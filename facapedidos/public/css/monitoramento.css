@@ -1,0 +1,61 @@
+
+/*
+ ***************************************************************************
+ * RENDERIZAÇÃO DO UI DO JQUERY PARA O PLUGIN DATABLES					   *
+ *************************************************************************** 
+ */
+.ui-widget-header {border: 1px solid black;color: #ffffff; font-weight: bold;line-height: 30px;}
+#pedido_fila_wrapper .ui-widget-header {  background: #dd0000 50% 50% repeat-x;  }
+#pedido_cozinha_wrapper .ui-widget-header { background: #f2bc00 50% 50% repeat-x;  }
+#pedido_viagem_wrapper .ui-widget-header {  background: #008000 50% 50% repeat-x;  }
+.ui-corner-bl{height: 30px;}
+
+/* renderiza bordas nas tabelas */
+#pedido_fila_wrapper .dataTables_scroll{border-left:1px solid #dd0000;border-right:1px solid #dd0000}
+#pedido_cozinha_wrapper .dataTables_scroll{border-left:1px solid #f2bc00;border-right:1px solid #f2bc00}
+#pedido_viagem_wrapper .dataTables_scroll{border-left:1px solid #008000;border-right:1px solid #008000}
+
+.dataTables_wrapper{margin:20px 0px}
+
+.ui-corner-bl input {margin-left:10px}
+
+/*
+ ***************************************************************************
+ * RENDERIZAÇÃO DAS TABELAS DE MONITORAMENTOS       					   *
+ *************************************************************************** 
+ */
+
+h2{text-align: center;margin-top:10px;}
+
+.grid-titulo{
+	color:#fff;
+	width:300px;
+	float: left;
+	text-align: left;
+}
+.grid-titulo h3,.dataTables_filter h3,.ui-corner-bl h3{
+	display:inline;
+	margin-left: 30px;
+	text-shadow: 2px 2px 2px #000000;
+	filter: dropshadow(color=#000000, offx=2, offy=2);
+}
+
+.icone{
+	width: 16px;
+	height: 16px;
+	background: url(../img/icons.png);
+	display:inline;
+	float:left;
+	margin:8px 0 8px 4px;
+	outline:medium none;
+	text-indent:-9999em;
+	position: relative;
+}
+.icone-max{
+	background-position: -48px -80px;
+}
+.icone-min{
+	background-position: -64px -128px;
+}
+.icon_acao{cursor:pointer;}
+
