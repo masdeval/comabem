@@ -1,0 +1,152 @@
+<style>
+.autocomp input{
+background:url("../images/bg-form-field.gif") repeat scroll 50% 50% #FFFFFF;
+border:1px solid #D4D1BF;
+border-radius:4px 4px 4px 4px;
+box-shadow:0 4px 18px #C8C8C8;
+color:#453821;
+height:25px;
+width: 200px;
+}
+</style>
+<h2><?php echo $this->headline; ?></h2>
+
+<div id="tabs" style="width: 714px;">
+  <ul>
+    <li><a href="#tabs-1">Customizar Ingredients</a></li>
+    <li><a href="#tabs-2">Associar Categoria Ingredients</a></li>
+  </ul>
+  <div id="tabs-1">
+    <div class="contentForm">
+    <form action="<?php echo $this->baseUrl()?>/estabelecimento/ingredients/add" method="post" class="frm" id='form1' onsubmit="return validateForm('form1');" enctype="multipart/form-data" >
+      <table class="tableFrm" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+          <td width="70%"><table class="tableFrm" cellspacing="7">
+              <tr>
+                <td> Ingredients * </td>
+                <td>
+                <div class="autocomp">
+                <?php
+
+                if($this->action=='edit'){
+                  $attribs =array("class"=>'input-medium RQR required', "title"=>'Por favor, indique Ingredients' ,'style'=>'width:200px','disabled'=>'true');
+                }
+                else{
+                   $attribs =array("class"=>'input-medium RQR required',"id"=>"combobox", "title"=>'Por favor, indique Ingredients' ,'style'=>'width:200px',);
+                }
+
+             echo $this->formSelect('cod_ingrediente', $this->formData['cod_ingrediente'], $attribs, $this->ingredienteOption); ?>
+
+              <div class='bodyTextSmall'> <span class='missing' id='errorFor' style="display: none;">Por favor, indique Ingredients</span></div>
+              </div>
+              </td>
+              </tr>
+              <tr>
+                <td> Descricao </td>
+                <td><input type="text" class="input-medium" maxlength="200"  name="descricao" value="<?php echo $this->formData['descricao']?>" style="width: 200px;">
+                  <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+              </tr>
+              <tr>
+                <td> Preco</td>
+                <td>
+                <table border="0" cellpadding="0" cellspacing="0" style="margin: 0px; padding: 0px;">
+                <tr>
+                <td><input type="text" class="input-medium validDecimalNumber"  name="preco_quando_adicional" maxlength="14" value="<?php echo $this->formData['preco_quando_adicional']?>" style="width: 200px;">
+                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                </td>
+                <td>&nbsp;Preco quando o ingrediente  utilazdo como adcional</td>
+                </tr>
+                </table>
+
+                  </td>
+              </tr>
+              </table></td>
+
+          <td width="30%"><?php if(!empty($this->formData['imagem'])) {?>
+            <span id='image'><img src="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/get-Image/ingrediente/<?php echo $this->formData['cod_ingrediente']?>/empresa/<?php echo $this->formData['cod_empresa']?>" width="151" height="141" alt=""></span><br>
+            <span id='changeImage' style="display: none;">
+            <input type="file" name="userfile">
+            <br>
+            <span onclick="toggleImage2()" id='labelChangeCancel' style="cursor: pointer; color: maroon;">Cancel</span></span><br>
+            <span onclick="toggleImage()" id='labelChange' style="cursor: pointer; color: blue;">Change</span>
+            <?php } else {?>
+            Logo <br><input type="file" name="userfile">
+            <?php }?></td>
+        </tr>
+      </table>
+
+      <fieldset style=" margin: 0; padding: 0;">
+        <legend>Indeque em quais categorias este ingrediente se enquadra :</legend>
+        <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+          <tr>
+          <?php $i=0;foreach($this->categoriaIngredienteRec as $k=>$v) {
+              if(in_array($v['cod_tipo_ingrediente'],(array)$this->categoriaIngredienteEmpresa)){
+                  $checked="checked";
+              }else{
+                  $checked='';
+              }
+              ?>
+            <td> <input type="checkbox" name="cod_tipo_ingrediente[]" value="<?php echo $v['cod_tipo_ingrediente']?>" <?php echo $checked ?>> <?php echo $v['nome']?>   </td>
+            <?php if($i>=4){ echo '</tr><tr>';$i=0;}?>
+            <?php $i++;}?>
+          </tr>
+
+
+        </table>
+      </fieldset>
+
+      <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+        <tr>
+          <td><input type="hidden" name="emorFrom" value="1">
+            <input type="hidden" name="action" value="<?php echo $this->action; ?>">
+           <input type="hidden" name="code_empresa" value="<?php echo $this->empresaId?>">
+           <input type="hidden" name="ingredienteId" value="<?php echo $this->ingredienteId?>">
+            <input type="submit" name="Save" value="Salvar">
+            <input type="button" name="Save" value="Remover" onclick="delIngrediente()">
+            <input type="button" name="Save" value="New" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/ingredients/'">
+            <input type="button" name="Save" value="Grid View" style="margin-left:  400px;" onclick="location.href='<?php echo $this->url(array('controller'=>'ingredients','action'=>'gridView'));?>'"></td>
+
+        </tr>
+      </table>
+      </form>
+    </div>
+  </div>
+
+
+  <div id="tabs-2">
+    <div class="contentForm">
+      <form action="<?php echo $this->baseUrl()?>/estabelecimento/ingredients/add" method="post" class="frm" id='form2' onsubmit="return validateForm('form2');" >
+      <fieldset style=" margin: 0; padding: 0;">
+        <legend>Associar Categoria Ingredients:</legend>
+        <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+           <tr>
+                <td> Escolha a categoria * </td>
+                <td colspan="10"><?php $attribs =array("class"=>'input-medium RQR required', "title"=>'Por favor, indique Ingredients' ,'style'=>'width:200px');
+echo $this->formSelect('cod_tipo_ingrediente', $this->formData['categoria_ingrediente'], $attribs, $this->categoriaIngredienteOption); ?>
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+              </tr>
+          <tr>
+            <?php $i=0;foreach($this->ingredienteEmpresa as $k=>$v) { ?>
+<td> <input type="checkbox" name="cod_ingrediente[]" value="<?php echo $v['cod_ingrediente']?>"> <?php echo $v['nome']?>   </td>
+            <?php if($i>=4){ echo '</tr><tr>';$i=0;}?>
+            <?php $i++;}?>
+          </tr>
+
+        </table>
+      </fieldset>
+      <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+        <tr>
+          <td><input type="hidden" name="emorFrom" value="2">
+            <input type="hidden" name="action" value="<?php echo $this->action; ?>">
+            <input type="hidden" name="code_empresa" value="<?php echo $this->empresaId?>">
+              <input type="hidden" name="ingredienteId" value="<?php echo $this->ingredienteId?>">
+            <input type="submit" name="Save" value="Salvar">
+            </td>
+        </tr>
+      </table>
+      </form>
+    </div>
+  </div>
+
+    </div>
+</div>
