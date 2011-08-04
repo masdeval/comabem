@@ -126,7 +126,7 @@ CREATE TABLE public.funcionario (
                 nome VARCHAR(50) NOT NULL,
                 cpf CHAR(14) NOT NULL,
                 data_nascimento DATE,
-                email VARCHAR(20),
+                email VARCHAR(50),
                 senha VARCHAR(10),
                 telefone_residencial CHAR(14),
                 telefone_comercial CHAR(14),
@@ -223,27 +223,10 @@ CREATE INDEX xpkempresa
  ON public.empresa USING BTREE
  ( cod_empresa );
 
-CREATE TABLE public.tipos_produtos_empresa (
-                cod_tipo_produto INTEGER NOT NULL,
-                cod_empresa INTEGER NOT NULL,
-                CONSTRAINT tipos_produtos_empresa_pkey PRIMARY KEY (cod_tipo_produto, cod_empresa)
-);
-
-
-CREATE INDEX empresa_has_tipo_produto_fkindex1
- ON public.tipos_produtos_empresa USING BTREE
- ( cod_empresa );
-
-CREATE INDEX ifk_rel_36
- ON public.tipos_produtos_empresa USING BTREE
- ( cod_tipo_produto );
-
 CREATE SEQUENCE public.produto_cod_produto_seq;
 
 CREATE TABLE public.produto (
                 cod_produto INTEGER NOT NULL DEFAULT nextval('public.produto_cod_produto_seq'),
-                cod_tipo_produto INTEGER NOT NULL,
-                cod_empresa INTEGER NOT NULL,
                 nome VARCHAR(50) NOT NULL,
                 descricao VARCHAR(200),
                 tempo_preparo_minutos SMALLINT,
@@ -253,15 +236,13 @@ CREATE TABLE public.produto (
                 cobrado_por_quilo BOOLEAN,
                 disponivel BOOLEAN,
                 removed SMALLINT DEFAULT 0,
+                cod_empresa INTEGER NOT NULL,
+                cod_tipo_produto INTEGER NOT NULL,
                 CONSTRAINT produto_pkey PRIMARY KEY (cod_produto)
 );
 
 
 ALTER SEQUENCE public.produto_cod_produto_seq OWNED BY public.produto.cod_produto;
-
-CREATE INDEX produto_fkindex2
- ON public.produto USING BTREE
- ( cod_empresa );
 
 CREATE INDEX xpkproduto
  ON public.produto USING BTREE
@@ -342,6 +323,21 @@ CREATE INDEX foto_produto_fkindex1
 CREATE INDEX ifk_rel_13
  ON public.foto_produto USING BTREE
  ( cod_produto );
+
+CREATE TABLE public.tipos_produtos_empresa (
+                cod_tipo_produto INTEGER NOT NULL,
+                cod_empresa INTEGER NOT NULL,
+                CONSTRAINT tipos_produtos_empresa_pkey PRIMARY KEY (cod_tipo_produto, cod_empresa)
+);
+
+
+CREATE INDEX empresa_has_tipo_produto_fkindex1
+ ON public.tipos_produtos_empresa USING BTREE
+ ( cod_empresa );
+
+CREATE INDEX ifk_rel_36
+ ON public.tipos_produtos_empresa USING BTREE
+ ( cod_tipo_produto );
 
 CREATE TABLE public.ingrediente_empresa (
                 cod_ingrediente INTEGER NOT NULL,
@@ -713,6 +709,13 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+ALTER TABLE public.produto ADD CONSTRAINT tipo_produto_produto_fk
+FOREIGN KEY (cod_tipo_produto)
+REFERENCES public.tipo_produto (cod_tipo_produto)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
 ALTER TABLE public.tb_cidade ADD CONSTRAINT tb_cidade_cod_estado_fkey
 FOREIGN KEY (cod_estado)
 REFERENCES public.tb_estado (cod_estado)
@@ -797,7 +800,6 @@ ON DELETE CASCADE
 ON UPDATE CASCADE
 NOT DEFERRABLE;
 
-
 ALTER TABLE public.tipos_produtos_empresa ADD CONSTRAINT tipos_produtos_empresa_cod_empresa_fkey
 FOREIGN KEY (cod_empresa)
 REFERENCES public.empresa (cod_empresa)
@@ -805,9 +807,9 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.produto ADD CONSTRAINT produto_cod_tipo_produto_fkey
-FOREIGN KEY (cod_tipo_produto, cod_empresa)
-REFERENCES public.tipos_produtos_empresa (cod_tipo_produto, cod_empresa)
+ALTER TABLE public.produto ADD CONSTRAINT empresa_produto_fk
+FOREIGN KEY (cod_empresa)
+REFERENCES public.empresa (cod_empresa)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
