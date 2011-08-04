@@ -6,7 +6,20 @@ class Estabelecimento_ErrorController extends Zend_Controller_Action
     public function errorAction()
     {
         $errors = $this->_getParam('error_handler');
-        
+
+        //Se chega aqui já com uma msg de erro, exibe a msg.
+        if($this->_getParam('msg') != null){
+            $this->view->message = $this->_getParam('msg');
+            return;
+        }
+        //Trata a excecao de acesso invalido
+        else if($errors->exception->getMessage() === 'Access denied')
+        {
+            $this->_setParam('error_handler', $errors);
+            $this->_helper->redirector->gotoUrl('error/error/msg/Voce nao tem permissao para acessar essa pagina!');
+        }
+
+        //Trata alguns tipos de excecao
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:

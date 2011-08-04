@@ -1,0 +1,86 @@
+body {
+font:62.5% "Trebuchet MS", sans-serif;
+margin:50px;
+}
+
+.tableFrm {
+font-size:12px;
+font-family:Verdana;
+width:100%;
+}
+
+.contentForm {
+width:700px;
+font-family:Verdana;
+}
+
+.input-medium {
+background:url(../images/bg-form-field.gif) repeat scroll 50% 50% #FFF;
+border:1px solid #D4D1BF;
+color:#453821;
+height:25px;
+-moz-border-radius:4px;
+-khtml-border-radius:4px;
+-webkit-border-radius:4px;
+border-radius:4px;
+-moz-box-shadow:rgba(200,200,200,1) 0 4px 18px;
+-webkit-box-shadow:rgba(200,200,200,1) 0 4px 18px;
+-khtml-box-shadow:rgba(200,200,200,1) 0 4px 18px;
+box-shadow:rgba(200,200,200,1) 0 4px 18px;
+}
+
+.dataDiv {
+background:url(../images/data-div-bg.png) repeat scroll 50% 50% #ECEADF;
+border:1px solid #D9D6C4;
+color:#1F1F1F;
+font-size:12px;
+}
+
+input.missing {
+color:#c00;
+background:#fff;
+border-color:#c00;
+}
+
+textarea.missing {
+color:#c00;
+background:#fff;
+font-weight:700;
+border-color:#c00;
+}
+
+span.missing {
+color:#c00;
+display:none;
+}
+
+.tip {
+font-family:Arial, Helvetica, sans-serif;
+font-size:11px;
+color:#999;
+}
+
+div.ErrorMessage {
+color:#c00;
+}
+
+.error {
+font-weight:700;
+color:#c00;
+}
+
+legend,.head td {
+font-weight:700;
+}
+
+input.focus,select.focus,textarea.focus {
+background:#fff;
+border-color:#4D70A0;
+}
+
+#radiomissing,.radiomissing,#checkboxmissing,.checkboxmissing {
+color:#c00;
+font-weight:700;
+display:none;
+border-color:#c00;
+}

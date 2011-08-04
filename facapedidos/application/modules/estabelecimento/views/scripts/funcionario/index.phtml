@@ -1,0 +1,137 @@
+<h2><?php echo $this->headline; ?></h2>
+<div id="tabs" style="width: 714px;">
+  <ul>
+    <li><a href="#tabs-1">Funcionario</a></li>
+    <li><a href="#tabs-2">Entregador</a></li>
+  </ul>
+  <div id="tabs-1">
+    <div class="contentForm">
+    <form action="<?php echo $this->baseUrl()?>/estabelecimento/funcionario/add" method="post" class="frm" id='form1' onsubmit="return validateForm('form1');" enctype="multipart/form-data" >
+      <table class="tableFrm" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+
+                <td> Empresa * <br><?php $attribs =array("class"=>'input-medium RQR required', "title"=>'Por favor, indique Empresa' ,'style'=>'width:200px');
+             echo $this->formSelect('cod_empresa', $this->cod_empresa, $attribs, $this->empresaOption); ?>
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                <td>&nbsp;&nbsp; </td>
+              </tr>
+              <tr>
+                <td> Nome* <br><input type="text" class="input-medium RQR required"   name="nome" value="<?php echo $this->formData['nome']?>" maxlength="50" style="width: 200px;" title="Por favor, indique Nome">
+                  <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                <td> CPF* <br><input type="text" class="input-medium RQR required"  name="cpf" maxlength="14" value="<?php echo $this->formData['cpf']?>" style="width: 200px;" title="Por favor, indique CPF">
+                  <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+              </tr>
+              <tr>
+                <td> Email<br><input type="text" class="input-medium validEmail"  name="email" maxlength="14" value="<?php echo $this->formData['email']?>" style="width: 200px;">
+                  <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> </td>
+                <td> Data nascimento<br><input type="text" class="input-medium"  name="data_nascimento" maxlength="14" value="<?php echo $this->formData['data_nascimento']?>" style="width: 200px;" id="datepicker">
+                  <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+              </tr>
+
+                    </table>
+      <table class="tableFrm" cellspacing="0" cellpadding="0" border="0">
+
+        <tr>
+          <td colspan="2"> Phone Residencial<br>
+            <input type="text" class="input-medium" maxlength="20"  name="telefone_residencial" value="<?php echo $this->formData['telefone_residencial']?>" style="width: 200px;">
+            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+          <td colspan="3" style="padding-left: 20px;"> Fone Commercial
+            <input type="text"   name="telefone_comercial" maxlength="14" value="<?php echo $this->formData['telefone_comercial']?>" style="width: 200px;" class="input-medium"  title='Por favor, indique Fone Commercial'>
+            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+            <td colspan="3" style="padding-left: 20px;"> Celular
+            <input type="text"   name="celular" maxlength="14" value="<?php echo $this->formData['celular']?>" style="width: 200px;" class="input-medium"  title='Por favor, indique celular'>
+            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+        </tr>
+      </table>
+
+      <fieldset style=" margin: 0; padding: 0;">
+        <legend>Endereco:</legend>
+        <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+          <tr>
+            <td> Logradouro *&nbsp;&nbsp;&nbsp;<br>
+              <input type="text" class="input-medium RQR required"  title='Por favor, indique Logradouro' maxlength="50"  name="endereco" value="<?php echo $this->formData['endereco']?>" style="width: 200px;">
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+            <td colspan="2"> Numero *<br>
+              <input type="text" class="input-medium RQR  required validNumber"  title='Por favor, indique Numero'  name="numero" value="<?php echo $this->formData['numero']?>" maxlength="4" style="width: 200px;">
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+          </tr>
+          <tr>
+            <td  > Complemento<br>
+              <input type="text" class="input-medium"  name="complemento" maxlength="20" value="<?php echo $this->formData['complemento']?>" style="width: 200px;"></td>
+            <td colspan="2"> CEP *<br>
+              <input type="text" class="input-medium RQR required"  title='Por favor, indique CEP' maxlength="8"  name="cep" value="<?php echo $this->formData['cep']?>" style="width: 200px;">
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+          </tr>
+          <tr>
+            <td valign="top"> Bairro<br>
+              <input type="text" class="input-medium" maxlength="30" name="bairro" value="<?php echo $this->formData['bairro']?>" style="width: 200px;"></td>
+              <td colspan="2"> Observacao<br>
+              <textarea name="observacao" class="input-medium" style="width: 200px; height: 100px;"><?php echo $this->formData['observacao']?></textarea>
+
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+
+          </tr>
+                  </table>
+      </fieldset>
+
+      <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+        <tr>
+          <td><input type="hidden" name="emorFrom" value="1">
+            <input type="hidden" name="action" value="<?php echo $this->action; ?>">
+
+            <input type="submit" name="Save" value="Salvar">
+            <input type="hidden" name="funcionarioId" value="<?php echo $this->funcionarioId; ?>">
+            <input type="button" name="Save" value="Remover" onclick="delfuncionario('<?php echo $this->funcionarioId;?>')">
+            <input type="button" name="Save" value="New" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/funcionario/'">
+            <input type="button" name="Save" value="Grid View" style="margin-left:  400px;" onclick="location.href='<?php echo $this->url(array('controller'=>'funcionario','action'=>'gridView'));?>'"></td>
+
+        </tr>
+      </table>
+      </form>
+    </div>
+  </div>
+
+
+  <div id="tabs-2">
+    <div class="contentForm">
+      <form action="<?php echo $this->baseUrl()?>/estabelecimento/funcionario/add" method="post" class="frm" id='form2' onsubmit="return validateForm('form2');" >
+      <fieldset style=" margin: 0; padding: 0;">
+        <legend>Entregador:</legend>
+        <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+          <tr>
+            <td> Modelo Moto &nbsp;&nbsp;&nbsp;<br>
+              <input type="text" class="input-medium"  title='Por favor, indique modelo moto' maxlength="50"  name="modelo_moto" value="<?php echo $this->formData2['modelo_moto']?>" style="width: 200px;">
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+            <td colspan="2"> Consumo <br>
+              <input type="text" class="input-medium validDecimalNumber"  title='Por favor, indique consumo'  name="consumo" value="<?php echo $this->formData2['consumo']?>" style="width: 200px;">
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+          </tr>
+          <tr>
+            <td  > Total km<br>
+              <input type="text" class="input-medium validDecimalNumber "  name="total_km" maxlength="20" value="<?php echo $this->formData2['total_km']?>" style="width: 200px;">
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+              </td>
+            <td colspan="2"> Numero de acidentes<br>
+              <input type="text" class="input-medium validNumber"  title='Por favor, indique total acidentes' maxlength="8"  name="total_acidentes" value="<?php echo $this->formData2['total_acidentes']?>" style="width: 200px;">
+              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+          </tr>
+
+                  </table>
+      </fieldset>
+
+            <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+        <tr>
+          <td><input type="hidden" name="emorFrom" value="2">
+            <input type="hidden" name="action" value="<?php echo $this->action; ?>">
+            <input type="submit" name="Save" value="Salvar">
+            <input type="hidden" name="funcionarioId" value="<?php echo $this->funcionarioId; ?>">
+            <input type="button" name="Save" value="Remover" onclick="delFuncionario_entregador('<?php echo $this->funcionarioId;?>')">
+            <input type="button" name="Save" value="New" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/funcionario/'">
+            </td>
+        </tr>
+      </table>
+      </form>
+    </div>
+  </div>
+    </div>
+</div>

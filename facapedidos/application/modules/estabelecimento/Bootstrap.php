@@ -29,18 +29,21 @@ class Estabelecimento_Bootstrap extends Zend_Application_Module_Bootstrap{
 	
 	public function _initAdminAcl(){
 		
-              if(Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session("estabelecimento"))
+             /*
+              * Verifica se foi armazenado na sessao o resultado de uma autenticacao. Se sim, lê a role
+              * desse usuario (um usuario tem apenas uma role) e seta numa variavel de registro.
+              * 
+              *  if(Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session("estabelecimento"))
 			->hasIdentity()){
 			
-		Zend_Registry::set("role",Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session("estabelecimento"))
-																	->getStorage()->read()->role);
+		Zend_Registry::set("role",Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session("estabelecimento"))->getStorage()->read()->role);
 			
 		}else{
 			
 			Zend_Registry::set("role","guest");
 			
 		}
-		
+*/
 		$this->_acl = new AdminAcl();
 		$front = Zend_Controller_Front::getInstance();		
 		$front->registerPlugin(new Plugins_CheckAcl($this->_acl)); 	

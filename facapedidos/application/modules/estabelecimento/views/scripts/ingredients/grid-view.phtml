@@ -1,0 +1,26 @@
+<input type="button" name="Save" value="New" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/ingredients/'">
+<div class="dataDiv ui-corner-all" style="width: 700px;">
+
+  <table border="0" class="gridViewTable" width="100%">
+    <tr class="head">
+      <td>Ingrediente </td>
+      <td>Descricao </td>
+      <td>Logo</td>
+      <td>Option</td>
+    </tr>
+    <?php  foreach ($this->paginator as $k=>$v) {?>
+    <tr>
+      <td><?php echo $v['nome'] ?></td>
+      <td><?php echo $v['descricao']; ?></td>
+      <td><img src="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/get-Image/ingrediente/<?php echo $v['cod_ingrediente']?>/empresa/<?php echo $v['cod_empresa']?>" width="100"  alt=""></td>
+
+      <td><a href="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/delete/id/<?php echo $v['cod_ingrediente']?>" onclick="return confirm('Are you sure you want to delete?')">Delete</a>&nbsp;&nbsp;<a href="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/edit/ingrediente/<?php echo $v['cod_ingrediente']?>">Edit</a></td>
+    </tr>
+    <?php }?>
+    <tr class="head">
+      <td colspan="6" align="right"><?php echo $paging ?></td>
+    </tr>
+  </table>
+</div>
+
+ <?php echo $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>
