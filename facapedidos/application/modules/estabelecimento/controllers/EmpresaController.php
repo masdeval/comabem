@@ -32,8 +32,8 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
             $message = $msg;
         } else {
             $message = 'Welcome!';
-        }       
-        
+        }
+
         $this->view->empresaId = '';
         $cidadeOption = $this->TbCidade->getCidadeDropDown();
         $this->view->cidadeOption = $cidadeOption;
@@ -89,7 +89,6 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
                     $this->trataEdicaoDeTiposDeProdutos($empresaId, $formData);
                     $this->getRequest()->setParam("id", $empresaId);
                     $this->_forward("edit");
-
                 } else {
                     $id = $this->TiposProdutosEmpresa->addRecord($empresaId, $formData);
                     $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
@@ -97,7 +96,6 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
             } else {
                 $this->_helper->redirector->gotoUrl($this->caminho . "/index/msg/1");
             }
-
         }
         if ($formData['emorFrom'] == 3) {
             //$empresaId = $_SESSION['empresaId'];
@@ -109,7 +107,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
                 } else {
                     $id = $this->HorarioFuncionamento->addRecord($empresaId, $formData);
                     $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
-                                    }
+                }
             } else {
                 $this->_helper->redirector->gotoUrl($this->caminho . "/index/msg/1");
             }
@@ -127,49 +125,49 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
          * empresa relacionado com o tipo que pretende-se excluir. (integridade referencial)
          */
 
-        //Primeiro verifica-se se esta tentando remover um tipo de produto para o qual já existe um produto associado
         try {
-
-            $this->TiposProdutosEmpresa->editRecord($empresaId, $formData);
-  
-        } catch (Exception $e) {
-
-            //Se for esse codigo eh erro de chave estrangeira e significa que tentou excluir um tipo de
-            //produto da empresa mas já existe esse tipo de produto associado a algum produto
-            if ($e->getCode() == 23503) {
-
-                //obtem os tipos de produtos atualmente cadastrados para a empresa
-                $tipos_produtos_atual = (array) $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($empresaId);
-                //cria um array com a nova lista de produtos que deve ficar cadastrada
-                $i = 0;
-                foreach ($formData['cod_tipo_produto'] as $k => $v) {
-                    $nova_lista_tipo_produtos[$i] = $v;
-                    $i++;
-                }
-                //Os cod_tipo_produto em $tipos_produtos_atual que nao estao em $nova_lista_tipo_produtos
-                //sao os que devem ser removidos. Avisar o usuario para primeiramente remover ou alterar os 
-                //produtos já associados com o tipo de produto a ser removido. array_dif ira retornar
-                //tudo que esta em $tipos_produtos_atual mas não está em $nova_lista_tipo_produtos
-                $comparacao = array_diff(array_keys($tipos_produtos_atual), $nova_lista_tipo_produtos);
-                //Obs: tive que usar a funcao array_keys pois a funcao getCodTipoProductoDropDown usada acima
-                //retorna o array com os indices sendo os cod_tipo_produtos
-                //
+            //Primeiro verifica-se se esta tentando remover um tipo de produto para o qual já existe um produto associado
+            //Obtem uma lista de tipos de produtos da empresa que realmente estao associados a algum produto
+            $tipos_produtos_atual = $this->Empresa->getTipoProdutoAssociadoAProduto($empresaId);
+            //Cria um array com a nova lista de produtos que deve ficar cadastrada (veio na ultima submissao do formulario)
+            $i = 0;
+            foreach ($formData['cod_tipo_produto'] as $k => $v) {
+                $nova_lista_tipo_produtos[$i] = $v;
+                $i++;
+            }
+            //Os cod_tipo_produto em $tipos_produtos_atual que nao estao em $nova_lista_tipo_produtos
+            //sao os que devem ser removidos. Avisar o usuario para primeiramente remover ou alterar os
+            //produtos já associados com o tipo de produto a ser removido. array_dif ira retornar
+            //tudo que esta em $tipos_produtos_atual mas não está em $nova_lista_tipo_produtos
+            $comparacao = array_diff(array_keys($tipos_produtos_atual), $nova_lista_tipo_produtos);
+            //Obs: tive que usar a funcao array_keys pois a funcao usada acima
+            //retorna o array com os indices sendo os cod_tipo_produtos
+            //
+            //Se $comparacao nao esta vazio, entao esta tentando remover indevidamente um tipo de produto dessa empresa que está
+            //associado com algum produto
+            if (!empty($comparacao)) {
                 //Agora avisar o usuario
                 //
                 //Obtenho os nomes dos produtos dessa empresa que estao relacionados aos tipos produtos
                 //que serao excluidos, ou seja, os tipos contidos em $comparacao
-                $produtos = $this->Produto->getNomeProdutosByTipo($empresaId, implode(',',$comparacao));
+                $produtos = $this->Produto->getNomeProdutosByTipo($empresaId, implode(',', $comparacao));
                 //Obtenho os nomes dos tipos de produtos que deseja-se excluir
                 $nomes_tipos_produtos = '';
-                foreach($comparacao as $indice)
-                {
-                    $nomes_tipos_produtos = $nomes_tipos_produtos." ".$tipos_produtos_atual[$indice];
+                foreach ($comparacao as $indice) {
+                    $nomes_tipos_produtos = $nomes_tipos_produtos . " " . $tipos_produtos_atual[$indice];
                 }
 
-                $this->getRequest()->setParam("msg", "Você está tentando remover os tipos de produtos: ".$nomes_tipos_produtos.
-                     ".  Estes tipos já foram associados com os produtos: ".implode(',',$produtos[0]).". Favor removê-los antes de proceder com a exclusão dos tipos.");
+                $this->getRequest()->setParam("msg", "Você está tentando remover os tipos de produtos: " . $nomes_tipos_produtos .
+                        ".  Estes tipos já foram associados com os produtos: " . implode(',', $produtos[0]) . ". Favor remover o produto ou associá-lo com outro tipo antes de proceder com a exclusão.");
+
                 return;
+            } else {
+
+                $this->TiposProdutosEmpresa->editRecord($empresaId, $formData);
             }
+
+        } catch (Exception $e) {
+
             throw $e;
         }
     }
@@ -196,11 +194,10 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
         $this->view->cidadeOption = $cidadeOption;
         $this->view->title = 'Empresa';
         //Acrescentei para sempre ser possivel imprimir alguma msg ao entrar nesse metodo
-        $this->view->headline = $this->_getParam('msg','');
+        $this->view->headline = $this->_getParam('msg', '');
         $this->view->action = 'edit';
         $this->view->empresaId = $empresaId;
         $this->_helper->viewRenderer('index');
-
     }
 
     public function do_upload() {

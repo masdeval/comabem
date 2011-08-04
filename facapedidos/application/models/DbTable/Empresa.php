@@ -111,5 +111,19 @@
           }
           return $result;
       }
+
+
+     public function getTipoProdutoAssociadoAProduto($cod_empresa)
+     {
+        $query = $this->_db->query("SELECT TP.nome,TP.cod_tipo_produto FROM tipos_produtos_empresa TPE, tipo_produto TP, produto P where TPE.cod_tipo_produto=TP.cod_tipo_produto and P.cod_tipo_produto = TPE.cod_tipo_produto and TPE.cod_empresa = $cod_empresa ");
+        $res = $query->fetchAll();
+        foreach ($res as $k => $row) {
+            $result[$row[cod_tipo_produto]] = $row['nome'];
+        }
+        return $result;
+    }
+
+
+
   }
 ?>
