@@ -1,6 +1,7 @@
 <?php
 
-class Estabelecimento_EmpresaController extends Zend_Controller_Action {
+class Estabelecimento_EmpresaController extends Zend_Controller_Action
+{
 
     public $TbCidade;
     public $TipoProduto;
@@ -11,7 +12,8 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
     public $errorMessage;
     public $caminho;
 
-    public function init() {
+    public function init()
+    {
         $this->_helper->layout()->setLayout('tela_cadastro_layout');
         $this->Empresa = new DbTable_Empresa();
         $this->TbCidade = new DbTable_TbCidade();
@@ -23,14 +25,17 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
 
         $msg = $this->_getParam('msg', '');
         //$m[1] = 'Please complete the form below first';
-        if (!empty($msg)) {
+        if (!empty($msg))
+        {
             //$message = $m[$msg];
             $message = $msg;
-        } else {
+        } else
+        {
             $message = 'Welcome!';
         }
 
@@ -42,32 +47,42 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
         $this->view->headline = $message;
     }
 
-    public function addAction() {
+    public function addAction()
+    {
         $error = false;
         $formData = $this->getRequest()->getPost();
 
-        if ($formData['emorFrom'] == 1) {
-            if ($formData['razao_social']) {
-                if (!empty($_FILES['userfile']['name'])) {
+        if ($formData['emorFrom'] == 1)
+        {
+            if ($formData['razao_social'])
+            {
+                if (!empty($_FILES['userfile']['name']))
+                {
                     $file = $this->do_upload();
-                    if (!empty($this->errorMessage)) {
+                    if (!empty($this->errorMessage))
+                    {
                         $error = true;
-                    } else {
+                    } else
+                    {
                         $fileName = $file;
                     }
                 }
-                if (!$error) {
-                    if ($formData['action'] == 'edit') {
+                if (!$error)
+                {
+                    if ($formData['action'] == 'edit')
+                    {
                         $id = $formData['empresaId'];
                         $this->Empresa->editEmpresa($formData, $id, $fileName);
                         $this->view->action = 'edit';
                         $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
-                    } else {
+                    } else
+                    {
                         $id = $this->Empresa->addEmpresa($formData, $fileName);
                         $this->view->empresaId = $id;
                         $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
                     }
-                } else {
+                } else
+                {
                     $this->view->formData = $formData;
                     $cidadeOption = $this->TbCidade->getCidadeDropDown();
                     $this->view->cidadeOption = $cidadeOption;
@@ -76,45 +91,57 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
                     $this->view->headline = $this->errorMessage;
                     $this->_helper->viewRenderer('index');
                 }
-            } else {
+            } else
+            {
                 $this->_helper->redirector->gotoUrl($this->caminho . "/index/msg/1");
             }
         }
-        if ($formData['emorFrom'] == 2) {
+        if ($formData['emorFrom'] == 2)
+        {
 
             $empresaId = $formData['empresaId'];
-            if (!empty($empresaId)) {
-                if ($formData['action'] == 'edit') {
+            if (!empty($empresaId))
+            {
+                if ($formData['action'] == 'edit')
+                {
 
                     $this->trataEdicaoDeTiposDeProdutos($empresaId, $formData);
                     $this->getRequest()->setParam("id", $empresaId);
                     $this->_forward("edit");
-                } else {
+                } else
+                {
                     $id = $this->TiposProdutosEmpresa->addRecord($empresaId, $formData);
                     $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
                 }
-            } else {
+            } else
+            {
                 $this->_helper->redirector->gotoUrl($this->caminho . "/index/msg/1");
             }
         }
-        if ($formData['emorFrom'] == 3) {
+        if ($formData['emorFrom'] == 3)
+        {
             //$empresaId = $_SESSION['empresaId'];
             $empresaId = $formData['empresaId'];
-            if (!empty($empresaId)) {
-                if ($formData['action'] == 'edit') {
+            if (!empty($empresaId))
+            {
+                if ($formData['action'] == 'edit')
+                {
                     $this->HorarioFuncionamento->editRecord($empresaId, $formData);
                     $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
-                } else {
+                } else
+                {
                     $id = $this->HorarioFuncionamento->addRecord($empresaId, $formData);
                     $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
                 }
-            } else {
+            } else
+            {
                 $this->_helper->redirector->gotoUrl($this->caminho . "/index/msg/1");
             }
         }
     }
 
-    public function trataEdicaoDeTiposDeProdutos($empresaId, $formData) {
+    public function trataEdicaoDeTiposDeProdutos($empresaId, $formData)
+    {
 
         /* Uma empresa pode trabalhar com varios tipos de produtos e isso é controlado nessa tabela.
          * Essa tabela possui uma chave composta formada por COD_TIPO_PRODUTO E COD_EMPRESA.
@@ -125,13 +152,15 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
          * empresa relacionado com o tipo que pretende-se excluir. (integridade referencial)
          */
 
-        try {
+        try
+        {
             //Primeiro verifica-se se esta tentando remover um tipo de produto para o qual já existe um produto associado
             //Obtem uma lista de tipos de produtos da empresa que realmente estao associados a algum produto
             $tipos_produtos_atual = $this->Empresa->getTipoProdutoAssociadoAProduto($empresaId);
             //Cria um array com a nova lista de produtos que deve ficar cadastrada (veio na ultima submissao do formulario)
             $i = 0;
-            foreach ($formData['cod_tipo_produto'] as $k => $v) {
+            foreach ($formData['cod_tipo_produto'] as $k => $v)
+            {
                 $nova_lista_tipo_produtos[$i] = $v;
                 $i++;
             }
@@ -145,7 +174,8 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
             //
             //Se $comparacao nao esta vazio, entao esta tentando remover indevidamente um tipo de produto dessa empresa que está
             //associado com algum produto
-            if (!empty($comparacao)) {
+            if (!empty($comparacao))
+            {
                 //Agora avisar o usuario
                 //
                 //Obtenho os nomes dos produtos dessa empresa que estao relacionados aos tipos produtos
@@ -153,7 +183,8 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
                 $produtos = $this->Produto->getNomeProdutosByTipo($empresaId, implode(',', $comparacao));
                 //Obtenho os nomes dos tipos de produtos que deseja-se excluir
                 $nomes_tipos_produtos = '';
-                foreach ($comparacao as $indice) {
+                foreach ($comparacao as $indice)
+                {
                     $nomes_tipos_produtos = $nomes_tipos_produtos . " " . $tipos_produtos_atual[$indice];
                 }
 
@@ -161,26 +192,30 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
                         ".  Estes tipos já foram associados com os produtos: " . implode(',', $produtos[0]) . ". Favor remover o produto ou associá-lo com outro tipo antes de proceder com a exclusão.");
 
                 return;
-            } else {
+            } else
+            {
 
                 $this->TiposProdutosEmpresa->editRecord($empresaId, $formData);
             }
-
-        } catch (Exception $e) {
+        } catch (Exception $e)
+        {
 
             throw $e;
         }
     }
 
-    public function editAction() {
+    public function editAction()
+    {
 
         $id = $this->_getParam('id', '');
-        if (!empty($id)) {
+        if (!empty($id))
+        {
 
             $this->view->empresaId = $id;
         }
         $empresaId = $id;
-        if (!empty($empresaId)) {
+        if (!empty($empresaId))
+        {
             $formData = $this->Empresa->getSingleData($empresaId);
             $formData2 = $this->TiposProdutosEmpresa->getRecords($empresaId);
             $formData3 = $this->HorarioFuncionamento->getRecords($empresaId);
@@ -193,24 +228,27 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
         $this->view->cod_tipo_produto = $cod_tipo_produto;
         $this->view->cidadeOption = $cidadeOption;
         $this->view->title = 'Empresa';
-        //Acrescentei para sempre ser possivel imprimir alguma msg ao entrar nesse metodo
-        $this->view->headline = $this->_getParam('msg', '');
         $this->view->action = 'edit';
         $this->view->empresaId = $empresaId;
         $this->_helper->viewRenderer('index');
+        //Acrescentei para sempre ser possivel imprimir alguma msg ao entrar nesse metodo
+        $this->view->headline = $this->_getParam('msg', '');
     }
 
-    public function do_upload() {
+    public function do_upload()
+    {
         $adapter = new Zend_File_Transfer_Adapter_Http();
         $adapter->setDestination('logo');
         $adapter->addValidator('Extension', false, 'jpg,png,jpeg,gif,xps');
         $adapter->addValidator('Size', false, 2000000);
-        if (!$adapter->receive()) {
+        if (!$adapter->receive())
+        {
             $messages = $adapter->getMessages();
             $this->_helper->viewRenderer('index');
             $this->errorMessage = implode("\n", $messages);
             return false;
-        } else {
+        } else
+        {
             $file = $adapter->getFileInfo();
             $name = $file['userfile']['name'];
             $d = file_get_contents($file['userfile']['tmp_name']);
@@ -219,13 +257,15 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
         }
     }
 
-    public function deleteAction() {
+    public function deleteAction()
+    {
         $empresaId = $this->_getParam('id', '');
         $this->Empresa->deleteRecords($empresaId);
         $this->_helper->redirector->gotoUrl($this->caminho . "/gridView");
     }
 
-    public function gridviewAction() {
+    public function gridviewAction()
+    {
         $record = $this->Empresa->getRecords();
         $page = $this->_getParam('page', 1);
         $paginator = Zend_Paginator::factory($record);
@@ -234,19 +274,22 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
         $this->view->paginator = $paginator;
     }
 
-    public function deleteTiposDeProdutosAction() {
+    public function deleteTiposDeProdutosAction()
+    {
         $empresaId = $this->_getParam('id', '');
         $this->TiposProdutosEmpresa->deleteRecords($empresaId);
         $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
     }
 
-    public function deleteHorarioAction() {
+    public function deleteHorarioAction()
+    {
         $empresaId = $this->_getParam('id', '');
         $this->HorarioFuncionamento->deleteRecords($empresaId);
         $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
     }
 
-    public function checkUrlAction() {
+    public function checkUrlAction()
+    {
         $url = $this->_getParam('url', '');
         $id = $this->_getParam('id', '');
         $status = $this->Empresa->checkDuplicateUrl($url, $id);
@@ -254,7 +297,8 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action {
         exit;
     }
 
-    public function getImageAction() {
+    public function getImageAction()
+    {
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $empresaId = $this->_getParam('id', '');
