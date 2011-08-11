@@ -6,34 +6,6 @@ function toggleImage2(){
     $('#changeImage').hide();
     $('#labelChange').show();
 }
-function checkUrl(elem){
-    val=$('#'+elem).attr('value');
-    status=false;
-     reqURL=base_url+'/empresa/check-Url/url/'+val;
-      $.ajax({
-        type: "GET",
-        url:reqURL,
-        success: function(r) {
-       r=jQuery.trim(r);
-       //alert(r)
-       if(r=='F'){
-           var msg='URL ja exist.Please usar outro url';
-           $('#spanUrl').html(msg);
-           $('#spanUrl').show();
-           status=false;
-           return status;
-       }
-       else{
-          $('#spanUrl').html('');
-           $('#spanUrl').hide();
-          status=true;
-           return status;
-       }
-        }
-      });
-
-
-}
 function delEmpresa(id){
     if(confirm('Are you sure you want to delete?')){
 

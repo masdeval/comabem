@@ -104,8 +104,8 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
             {
                 if ($formData['action'] == 'edit')
                 {
-
-                    $this->trataEdicaoDeTiposDeProdutos($empresaId, $formData);
+                    //$this->trataEdicaoDeTiposDeProdutos($empresaId, $formData);
+                    $this->TiposProdutosEmpresa->editRecord($empresaId, $formData);
                     $this->getRequest()->setParam("id", $empresaId);
                     $this->_forward("edit");
                 } else
@@ -140,18 +140,21 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         }
     }
 
-    public function trataEdicaoDeTiposDeProdutos($empresaId, $formData)
-    {
 
-        /* Uma empresa pode trabalhar com varios tipos de produtos e isso é controlado nessa tabela.
+
+         /* Uma empresa pode trabalhar com varios tipos de produtos e isso é controlado nessa tabela.
          * Essa tabela possui uma chave composta formada por COD_TIPO_PRODUTO E COD_EMPRESA.
-         * Quando os produtos de uma empresa sao cadastrados deve-se informar qual é o seu tipo. É apresentada 
+         * Quando os produtos de uma empresa sao cadastrados deve-se informar qual é o seu tipo. É apresentada
          * uma lista apenas com os tipos de produto da empresa em questao.
          * 
          * Obs: Nao é permitido remover um tipo de produto de uma empresa caso já exista algum produto dessa
          * empresa relacionado com o tipo que pretende-se excluir. (integridade referencial)
          */
 
+  /* Nao preciso mais fazer a validacao aqui, no momento de salvar. Estou fazendo quando usuario interage na tela
+
+    public function trataEdicaoDeTiposDeProdutos($empresaId, $formData)
+    {
         try
         {
             //Primeiro verifica-se se esta tentando remover um tipo de produto para o qual já existe um produto associado
@@ -202,6 +205,30 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
 
             throw $e;
         }
+    }
+
+*/
+    public function checkTipoProdutoDeletionAction()
+    {
+        $empresaId = $this->_getParam('empresaId', '');
+        $idTipoProduto = $this->_getParam('idTipoProduto', '');//tipo de produto que esta sendo removido
+        //da empresa e que deve ser confrontado com a tabela produto para saber se já não está associado a algum
+        //produto desta empresa
+
+        //Preciso saber se existe algum produto na tabela produto que esteja relacionado com a empresa e com
+        //o tipo de produto a ser removido em questao
+        $produtos = $this->Produto->getNomeProdutosByTipo($empresaId, $idTipoProduto);
+
+        if(!empty($produtos)) //significa que há produto relacionado com o tipo produto e nao pode permitir a exclusao
+        {
+            //Agora avisar o usuario
+            echo "Este tipo está associado com os produtos: ".implode(',', $produtos[0])." Antes de removê-lo você precisa primeiro excluir o(s) produto(s) ou alterar seu tipo.";
+
+            exit;
+        }
+
+        echo "OK";
+        exit;
     }
 
     public function editAction()

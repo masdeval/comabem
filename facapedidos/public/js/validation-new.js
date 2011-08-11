@@ -123,6 +123,8 @@ function validateForm(id){
     });
 
      var count=0;
+     //checkMax esta na tela de produto e serve para verificar se o numero maximo de adicionais esta sendo respeitado
+
      $(frmid+" .checkMax").each(function(){
         var _v=true;var m="";
 
@@ -148,6 +150,8 @@ function validateForm(id){
 
     });
 
+    //ajaxcheck esta na tela empresa e verifica se uma URL ja existe na base de dados
+    /*
     if(v==true){
     $(frmid+" .ajaxcheck").each(function(){
         var _v=true;var m="";v=false;
@@ -184,7 +188,9 @@ function validateForm(id){
     });
 
 
-    }
+    } */
+
+
         return v;
     }
 
