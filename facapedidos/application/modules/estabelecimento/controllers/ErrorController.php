@@ -16,7 +16,9 @@ class Estabelecimento_ErrorController extends Zend_Controller_Action
         else if($errors->exception->getMessage() === 'Access denied')
         {
             $this->_setParam('error_handler', $errors);
-            $this->_helper->redirector->gotoUrl('error/error/msg/Voce nao tem permissao para acessar essa pagina!');
+            $this->_setParam('msg','Voce nao tem permissao para acessar essa pagina!');
+            $this->_forward('error','error','estabelecimento');
+            //$this->_helper->redirector->gotoUrl('error/error/msg/Voce nao tem permissao para acessar essa pagina!');
         }
 
         //Trata alguns tipos de excecao
