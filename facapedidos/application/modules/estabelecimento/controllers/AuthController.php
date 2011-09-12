@@ -69,11 +69,11 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
 
         $authAdapter = new Zend_Auth_Adapter_DbTable($db);
         $authAdapter->setTableName("funcionario")
-                ->setIdentityColumn("email")
+                ->setIdentityColumn("cpf")
                 ->setCredentialColumn("senha");
                 //->setCredentialTreatment('role <> "" and role <> "user"');
 
-        $authAdapter->setIdentity($formData['email'])
+        $authAdapter->setIdentity($formData['cpf'])
                 ->setCredential($formData['senha']);
 
         return $authAdapter;

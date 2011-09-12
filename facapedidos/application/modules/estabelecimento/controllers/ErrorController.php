@@ -18,6 +18,7 @@ class Estabelecimento_ErrorController extends Zend_Controller_Action
             $this->_setParam('error_handler', $errors);
             $this->_setParam('msg','Voce nao tem permissao para acessar essa pagina!');
             $this->_forward('error','error','estabelecimento');
+            return;
             //$this->_helper->redirector->gotoUrl('error/error/msg/Voce nao tem permissao para acessar essa pagina!');
         }
 

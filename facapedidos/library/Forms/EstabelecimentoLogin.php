@@ -6,7 +6,7 @@ class Forms_EstabelecimentoLogin extends Zend_Form{
 		
 		$this->setMethod("post");
 		
-		$email = $this->createElement("text","email",array("label"=>"Email","class"=>"input-g"))
+		$email = $this->createElement("text","cpf",array("label"=>"CPF","class"=>"input-g"))
 					 ->setRequired(true)
 					 ->addValidator('NotEmpty')
 					 ->setErrorMessages(array("Digite um login válido."));

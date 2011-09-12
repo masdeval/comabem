@@ -17,9 +17,28 @@ class Plugins_CheckAcl extends Zend_Controller_Plugin_Abstract {
 
         if (!$this->_accessValid($request)) {
             //we throw an exception because the error controller
-            //can easily handle these      
+            //can easily handle these
+            //Tenho que mudar o request aqui se nao ira apresentar a pagina mesmo sendo invalida
+            $request->setModuleName('estabelecimento')
+                ->setControllerName('auth')
+                ->setActionName('index');
+   
             throw new Exception('Access denied');
         }
+        else{
+
+         /* Essa parte é importante. Seta no navigation qual a role que deve ser considerada.
+          * Cada usuario tem sua propria role e se chegar aqui certamente ja terá um usuario na sessao.
+          *  */
+         $view = Zend_Registry::get('view');
+         $session = new Zend_Session_Namespace('default');
+         if (isset($session->user))
+         {
+            $view->navigation($navContainer)->setRole(new Zend_Acl_Role($session->user->role));
+         }
+
+        }
+
     }
 
     private function _accessValid(Zend_Controller_Request_Abstract $request) {
@@ -39,28 +58,10 @@ class Plugins_CheckAcl extends Zend_Controller_Plugin_Abstract {
                 ->setActionName('index');
         }
 
-    //$factory = new Application_Model_AclFactory();
-    //$resource = strtolower($request->getControllerName());
-    //$acl = $factory->createUserAcl($user);
-
     $aux = $module . ':' . $resource;
     return $this->_acl->hasRole($user->role) && $this->_acl->has($aux)
        && $this->_acl->isAllowed($user->role, $aux, $action);
 
-   /* if ($module == 'estabelecimento') {
-
-            if (!$this->_acl->isAllowed(Zend_Registry::get('role'), $module . ':' . $resource, $action)) {
-
-                if (Zend_Registry::get("role") == "guest") {
-
-                    $request->setModuleName('estabelecimento')
-                            ->setControllerName('auth')
-                            ->setActionName('index');
-                } else {
-                    //	$request->setModuleName('estabelecimento')->setControllerName('index');
-                }
-            }
-        } */
     }
 
 }
