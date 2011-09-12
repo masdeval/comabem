@@ -1,6 +1,6 @@
 <?php
 
-class Portal_IndexController extends Zend_Controller_Action
+class Portal_TesteController extends Zend_Controller_Action
 {
 
     public function init()

@@ -8,62 +8,51 @@
         Purpose of the document follows.
 -->
 
-
-<configdata>
+<config>
+    
     <nav>
-        <label>Home</label>
-        <controller>dashboard</controller>
-        <action>index</action>
-        <pages>
-            <query>
-                <label>Query</label>
-                <controller>query</controller>
-                <action>index</action>
-                <pages>
-                    <mydrafts>
-                        <label>My Drafts</label>
-                        <controller>query</controller>
-                        <action>index</action>
-                        <params>
-                            <queryname>mydrafts</queryname>
-                        </params>
-                    </mydrafts>
-                    <myorders>
-                        <label>My Orders</label>
-                        <controller>query</controller>
-                        <action>index</action>
-                        <params>
-                            <queryname>myorders</queryname>
-                        </params>
-                    </myorders>
-                    <allopenorders>
-                        <label>All Open Orders</label>
-                        <controller>query</controller>
-                        <action>index</action>
-                        <params>
-                            <queryname>allopenorders</queryname>
-                        </params>
-                    </allopenorders>
-                </pages>
-            </query>
-            <reports>
-                <label>Reports</label>
-                <controller>report</controller>
-                <action>index</action>
-                <pages>
-                    <country>
-                        <label>Country</label>
-                        <controller>report</controller>
-                        <action>country</action>
-                    </country>
-                    <countryrevenue>
-                        <label>Country Revenue</label>
-                        <controller>report</controller>
-                        <action>countryrevenue</action>
-                    </countryrevenue>
-                </pages>
-            </reports>
-        </pages>
-    </nav>
-</configdata>
 
+     <empresa>
+        <label>Empresa</label>
+        <module>/estabelecimento</module>
+        <controller>/empresa</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:empresa</resource>
+        <image>/img/xxx.png</image>
+
+     </empresa>
+
+     <produtos>
+      <label>Produtos</label>
+        <module>/estabelecimento</module>
+        <controller>/produto</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:produto</resource>
+        <image></image>
+     </produtos>
+
+  <funcionarios>
+      <label>Funcionarios</label>
+        <module>/estabelecimento</module>
+        <controller>/funcionario</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:funcionario</resource>
+        <image></image>
+     </funcionarios>
+
+  <ingredientes>
+      <label>Ingredientes</label>
+        <module>/estabelecimento</module>
+        <controller>/ingredients</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:ingredients</resource>
+        <image></image>
+     </ingredientes>
+
+  </nav>
+
+</config>
