@@ -19,7 +19,7 @@
               <tr>
                 <td> Nome* <br><input type="text" class="input-medium RQR required"   name="nome" value="<?php echo $this->formData['nome']?>" maxlength="50" style="width: 200px;" title="Por favor, indique Nome">
                   <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                <td> CPF* (apenas números) <br><input type="text" class="input-medium validNumber RQR required"  name="cpf" maxlength="11" onblur="//checkCPF(this,<?php echo $this->funcionarioId ?>);" value="<?php echo $this->formData['cpf']?>" style="width: 200px;" title="Por favor, indique CPF">
+                <td> CPF* (apenas números) <br><input type="text" class="input-medium validNumber RQR required"  name="cpf" maxlength="11" onblur="checkCPF(this,<?php echo $this->funcionarioId ?>);" value="<?php echo $this->formData['cpf']?>" style="width: 200px;" title="Por favor, indique CPF">
                   <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' id='spanCpf'></span></div></td>
               </tr>
               <tr>
