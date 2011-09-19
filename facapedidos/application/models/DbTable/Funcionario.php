@@ -61,6 +61,7 @@
           }
 
           $where[] = "cod_funcionario = $id";
+          
           $t = $this->_db->update('funcionario', $data, $where);
           return $t;
       }
@@ -96,6 +97,24 @@
           else
             return 0;
      }
+
+     public function checkDuplicateCPF($cpf,$id='')
+      {
+          if(!empty($id)){
+            $q="SELECT cpf FROM funcionario where cpf='$cpf' and cod_funcionario !='$id' ";
+            $query = $this->_db->query($q);
+          }else{
+            $query = $this->_db->query("SELECT cpf FROM funcionario where cpf='$cpf'");
+          }
+          $res = $query->fetchAll();
+          if (count($res) > 0) {
+              return 'F';
+          } else {
+              return 'OK';
+          }
+      }
+
+
 
   }
 ?>

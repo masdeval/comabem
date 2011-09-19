@@ -54,7 +54,7 @@ function validateForm(id){
             m="Please use less than "+this.maxlength+" characters.";_v=false;v=false;
         }
          else if(!this.value.match(/^[0-9]+$/)){
-            m="Please enter valid number.";_v=false;v=false;
+            m="Por favor entre com um número valido.";_v=false;v=false;
         }
         if(!_v){var x=$(this).addClass("missing").next();x.find(".tip").hide();x.find(".missing").text(m).fadeIn(s);
         }
@@ -69,7 +69,7 @@ function validateForm(id){
             m="Please use less than "+this.maxlength+" characters.";_v=false;v=false;
         }
          else if(!this.value.match(/^[0-9\.]+$/)){
-            m="Please enter valid number.";_v=false;v=false;
+            m="Por favor entre com um número valido.";_v=false;v=false;
         }
         if(!_v){var x=$(this).addClass("missing").next();x.find(".tip").hide();x.find(".missing").text(m).fadeIn(s);
         }
@@ -94,7 +94,7 @@ function validateForm(id){
         }
         else if(!this.value.match(/^[a-zA-Z0-9_\s]+$/))
         {
-            m="Por favor, digite apenas caracteres alfa num�ricos ou _ para url";_v=false;v=false;
+            m="Por favor, digite apenas caracteres alfa numéricos ou _ para url";_v=false;v=false;
         }
 
         if(!_v){var x=$(this).addClass("missing").next();x.find(".tip").hide();x.find(".missing").text(m).fadeIn(s);
