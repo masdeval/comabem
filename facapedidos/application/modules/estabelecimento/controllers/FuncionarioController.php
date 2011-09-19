@@ -1,7 +1,8 @@
 <?php
 
 //Funcionario
-class Estabelecimento_FuncionarioController extends Zend_Controller_Action {
+class Estabelecimento_FuncionarioController extends Zend_Controller_Action
+{
 
     public $TbCidade;
     public $TipoProduto;
@@ -11,7 +12,8 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action {
     public $errorMessage;
     public $caminho;
 
-    public function init() {
+    public function init()
+    {
         $this->_helper->layout()->setLayout('tela_cadastro_layout');
         $this->Funcionario = new DbTable_Funcionario();
         $this->Empresa = new DbTable_Empresa();
@@ -21,110 +23,150 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action {
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
     }
 
-    public function indexAction() {
-        $msg = $this->_getParam('msg', '');
-        $m[1] = 'Please complete the form below first';
-        if (!empty($msg)) {
-            $message = $m[$msg];
-        } else {
-            $message = 'Welcome!';
-        }
+    public function indexAction()
+    {
         $this->view->funcionarioId = '';
         $empresaOption = $this->Empresa->getEmpresaOptionDropDown();
         $this->view->empresaOption = $empresaOption;
-        $this->view->headline = $message;
     }
 
-    public function addAction() {
-        $error = false;
+    public function addAction()
+    {
         $formData = $this->getRequest()->getPost();
 
-        if ($formData['emorFrom'] == 1) {
-            if ($formData['nome']) {
+        if ($formData['emorFrom'] == 1)
+        {
 
-                if ($formData['action'] == 'edit') {
-                    $id = $formData['funcionarioId'];
+            if ($formData['action'] == 'edit')
+            {
+                $id = $formData['funcionarioId'];
+                try
+                {
                     $this->Funcionario->editFuncionario($formData, $id);
-                    $this->FuncionarioHasEmpresa->updateRecord($id, $formData['cod_empresa']);
-                    $this->view->action = 'edit';
-                    $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
-                } else {
-                    $id = $this->Funcionario->addFuncionario($formData);
-                    $this->FuncionarioHasEmpresa->insertRecord($id, $formData['cod_empresa']);
-                    $this->view->funcionarioId = $id;
-                    $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
+                } catch (Exception $e)
+                {
+
+                    if ($e->getCode() == 23505) //Unique violation
+                    {
+                        $this->view->headline = "Este CPF já está cadastrado. Por favor escolha outro.";
+                        $this->_setParam("id", $id);
+                        $this->_forward("edit");
+                        return;
+                    }
                 }
-            } else {
-                $this->_helper->redirector->gotoUrl('funcionario/index/msg/1');
+                $this->FuncionarioHasEmpresa->updateRecord($id, $formData['cod_empresa']);
+                $this->view->action = 'edit';
+                $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
+            } else
+            {
+                try
+                {
+                    $id = $this->Funcionario->addFuncionario($formData);
+                } catch (Exception $e)
+                {
+
+                    if ($e->getCode() == 23505) //Unique violation
+                    {
+                        $this->view->headline = "Este CPF já está cadastrado. Por favor escolha outro.";
+                        // $this->_setParam("id", $id);
+                        //           $this->getRequest()->setPost($this->getRequest()->getPost());
+                        $this->_forward("error");
+                        return;
+                    }
+                }
+                $this->FuncionarioHasEmpresa->insertRecord($id, $formData['cod_empresa']);
+                $this->view->funcionarioId = $id;
+                $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
             }
         }
-        if ($formData['emorFrom'] == 2) {
+        if ($formData['emorFrom'] == 2)
+        {
             $funcionarioId = $formData['funcionarioId'];
-            if (!empty($funcionarioId)) {
-                if ($formData['action'] == 'edit') {
+            if (!empty($funcionarioId))
+            {
+                if ($formData['action'] == 'edit')
+                {
                     $funcionarioId = $formData['funcionarioId'];
                     $this->FuncionarioEntregador->editRecord($formData, $funcionarioId);
                     $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$funcionarioId");
-                } else {
+                } else
+                {
                     $id = $this->FuncionarioEntregador->addRecord($formData, $funcionarioId);
                     $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
                 }
-            } else {
-                $this->_helper->redirector->gotoUrl('funcionario/index/msg/1');
+            } else
+            {
+                $this->view->headline = "Por favor, preencha o formulário.";
+                $this->_forward("index");
             }
         }
     }
 
-    public function editAction() {
-        $id = $this->_getParam('id', '');
-        if (!empty($id)) {
-            $this->view->funcionarioId = $id;
-        }
-        $msg = $this->_getParam('msg', '');
-        $m[2] = "Record could not be deleted as there is foreign key in table entrega";
-        if (!empty($msg)) {
-            $message = $m[$msg];
-        } else {
-            $message = 'Welcome!';
-        }
-        $funcionarioId = $id;
-        if (!empty($funcionarioId)) {
-            $formData = $this->Funcionario->getSingleData($funcionarioId);
-            $cod_empresa = $this->FuncionarioHasEmpresa->getRecord($id);
-            $cod_empresa = $cod_empresa['cod_empresa'];
-            if (!empty($formData['data_nascimento'])) {
-                list($year, $month, $day) = explode('-', $formData['data_nascimento']);
-                $data_nascimento = "$day/$month/$year";
-                $formData['data_nascimento'] = $data_nascimento;
-            }
-            $formData2 = $this->FuncionarioEntregador->getRecords($funcionarioId);
-            $empresaOption = $this->Empresa->getEmpresaOptionDropDown();
-            $this->view->cod_empresa = $cod_empresa;
-            $this->view->empresaOption = $empresaOption;
-            $this->view->formData = $formData;
-            $this->view->formData2 = $formData2;
-        }
-        $this->view->headline = $message;
-        $this->view->action = 'edit';
-        $this->view->funcionarioId = $funcionarioId;
-        $this->view->title = 'Funcionario';
+    public function errorAction()
+    {
+        $formData = $this->getRequest()->getPost();
+        $empresaOption = $this->Empresa->getEmpresaOptionDropDown();
+        $this->view->cod_empresa = $formData["cod_empresa"];
+        $this->view->empresaOption = $this->Empresa->getEmpresaOptionDropDown();
+        $this->view->formData = $formData;
         $this->_helper->viewRenderer('index');
     }
 
-    public function deleteAction() {
+    public function editAction()
+    {
         $funcionarioId = $this->_getParam('id', '');
-        if (!$this->Funcionario->checkEntregaRelation($funcionarioId)) {
+        if (empty($funcionarioId))
+        {
+            $this->view->headline = "Problema inesperado. Contacte o administrator do sistema!";
+            $this->_forward("error");
+            return;
+        }
+        $formData = $this->Funcionario->getSingleData($funcionarioId);
+        $cod_empresa = $this->FuncionarioHasEmpresa->getRecord($funcionarioId);
+        $cod_empresa = $cod_empresa['cod_empresa'];
+        if (!empty($formData['data_nascimento']))
+        {
+            list($year, $month, $day) = explode('-', $formData['data_nascimento']);
+            $data_nascimento = "$day/$month/$year";
+            $formData['data_nascimento'] = $data_nascimento;
+        }
+        $formData2 = $this->FuncionarioEntregador->getRecords($funcionarioId);
+        $empresaOption = $this->Empresa->getEmpresaOptionDropDown();
+        $this->view->cod_empresa = $cod_empresa;
+        $this->view->empresaOption = $empresaOption;
+        $this->view->formData = $formData;
+        $this->view->formData2 = $formData2;
+
+        $this->view->action = 'edit';
+        $this->view->title = 'Funcionario';
+        $this->view->funcionarioId = $funcionarioId;
+        $this->_helper->viewRenderer('index');
+    }
+
+    public function deleteAction()
+    {
+        $funcionarioId = $this->_getParam('id', '');
+        //Exclui o funcionario e todas as suas entregas
+        // if (!$this->Funcionario->checkEntregaRelation($funcionarioId))
+        {
 
             $this->FuncionarioHasEmpresa->deleteRecords($funcionarioId);
             $this->FuncionarioEntregador->deleteRecords($funcionarioId);
             $this->Funcionario->deleteRecords($funcionarioId);
             $this->_helper->redirector->gotoUrl($this->caminho . "/gridView");
-        } else {
-            $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$funcionarioId/msg/2");
         }
+        /* else
+          {
+
+          $this->getRequest()->setParam("id", $funcionarioId);
+          $this->getRequest()->setParam("msg", "Este funcionário não pode ser removido pois existem entregas associadas a ele.");
+          $this->_forward("edit");
+
+          } */
     }
 
-    public function gridviewAction() {
+    public function gridviewAction()
+    {
         $record = $this->Funcionario->getRecords();
         $page = $this->_getParam('page', 1);
         $paginator = Zend_Paginator::factory($record);
@@ -133,10 +175,20 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action {
         $this->view->paginator = $paginator;
     }
 
-    public function deleteFuncionarioEntregadorAction() {
+    public function deleteFuncionarioEntregadorAction()
+    {
         $funcionarioId = $this->_getParam('id', '');
         $this->FuncionarioEntregador->deleteRecords($funcionarioId);
         $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$funcionarioId");
+    }
+
+    public function checkCpfAction()
+    {
+        $cpf = $this->_getParam('cpf', '');
+        $id = $this->_getParam('id', '');
+        $status = $this->Funcionario->checkDuplicateCPF($cpf, $id);
+        echo $status;
+        exit;
     }
 
 }

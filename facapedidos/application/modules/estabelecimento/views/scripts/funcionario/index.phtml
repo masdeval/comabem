@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/js/funcionario.js"></script>
 <h2><?php echo $this->headline; ?></h2>
 <div id="tabs" style="width: 714px;">
   <ul>
@@ -18,8 +19,8 @@
               <tr>
                 <td> Nome* <br><input type="text" class="input-medium RQR required"   name="nome" value="<?php echo $this->formData['nome']?>" maxlength="50" style="width: 200px;" title="Por favor, indique Nome">
                   <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                <td> CPF* <br><input type="text" class="input-medium RQR required"  name="cpf" maxlength="14" value="<?php echo $this->formData['cpf']?>" style="width: 200px;" title="Por favor, indique CPF">
-                  <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                <td> CPF* (apenas números) <br><input type="text" class="input-medium validNumber RQR required"  name="cpf" maxlength="11" onblur="//checkCPF(this,<?php echo $this->funcionarioId ?>);" value="<?php echo $this->formData['cpf']?>" style="width: 200px;" title="Por favor, indique CPF">
+                  <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' id='spanCpf'></span></div></td>
               </tr>
               <tr>
                 <td> Email<br><input type="text" class="input-medium validEmail"  name="email" maxlength="14" value="<?php echo $this->formData['email']?>" style="width: 200px;">
@@ -58,8 +59,8 @@
           <tr>
             <td  > Complemento<br>
               <input type="text" class="input-medium"  name="complemento" maxlength="20" value="<?php echo $this->formData['complemento']?>" style="width: 200px;"></td>
-            <td colspan="2"> CEP *<br>
-              <input type="text" class="input-medium RQR required"  title='Por favor, indique CEP' maxlength="8"  name="cep" value="<?php echo $this->formData['cep']?>" style="width: 200px;">
+            <td colspan="2"> CEP (apenas números) *<br>
+              <input type="text" class="input-medium RQR required validNumber"  title='Por favor, indique CEP' maxlength="8"  name="cep" value="<?php echo $this->formData['cep']?>" style="width: 200px;">
               <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
           </tr>
           <tr>
