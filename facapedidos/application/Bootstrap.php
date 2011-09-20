@@ -52,8 +52,26 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap {
     }
 
     protected function _initAutoLoader() {
+
         $autoloader = Zend_Loader_Autoloader::getInstance();
         $autoloader->setFallbackAutoloader(true); //pega tudo
+        
+
+        /*$autoloader = new Zend_Loader_Autoloader_Resource(array(
+            'namespace' => '',
+            'basePath' => APPLICATION_PATH,
+            'resourceTypes' => array(
+                'form' => array(
+                    'path' => 'forms/',
+                    'namespace' => 'Form',
+                ),
+                'model' => array(
+                    'path' => 'models/',
+                    'namespace' => 'Model',
+                ),
+            )
+        )); */
+        
     }
 
     protected function _initPlugins() {

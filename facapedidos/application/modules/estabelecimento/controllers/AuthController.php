@@ -11,12 +11,11 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
     public function indexAction() {
         $msg = $this->_getParam('msg', '');
         $this->view->headline = $msg;
-
         $this->_forward('login');
     }
 
     public function loginAction() {
-        $form = new Forms_EstabelecimentoLogin();
+        $form = new Form_Login();
         $success = false;
 
         if ($this->_request->isPost()) {
