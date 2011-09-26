@@ -17,11 +17,11 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
     public function init()
     {
         $this->_helper->layout()->setLayout('tela_cadastro_layout');
-        $this->db = Zend_Db_Table::getDefaultAdapter();        
+        $this->db = Zend_Db_Table::getDefaultAdapter();
         $this->Funcionario = new DbTable_Funcionario($this->db);
         $this->Empresa = new DbTable_Empresa();
         $this->FuncionarioHasEmpresa = new DbTable_FuncionarioHasEmpresa($this->db);
-        $this->FuncionarioEntregador = new DbTable_FuncionarioEntregador();
+        $this->FuncionarioEntregador = new DbTable_FuncionarioEntregador($this->db);
         $this->view->pageTitle = 'Funcionario';
         $this->session = new Zend_Session_Namespace('default');
         if (isset($this->session->user))
@@ -87,7 +87,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                         return;
                     }
 
-                    $this->view->headline = "Erro ao inserir o registro! ".$e->getMessage();
+                    $this->view->headline = "Erro ao inserir o registro! " . $e->getMessage();
                     $this->_forward("error");
                     return;
                 }
@@ -160,15 +160,26 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
     public function deleteAction()
     {
         $funcionarioId = $this->_getParam('id', '');
-        $this->Funcionario->deleteRecords($funcionarioId);
+        try
+        {
 
-        /*
-         * Nao remove tudo relacionado a funcionario. Apenas marca uma flag dizendo que na tabela master
-         * FUNCIONARIO o registro foi removido
-        //$this->FuncionarioHasEmpresa->deleteRecords($funcionarioId);
-        //$this->FuncionarioEntregador->deleteRecords($funcionarioId);
+            $this->db->beginTransaction();
+            /*
+             * Nao remove tudo relacionado a funcionario. Apenas marca uma flag dizendo que na tabela master
+             * FUNCIONARIO o registro foi removido
+              //$this->FuncionarioHasEmpresa->deleteRecords($funcionarioId);
+              //$this->FuncionarioEntregador->deleteRecords($funcionarioId);
 
-        */
+             */
+            $this->Funcionario->deleteRecords($funcionarioId);
+            $this->db->commit();
+        } catch (Exception $e)
+        {
+            $this->db->rollback();
+            $this->view->headline = "Erro ao remover o registro! " . $e->getMessage();
+            $this->_forward("error");
+            return;
+        }
         $this->_helper->redirector->gotoUrl($this->caminho . "/gridView");
     }
 

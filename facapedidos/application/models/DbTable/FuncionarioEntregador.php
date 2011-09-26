@@ -2,6 +2,12 @@
   class DbTable_FuncionarioEntregador extends Zend_Db_Table_Abstract
   {
       protected $_name = 'funcionario_entregador';
+
+      public function __construct($db)
+      {
+          $this->_db = $db;
+      }
+
        public function getRecords($cod_funcionario)
       {
           $query = $this->_db->query("SELECT * FROM funcionario_entregador where  cod_funcionario =$cod_funcionario ");
