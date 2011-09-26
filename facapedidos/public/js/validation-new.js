@@ -68,7 +68,7 @@ function validateForm(id){
         {
             m="Please use less than "+this.maxlength+" characters.";_v=false;v=false;
         }
-         else if(!this.value.match(/^[0-9\.]+$/)){
+         else if(!this.value.match(/^[0-9\,]+$/)){
             m="Por favor entre com um número valido.";_v=false;v=false;
         }
         if(!_v){var x=$(this).addClass("missing").next();x.find(".tip").hide();x.find(".missing").text(m).fadeIn(s);
