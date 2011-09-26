@@ -11,19 +11,20 @@
       <table class="tableFrm" cellspacing="0" cellpadding="0" border="0">
         <tr>
 
-                <td> Empresa * <br><?php $attribs =array("class"=>'input-medium RQR required', "title"=>'Por favor, indique Empresa' ,'style'=>'width:200px');
+                <td> Empresa * <br><?php $attribs =array("class"=>'input-medium RQR required', "disabled"=>'disabled' ,'style'=>'width:200px');
              echo $this->formSelect('cod_empresa', $this->cod_empresa, $attribs, $this->empresaOption); ?>
+                    <input type="hidden" name="cod_empresa" value="<?php echo $this->cod_empresa;?>"> <!-- O campo desabilitado acima não vai submeter o valor, entao tive que criar esse hidden-->
               <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                 <td>&nbsp;&nbsp; </td>
               </tr>
               <tr>
                 <td> Nome* <br><input type="text" class="input-medium RQR required"   name="nome" value="<?php echo $this->formData['nome']?>" maxlength="50" style="width: 200px;" title="Por favor, indique Nome">
                   <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                <td> CPF* (apenas números) <br><input type="text" class="input-medium validNumber RQR required"  name="cpf" maxlength="11" onblur="checkCPF(this,<?php echo $this->funcionarioId ?>);" value="<?php echo $this->formData['cpf']?>" style="width: 200px;" title="Por favor, indique CPF">
+                <td> CPF* (apenas números) <br><input type="text" class="input-medium validNumber RQR required"  name="cpf" minlength="11" maxlength="11" onblur="checkCPF(this,<?php echo $this->funcionarioId ?>);" value="<?php echo $this->formData['cpf']?>" style="width: 200px;" title="Por favor, indique CPF">
                   <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' id='spanCpf'></span></div></td>
               </tr>
               <tr>
-                <td> Email<br><input type="text" class="input-medium validEmail"  name="email" maxlength="14" value="<?php echo $this->formData['email']?>" style="width: 200px;">
+                  <td> Email<br><input type="text"  class="input-medium validEmail"  name="email" maxlength="30" value="<?php echo $this->formData['email']?>" style="width: 200px;">
                   <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> </td>
                 <td> Data nascimento<br><input type="text" class="input-medium"  name="data_nascimento" maxlength="14" value="<?php echo $this->formData['data_nascimento']?>" style="width: 200px;" id="datepicker">
                   <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
@@ -83,7 +84,7 @@
             <input type="submit" name="Save" value="Salvar">
             <input type="hidden" name="funcionarioId" value="<?php echo $this->funcionarioId; ?>">
             <input type="button" name="Save" value="Remover" onclick="delfuncionario('<?php echo $this->funcionarioId;?>')">
-            <input type="button" name="Save" value="New" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/funcionario/'">
+            <input type="button" name="Save" value="New" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/funcionario/index'">
             <input type="button" name="Save" value="Grid View" style="margin-left:  400px;" onclick="location.href='<?php echo $this->url(array('controller'=>'funcionario','action'=>'gridView'));?>'"></td>
 
         </tr>
@@ -103,7 +104,7 @@
             <td> Modelo Moto &nbsp;&nbsp;&nbsp;<br>
               <input type="text" class="input-medium"  title='Por favor, indique modelo moto' maxlength="50"  name="modelo_moto" value="<?php echo $this->formData2['modelo_moto']?>" style="width: 200px;">
               <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-            <td colspan="2"> Consumo <br>
+            <td colspan="2"> Consumo(km/l) <br>
               <input type="text" class="input-medium validDecimalNumber"  title='Por favor, indique consumo'  name="consumo" value="<?php echo $this->formData2['consumo']?>" style="width: 200px;">
               <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
           </tr>
