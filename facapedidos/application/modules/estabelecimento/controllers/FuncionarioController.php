@@ -1,6 +1,5 @@
 <?php
 
-//Funcionario
 class Estabelecimento_FuncionarioController extends Zend_Controller_Action
 {
 
@@ -18,7 +17,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
     public function init()
     {
         $this->_helper->layout()->setLayout('tela_cadastro_layout');
-        $this->db = Zend_Db_Table::getDefaultAdapter();
+        $this->db = Zend_Db_Table::getDefaultAdapter();        
         $this->Funcionario = new DbTable_Funcionario($this->db);
         $this->Empresa = new DbTable_Empresa();
         $this->FuncionarioHasEmpresa = new DbTable_FuncionarioHasEmpresa($this->db);
