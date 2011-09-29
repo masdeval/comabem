@@ -1,17 +1,30 @@
 function toggleImage(){
     $('#changeImage').show();
     $('#labelChange').hide();
+    $('#labelRemove').hide();
+    $('#labelChangeCancel').show();
 }
+//Esse é o botao de cancelar
 function toggleImage2(){
     $('#changeImage').hide();
     $('#labelChange').show();
+    $('#labelRemove').show();
+    document.getElementById("flagRemoverImagem").value = "";
+    $('#image').show();
+    $('#labelChangeCancel').hide();
+}
+function removeImage(){  
+  $('#image').hide();
+  $('#labelChange').hide();
+  $('#labelChangeCancel').show();
+  document.getElementById("flagRemoverImagem").value = "remover";
+
 }
 function delEmpresa(id){
     if(confirm('Are you sure you want to delete?')){
-
         var url=base_url+'/empresa/delete/id/'+id;
-        //alert(url);
-        location.href=url;
+        document.getElementById('form1').action = url;
+        document.getElementById('form1').submit();
     }
 }
 function delTipos_de_produtos(id){
@@ -34,8 +47,9 @@ function delfuncionario(id){
     if(confirm('Are you sure you want to delete?')){
 
         var url=base_url+'/funcionario/delete/id/'+id;
-        //alert(url);
-        location.href=url;
+        document.getElementById('form1').action = url;
+        document.getElementById('form1').submit();
+        
     }
 }
 function delFuncionario_entregador(id){
@@ -50,8 +64,8 @@ function delIngrediente(id){
      if(confirm('Are you sure you want to delete?')){
 
         var url=base_url+'/ingredients/delete/id/'+id;
-        //alert(url);
-        location.href=url;
+        document.getElementById('form1').action = url;
+        document.getElementById('form1').submit();
     }
 
 }
@@ -59,8 +73,8 @@ function delProduto(id){
  if(confirm('Are you sure you want to delete?')){
 
         var url=base_url+'/produto/delete/id/'+id;
-        //alert(url);
-        location.href=url;
+        document.getElementById('form1').action = url;
+        document.getElementById('form1').submit();
     }
 }
 function delImagens(id){
