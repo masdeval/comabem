@@ -105,7 +105,7 @@ class DbTable_Funcionario extends Zend_Db_Table_Abstract
 
     public function getSingleData($id)
     {
-        $query = $this->_db->query("SELECT * FROM funcionario where cod_funcionario='$id'");
+        $query = $this->_db->query("SELECT * FROM funcionario where cod_funcionario='$id' and removed <> '1' ");
         $result = $query->fetchAll();
         $result = $result[0];
         return $result;
@@ -147,7 +147,7 @@ class DbTable_Funcionario extends Zend_Db_Table_Abstract
     {
         if (!empty($id))
         {
-            $q = "SELECT cpf FROM funcionario where cpf='$cpf' and cod_funcionario !='$id' ";
+            $q = "SELECT cpf FROM funcionario where cpf='$cpf' and cod_funcionario !='$id'";
             $query = $this->_db->query($q);
         } else
         {

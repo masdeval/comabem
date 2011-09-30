@@ -21,64 +21,64 @@ function removeImage(){
 
 }
 function delEmpresa(id){
-    if(confirm('Are you sure you want to delete?')){
-        var url=base_url+'/empresa/delete/id/'+id;
+    if(confirm('Tem certeza que deseja remover o registro?')){
+        var url=base_url+'/empresa/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
     }
 }
 function delTipos_de_produtos(id){
-    if(confirm('Are you sure you want to delete?')){
+    if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/empresa/delete-Tipos-De-Produtos/id/'+id;
-       // alert(url);
-        location.href=url;
+        var url=base_url+'/empresa/delete-Tipos-De-Produtos/';
+        document.getElementById('form2').action = url;
+        document.getElementById('form2').submit();
     }
 }
 function deleteHorario(id){
-    if(confirm('Are you sure you want to delete?')){
+    if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/empresa/delete-Horario/id/'+id;
-        //alert(url);
-        location.href=url;
+        var url=base_url+'/empresa/delete-Horario/';
+        document.getElementById('form3').action = url;
+        document.getElementById('form3').submit();
     }
 }
 function delfuncionario(id){
-    if(confirm('Are you sure you want to delete?')){
+    if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/funcionario/delete/id/'+id;
+        var url=base_url+'/funcionario/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
         
     }
 }
 function delFuncionario_entregador(id){
-    if(confirm('Are you sure you want to delete?')){
+    if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/funcionario/delete-Funcionario-Entregador/id/'+id;
-       // alert(url);
-        location.href=url;
+        var url=base_url+'/funcionario/delete-Funcionario-Entregador';
+        document.getElementById('form2').action = url;
+        document.getElementById('form2').submit();
     }
 }
 function delIngrediente(id){
-     if(confirm('Are you sure you want to delete?')){
+     if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/ingredients/delete/id/'+id;
+        var url=base_url+'/ingredients/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
     }
 
 }
 function delProduto(id){
- if(confirm('Are you sure you want to delete?')){
+ if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/produto/delete/id/'+id;
+        var url=base_url+'/produto/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
     }
 }
 function delImagens(id){
- if(confirm('Are you sure you want to delete?')){
+ if(confirm('Tem certeza que deseja remover a imagem?')){
 
         document.form2.submit();
         //alert(url);
@@ -86,7 +86,7 @@ function delImagens(id){
     }
 }
 function delTamanhos(id,tamid){
-    if(confirm('Are you sure you want to delete?')){
+    if(confirm('Tem certeza que deseja remover o registro?')){
     if(id==''){
         return false;
     }
@@ -96,7 +96,7 @@ function delTamanhos(id,tamid){
     }
 }
 function delPromocao(id,pid){
-    if(confirm('Are you sure you want to delete?')){
+    if(confirm('Tem certeza que deseja remover o registro?')){
 
         var url=base_url+'/produto/delete-Promocao/id/'+id+'/produtoId/'+pid;
        // alert(url);

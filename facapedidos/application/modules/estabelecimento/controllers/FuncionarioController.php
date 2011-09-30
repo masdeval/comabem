@@ -19,7 +19,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         $this->_helper->layout()->setLayout('tela_cadastro_layout');
         $this->db = Zend_Db_Table::getDefaultAdapter();
         $this->Funcionario = new DbTable_Funcionario($this->db);
-        $this->Empresa = new DbTable_Empresa();
+        $this->Empresa = new DbTable_Empresa($this->db);
         $this->FuncionarioHasEmpresa = new DbTable_FuncionarioHasEmpresa($this->db);
         $this->FuncionarioEntregador = new DbTable_FuncionarioEntregador($this->db);
         $this->view->pageTitle = 'Funcionario';
@@ -31,6 +31,10 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         $this->view->cod_empresa = $this->empresaId;
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
         $this->view->empresaOption = $this->Empresa->getEmpresaOptionDropDown();
+
+        //Esses metodos nao funcionaram muito bem
+        //$this->getRequest()->setParamSources(array('_POST'));//garante que o metodo getParam somente lerá dados setados por setParam e submetidos via Post
+        //$this->getRequest()->clearParams("funcionarioId");
     }
 
     public function indexAction()
@@ -45,7 +49,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         if ($formData['emorFrom'] == 1)
         {
 
-            if ($formData['action'] == 'edit')
+            if (!empty($formData['funcionarioId'])) //edicao
             {
                 $id = $formData['funcionarioId'];
 
@@ -62,14 +66,12 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                     {
 
                         $this->view->headline = "Este CPF já está cadastrado. Por favor escolha outro.";
-                        $this->_setParam("id", $id);
-                        $this->_forward("edit");
+                        //$this->_setParam("id", $id);
+                        $this->editAction($id);
                         return;
                     }
                 }
-                $this->view->action = 'edit';
-                $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
-            } else
+            } else //novo registro
             {
                 try
                 {
@@ -91,28 +93,32 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                     $this->_forward("error");
                     return;
                 }
-                $this->view->funcionarioId = $id;
-                $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
             }
+            $this->view->funcionarioId = $id;
+            //$this->_setParam("id", $id);
+            //$this->_forward("edit");
+            $this->editAction($id);
         }
-        if ($formData['emorFrom'] == 2)
+        if ($formData['emorFrom'] == 2) //dados de entregador
         {
             $funcionarioId = $formData['funcionarioId'];
             if (!empty($funcionarioId))
             {
-                if ($formData['action'] == 'edit')
+               // if ($formData['action'] == 'edit')
                 {
                     $funcionarioId = $formData['funcionarioId'];
                     $this->FuncionarioEntregador->editRecord($formData, $funcionarioId);
-                    $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$funcionarioId");
-                } else
+                    //$this->_setParam("id", $funcionarioId);
+                    $this->editAction($funcionarioId);
+                }// else
                 {
-                    $id = $this->FuncionarioEntregador->addRecord($formData, $funcionarioId);
-                    $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
+                   // $id = $this->FuncionarioEntregador->addRecord($formData, $funcionarioId);
+                    //$this->_setParam("id", $funcionarioId);
+                   // $this->editAction($funcionarioId);
                 }
-            } else
+            } else //esse eh o caso de escolher a aba de entregador sem ter escolhido antes um funcionario na aba principal
             {
-                $this->view->headline = "Por favor, preencha o formulário.";
+                $this->view->headline = "Por favor, selecione um funcionário primeiro.";
                 $this->_forward("index");
             }
         }
@@ -127,9 +133,11 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         $this->_helper->viewRenderer('index');
     }
 
-    public function editAction()
+    public function editAction($funcionarioId = '')
     {
-        $funcionarioId = $this->_getParam('id', '');
+        if(empty($funcionarioId))
+            $funcionarioId = $this->getRequest()->getPost("funcionarioId");//quando vem do Grid
+    
         if (empty($funcionarioId))
         {
             $this->view->headline = "Id do funcionário é nula. Contacte o administrator do sistema!";
@@ -151,7 +159,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         $this->view->formData = $formData;
         $this->view->formData2 = $formData2;
 
-        $this->view->action = 'edit';
+        //$this->view->action = 'edit';
         $this->view->title = 'Funcionario';
         $this->view->funcionarioId = $funcionarioId;
         $this->_helper->viewRenderer('index');
@@ -159,7 +167,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
 
     public function deleteAction()
     {
-        $funcionarioId = $this->_getParam('id', '');
+        $funcionarioId = $this->getRequest()->getPost("funcionarioId");
         try
         {
 
@@ -180,12 +188,12 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
             $this->_forward("error");
             return;
         }
-        $this->_helper->redirector->gotoUrl($this->caminho . "/gridView");
+        $this->_forward("gridView");
     }
 
     public function gridviewAction()
     {
-        $record = $this->Funcionario->getRecords($this->empresaId);
+        $record = $this->Funcionario->getRecords($this->empresaId); //empresa do usuario que esta logado
         $page = $this->_getParam('page', 1);
         $paginator = Zend_Paginator::factory($record);
         $paginator->setItemCountPerPage(20);
@@ -195,9 +203,9 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
 
     public function deleteFuncionarioEntregadorAction()
     {
-        $funcionarioId = $this->_getParam('id', '');
+        $funcionarioId = $this->getRequest()->getPost("funcionarioId");
         $this->FuncionarioEntregador->deleteRecords($funcionarioId);
-        $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$funcionarioId");
+        $this->editAction($funcionarioId);
     }
 
     public function checkCpfAction()
