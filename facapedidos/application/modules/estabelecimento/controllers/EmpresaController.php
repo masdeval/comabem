@@ -52,7 +52,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         $this->view->empresaId = $this->empresaId;
         $this->view->cidadeOption = $this->TbCidade->getCidadeDropDown();
         $this->view->cod_tipo_produto = $this->TipoProduto->getCodTipoProductoDropDown();
-        $this->_forward("edit");
+        $this->editAction();
     }
 
     public function addAction()
@@ -92,12 +92,12 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                     if ($e->getCode() == 23505) //Unique violation
                     {
                         $this->view->headline = "CNPJ ou URL duplicados. Favor verificar.";
-                        $this->_forward("edit");
+                        $this->editAction();
                         return;
                     }
                 }
-                $this->view->action = 'edit';
-                $this->_forward("edit");
+                //$this->view->action = 'edit';
+                $this->editAction();
                 //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
             } else
             {
@@ -117,41 +117,56 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                     }
                 }
                 $this->view->empresaId = $id;
-                $this->_forwar("edit");
+                $this->editAction();
                 //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
             }
         }
-        if ($formData['emorFrom'] == 2)
+        if ($formData['emorFrom'] == 2) //formulario de tipo produto
         {
 
-            $empresaId = $formData['empresaId'];
-
-                if ($formData['action'] == 'edit')
+            $empresaId = $formData['empresaId']; //e se for vazio
+            if(!empty($empresaId))
+            {
+               // if ($formData['action'] == 'edit')
                 {
                     $this->TiposProdutosEmpresa->editRecord($empresaId, $formData);
                     $this->getRequest()->setParam("id", $empresaId);
-                    $this->_forward("edit");
-                } else
+                    $this->editAction();;
+                } //else
                 {
-                    $id = $this->TiposProdutosEmpresa->addRecord($empresaId, $formData);
-                    $this->_forwar("edit");
+                   // $this->TiposProdutosEmpresa->addRecord($empresaId, $formData);
+                   // $this->editAction();
                     //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
                 }
+            }
+             else 
+            {
+                $this->view->headline = "Por favor, selecione uma empresa primeiro.";
+                $this->_forward("index");
+            }
         }
         if ($formData['emorFrom'] == 3)
         {
             $empresaId = $formData['empresaId'];
-                if ($formData['action'] == 'edit')
+            if(!empty($empresaId))
+            {
+                //if ($formData['action'] == 'edit')
                 {
                     $this->HorarioFuncionamento->editRecord($empresaId, $formData);
-                    $this->_forward("edit");
+                    $this->editAction();
                     //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
-                } else
+                } //else
                 {
-                    $id = $this->HorarioFuncionamento->addRecord($empresaId, $formData);
-                    $this->_forward("edit");
+                    //$id = $this->HorarioFuncionamento->addRecord($empresaId, $formData);
+                    //$this->editAction();
                     //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
                 }
+            }
+             else
+            {
+                $this->view->headline = "Por favor, selecione uma empresa primeiro.";
+                $this->_forward("index");
+            }
         }
     }
 
@@ -247,7 +262,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
     public function editAction()
     {
 
-        $empresaId = $this->empresaId; //$this->_getParam('id', '');
+        $empresaId = $this->empresaId; //$this->getRequest()->getPost('empresaId');
         $this->view->empresaId = $empresaId;
 
         $formData = $this->Empresa->getSingleData($empresaId);
@@ -262,7 +277,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         $this->view->cod_tipo_produto = $cod_tipo_produto;
         $this->view->cidadeOption = $cidadeOption;
         $this->view->title = 'Empresa';
-        $this->view->action = 'edit';
+        //$this->view->action = 'edit';
         $this->view->empresaId = $empresaId;
         $this->_helper->viewRenderer('index');
     }
@@ -295,7 +310,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
 
     public function deleteAction()
     {
-        $empresaId = $this->empresaId;  //$this->_getParam('id', '');
+        $empresaId = $this->empresaId;  //$this->getRequest()->getPost('empresaId');
         try
         {
             $this->db->beginTransaction();
@@ -331,16 +346,18 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
 
     public function deleteTiposDeProdutosAction()
     {
-        $empresaId = $this->empresaId; //$this->_getParam('id', '');
+        $empresaId = $this->empresaId; //$this->getRequest()->getPost('empresaId');
         $this->TiposProdutosEmpresa->deleteRecords($empresaId);
-        $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
+        //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
+        $this->editAction();
     }
 
     public function deleteHorarioAction()
     {
-        $empresaId = $this->empresaId; //$this->_getParam('id', '');
+        $empresaId = $this->empresaId; //$this->getRequest()->getPost('empresaId');
         $this->HorarioFuncionamento->deleteRecords($empresaId);
-        $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
+        //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
+        $this->editAction();
     }
 
     public function checkUrlAction()
