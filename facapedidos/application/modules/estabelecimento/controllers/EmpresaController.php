@@ -38,7 +38,6 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
 
     public function errorAction()
     {
-        $form = $this->getRequest()->getPost();
         $this->view->formData = $this->getRequest()->getPost();
         $this->view->cidadeOption = $this->TbCidade->getCidadeDropDown();
         $this->view->cod_tipo_produto = $this->TipoProduto->getCodTipoProductoDropDown();
