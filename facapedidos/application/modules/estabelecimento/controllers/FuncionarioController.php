@@ -57,7 +57,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                 {
                     $this->db->beginTransaction();
                     $this->Funcionario->editFuncionario($formData, $id);
-                    $this->FuncionarioHasEmpresa->updateRecord($id, $formData['cod_empresa']);
+                    $this->FuncionarioHasEmpresa->updateRecord($id, $this->empresaId);
                     $this->db->commit();
                 } catch (Exception $e)
                 {
@@ -77,7 +77,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                 {
                     $this->db->beginTransaction();
                     $id = $this->Funcionario->addFuncionario($formData);
-                    $this->FuncionarioHasEmpresa->insertRecord($id, $formData['cod_empresa']);
+                    $this->FuncionarioHasEmpresa->insertRecord($id, $this->empresaId);
                     $this->db->commit();
                 } catch (Exception $e)
                 {
@@ -126,10 +126,9 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
 
     public function errorAction()
     {
-        $formData = $this->getRequest()->getPost();
-        $this->view->cod_empresa = $formData["cod_empresa"];
+        $this->view->cod_empresa = $this->empresaId;
         $this->view->empresaOption = $this->Empresa->getEmpresaOptionDropDown();
-        $this->view->formData = $formData;
+        $this->view->formData = $this->getRequest()->getPost();
         $this->_helper->viewRenderer('index');
     }
 
@@ -146,7 +145,6 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         }
         $formData = $this->Funcionario->getSingleData($funcionarioId);
         $cod_empresa = $this->FuncionarioHasEmpresa->getRecord($funcionarioId);
-        $cod_empresa = $cod_empresa['cod_empresa'];
         if (!empty($formData['data_nascimento']))
         {
             list($year, $month, $day) = explode('-', $formData['data_nascimento']);
@@ -154,7 +152,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
             $formData['data_nascimento'] = $data_nascimento;
         }
         $formData2 = $this->FuncionarioEntregador->getRecords($funcionarioId);
-        $this->view->cod_empresa = $cod_empresa;
+        $this->view->cod_empresa = $this->empresaId;
         $this->view->empresaOption = $this->Empresa->getEmpresaOptionDropDown();
         $this->view->formData = $formData;
         $this->view->formData2 = $formData2;
