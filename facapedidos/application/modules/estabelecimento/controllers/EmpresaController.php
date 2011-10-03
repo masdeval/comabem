@@ -94,6 +94,12 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                         $this->editAction();
                         return;
                     }
+                    else
+                    {
+                        $this->view->headline = $e->getMessage();
+                        $this->_forward("error");
+                        return;
+                    }
                 }
                 //$this->view->action = 'edit';
                 $this->editAction();
@@ -111,6 +117,11 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                     if ($e->getCode() == 23505) //Unique violation
                     {
                         $this->view->headline = "CNPJ ou URL duplicados. Favor verificar.";
+                        $this->_forward("error");
+                        return;
+                    }else
+                    {
+                        $this->view->headline = $e->getMessage();
                         $this->_forward("error");
                         return;
                     }
