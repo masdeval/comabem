@@ -70,6 +70,12 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                         $this->editAction($id);
                         return;
                     }
+                    else
+                    {
+                        $this->view->headline = $e->getMessage();
+                        $this->_forward("error");
+                        return;
+                    }
                 }
             } else //novo registro
             {
