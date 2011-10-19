@@ -5,10 +5,9 @@ class DbTable_FuncionarioHasEmpresa  extends Zend_Db_Table_Abstract
 
     protected $_name = 'funcionario_has_empresa';
 
-    public function __contruct($db)
+    public function __construct($db)
     {
         $this->_db = $db;
-
     }
 
     public function getRecord($cod_funcionario)

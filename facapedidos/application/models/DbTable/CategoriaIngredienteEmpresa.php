@@ -3,6 +3,12 @@
   {
       protected $_name = 'categoria_ingrediente_empresa';
 
+    public function __construct($db)
+    {
+        $this->_db = $db;
+    }
+
+
       public function getRecords($ingredienteId,$empresaId)
       {
           $query = $this->_db->query("SELECT cod_tipo_ingrediente FROM categoria_ingrediente_empresa WHERE cod_empresa=$empresaId AND cod_ingrediente=$ingredienteId");

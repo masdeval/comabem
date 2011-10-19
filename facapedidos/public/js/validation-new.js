@@ -23,10 +23,10 @@ function validateForm(id){
         }
         else if(this.value.length>this.maxlength)
         {
-            m="Please use less than "+this.maxlength+" characters.";_v=false;v=false;
+            m="Por favor use menos que  "+this.maxlength+" caracteres.";_v=false;v=false;
         }
         else if(!this.value.match(/^[a-zA-Z0-9'\-_]+(?:[\.][a-zA-Z0-9'\-_]+)*@([a-zA-Z0-9]([-]?[a-zA-Z0-9_])*\.)*[a-zA-Z0-9]([-]?[a-zA-Z0-9]){0,61}[a-zA-Z0-9]{0,1}\.[a-zA-Z]{2,6}(\.[a-zA-Z]{2})?$/)){
-            m="That email address does not appear to be in a valid format.";_v=false;v=false;
+            m="O email parece não estar em um formato válido.";_v=false;v=false;
         }
         if(!_v){var x=$(this).addClass("missing").next();x.find(".tip").hide();x.find(".missing").text(m).fadeIn(s);
         }
@@ -38,7 +38,7 @@ function validateForm(id){
         }
         else if(this.value.length>this.maxlength)
         {
-            m="Please use less than "+this.maxlength+" characters.";_v=false;v=false;
+            m="Por favor use menos que "+this.maxlength+" caracteres.";_v=false;v=false;
         }
         else if(this.value.length>0&&this.value!=$("#txtPass")[0].value){m="Passwords don't appear to match.";_v=false;v=false;}
         if(!_v){var x=$(this).addClass("missing").next();x.find(".tip").hide();x.find(".missing").text(m).fadeIn(s);
@@ -51,7 +51,7 @@ function validateForm(id){
         }
         else if(this.value.length>this.maxlength)
         {
-            m="Please use less than "+this.maxlength+" characters.";_v=false;v=false;
+            m="Por favor use menos que "+this.maxlength+" caracteres.";_v=false;v=false;
         }
          else if(!this.value.match(/^[0-9]+$/)){
             m="Por favor entre com um número valido.";_v=false;v=false;
@@ -66,7 +66,7 @@ function validateForm(id){
         }
         else if(this.value.length>this.maxlength)
         {
-            m="Please use less than "+this.maxlength+" characters.";_v=false;v=false;
+            m="Por favor use menos que "+this.maxlength+" caracteres.";_v=false;v=false;
         }
          else if(!this.value.match(/^[0-9\.]+$/)){
             m="Por favor entre com um número valido.";_v=false;v=false;
@@ -81,7 +81,7 @@ function validateForm(id){
         }
         else if(!IsValidTime(this.value))
         {
-            m="Por favor, indique o tempo valido";_v=false;v=false;
+            m="Por favor, indique um tempo valido";_v=false;v=false;
         }
 
         if(!_v){var x=$(this).addClass("missing").next();x.find(".tip").hide();x.find(".missing").text(m).fadeIn(s);
@@ -115,7 +115,7 @@ function validateForm(id){
         }
         else if(!compareDate(formDate,toDate))
         {
-            m="Must be grater than Data Inicial";_v=false;v=false;
+            m="Deve ser maior que data inicial";_v=false;v=false;
         }
 
         if(!_v){var x=$(this).addClass("missing").next();x.find(".tip").hide();x.find(".missing").text(m).fadeIn(s);

@@ -81,7 +81,7 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
     private function criaUsuarioNaSessao($auth){
 
             $privilege = new DbTable_UserPrivileges();
-            $funcionario = new DbTable_Funcionario();
+            $funcionario = new DbTable_Funcionario(Zend_Db_Table::getDefaultAdapter());
             $user = new User();
             $user->id = $auth->getIdentity()->cod_funcionario;
             $user->name = $auth->getIdentity()->nome;

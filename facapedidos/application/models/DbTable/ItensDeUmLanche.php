@@ -3,6 +3,12 @@
   {
       protected $_name = 'itens_de_um_lanche';
 
+    public function __construct($db)
+    {
+        $this->_db = $db;
+    }
+
+
       public function getRecords($empresaId,$ingredienteId)
       {
           $query = $this->_db->query("SELECT * FROM itens_de_um_lanche WHERE cod_empresa=$empresaId AND cod_ingrediente=$ingredienteId");
@@ -35,12 +41,18 @@
           }
       }
 
-      public function getSum($cod_produto){
+      public function getPreco($cod_produto){
            $query = $this->_db->query("SELECT SUM(preco) as total FROM itens_de_um_lanche WHERE cod_produto=$cod_produto");
 
           $result = $query->fetchAll();
           return $result[0]['total'];
       }
 
+      public function getCalorias($cod_produto){
+           $query = $this->_db->query("SELECT SUM(valor_calorico) as total FROM itens_de_um_lanche WHERE cod_produto=$cod_produto");
+
+          $result = $query->fetchAll();
+          return $result[0]['total'];
+      }
   }
 ?>

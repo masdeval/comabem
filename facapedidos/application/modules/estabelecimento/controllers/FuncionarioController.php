@@ -69,8 +69,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                         //$this->_setParam("id", $id);
                         $this->editAction($id);
                         return;
-                    }
-                    else
+                    } else
                     {
                         $this->view->headline = $e->getMessage();
                         $this->_forward("error");
@@ -110,17 +109,20 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
             $funcionarioId = $formData['funcionarioId'];
             if (!empty($funcionarioId))
             {
-               // if ($formData['action'] == 'edit')
+                try
                 {
+                    $this->db->beginTransaction();
                     $funcionarioId = $formData['funcionarioId'];
                     $this->FuncionarioEntregador->editRecord($formData, $funcionarioId);
+                    $this->db->commit();
                     //$this->_setParam("id", $funcionarioId);
                     $this->editAction($funcionarioId);
-                }// else
+                } catch (Exception $e)
                 {
-                   // $id = $this->FuncionarioEntregador->addRecord($formData, $funcionarioId);
-                    //$this->_setParam("id", $funcionarioId);
-                   // $this->editAction($funcionarioId);
+                    $this->db->rollBack();
+                    $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
+                    $this->_forward("error");
+                    return;
                 }
             } else //esse eh o caso de escolher a aba de entregador sem ter escolhido antes um funcionario na aba principal
             {
@@ -140,10 +142,10 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
 
     public function editAction($funcionarioId = '')
     {
-        if(empty($funcionarioId))
-            $funcionarioId = $this->getRequest()->getPost("funcionarioId");//quando vem do Grid
-    
         if (empty($funcionarioId))
+            $funcionarioId = $this->getRequest()->getPost("funcionarioId"); //quando vem do Grid
+
+            if (empty($funcionarioId))
         {
             $this->view->headline = "Id do funcionário é nula. Contacte o administrator do sistema!";
             $this->_forward("error");
