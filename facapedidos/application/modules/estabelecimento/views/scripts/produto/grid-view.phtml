@@ -10,7 +10,21 @@
     <tr>
       <td><?php echo $v['nome'] ?></td>
       <td><?php echo $v['tipo'] ?></td>
-      <td><a href="<?php echo $this->baseUrl() ?>/estabelecimento/produto/delete/id/<?php echo $v['cod_produto']?>" onclick="return confirm('Are you sure you want to delete?')">Delete</a>&nbsp;&nbsp;<a href="<?php echo $this->baseUrl() ?>/estabelecimento/produto/edit/id/<?php echo $v['cod_produto']?>">Edit</a></td>
+      <td>
+          
+           <form action="" method="post" id="gridForm"> 
+              <input type="hidden" value="" name="produtoId" id="cod_produto">
+              <!--    <a href="<?php //echo $this->baseUrl() ?>/estabelecimento/produto/delete/id/<?php //echo $v['cod_produto']?>" onclick="return confirm('Are you sure you want to delete?')">Delete</a>-->
+
+              <a href="#" onclick="javascript:removeGrid(<?php echo $v['cod_produto']?>)">Excluir</a>
+              &nbsp;&nbsp;
+              <!--<a href="<?php// echo $this->baseUrl() ?>/estabelecimento/produto/edit/id/<?php// echo $v['cod_produto']?>">Edit</a> -->
+              <a href="#" onclick="javascript:editaGrid(<?php echo $v['cod_produto']?>)">Editar</a>
+          </form>
+
+
+
+      </td>
     </tr>
     <?php }?>
     <tr class="head">
@@ -18,5 +32,36 @@
     </tr>
   </table>
 </div>
+
+
+ <script type="text/javascript">
+
+    function removeGrid(valor){
+
+        if (confirm('Tem certeza que deseja remover o registro?'))
+        {
+         var url='/estabelecimento/produto/delete';
+         document.getElementById('gridForm').action = url;
+         document.getElementById('cod_produto').value = valor;
+         document.getElementById('gridForm').submit();
+        }
+
+    }
+
+  function editaGrid(valor){
+
+         var url='/estabelecimento/produto/edit';
+         document.getElementById('gridForm').action = url;
+         document.getElementById('cod_produto').value = valor;
+         document.getElementById('gridForm').submit();
+
+
+    }
+
+
+
+    </script>
+
+
 
  <?php echo $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>

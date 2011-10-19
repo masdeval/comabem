@@ -5,6 +5,13 @@ class DbTable_TiposProdutosEmpresa extends Zend_Db_Table_Abstract {
     protected $_name = 'tipos_produtos_empresa';
     protected $_sequence = array('cod_tipo_produto', 'cod_empresa');
 
+    
+    public function __construct($db)
+    {
+        $this->_db = $db;
+    }
+
+
     public function getRecords($cod_empresa) {
         $query = $this->_db->query("SELECT * FROM tipos_produtos_empresa where  cod_empresa =$cod_empresa ");
         $res = $query->fetchAll();

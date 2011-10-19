@@ -28,12 +28,12 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         $this->Empresa = new DbTable_Empresa($this->db);
         $this->TbCidade = new DbTable_TbCidade();
         $this->TipoProduto = new DbTable_TipoProduto();
-        $this->Produto = new DbTable_Produto();
+        $this->Produto = new DbTable_Produto($this->db);
         $this->TiposProdutosEmpresa = new DbTable_TiposProdutosEmpresa($this->db);
         $this->HorarioFuncionamento = new DbTable_HorarioFuncionamento($this->db);
         $this->view->pageTitle = 'Empresa';
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
-        $this->view->empresaId = $this->empresaId;//dessa maneira garanto que sempre exista um id de empresa setado na tela
+        $this->view->empresaId = $this->empresaId; //dessa maneira garanto que sempre exista um id de empresa setado na tela
     }
 
     public function errorAction()
@@ -72,12 +72,12 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                     return;
                 }
             }
-            if(!empty($formData['flagRemoverImagem']))
+            if (!empty($formData['flagRemoverImagem']))
                 $fileName = "remover";
-            
+
             if (!empty($formData['empresaId']))
             {
-                $id = $formData['empresaId'];//se tem Id é uma edicao
+                $id = $formData['empresaId']; //se tem Id é uma edicao
 
                 try
                 {
@@ -93,8 +93,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                         $this->view->headline = "CNPJ ou URL duplicados. Favor verificar.";
                         $this->editAction();
                         return;
-                    }
-                    else
+                    } else
                     {
                         $this->view->headline = $e->getMessage();
                         $this->_forward("error");
@@ -119,7 +118,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                         $this->view->headline = "CNPJ ou URL duplicados. Favor verificar.";
                         $this->_forward("error");
                         return;
-                    }else
+                    } else
                     {
                         $this->view->headline = $e->getMessage();
                         $this->_forward("error");
@@ -135,21 +134,24 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         {
 
             $empresaId = $formData['empresaId']; //e se for vazio
-            if(!empty($empresaId))
+            if (!empty($empresaId))
             {
-               // if ($formData['action'] == 'edit')
+                try
                 {
+                    $this->db->beginTransaction();
                     $this->TiposProdutosEmpresa->editRecord($empresaId, $formData);
                     $this->getRequest()->setParam("id", $empresaId);
-                    $this->editAction();;
-                } //else
+                    $this->db->commit();
+                    $this->editAction();
+                    
+                } catch (Exception $e)
                 {
-                   // $this->TiposProdutosEmpresa->addRecord($empresaId, $formData);
-                   // $this->editAction();
-                    //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
+                    $this->db->rollBack();
+                    $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
+                    $this->_forward("error");
+                    return;
                 }
-            }
-             else 
+            } else
             {
                 $this->view->headline = "Por favor, selecione uma empresa primeiro.";
                 $this->_forward("index");
@@ -158,21 +160,23 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         if ($formData['emorFrom'] == 3)
         {
             $empresaId = $formData['empresaId'];
-            if(!empty($empresaId))
+            if (!empty($empresaId))
             {
-                //if ($formData['action'] == 'edit')
+                try
                 {
+                    $this->db->beginTransaction();
                     $this->HorarioFuncionamento->editRecord($empresaId, $formData);
+                    $this->db->commit();
                     $this->editAction();
                     //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
-                } //else
+                } catch (Exception $e)
                 {
-                    //$id = $this->HorarioFuncionamento->addRecord($empresaId, $formData);
-                    //$this->editAction();
-                    //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$empresaId");
+                    $this->db->rollBack();
+                    $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
+                    $this->_forward("error");
+                    return;
                 }
-            }
-             else
+            } else
             {
                 $this->view->headline = "Por favor, selecione uma empresa primeiro.";
                 $this->_forward("index");

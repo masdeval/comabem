@@ -3,6 +3,12 @@
   {
       protected $_name = 'categoria_permitida_como_adicional';
 
+         public function __construct($db)
+    {
+        $this->_db = $db;
+    }
+
+
       public function getRecords($cod_produto)
       {
           $query = $this->_db->query("SELECT * FROM categoria_permitida_como_adicional where cod_produto=$cod_produto ");

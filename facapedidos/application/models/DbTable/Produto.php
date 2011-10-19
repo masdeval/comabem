@@ -3,9 +3,15 @@
   {
       protected $_name = 'produto';
 
-      public function getRecords()
+         public function __construct($db)
+    {
+        $this->_db = $db;
+    }
+
+
+      public function getRecords($empresaId)
       {
-          $query = $this->_db->query("SELECT P.*,TP.nome as tipo FROM produto P JOIN tipo_produto TP ON (P.cod_tipo_produto=TP.cod_tipo_produto) where P.removed <>1 ");
+          $query = $this->_db->query("SELECT P.*,TP.nome as tipo FROM produto P JOIN tipo_produto TP ON (P.cod_tipo_produto=TP.cod_tipo_produto) where P.removed <>1 and P.cod_empresa = $empresaId");
           $result = $query->fetchAll();
           return $result;
       }

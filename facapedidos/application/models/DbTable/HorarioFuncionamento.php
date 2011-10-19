@@ -2,6 +2,12 @@
   class DbTable_HorarioFuncionamento extends Zend_Db_Table_Abstract
   {
       protected $_name = 'horario_funcionamento';
+
+    public function __construct($db)
+    {
+        $this->_db = $db;
+    }
+
       public function getRecords($cod_empresa)
       {
           $query = $this->_db->query("SELECT * FROM horario_funcionamento where  cod_empresa =$cod_empresa ");

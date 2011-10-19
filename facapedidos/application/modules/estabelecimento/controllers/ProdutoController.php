@@ -1,283 +1,466 @@
 <?php
 
-  class Estabelecimento_ProdutoController extends Zend_Controller_Action
-  {
-      public $TipoProduto;
-      public $Empresa;
-      public $HorarioFuncionamento;
-      public $errorMessage;
-      public $caminho;
-   
-      public function init()
-      {
-          $this->_helper->layout()->setLayout('tela_cadastro_layout');
-          $session = new Zend_Session_Namespace('default');
-          $this->Produto = new DbTable_Produto();
-          $this->FotoProduto = new DbTable_FotoProduto();
-          $this->CategoriaPermitidaComoAdicional = new DbTable_CategoriaPermitidaComoAdicional();
-          $this->TamanhoProduto = new DbTable_TamanhoProduto();
-          $this->Promocao = new DbTable_Promocao();
-          $this->TipoProduto = new DbTable_TipoProduto();
-          $this->TiposProdutosEmpresa = new DbTable_TiposProdutosEmpresa();
-          $this->Ingrediente = new DbTable_Ingrediente();
-          $this->CategoriaIngrediente = new DbTable_CategoriaIngrediente();
-          $this->CategoriaIngredienteEmpresa = new DbTable_CategoriaIngredienteEmpresa();
-          $this->IngredienteEmpresa = new DbTable_IngredienteEmpresa();
-          $this->ItensDeUmLanche = new DbTable_ItensDeUmLanche();         
-          $this->view->pageTitle = 'Producto';
-          if(isset($session->user)){
-            $this->user = $session->user;
-          }
-          $this->view->empresaId = $this->user->empresa;
-          $this->caminho = $this->getRequest()->getModuleName()."/".$this->getRequest()->getControllerName();
-      }
-      public function indexAction()
-      {
-          $msg = $this->_getParam('msg', '');
-          $m[1] = 'Please complete the form below first';
-          if (!empty($msg)) {
-              $message = $m[$msg];
-          } else {
-              $message = 'Welcome!';
-          }
+class Estabelecimento_ProdutoController extends Zend_Controller_Action
+{
 
-          $this->view->produtoId = '';
-          $cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->user->empresa);
-          $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getAllRecords();
-          $categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
-          $this->view->categoriaIngredienteRec = $categoriaIngredienteRec;
-          $this->view->cod_tipo_produto = $cod_tipo_produto;
-          $this->view->headline = $message;
-      }
-      public function addAction()
-      {
-          $error = false;
-          $formData = $this->getRequest()->getPost();
-          $produtoId = $formData['produtoId'];
-          if ($formData['emorFrom'] == 1) {
-              if ($formData['nome']) {
-                  if ($formData['action'] == 'edit') {
-                      $id = $formData['produtoId'];
-                      $this->Produto->edit($formData, $this->user->empresa, $id);
-                      $this->view->action = 'edit';
-                      $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
-                  } else {
-                      $id = $this->Produto->add($formData, $this->user->empresa);
-                      $this->view->produtoId = $id;
-                      $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
+    public $TipoProduto;
+    public $Empresa;
+    public $HorarioFuncionamento;
+    public $errorMessage;
+    public $caminho;
+    public $session;
+    public $db;
+    public $empresaId; //empresa que o usuario logado que instanciou esta classe pertence
+
+    public function init()
+    {
+        $this->_helper->layout()->setLayout('tela_cadastro_layout');
+        $this->db = Zend_Db_Table::getDefaultAdapter();
+        $this->session = new Zend_Session_Namespace('default');
+        if (isset($this->session->user))
+        {
+            $this->empresaId = $this->session->user->empresa;
+        }
+
+        $this->Produto = new DbTable_Produto($this->db);
+        $this->FotoProduto = new DbTable_FotoProduto($this->db);
+        $this->CategoriaPermitidaComoAdicional = new DbTable_CategoriaPermitidaComoAdicional($this->db);
+        $this->TamanhoProduto = new DbTable_TamanhoProduto($this->db);
+        $this->Promocao = new DbTable_Promocao($this->db);
+        $this->TipoProduto = new DbTable_TipoProduto();
+        $this->TiposProdutosEmpresa = new DbTable_TiposProdutosEmpresa($this->db);
+        $this->Ingrediente = new DbTable_Ingrediente();
+        $this->CategoriaIngrediente = new DbTable_CategoriaIngrediente();
+        $this->CategoriaIngredienteEmpresa = new DbTable_CategoriaIngredienteEmpresa($this->db);
+        $this->IngredienteEmpresa = new DbTable_IngredienteEmpresa();
+        $this->ItensDeUmLanche = new DbTable_ItensDeUmLanche($this->db);
+        $this->view->pageTitle = 'Producto';
+        $this->view->empresaId = $this->empresaId;
+        $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
+    }
+
+    public function errorAction()
+    {
+        $formId = $this->getRequest()->getPost('emorFrom');
+
+        $this->editAction();
+        //Este switch é para tentar recuperar os formularios com o ultimo dado que o usuario inseriu antes do erro
+        switch ($formId)
+        {
+            case 1:
+                $this->view->formData = $this->getRequest()->getPost();
+                break;
+            case 5:
+                $this->view->formData5 = $this->getRequest()->getPost();
+                break;
+            case 7:
+                $this->view->formData7 = $this->getRequest()->getPost();
+                break;
+        }
+
+        $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getAllRecords();
+        $this->view->categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
+        $this->view->cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
+        $this->view->empresaId = $this->empresaId;
+        $this->_helper->viewRenderer('index');
+    }
+
+    public function indexAction()
+    {
+
+        $this->view->produtoId = '';
+        $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getAllRecords();
+        $this->view->categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
+        $this->view->cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
+        $this->_helper->viewRenderer('index');
+
+    }
+
+    public function addAction()
+    {
+        $formData = $this->getRequest()->getPost();
+        $produtoId = $formData['produtoId'];
+
+        if ($formData['emorFrom'] == 1) //formulario principal de produto
+        {
+
+            if (!empty($produtoId)) //aletracao de um produto
+            {
+                try
+                {
+                    $this->Produto->edit($formData, $this->empresaId, $produtoId);
+                } catch (Exception $e)
+                {
+                    $this->view->headline = "Problema ao editar registro. " . $e->getMessage();
+                    $this->errorAction();
+                    return;
+                }
+                $this->editAction($prdutoId);
+                //$this->view->action = 'edit';
+                //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
+            } else //insercao de um produto novo
+            {
+                try
+                {
+                    $produtoId = $this->Produto->add($formData, $this->empresaId);
+                } catch (Exception $e)
+                {
+                    $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
+                    $this->errorAction();
+                    return;
+                }
+                $this->view->produtoId = $produtoId;
+                $this->editAction($produtoId);
+                //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
+            }
+        }
+        if ($formData['emorFrom'] == 2) //formulario de imagens do produto
+        {
+            if (!empty($_FILES['userfile']['name']))
+            {
+                try
+                {
+                    $fileName = $this->do_upload();
+                } catch (Exception $e)
+                {
+                    $this->view->headline = "Problema ao fazer upload da imagem. " . $e->getMessage();
+                    $this->errorAction();
+                    return;
+                }
+            }
+
+            if (!empty($produtoId))
+            {
+                try
+                {
+                    $this->db->beginTransaction();
+                    $this->FotoProduto->add($formData, $fileName, $produtoId);
+                    $this->db->commit();
+                } catch (Exception $e)
+                {
+                    $this->db->rollBack();
+
+                    $this->view->headline = "Erro ao inserir imagem. " . $e->getMessage();
+                    $this->errorAction();
+                    return;
+                }
+                $this->editAction($produtoId);
+            } else
+            {
+                $this->view->headline = "Por favor, selecione um produto primeiro.";
+                return $this->indexAction();
+            }
+        }
+        if ($formData['emorFrom'] == 3) //formulario de categorias permitidas como adicional para um produto
+        {
+            if (!empty($produtoId))
+            {
+                try
+                {
+                    $this->db->beginTransaction();
+                    $this->CategoriaPermitidaComoAdicional->add($formData, $produtoId);
+                    $this->db->commit();
+                } catch (Exception $e)
+                {
+                    $this->db->rollBack();
+                    $this->view->headline = "Erro ao inserir registro. " . $e->getMessage();
+                    $this->errorAction();
+                    return;
+                }
+                $this->editAction($produtoId);
+            } else
+            {
+                $this->view->headline = "Por favor, selecione um produto primeiro.";
+                return $this->indexAction();
+            }
+        }
+        if ($formData['emorFrom'] == 4) //ingredientes
+        {
+            if (!empty($produtoId))
+            {
+                try
+                {
+                    $this->db->beginTransaction();
+                    $this->ItensDeUmLanche->add($formData, $produtoId, $this->empresaId);
+                    $this->db->commit();
+                } catch (Exception $e)
+                {
+                    $this->db->rollBack();
+                    $this->view->headline = "Erro ao inserir registro. " . $e->getMessage();
+                    $this->errorAction();
+                    return;
+                }
+                $this->editAction($produtoId);
+            } else
+            {
+                $this->view->headline = "Por favor, selecione um produto primeiro.";
+                return $this->indexAction();
+            }
+        }
+        if ($formData['emorFrom'] == 5)  //tamanho dos produtos
+        {
+            // $promocaoId = $this->_getParam('promocaoId', '');
+            $tamanhoId = $formData['tamanhoId'];
+            if (!empty($produtoId))
+            {
+                //Esse metodo trata se devera ser feita uma edicao ou uma insercao.
+                //Se no combobox de tamanhos foi selecionado algum tamanho para edicao entao
+                //o javascript acionado setou um valor para o campo hidden tamanhoId
+                try
+                {
+                    $tamanhoId = $this->TamanhoProduto->add($formData, $produtoId);
+                } catch (Exception $e)
+                {
+                    $this->view->headline = "Erro ao inserir registro. " . $e->getMessage();
+                    $this->errorAction();
+                    return;
+                }
+                /* if (empty($formData['act2'])) //javascript  savePromocao seta o campo hidden act2 com o valor 'editPromocao'
+                  {
+                  //se o javascript nao foi executado foi o botao salvar do formulario de tamanho
+                  //e significa que é para inserir um tamanho
+                  $tamanhoId = $this->TamanhoProduto->add($formData, $produtoId);
+                  } */
+                /*  if (!empty($promocaoId))  //javascript savePromocao seta esse campo hidden
+                  {
+                  $this->Promocao->edit($formData['val'][$promocaoId], $promocaoId, $produtoId);
+                  } else
+                  {
+                  if (!empty($tamanhoId)) //nesse caso promocaoId esta vazio
+                  {
+                  $this->Promocao->add($formData, $produtoId, $tamanhoId);
                   }
-              } else {
-                  $this->_helper->redirector->gotoUrl('produto/index/msg/1');
-              }
-          }
-          if ($formData['emorFrom'] == 2) {
-              if (!empty($_FILES['userfile']['name'])) {
-                  $file = $this->do_upload();
-                  if (!empty($this->errorMessage)) {
-                      $error = true;
-                  } else {
-                      $fileName = $file;
-                  }
-              }
-              if (!$error) {
+                  } */
+                if (!empty($tamanhoId))
+                {
+                    $this->editAction($produtoId, $tamanhoId);
+                } else
+                {
+                    $this->editAction($produtoId);
+                }
+            } else
+            {
+                $this->view->headline = "Por favor, selecione um produto primeiro.";
+                return $this->indexAction();
 
-                  $this->FotoProduto->add($formData, $fileName, $produtoId);
-                  $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$produtoId");
-              } else {
-                  $this->view->headline = $this->errorMessage;
-                  $this->_helper->viewRenderer('index');
-              }
-          }
-          if ($formData['emorFrom'] == 3) {
-              if (!empty($produtoId)) {
-                  $this->CategoriaPermitidaComoAdicional->add($formData, $produtoId);
-                  $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$produtoId");
-              } else {
-                  $this->_helper->redirector->gotoUrl($this->caminho . "/index/msg/1");
-              }
-          }
-          if ($formData['emorFrom'] == 4) {
-              if (!empty($produtoId)) {
-                  $this->ItensDeUmLanche->add($formData, $produtoId, $this->user->empresa);
-                  $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$produtoId");
-              } else {
-                  $this->_helper->redirector->gotoUrl($this->caminho . "/index/msg/1");
-              }
-          }
-          if ($formData['emorFrom'] == 5) {
-             // echo '<pre>';print_r($_REQUEST);echo '</pre>';
-              //exit;
-              $promocaoId= $this->_getParam('promocaoId', '');
-              $tamanhoId=$formData['tamanhoId'];
-              //echo "<h1> var $tamanhoId </h1>";
-              //exit;
-              if (!empty($produtoId)) {
+            }
+        }
 
-                  if(empty($formData['editPromocao'])){
-                      $tamanhoId=$this->TamanhoProduto->add($formData, $produtoId);
-                  }
-                  if(!empty($promocaoId)){
-                   $this->Promocao->edit($formData['val'][$promocaoId], $promocaoId,$produtoId);
-                  }else{
-                      if(!empty($tamanhoId)){
-                         $this->Promocao->add($formData, $produtoId,$tamanhoId);
-                      }
+        if ($formData['emorFrom'] == 6 || $formData['emorFrom'] == 7)
+        {
+            if (!empty($produtoId))
+            {
+                $tamanhoId = $formData['tamanhoId'];
 
-                  }
-                  if(!empty($tamanhoId)){
-                      $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$produtoId/tamid/$tamanhoId");
+                if (!empty($tamanhoId))
+                {
+                    $promocaoId = $formData['promocaoId'];
 
-                  }else{
-                    $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$produtoId");
-                  }
+                    if (!empty($promocaoId)) //eh uma edicao
+                    {
+                        try
+                        {
+                            $this->Promocao->edit($formData['val'][$promocaoId], $promocaoId, $produtoId);
+                        } catch (Exception $e)
+                        {
+                            $this->view->headline = "Erro ao alterar registro. " . $e->getMessage();
+                            $this->errorAction();
+                            return;
+                        }
+                    } else
+                    {
+                        try
+                        {
+                            $this->Promocao->add($formData, $produtoId, $tamanhoId);
+                        } catch (Exception $e)
+                        {
+                            $this->view->headline = "Erro ao inserir registro. " . $e->getMessage();
+                            $this->errorAction();
+                            return;
+                        }
+                    }
+                    $this->editAction($produtoId, $tamanhoId);
+                } else
+                {
+                    $this->view->headline = "Por favor, selecione um tamanho de produto primeiro.";
+                    $this->editAction($produtoId, $tamanhoId);
+                }
+            } else
+            {
+                $this->view->headline = "Por favor, selecione um produto primeiro.";
+                return $this->indexAction();
+            }
+        }
+    }
 
-              } else {
-                  $this->_helper->redirector->gotoUrl($this->caminho . "/index/msg/1");
-              }
-          }
+    public function editAction($produtoId = '', $tamanhoId = '')
+    {
+        if (empty($produtoId))
+            $produtoId = $this->getRequest()->getPost('produtoId');
 
-           if ($formData['emorFrom'] == 6) {
-              if (!empty($produtoId)) {
-                  $promocaoId= $this->_getParam('promocaoId', '');
-                  if(!empty($promocaoId)){
-                   $this->Promocao->edit($formData['val'][$promocaoId], $promocaoId,$produtoId);
-                  }else{
-                   $this->Promocao->add($formData, $produtoId);
-                  }
-                  $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$produtoId");
-              } else {
-                  $this->_helper->redirector->gotoUrl($this->caminho . "/index/msg/1");
-              }
-          }
-      }
-      public function editAction()
-      {
-          $id = $this->_getParam('id', '');
-          $tamanhoId=$this->_getParam('tamid', '');
-          if (!empty($id)) {
-              $this->view->produtoId = $id;
-          }
-          $produtoId = $id;
-          if (!empty($produtoId)) {
-              $this->view->formData = $this->Produto->getSingleData($produtoId);
-              $this->view->formData2 = $this->FotoProduto->getRecords($produtoId);
-              $b = $this->CategoriaPermitidaComoAdicional->getRecords($produtoId);
-              foreach ($b as $k => $v) {
-                  $formData3[$v['cod_tipo_ingrediente']] = $v;
-              }
-              $this->view->formData3 = $formData3;
-              $b = $this->ItensDeUmLanche->getRecordsProduto($this->user->empresa, $produtoId);
-              foreach ($b as $k => $v) {
-                  $formData4[$v['cod_ingrediente']] = $v;
-              }
-              $this->view->formData4 = $formData4;
+        if (empty($tamanhoId))
+            $tamanhoId = $this->getRequest()->getPost('tamanhoId');
 
-              //echo "<h1> var $tamanhoId </h1>";
-              if(!empty($tamanhoId)){
-              $this->view->formData5 = $this->TamanhoProduto->getRecords($tamanhoId);
+        //Trata as abas Produto, Imagens, Categorias Permitidas como Adicional e Ingredientes
+        if (!empty($produtoId))
+        {
+            $this->view->produtoId = $produtoId;
+            $this->view->formData = $this->Produto->getSingleData($produtoId);
+            $this->view->formData2 = $this->FotoProduto->getRecords($produtoId);
+            $b = $this->CategoriaPermitidaComoAdicional->getRecords($produtoId);
+            foreach ($b as $k => $v)
+            {
+                $formData3[$v['cod_tipo_ingrediente']] = $v;
+            }
+            $this->view->formData3 = $formData3;
+            $b = $this->ItensDeUmLanche->getRecordsProduto($this->empresaId, $produtoId);
+            foreach ($b as $k => $v)
+            {
+                $formData4[$v['cod_ingrediente']] = $v;
+            }
+            $this->view->formData4 = $formData4;
 
-              $formData6=$this->Promocao->getRecords($tamanhoId);
+            $this->view->tamanhoDropDown = $this->TamanhoProduto->getDropDown($produtoId);
+            $this->view->totalPrco = $this->ItensDeUmLanche->getPreco($produtoId);
+            $this->view->totalCalorias = $this->ItensDeUmLanche->getCalorias($produtoId);
+        }
 
-              foreach($formData6 as $k=>$v){
-              if(!empty($v['data_inicio'])){
-                 $v['data_inicio']=str_replace('00:00:00','',$v['data_inicio']);
-                 $v['data_inicio']=trim($v['data_inicio']);
-                  list($year,$month,$day)=explode('-',$v['data_inicio']);
-                  $date="$day/$month/$year";
-                  $formData6[$k]['data_inicio']=$date;
-              }
-              if(!empty($v['data_fim'])){
-                  $v['data_fim']=str_replace('00:00:00','',$v['data_fim']);
-                 $v['data_fim']=trim($v['data_fim']);
-                  list($year,$month,$day)=explode('-',$v['data_fim']);
-                  $date="$day/$month/$year";
-                  $formData6[$k]['data_fim']=$date;
-              }
-              }
+        //Trata a aba Tamanhos
+        if (!empty($tamanhoId))
+        {
+            $this->view->tamanhoId = $tamanhoId;
+            $this->view->formData5 = $this->TamanhoProduto->getRecords($tamanhoId);
+            $formData6 = $this->Promocao->getRecords($tamanhoId);
 
-              }
-              else{
-                $formData6='';
-              }
 
-           // echo '<pre>';print_r($formData6);echo '</pre>';
-              $this->view->formData6 = $formData6;
-              $this->view->tamanhoId = $tamanhoId;
-              $tamanhoDropDown = $this->TamanhoProduto->getDropDown($produtoId);
+            foreach ($formData6 as $k => $v)
+            {
+                if (!empty($v['data_inicio']))
+                {
+                    $v['data_inicio'] = str_replace('00:00:00', '', $v['data_inicio']);
+                    $v['data_inicio'] = trim($v['data_inicio']);
+                    list($year, $month, $day) = explode('-', $v['data_inicio']);
+                    $date = "$day/$month/$year";
+                    $formData6[$k]['data_inicio'] = $date;
+                }
+                if (!empty($v['data_fim']))
+                {
+                    $v['data_fim'] = str_replace('00:00:00', '', $v['data_fim']);
+                    $v['data_fim'] = trim($v['data_fim']);
+                    list($year, $month, $day) = explode('-', $v['data_fim']);
+                    $date = "$day/$month/$year";
+                    $formData6[$k]['data_fim'] = $date;
+                }
+            }
+            $this->view->formData6 = $formData6;
+        } else
+        {
+            $formData6 = '';
+        }
 
-              $this->view->tamanhoDropDown = $tamanhoDropDown;
-              //echo '<pre>';print_r($this->view->tamanhoDropDown);echo '</pre>';
-          }
-          $totalPrco = $this->ItensDeUmLanche->getSum($produtoId);
-          $this->view->totalPrco = $totalPrco;
-          $categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
-          $this->view->categoriaIngredienteRec = $categoriaIngredienteRec;
-          $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getAllRecords();
-          $cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->user->empresa);
-          $this->view->cod_tipo_produto = $cod_tipo_produto;
-          $this->view->cidadeOption = $cidadeOption;
-          $this->view->title = 'Produto';
-          $this->view->headline = 'Welcome';
-          $this->view->action = 'edit';
-          $this->view->empresaId = $this->user->empresa;
-          $this->_helper->viewRenderer('index');
-      }
-      public function do_upload()
-      {
+        $categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
+        $this->view->categoriaIngredienteRec = $categoriaIngredienteRec;
+        $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getAllRecords();
+        $cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
+        $this->view->cod_tipo_produto = $cod_tipo_produto;
+        $this->view->title = 'Produto';
+        // $this->view->action = 'edit';
+        $this->view->empresaId = $this->empresaId;
+        $this->_helper->viewRenderer('index');
+    }
+
+    public function do_upload()
+    {
           $adapter = new Zend_File_Transfer_Adapter_Http();
-          $adapter->setDestination('logo');
-          $adapter->addValidator('Extension', false, 'jpg,png,jpeg,gif,xps');
-          $adapter->addValidator('Size', false, 200000000);
-          if (!$adapter->receive()) {
-              $messages = $adapter->getMessages();
-              $this->_helper->viewRenderer('index');
-              $this->errorMessage = implode("\n", $messages);
-              return false;
-          } else {
-              $file = $adapter->getFileInfo();
-              $name = $file['userfile']['name'];
-              $d = file_get_contents($file['userfile']['tmp_name']);
-              unlink($file['userfile']['tmp_name']);
-              return $d;
-          }
-      }
-      public function deleteAction()
-      {
-          $produtoId = $this->_getParam('id', '');
-          $this->Produto->deleteRecords($produtoId);
-          $this->_helper->redirector->gotoUrl($this->caminho . "/gridView");
-      }
-      public function gridviewAction()
-      {
-          $record = $this->Produto->getRecords();
-          $page = $this->_getParam('page', 1);
-          $paginator = Zend_Paginator::factory($record);
-          $paginator->setItemCountPerPage(2);
-          $paginator->setCurrentPageNumber($page);
-          $this->view->paginator = $paginator;
-      }
-      public function deleteTamanhosAction()
-      {
-          $produtoId = $this->_getParam('id', '');
-          $tamanhoId=$this->_getParam('tamid', '');
-          $this->TamanhoProduto->deleteRecords($tamanhoId);
-          $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$produtoId");
-      }
-       public function deletePromocaoAction()
-      {
-          $id = $this->_getParam('id', '');
-          $produtoId= $this->_getParam('produtoId', '');
-          $this->Promocao->deleteRecords($id);
-          $this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$produtoId");
-      }
-      public function getImageAction()
-      {
-          $this->_helper->layout->disableLayout();
-          $this->_helper->viewRenderer->setNoRender(true);
-          $id = $this->_getParam('id', '');
-          $image = $this->FotoProduto->getImageData($id);
-          header('Content-type: image/jpeg/png/gif/jpg');
-          echo base64_decode($image);
-      }
-  }
+        //$adapter->setDestination('logo');
+        $adapter->addValidator('Extension', false, 'jpg,png,jpeg,gif,xps');
+        $adapter->addValidator('Size', false, 2000000);
+        if (!$adapter->receive())
+        {
+            $messages = $adapter->getMessages();
+            throw new Exception(implode("\n", $messages));
+            return;
+
+            //$messages = $adapter->getMessages();
+            //$this->_helper->viewRenderer('index');
+            //$this->errorMessage = implode("\n", $messages);
+            //return false;
+        } else
+        {
+            $file = $adapter->getFileInfo();
+            $name = $file['userfile']['name'];
+            $d = file_get_contents($file['userfile']['tmp_name']);
+            unlink($file['userfile']['tmp_name']);
+            return $d;
+        }
+
+    }
+
+  
+    public function deleteAction()
+    {
+        $produtoId = $this->getRequest()->getPost('produtoId');
+        $this->Produto->deleteRecords($produtoId);
+        $this->_helper->redirector->gotoUrl($this->caminho . "/gridView");
+    }
+
+    public function gridviewAction()
+    {
+        $record = $this->Produto->getRecords($this->empresaId);
+        $page = $this->_getParam('page', 1);
+        $paginator = Zend_Paginator::factory($record);
+        $paginator->setItemCountPerPage(20);
+        $paginator->setCurrentPageNumber($page);
+        $this->view->paginator = $paginator;
+    }
+
+    public function deleteTamanhosAction()
+    {
+        $produtoId = $this->getRequest()->getPost("produtoId");
+        $tamanhoId = $this->getRequest()->getPost("tamanhoId");
+        try
+        {
+            $this->db->beginTransaction();
+            $this->TamanhoProduto->deleteRecords($tamanhoId);
+            $this->db->commit();
+        } catch (Exception $e)
+        {
+            $this->db->rollBack();
+            $this->view->headline = "Erro na remoção de tamanho. " . $e->getMessage();
+            $this->errorAction();
+            return;
+        }
+
+        $this->editAction($produtoId);
+    }
+
+    public function deletePromocaoAction()
+    {
+        $promocaoId = $this->getRequest()->getPost("promocaoId");
+        $produtoId = $this->getRequest()->getPost("produtoId");
+        $tamanhoId = $this->getRequest()->getPost("tamanhoId");
+        try
+        {
+            $this->Promocao->deleteRecords($promocaoId);
+            $this->editAction($produtoId,$tamanhoId);
+        }catch(Exception $e)
+        {
+           $this->view->headline = "Erro na remoção da promoção. " . $e->getMessage();
+           $this->errorAction();
+        }
+        
+    }
+
+    public function getImageAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $id = $this->_getParam('id', '');
+        $image = $this->FotoProduto->getImageData($id);
+        header('Content-type: image/jpeg/png/gif/jpg');
+        echo base64_decode($image);
+    }
+
+}
+
 ?>

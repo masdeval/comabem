@@ -1,3 +1,5 @@
+
+/*Tela de Empresa*/ 
 function toggleImage(){
     $('#changeImage').show();
     $('#labelChange').hide();
@@ -14,10 +16,12 @@ function toggleImage2(){
     $('#labelChangeCancel').hide();
 }
 function removeImage(){  
-  $('#image').hide();
-  $('#labelChange').hide();
-  $('#labelChangeCancel').show();
-  document.getElementById("flagRemoverImagem").value = "remover";
+    $('#image').hide();
+    $('#labelRemove').hide();
+    $('#labelRemove').hide();
+    $('#labelChange').hide();
+    $('#labelChangeCancel').show();
+    document.getElementById("flagRemoverImagem").value = "remover";
 
 }
 function delEmpresa(id){
@@ -43,6 +47,8 @@ function deleteHorario(id){
         document.getElementById('form3').submit();
     }
 }
+
+/*Tela de Funcionarios*/
 function delfuncionario(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
 
@@ -60,8 +66,10 @@ function delFuncionario_entregador(id){
         document.getElementById('form2').submit();
     }
 }
+
+/*Tela de Ingrediente*/
 function delIngrediente(id){
-     if(confirm('Tem certeza que deseja remover o registro?')){
+    if(confirm('Tem certeza que deseja remover o registro?')){
 
         var url=base_url+'/ingredients/delete/';
         document.getElementById('form1').action = url;
@@ -69,8 +77,10 @@ function delIngrediente(id){
     }
 
 }
+
+/* Tela de Produtos */
 function delProduto(id){
- if(confirm('Tem certeza que deseja remover o registro?')){
+    if(confirm('Tem certeza que deseja remover o registro?')){
 
         var url=base_url+'/produto/delete/';
         document.getElementById('form1').action = url;
@@ -78,61 +88,117 @@ function delProduto(id){
     }
 }
 function delImagens(id){
- if(confirm('Tem certeza que deseja remover a imagem?')){
+    if(confirm('Tem certeza que deseja remover a imagem?')){
 
         document.form2.submit();
-        //alert(url);
+    //alert(url);
 
     }
 }
-function delTamanhos(id,tamid){
-    if(confirm('Tem certeza que deseja remover o registro?')){
-    if(id==''){
-        return false;
+
+
+function delTamanhos(id,tamid)
+{
+    if(id == '' || id == null || tamid == '' || tamid == null)
+    {
+        alert('Selecione o tamanho que deseja excluir.');
+        return;
     }
-        var url=base_url+'/produto/delete-Tamanhos/id/'+id+'/tamid/'+tamid;
-       // alert(url);
-        location.href=url;
+
+    if(confirm('Tem certeza que deseja remover o registro?')){
+        var url=base_url+'/produto/delete-Tamanhos/';
+        document.form5.action = url;
+        document.form5.submit();
     }
 }
-function delPromocao(id,pid){
+function delPromocao(id){
+
     if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/produto/delete-Promocao/id/'+id+'/produtoId/'+pid;
-       // alert(url);
-        location.href=url;
+        var url=base_url+'/produto/delete-Promocao/';
+        document.getElementById('form6').promocaoId.value=id;  
+        document.getElementById('form6').action = url;
+        document.getElementById('form6').submit();
+
     }
 }
-function savePromaco(id){
-    if(!validateForm('form5')){
+
+function savePromocao(id){
+
+    if(!validateForm('form6'))
         return false;
-    }
-    document.form5.promocaoId.value=id;
-    document.form5.act2.value='editPromocao';
-    document.form5.submit();
+    
+    document.getElementById('form6').promocaoId.value=id;
+    document.getElementById('form6').submit();
 }
+
 function getCategria(elem,ing){
     val=$('#cod_tipo_ingrediente').attr('value');
-     reqURL=base_url+'/ingredients/categria/tipoing/'+val+'/ing/'+ing;
-      $.ajax({
+    reqURL=base_url+'/ingredients/categria/tipoing/'+val+'/ing/'+ing;
+    $.ajax({
         type: "GET",
         url:reqURL,
         success: function(r) {
-         r=jQuery.trim(r);
-        $('#respp').html(r);
+            r=jQuery.trim(r);
+            $('#respp').html(r);
 
         }
-      });
-
+    });
 
 }
-function editTamanho(elem,id){
-    var tamid=elem.value;
-    if(tamid==''){
-        return false;
-    }
-      var url=base_url+'/produto/edit/id/'+id+'/tamid/'+tamid;
-       // alert(url);
-        location.href=url;
 
+/* É executado quando o combobox de tamanhos na aba Tamanhos é alterado */
+
+function editTamanho(tamid,id)
+{
+    
+    //var url=base_url+'/produto/edit/id/'+id+'/tamid/'+tamid; //antes estava so assim
+
+    //Esse caso é quando a funcao é chamada no link de adicionar um tamanho novo
+    //Nesse caso, deve-se apenas limpar os campos de tamanho no formulario e não há
+    //um codigo de tamanho para ser preenchido no campo hidden tamanhoId que deve receber string vazia
+    if(tamid == 0)
+    {
+        /*document.getElementById("descricao").value = '';
+        document.getElementById("preco").value = '';
+        try{
+            document.getElementById("numero_sabores_pizza").value = '';//pode ser que esse campo nao exista na tela. Dessa maneira nao vai travar nessa linha
+        }
+        catch(err){}
+        document.getElementById("tamanhoId").value = '';        
+        document.getElementById("tamanhoEdit").selectedIndex = 0; */
+        
+        document.getElementById("tamanhoId").value = '';
+        document.form5.action='/produto/edit/';
+        document.form5.submit();
+
+    }
+    else
+    {
+        document.getElementById('produtoId').value = id;
+        document.getElementById('tamanhoId').value = tamid;
+        document.form5.action='/produto/edit/';
+        document.form5.submit();
+        
+    /*
+        //esse codigo cria um formulario HTML dinamicamente
+        //achei que precisava fazer isso
+        var myform=document.createElement("form");
+        myform.setAttribute('action', '/produto/edit');
+        myform.method='POST';
+        myform.id='xxx';
+        var hiddenProdutoId = document.createElement("input");
+        hiddenProdutoId.type='hidden';
+        var hiddenTamanhoId = document.createElement("input");
+        hiddenTamanhoId.type = 'hidden';
+        hiddenProdutoId.setAttribute("name", "produtoId");
+        hiddenTamanhoId.setAttribute("name", "tamid");
+        hiddenProdutoId.setAttribute("value", id);
+        hiddenTamanhoId.setAttribute("value", tamid);
+        myform.appendChild(hiddenTamanhoId);
+        myform.appendChild(hiddenProdutoId);
+        document.body.appendChild(myform);
+        document.getElementById('xxx').submit();
+        */
+    }
 }

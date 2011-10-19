@@ -6,14 +6,14 @@
       public function getRecords($code_empresa)
       {
 
-          $query = $this->_db->query("SELECT IE.*,E.razao_social,I.nome FROM ingrediente_empresa IE LEFT JOIN empresa E ON (IE.cod_empresa=E.cod_empresa) LEFT JOIN ingrediente I ON (IE.cod_ingrediente=I.cod_ingrediente) WHERE IE.cod_empresa=$code_empresa and IE.removed='0' ORDER BY  I.nome ");
+          $query = $this->_db->query("SELECT IE.*,E.razao_social,I.nome FROM ingrediente_empresa IE LEFT JOIN empresa E ON (IE.cod_empresa=E.cod_empresa) LEFT JOIN ingrediente I ON (IE.cod_ingrediente=I.cod_ingrediente) WHERE IE.cod_empresa=$code_empresa and IE.removed=0 ORDER BY  I.nome ");
           $result = $query->fetchAll();
           return $result;
       }
 	   public function getAllRecords()
       {
 
-          $query = $this->_db->query("SELECT IE.*,E.razao_social,I.nome FROM ingrediente_empresa IE LEFT JOIN empresa E ON (IE.cod_empresa=E.cod_empresa) LEFT JOIN ingrediente I ON (IE.cod_ingrediente=I.cod_ingrediente) WHERE IE.removed='0' ORDER BY  I.nome ");
+          $query = $this->_db->query("SELECT IE.*,E.razao_social,I.nome FROM ingrediente_empresa IE LEFT JOIN empresa E ON (IE.cod_empresa=E.cod_empresa) LEFT JOIN ingrediente I ON (IE.cod_ingrediente=I.cod_ingrediente) WHERE IE.removed=0 ORDER BY  I.nome ");
           $result = $query->fetchAll();
           return $result;
       }
