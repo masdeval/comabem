@@ -36,16 +36,17 @@
                         <td> Max Adicionais<br><input type="text" class="input-medium validNumber"  name="numero_max_adicionais" maxlength="14" value="<?php echo $this->formData['numero_max_adicionais'] ?>" id='maxAdicionais' style="width: 200px;">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                     </tr>
-                    <tr>
+                  <!--  <tr>
                         <td colspan="2">
                             <table><tr>
-                                    <td> Fator De Ajuste<br><input type="text" class="input-medium validDecimalNumber"  name="fator_de_ajuste" maxlength="14" value="<?php echo $this->formData['fator_de_ajuste'] ?>" style="width: 200px;">
+                                    <td> Fator De Ajuste<br><input type="text" class="input-medium validDecimalNumber"  name="fator_de_ajuste" maxlength="14" value="<?php //echo $this->formData['fator_de_ajuste'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> </td>
                                     <td>Este Um Valor percentual qua sera aplicado sobre o preco de custo visando  o calculo da valor final</td>
                                 </tr>
                             </table>
                         </td>
-                    </tr>
+                    </tr>  -->
+                    
                     <tr>
                         <td>Cobrado Por Quilo ?<input type="checkbox" value="1" name="cobrado_por_quilo" <?php if ($this->formData['cobrado_por_quilo'] == 1)
                             {

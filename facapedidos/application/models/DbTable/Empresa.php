@@ -20,11 +20,6 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
     public function addEmpresa($formData, $logoFileName)
     {
         $now = date("Y-m-d H:i:s");
-        if (!empty($logoFileName))
-        {
-            //$logoFileName = 'noimage.gif';
-            $logoFileName = bin2hex($logoFileName);
-        }
         $data = array('razao_social' => $formData['razao_social'],
             'cnpj' => $formData['cnpj'],
             'rua' => $formData['rua'],
@@ -42,9 +37,11 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
             'cod_cidade' => (int) $formData['cod_cidade'],
             'data_cadastro' => $now,);
         $id = $this->insert($data);
+
+        $logoFileName = bin2hex($logoFileName);
         if (!empty($logoFileName))
         {
-            $this->getAdapter()->getConnection()->query("UPDATE empresa SET logo=decode('{$logoFileName}' , 'hex')  WHERE cod_empresa = '$id' ");
+            $this->_db->query("UPDATE empresa SET logo=decode('{$logoFileName}' , 'hex')  WHERE cod_empresa = '$id' ");
         }
         return $id;
     }
@@ -71,14 +68,14 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 
         if ($logoFileName == "remover")
         {
-            $this->getAdapter()->getConnection()->query("UPDATE empresa SET logo=NULL  WHERE cod_empresa = '$id' ");
+            $this->_db->query("UPDATE empresa SET logo=NULL  WHERE cod_empresa = '$id' ");
         } else
         {
             $logoFileName = bin2hex($logoFileName);
             if (!empty($logoFileName))
             {
 
-                $this->getAdapter()->getConnection()->query("UPDATE empresa SET logo=decode('{$logoFileName}' , 'hex')  WHERE cod_empresa = '$id' ");
+                $this->_db->query("UPDATE empresa SET logo=decode('{$logoFileName}' , 'hex')  WHERE cod_empresa = '$id' ");
             }
         }
 

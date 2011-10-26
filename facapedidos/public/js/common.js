@@ -1,10 +1,120 @@
 
-/*Tela de Empresa*/ 
+// limpa todos os caracteres especiais do campo solicitado
+function filtraCampo(campo){
+	var s = "";
+	var cp = "";
+	vr = campo.value;
+	tam = vr.length;
+	for (i = 0; i < tam ; i++) {
+		if (vr.substring(i,i + 1) != "/" && vr.substring(i,i + 1) != "-" && vr.substring(i,i + 1) != "."  && vr.substring(i,i + 1) != "," ){
+		 	s = s + vr.substring(i,i + 1);}
+	}
+	campo.value = s;
+	return cp = campo.value
+}
+//limpa todos os caracteres especiais do campo solicitado
+function filtraCampoValor(campo){
+	var s = "";
+	var cp = "";
+	vr = campo.value;
+	tam = vr.length;
+	for (i = 0; i < tam ; i++) {
+		if (vr.substring(i,i + 1) >= "0" && vr.substring(i,i + 1) <= "9"){
+		 	s = s + vr.substring(i,i + 1);}
+	}
+	campo.value = s;
+	return cp = campo.value
+}
+
+
+function formataCEP(campo){
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	tam = vr.length;
+
+	if ( tam <= 3 )
+		campo.value = vr;
+	if ( tam > 3 )
+		campo.value = vr.substr(0, tam-3 ) + '-' + vr.substr(tam-3, tam);
+}
+
+function formataHora(campo,teclapres) {
+	var tecla = teclapres.keyCode;
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	vr = vr.replace( ".", "" );
+	vr = vr.replace( ":", "" );
+	vr = vr.replace( ":", "" );
+	tam = vr.length + 1;
+
+	if ( tecla != 9 && tecla != 8 ){
+		if ( tam > 2 && tam < 5 )
+			campo.value = vr.substr( 0, tam - 2  ) + ':' + vr.substr( tam - 2, tam );
+	}
+}
+
+// Formata o campo valor
+function formataValor(campo) {
+	campo.value = filtraCampoValor(campo);
+	vr = campo.value;
+	tam = vr.length;
+
+	if ( tam <= 2 ){
+ 		campo.value = vr ; }
+ 	if ( (tam > 2) && (tam <= 5) ){
+ 		campo.value = vr.substr( 0, tam - 2 ) + ',' + vr.substr( tam - 2, tam ) ; }
+ 	if ( (tam >= 6) && (tam <= 8) ){
+ 		campo.value = vr.substr( 0, tam - 5 ) + '.' + vr.substr( tam - 5, 3 ) + ',' + vr.substr( tam - 2, tam ) ; }
+ 	if ( (tam >= 9) && (tam <= 11) ){
+ 		campo.value = vr.substr( 0, tam - 8 ) + '.' + vr.substr( tam - 8, 3 ) + '.' + vr.substr( tam - 5, 3 ) + ',' + vr.substr( tam - 2, tam ) ; }
+ 	if ( (tam >= 12) && (tam <= 14) ){
+ 		campo.value = vr.substr( 0, tam - 11 ) + '.' + vr.substr( tam - 11, 3 ) + '.' + vr.substr( tam - 8, 3 ) + '.' + vr.substr( tam - 5, 3 ) + ',' + vr.substr( tam - 2, tam ) ; }
+ 	if ( (tam >= 15) && (tam <= 18) ){
+ 		campo.value = vr.substr( 0, tam - 14 ) + '.' + vr.substr( tam - 14, 3 ) + '.' + vr.substr( tam - 11, 3 ) + '.' + vr.substr( tam - 8, 3 ) + '.' + vr.substr( tam - 5, 3 ) + ',' + vr.substr( tam - 2, tam ) ;}
+
+}
+
+// Formata o campo valor
+function formataNumerico(campo) {
+
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	tam = vr.length;
+}
+
+function formataCPF(campo){
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	tam = vr.length ;
+	if ( tam <= 2 ){
+ 		campo.value = vr ;}
+	if ( tam > 2 && tam <= 5 ){
+		campo.value = vr.substr( 0, tam - 2 ) + '-' + vr.substr( tam - 2, tam );}
+	if ( tam >= 6 && tam <= 8 ){
+		campo.value = vr.substr( 0, tam - 5 ) + '.' + vr.substr(tam - 5, 3 ) + '-' + vr.substr( tam - 2, tam );}
+	if ( tam >= 9 && tam <= 11 ){
+		campo.value = vr.substr( 0, tam - 8 ) + '.' + vr.substr( tam - 8, 3 ) + '.' + vr.substr(tam - 5, 3 ) + '-' + vr.substr( tam - 2, tam );}
+
+}
+
+function formataTelefone(campo) {
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	tam = vr.length;
+
+	if ( tam <= 4 )
+		campo.value = vr;
+	if ( tam > 4 )
+		campo.value = vr.substr(0, tam-4 ) + '-' + vr.substr(tam-4, tam);
+}
+
+
 function toggleImage(){
     $('#changeImage').show();
     $('#labelChange').hide();
     $('#labelRemove').hide();
     $('#labelChangeCancel').show();
+   
 }
 //Esse é o botao de cancelar
 function toggleImage2(){
@@ -24,6 +134,7 @@ function removeImage(){
     document.getElementById("flagRemoverImagem").value = "remover";
 
 }
+/*Tela de Empresa*/
 function delEmpresa(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
         var url=base_url+'/empresa/delete/';
@@ -77,6 +188,33 @@ function delIngrediente(id){
     }
 
 }
+
+//Eh chamado quando o combo de ingrediente eh alterado (nao esta sendo utilizado)
+function editaIngrediente(elem){
+
+         var url='/estabelecimento/ingredients/edit';
+         //if(elem.selectedIndex == 0) //caso o valor selecionado seja nulo (ou seja, a opcao 'Select')
+           //  elem.options[elem.selectedIndex].value = 0; //faco isso para trazer uma tela vazia
+         document.getElementById('form1').action = url;     
+         document.getElementById('form1').submit();
+ }
+
+function getCategoria(elem,ing){
+    var val=elem.options[elem.selectedIndex].value; //$('#cod_tipo_ingrediente').attr('value');
+    reqURL=base_url+'/ingredients/categoria/tipoing/'+val+'/ing/'+ing;
+
+    $.ajax({
+        type: "GET",
+        url:reqURL,
+        success: function(r) {
+            r=jQuery.trim(r);
+            $('#respp').html(r);
+        }
+    });
+
+}
+
+
 
 /* Tela de Produtos */
 function delProduto(id){
@@ -132,20 +270,6 @@ function savePromocao(id){
     document.getElementById('form6').submit();
 }
 
-function getCategria(elem,ing){
-    val=$('#cod_tipo_ingrediente').attr('value');
-    reqURL=base_url+'/ingredients/categria/tipoing/'+val+'/ing/'+ing;
-    $.ajax({
-        type: "GET",
-        url:reqURL,
-        success: function(r) {
-            r=jQuery.trim(r);
-            $('#respp').html(r);
-
-        }
-    });
-
-}
 
 /* É executado quando o combobox de tamanhos na aba Tamanhos é alterado */
 
