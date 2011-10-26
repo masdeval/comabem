@@ -285,17 +285,16 @@
                                         <input type="text" class="input-medium RQR required validDecimalNumber"  title='Por favor, indique o preço'  name="preco" id="preco" value="<?php echo $this->formData5['preco'] ?>" style="width: 200px;" maxlength="11">
                                     <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                             </tr>
-<?php if ($this->formData['tipo'] == 'Pizza')
-                                { ?>
+<?php //if ($this->formData['tipo'] == 'Pizza') { ?>
                                 <tr>
-                                    <td colspan="2">Numero Sabores Pizza<br>
-                                        <input type="text" class="input-medium validDecimalNumber " id="numero_sabores_pizza" name="numero_sabores_pizza" maxlength="3" value="<?php echo $this->formData5['numero_sabores_pizza'] ?>" style="width: 200px;">
+                                    <td colspan="2">Se este produto é uma pizza, indique o número de sabores que o cliente pode escolher para esse tamanho<br>
+                                        <input type="text" class="input-medium validNumber " id="numero_sabores_pizza" name="numero_sabores_pizza" maxlength="3" value="<?php echo $this->formData5['numero_sabores_pizza'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
                                     </td>
 
                                 </tr>
                                
-<?php } ?>
+<?php// } ?>
                             
                         </table>
                     </fieldset>

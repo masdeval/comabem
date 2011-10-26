@@ -29,6 +29,7 @@ class DbTable_TamanhoProduto extends Zend_Db_Table_Abstract
                 'descricao' => $formData['descricao'],
                 'preco' => (float) $formData['preco'],
                 'numero_sabores_pizza' => (int) $formData['numero_sabores_pizza'],
+                'removed' => 0,
             );
             $tid = $this->insert($data);
         } else
@@ -38,7 +39,6 @@ class DbTable_TamanhoProduto extends Zend_Db_Table_Abstract
                 'descricao' => $formData['descricao'],
                 'preco' => (float) $formData['preco'],
                 'numero_sabores_pizza' => (int) $formData['numero_sabores_pizza'],
-                'removed' => 0,
             );
 
             $where[] = "cod_tamanho_produto= $tamanhoId";
