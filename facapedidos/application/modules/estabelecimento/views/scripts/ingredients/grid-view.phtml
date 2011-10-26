@@ -12,9 +12,22 @@
     <tr>
       <td><?php echo $v['nome'] ?></td>
       <td><?php echo $v['descricao']; ?></td>
-      <td><img src="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/get-Image/ingrediente/<?php echo $v['cod_ingrediente']?>/empresa/<?php echo $v['cod_empresa']?>" width="100"  alt=""></td>
+      <td>
+          <?php if(!empty($v['imagem'])) {?>
+          <img src="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/get-Image/ingrediente/<?php echo $v['cod_ingrediente']?>/empresa/<?php echo $v['cod_empresa']?>" width="100"  alt=""></td>
+          <?php } ?>
+      <td>
+          <form action="" method="post" id="gridForm">
+          <input type="hidden" value="" name="ingredienteId" id="cod_ingrediente">
+              <!--    <a href="<?php //echo $this->baseUrl() ?>/estabelecimento/ingredients/delete/id/<?php //echo $v['cod_ingrediente']?>" onclick="return confirm('Are you sure you want to delete?')">Delete</a>-->
 
-      <td><a href="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/delete/id/<?php echo $v['cod_ingrediente']?>" onclick="return confirm('Are you sure you want to delete?')">Delete</a>&nbsp;&nbsp;<a href="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/edit/ingrediente/<?php echo $v['cod_ingrediente']?>">Edit</a></td>
+              <a href="#" onclick="javascript:removeGrid(<?php echo $v['cod_ingrediente']?>)">Excluir</a>
+              &nbsp;&nbsp;
+              <!--<a href="<?php //echo $this->baseUrl() ?>/estabelecimento/ingredients/edit/ingrediente/<?php// echo $v['cod_ingrediente']?>">Edit</a> -->
+              <a href="#" onclick="javascript:editaGrid(<?php echo $v['cod_ingrediente']?>)">Editar</a>
+          </form>
+
+      </td>
     </tr>
     <?php }?>
     <tr class="head">
@@ -24,3 +37,33 @@
 </div>
 
  <?php echo $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>
+
+<script type="text/javascript">
+
+    function removeGrid(valor){
+
+        if (confirm('Tem certeza que deseja remover o registro?'))
+        {
+         var url='/estabelecimento/ingredients/delete';
+         document.getElementById('gridForm').action = url;
+         document.getElementById('cod_ingrediente').value = valor;
+         document.getElementById('gridForm').submit();
+        }
+
+    }
+
+  function editaGrid(valor){
+
+         var url='/estabelecimento/ingredients/edit';
+         document.getElementById('gridForm').action = url;
+         document.getElementById('cod_ingrediente').value = valor;
+         document.getElementById('gridForm').submit();
+
+
+    }
+
+
+
+    </script>
+
+

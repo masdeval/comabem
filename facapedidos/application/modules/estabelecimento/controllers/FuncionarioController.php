@@ -28,9 +28,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         {
             $this->empresaId = $this->session->user->empresa;
         }
-        $this->view->cod_empresa = $this->empresaId;
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
-        $this->view->empresaOption = $this->Empresa->getEmpresaOptionDropDown();
 
         //Esses metodos nao funcionaram muito bem
         //$this->getRequest()->setParamSources(array('_POST'));//garante que o metodo getParam somente lerá dados setados por setParam e submetidos via Post
@@ -40,31 +38,34 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
     public function indexAction()
     {
         $this->view->funcionarioId = '';
+        $this->view->cod_empresa = $this->empresaId;
+        $this->view->empresaOption = $this->Empresa->getEmpresaOptionDropDown();
     }
 
     public function addAction()
     {
         $formData = $this->getRequest()->getPost();
+        $id = $formData['funcionarioId'];
 
         if ($formData['emorFrom'] == 1)
         {
 
-            if (!empty($formData['funcionarioId'])) //edicao
+            if (!empty($id)) //edicao
             {
-                $id = $formData['funcionarioId'];
 
                 try
                 {
                     $this->db->beginTransaction();
                     $this->Funcionario->editFuncionario($formData, $id);
-                    $this->FuncionarioHasEmpresa->updateRecord($id, $this->empresaId);
+                    //Nao faz sentido chamar essa funcao pois na tela nem é permitido alterar
+                    //a qual empresa um funcionario pertence
+                    //$this->FuncionarioHasEmpresa->updateRecord($id, $this->empresaId);
                     $this->db->commit();
                 } catch (Exception $e)
                 {
                     $this->db->rollback();
                     if ($e->getCode() == 23505) //Unique violation
                     {
-
                         $this->view->headline = "Este CPF já está cadastrado. Por favor escolha outro.";
                         //$this->_setParam("id", $id);
                         $this->editAction($id);
@@ -72,7 +73,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                     } else
                     {
                         $this->view->headline = $e->getMessage();
-                        $this->_forward("error");
+                        $this->errorAction();
                         return;
                     }
                 }
@@ -90,12 +91,12 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                     if ($e->getCode() == 23505) //Unique violation
                     {
                         $this->view->headline = "Este CPF já está cadastrado. Por favor escolha outro.";
-                        $this->_forward("error");
+                        $this->_forward("index");
                         return;
                     }
 
                     $this->view->headline = "Erro ao inserir o registro! " . $e->getMessage();
-                    $this->_forward("error");
+                    $this->_forward("index");
                     return;
                 }
             }
@@ -121,7 +122,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
                 {
                     $this->db->rollBack();
                     $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
-                    $this->_forward("error");
+                    $this->errorAction();
                     return;
                 }
             } else //esse eh o caso de escolher a aba de entregador sem ter escolhido antes um funcionario na aba principal
@@ -134,9 +135,20 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
 
     public function errorAction()
     {
-        $this->view->cod_empresa = $this->empresaId;
-        $this->view->empresaOption = $this->Empresa->getEmpresaOptionDropDown();
-        $this->view->formData = $this->getRequest()->getPost();
+
+        $formId = $this->getRequest()->getPost('emorFrom');
+
+        $this->editAction();
+        //Este switch é para tentar recuperar os formularios com o ultimo dado que o usuario inseriu antes do erro
+        switch ($formId)
+        {
+            case 1:
+                $this->view->formData = $this->getRequest()->getPost();
+                break;
+            case 2:
+                $this->view->formData2 = $this->getRequest()->getPost();
+                break;
+        }
         $this->_helper->viewRenderer('index');
     }
 
@@ -145,12 +157,6 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         if (empty($funcionarioId))
             $funcionarioId = $this->getRequest()->getPost("funcionarioId"); //quando vem do Grid
 
-            if (empty($funcionarioId))
-        {
-            $this->view->headline = "Id do funcionário é nula. Contacte o administrator do sistema!";
-            $this->_forward("error");
-            return;
-        }
         $formData = $this->Funcionario->getSingleData($funcionarioId);
         $cod_empresa = $this->FuncionarioHasEmpresa->getRecord($funcionarioId);
         if (!empty($formData['data_nascimento']))
@@ -191,7 +197,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         {
             $this->db->rollback();
             $this->view->headline = "Erro ao remover o registro! " . $e->getMessage();
-            $this->_forward("error");
+            $this->errorAction();
             return;
         }
         $this->_forward("gridView");

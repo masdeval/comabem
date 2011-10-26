@@ -33,52 +33,57 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         $this->HorarioFuncionamento = new DbTable_HorarioFuncionamento($this->db);
         $this->view->pageTitle = 'Empresa';
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
-        $this->view->empresaId = $this->empresaId; //dessa maneira garanto que sempre exista um id de empresa setado na tela
     }
 
     public function errorAction()
     {
-        $this->view->formData = $this->getRequest()->getPost();
-        $this->view->cidadeOption = $this->TbCidade->getCidadeDropDown();
-        $this->view->cod_tipo_produto = $this->TipoProduto->getCodTipoProductoDropDown();
-        //Como nessa tela de empresa nao sera permitido cadastrar outra, sempre vai para edicao da empresa que
-        //o usuario tem permissao de manipular
+        $formId = $this->getRequest()->getPost('emorFrom');
+        $this->editAction();
+        //Este switch é para tentar recuperar os formularios com o ultimo dado que o usuario inseriu antes do erro
+        switch ($formId)
+        {
+            case 1:
+                $this->view->formData = $this->getRequest()->getPost();
+                break;
+            case 3:
+                $this->view->formData3 = $this->getRequest()->getPost();
+                break;
+        }
         $this->_helper->viewRenderer('index');
     }
 
     public function indexAction()
     {
-        $this->view->empresaId = $this->empresaId;
+        $this->view->empresaId = $this->empresaId; //dessa maneira garanto que sempre exista um id de empresa setado na tela
         $this->view->cidadeOption = $this->TbCidade->getCidadeDropDown();
         $this->view->cod_tipo_produto = $this->TipoProduto->getCodTipoProductoDropDown();
-        $this->editAction();
+        $this->editAction();//so nesse caso de empresa que precisa ter essa chamada
     }
 
     public function addAction()
     {
         $formData = $this->getRequest()->getPost();
+        $id = $formData['empresaId']; //se tem Id é uma edicao
 
         if ($formData['emorFrom'] == 1)//formulario de empresa
         {
-            if (!empty($_FILES['userfile']['name']))
-            {
-                try
-                {
-                    $fileName = $this->do_upload();
-                } catch (Exception $e)
-                {
-                    $this->view->headline = "Problema ao fazer upload da imagem. " . $e->getMessage();
-                    $this->_forward("error");
-                    return;
-                }
-            }
             if (!empty($formData['flagRemoverImagem']))
                 $fileName = "remover";
 
-            if (!empty($formData['empresaId']))
+            if (!empty($id)) //edicao de empresa
             {
-                $id = $formData['empresaId']; //se tem Id é uma edicao
-
+                if (!empty($_FILES['userfile']['name']))
+                {
+                    try
+                    {
+                        $fileName = $this->do_upload();
+                    } catch (Exception $e)
+                    {
+                        $this->view->headline = "Problema ao fazer upload da imagem. " . $e->getMessage();
+                        $this->errorAction();
+                        return;
+                    }
+                }
                 try
                 {
                     $this->db->beginTransaction();
@@ -96,15 +101,28 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                     } else
                     {
                         $this->view->headline = $e->getMessage();
-                        $this->_forward("error");
+                        $this->errorAction();
                         return;
                     }
                 }
                 //$this->view->action = 'edit';
                 $this->editAction();
                 //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
-            } else
+            } else  //insercao de empresa
             {
+                if (!empty($_FILES['userfile']['name']))
+                {
+                    try
+                    {
+                        $fileName = $this->do_upload();
+                    } catch (Exception $e)
+                    {
+                        $this->view->headline = "Problema ao fazer upload da imagem. " . $e->getMessage();
+                        $this->_forward("index");
+                        return;
+                    }
+                }
+
                 try
                 {
                     $this->db->beginTransaction();
@@ -116,17 +134,17 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                     if ($e->getCode() == 23505) //Unique violation
                     {
                         $this->view->headline = "CNPJ ou URL duplicados. Favor verificar.";
-                        $this->_forward("error");
+                        $this->_forward("index");
                         return;
                     } else
                     {
                         $this->view->headline = $e->getMessage();
-                        $this->_forward("error");
+                        $this->_forward("index");
                         return;
                     }
                 }
                 $this->view->empresaId = $id;
-                $this->editAction();
+                $this->editAction($id);
                 //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
             }
         }
@@ -143,12 +161,11 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                     $this->getRequest()->setParam("id", $empresaId);
                     $this->db->commit();
                     $this->editAction();
-                    
                 } catch (Exception $e)
                 {
                     $this->db->rollBack();
                     $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
-                    $this->_forward("error");
+                    $this->errorAction();
                     return;
                 }
             } else
@@ -173,7 +190,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                 {
                     $this->db->rollBack();
                     $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
-                    $this->_forward("error");
+                    $this->errorAction();
                     return;
                 }
             } else
@@ -342,7 +359,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         {
             $this->db->rollBack();
             $this->view->headline = "Erro ao remover o registro! " . $e->getMessage();
-            $this->_forward("error");
+            $this->errorAction();
             return;
         }
         $this->_helper->redirector->gotoUrl($this->caminho . "/gridView");

@@ -22,12 +22,20 @@ class DbTable_FuncionarioHasEmpresa  extends Zend_Db_Table_Abstract
           $data = array(
                         'cod_funcionario' => $cod_funcionario,
                         'cod_empresa' => $cod_empresa,
+                        'responsavel' => '0',
                        );
 
           $id = $this->insert($data);
           return $id;
       }
-      public function updateRecord($cod_funcionario,$cod_empresa)
+
+
+      /*
+       * Uma vez que um usuario foi criado e associado com uma empresa, isso nao pode ser alterado. Entao
+       * essa funcao nao faz sentido.
+       *
+       */
+     /* public function updateRecord($cod_funcionario,$cod_empresa)
       {
              $this->deleteRecords($cod_funcionario);
              $data = array(
@@ -37,7 +45,7 @@ class DbTable_FuncionarioHasEmpresa  extends Zend_Db_Table_Abstract
 
           $id = $this->insert($data);
           return $id;
-      }
+      }*/
        public function deleteRecords($cod_funcionario)
       {
           $where[] = "cod_funcionario = $cod_funcionario";

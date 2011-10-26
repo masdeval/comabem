@@ -29,13 +29,11 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
         $this->Promocao = new DbTable_Promocao($this->db);
         $this->TipoProduto = new DbTable_TipoProduto();
         $this->TiposProdutosEmpresa = new DbTable_TiposProdutosEmpresa($this->db);
-        $this->Ingrediente = new DbTable_Ingrediente();
         $this->CategoriaIngrediente = new DbTable_CategoriaIngrediente();
         $this->CategoriaIngredienteEmpresa = new DbTable_CategoriaIngredienteEmpresa($this->db);
-        $this->IngredienteEmpresa = new DbTable_IngredienteEmpresa();
+        $this->IngredienteEmpresa = new DbTable_IngredienteEmpresa($this->db);
         $this->ItensDeUmLanche = new DbTable_ItensDeUmLanche($this->db);
-        $this->view->pageTitle = 'Producto';
-        $this->view->empresaId = $this->empresaId;
+        $this->view->pageTitle = 'Produto';
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
     }
 
@@ -58,22 +56,17 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
                 break;
         }
 
-        $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getAllRecords();
-        $this->view->categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
-        $this->view->cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
-        $this->view->empresaId = $this->empresaId;
         $this->_helper->viewRenderer('index');
     }
 
     public function indexAction()
     {
-
         $this->view->produtoId = '';
-        $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getAllRecords();
+        $this->view->empresaId = $this->empresaId;
+        $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getRecords($this->empresaId);
         $this->view->categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
         $this->view->cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
         $this->_helper->viewRenderer('index');
-
     }
 
     public function addAction()
@@ -106,7 +99,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
                 } catch (Exception $e)
                 {
                     $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
-                    $this->errorAction();
+                    $this->_forward("index");
                     return;
                 }
                 $this->view->produtoId = $produtoId;
@@ -116,21 +109,21 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
         }
         if ($formData['emorFrom'] == 2) //formulario de imagens do produto
         {
-            if (!empty($_FILES['userfile']['name']))
-            {
-                try
-                {
-                    $fileName = $this->do_upload();
-                } catch (Exception $e)
-                {
-                    $this->view->headline = "Problema ao fazer upload da imagem. " . $e->getMessage();
-                    $this->errorAction();
-                    return;
-                }
-            }
-
             if (!empty($produtoId))
             {
+                if (!empty($_FILES['userfile']['name']))
+                {
+                    try
+                    {
+                        $fileName = $this->do_upload();
+                    } catch (Exception $e)
+                    {
+                        $this->view->headline = "Problema ao fazer upload da imagem. " . $e->getMessage();
+                        $this->errorAction();
+                        return;
+                    }
+                }
+
                 try
                 {
                     $this->db->beginTransaction();
@@ -242,7 +235,6 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
             {
                 $this->view->headline = "Por favor, selecione um produto primeiro.";
                 return $this->indexAction();
-
             }
         }
 
@@ -360,7 +352,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 
         $categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
         $this->view->categoriaIngredienteRec = $categoriaIngredienteRec;
-        $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getAllRecords();
+        $this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getRecords($this->empresaId);
         $cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
         $this->view->cod_tipo_produto = $cod_tipo_produto;
         $this->view->title = 'Produto';
@@ -371,7 +363,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 
     public function do_upload()
     {
-          $adapter = new Zend_File_Transfer_Adapter_Http();
+        $adapter = new Zend_File_Transfer_Adapter_Http();
         //$adapter->setDestination('logo');
         $adapter->addValidator('Extension', false, 'jpg,png,jpeg,gif,xps');
         $adapter->addValidator('Size', false, 2000000);
@@ -393,14 +385,19 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
             unlink($file['userfile']['tmp_name']);
             return $d;
         }
-
     }
 
-  
     public function deleteAction()
     {
         $produtoId = $this->getRequest()->getPost('produtoId');
-        $this->Produto->deleteRecords($produtoId);
+        try
+        {
+            $this->Produto->deleteRecords($produtoId);
+        } catch (Exception $e)
+        {
+            $this->editAction();
+            return;
+        }
         $this->_helper->redirector->gotoUrl($this->caminho . "/gridView");
     }
 
@@ -442,13 +439,12 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
         try
         {
             $this->Promocao->deleteRecords($promocaoId);
-            $this->editAction($produtoId,$tamanhoId);
-        }catch(Exception $e)
+            $this->editAction($produtoId, $tamanhoId);
+        } catch (Exception $e)
         {
-           $this->view->headline = "Erro na remoção da promoção. " . $e->getMessage();
-           $this->errorAction();
+            $this->view->headline = "Erro na remoção da promoção. " . $e->getMessage();
+            $this->errorAction();
         }
-        
     }
 
     public function getImageAction()
