@@ -25,7 +25,7 @@ class DbTable_CategoriaIngredienteEmpresa extends Zend_Db_Table_Abstract
     public function updateRecord($formData, $ingredienteId, $empresaId)
     {
         $this->deleteRecord($ingredienteId, $empresaId);
-        foreach ($formData['cod_tipo_ingrediente'] as $k => $v)
+        foreach ((array)$formData['cod_tipo_ingrediente'] as $k => $v)
         {
             //if ($this->checkDuplicateRec($empresaId, $ingredienteId, $v))
             {
