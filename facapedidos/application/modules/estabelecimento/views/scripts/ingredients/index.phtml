@@ -61,8 +61,12 @@
               </tr>
               </table></td>
 
-          <td width="30%"><?php if(!empty($this->formData['imagem'])) {?>
-            <span id='image'><img src="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/get-Image/ingrediente/<?php echo $this->formData['cod_ingrediente']?>/empresa/<?php echo $this->formData['cod_empresa']?>" width="151" height="141" alt=""></span><br>
+          <td width="30%">
+      
+          <?php if(!empty($this->formData['imagem_original'])) {?>
+          <span id='image'>
+          <img src="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/get-Image-Original/ingrediente/<?php echo $this->formData['cod_ingrediente']?>" width="151" height="141"  alt="">
+           </span><br>
             <span id='changeImage' style="display: none;">
             <input type="file" name="userfile">
             </span>
@@ -72,9 +76,28 @@
             <span onclick="toggleImage()" id='labelChange' style="cursor: pointer; color: blue;">Trocar</span>
             <span onclick="removeImage()" id='labelRemove' style="cursor: pointer; color: blue;">Remover</span>
             <input type="hidden" value="" name="flagRemoverImagem" id="flagRemoverImagem">
-            <?php } else {?>
+
+          <?php }
+
+          else if(!empty($this->formData['imagem'])) {
+          ?>
+          <span id='image'>
+          <img src="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/get-Image/ingrediente/<?php echo $this->formData['cod_ingrediente']?>/empresa/<?php echo $this->formData['cod_empresa']?>" width="151" height="141" alt="">
+           </span><br>
+            <span id='changeImage' style="display: none;">
+            <input type="file" name="userfile">
+            </span>
+            <br>
+            <span onclick="toggleImage2()" id='labelChangeCancel' style="cursor: pointer; color: maroon;display:none;">Cancela</span>
+            <br>
+            <span onclick="toggleImage()" id='labelChange' style="cursor: pointer; color: blue;">Trocar</span>
+            <span onclick="removeImage()" id='labelRemove' style="cursor: pointer; color: blue;">Remover</span>
+            <input type="hidden" value="" name="flagRemoverImagem" id="flagRemoverImagem">
+         <?php } else {?>
             Logo <br><input type="file" name="userfile">
-            <?php }?></td>
+            <?php }?>
+
+          </td>
         </tr>
       </table>
 

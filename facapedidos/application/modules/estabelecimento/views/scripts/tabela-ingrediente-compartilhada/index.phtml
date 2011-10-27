@@ -1,0 +1,68 @@
+
+    <form action="<?php echo $this->baseUrl()?>/estabelecimento/tabelaIngredienteCompartilhada/add" method="post" class="frm" id='form1' enctype="multipart/form-data" >
+      <table class="tableFrm" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+               <tr>
+                <td> Nome </td>
+                <td>
+                <?php
+                    $attribs =array("class"=>'input-medium ', 'id'=>'combo_ingrediente', "title"=>'Por favor, indique o ingrediente' ,'style'=>'width:200px','onchange'=>'editaIngrediente(this)');
+                    echo $this->formSelect('ingredienteId', $this->formData["cod_ingrediente"], $attribs, $this->ingredientesOption);
+             ?>
+
+             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+
+              </td>
+              </tr>
+
+           <!--   <tr>
+                <td> Descrição </td>
+                <td><input type="text" class="input-medium" maxlength="200"  name="descricao" value="<?php echo $this->formData['descricao']?>" style="width: 200px;">
+                  <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+              </tr>  -->
+
+
+              <tr>
+
+          <td width="30%"><?php if(!empty($this->formData['imagem'])) {?>
+            <span id='image'><img src="<?php echo $this->baseUrl() ?>/estabelecimento/tabelaIngredienteCompartilhada/get-Image/ingrediente/<?php echo $this->formData['cod_ingrediente']?>" width="90" height="80" alt=""></span><br>
+            <span id='changeImage' style="display: none;">
+            <input type="file" name="userfile">
+            </span>
+            <br>
+            <span onclick="toggleImage2()" id='labelChangeCancel' style="cursor: pointer; color: maroon;display:none;">Cancela</span>
+            <br>
+            <span onclick="toggleImage()" id='labelChange' style="cursor: pointer; color: blue;">Trocar</span>
+            <span onclick="removeImage()" id='labelRemove' style="cursor: pointer; color: blue;">Remover</span>
+            <input type="hidden" value="" name="flagRemoverImagem" id="flagRemoverImagem">
+            <?php } else {?>
+            Logo <br><input type="file" name="userfile"> 
+            <?php }?></td>
+
+        </tr>
+      </table>
+
+
+      <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+        <tr> <td>
+            <input type="submit" name="Save" value="Salvar">
+     <!--    <input type="button" name="Save" value="Lista de ingredientes já customizados" style="margin-left:  400px;" onclick="location.href='<?php //echo $this->url(array('controller'=>'ingredients','action'=>'gridView'));?>'"></td> -->
+
+        </tr>
+      </table>
+      </form>
+
+
+<script type="text/javascript">
+
+function editaIngrediente(elem){
+
+         var url='/estabelecimento/tabelaIngredienteCompartilhada/edit';
+         document.getElementById('form1').action = url;
+     //    document.getElementById('cod_ingrediente').value = valor;
+         document.getElementById('form1').submit();
+
+
+    }
+
+    </script>

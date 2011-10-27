@@ -257,6 +257,17 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
         echo base64_decode($image);
     }
 
+    public function getImageOriginalAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $ingredienteId = $this->_getParam('ingrediente', '');
+        $image = $this->Ingrediente->getImageData($ingredienteId);
+        header('Content-type: image/jpeg/png/gif/jpg');
+        echo base64_decode($image);
+    }
+
+
     /*
      * Na tela de ingredientes existe uma aba onde eh possivel observar, dada uma categoria, quais ingredientes
      * customizados pela empresa estao nesta categoria. Quando o combobox para escolher a categoria eh acionado

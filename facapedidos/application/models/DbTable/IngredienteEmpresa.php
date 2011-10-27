@@ -48,7 +48,7 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
     public function getRecords($code_empresa)
     {
 
-        $query = $this->_db->query("SELECT IE.*,E.razao_social,I.nome FROM ingrediente_empresa IE LEFT JOIN empresa E ON (IE.cod_empresa=E.cod_empresa) LEFT JOIN ingrediente I ON (IE.cod_ingrediente=I.cod_ingrediente) WHERE IE.cod_empresa=$code_empresa and IE.removed=0 ORDER BY  I.nome ");
+        $query = $this->_db->query("SELECT IE.*,E.razao_social,I.nome, I.imagem as imagem_original FROM ingrediente_empresa IE LEFT JOIN empresa E ON (IE.cod_empresa=E.cod_empresa) LEFT JOIN ingrediente I ON (IE.cod_ingrediente=I.cod_ingrediente) WHERE IE.cod_empresa=$code_empresa and IE.removed=0 ORDER BY  I.nome ");
         $result = $query->fetchAll();
         return $result;
     }
@@ -63,7 +63,7 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
 
     public function getSingleData($ingredienteId, $empresaId)
     {
-        $query = $this->_db->query("SELECT * FROM ingrediente_empresa where cod_ingrediente='$ingredienteId' AND cod_empresa=$empresaId and removed=0");
+        $query = $this->_db->query("SELECT IE.*, I.imagem as imagem_original FROM ingrediente_empresa IE, ingrediente I where IE.cod_ingrediente = I.cod_ingrediente AND IE.cod_ingrediente='$ingredienteId' AND IE.cod_empresa=$empresaId and removed=0");
         $result = $query->fetchAll();
         $result = $result[0];
         return $result;
@@ -77,7 +77,7 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
             'descricao' => $formData['descricao'],
             'preco_quando_adicional' => (float) $formData['preco_quando_adicional'],
         );
-        $id = $this->insert($data);
+        $this->insert($data);
 
         $logoFileName = bin2hex($logoFileName);
         if (!empty($logoFileName))
@@ -85,7 +85,7 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
             $this->_db->query("UPDATE ingrediente_empresa SET imagem=decode('{$logoFileName}' , 'hex')  WHERE cod_ingrediente = $cod_ingrediente AND cod_empresa=$cod_empresa ");
         }
 
-        return $id;
+        return ;
     }
 
     public function editRecord($formData, $cod_ingrediente, $cod_empresa, $logoFileName)
@@ -96,26 +96,24 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
             'preco_quando_adicional' => (float) $formData['preco_quando_adicional'],
         );
 
-
-        if ($logoFileName == "remover")
+        $logoFileName = bin2hex($logoFileName);
+        if (!empty($logoFileName))
         {
-            //Mesmo pegando a conexao dessa maneira a trasacao funciona corretamente
-            $this->getAdapter()->getConnection()->query("UPDATE ingrediente_empresa SET imagem=NULL  WHERE cod_ingrediente = $cod_ingrediente AND cod_empresa=$cod_empresa ");
-        } else
-        {
-            $logoFileName = bin2hex($logoFileName);
-            if (!empty($logoFileName))
+            if ($logoFileName == "remover")
+            {
+                $this->getAdapter()->getConnection()->query("UPDATE ingrediente_empresa SET imagem=NULL  WHERE cod_ingrediente = $cod_ingrediente AND cod_empresa=$cod_empresa ");
+            }
+            else
             {
                 $this->getAdapter()->getConnection()->query("UPDATE ingrediente_empresa SET imagem=decode('{$logoFileName}' , 'hex')  WHERE cod_ingrediente = $cod_ingrediente AND cod_empresa=$cod_empresa ");
             }
         }
-
         $where[] = "cod_ingrediente = $cod_ingrediente";
         $where[] = "cod_empresa = $cod_empresa";
-        $t = $this->_db->update('ingrediente_empresa', $data, $where);
+        $this->_db->update('ingrediente_empresa', $data, $where);
 
         
-        return $t;
+        return;
     }
 
     public function getImageData($ingredienteId, $empresaId)

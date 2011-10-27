@@ -13,9 +13,15 @@
       <td><?php echo $v['nome'] ?></td>
       <td><?php echo $v['descricao']; ?></td>
       <td>
-          <?php if(!empty($v['imagem'])) {?>
+          <?php if(!empty($v['imagem_original'])) {?>
+          <img src="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/get-Image-Original/ingrediente/<?php echo $v['cod_ingrediente']?>" width="100"  alt=""></td>
+          <?php } 
+          
+          else if(!empty($v['imagem'])) {          
+          ?>
           <img src="<?php echo $this->baseUrl() ?>/estabelecimento/ingredients/get-Image/ingrediente/<?php echo $v['cod_ingrediente']?>/empresa/<?php echo $v['cod_empresa']?>" width="100"  alt=""></td>
-          <?php } ?>
+         <?php } ?>
+
       <td>
           <form action="" method="post" id="gridForm">
           <input type="hidden" value="" name="ingredienteId" id="cod_ingrediente">
