@@ -4,9 +4,8 @@
         <ul>
             <li><a href="#tab1">Produto</a></li>
             <li><a href="#tab2">Imagens</a></li>
-
             <li><a href="#tab3">Categorias Permitidas como adicionais</a></li>
-            <li><a href="#tab4">Ingredientes</a></li>
+           <!-- <li><a href="#tab4">Ingredientes</a></li> -->
             <li><a href="#tab5">Tamanhos</a></li>
 
         </ul>
@@ -19,10 +18,10 @@
 
                         <td width="50%"> Nome* <br><input type="text" class="input-medium RQR required"  name="nome" maxlength="50" value="<?php echo $this->formData['nome'] ?>" style="width: 200px;" title="Por favor, indique nome">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                        <td width="50%">&nbsp;&nbsp; Valor calórico calculado: <?php echo $this->totalCalorias; ?></td>
+                       <!--  <td width="50%">&nbsp;&nbsp; Valor calórico calculado: <?php //echo $this->totalCalorias; ?></td> -->
                     </tr>
                     <tr>
-                        <td> Valor calorico <br><input type="text" class="input-medium validDecimalNumber"   name="valor_calorico" value="<?php echo $this->formData['valor_calorico'] ?>" maxlength="50" style="width: 200px;" title="Por favor, indique valor calorico">
+                        <td> Valor calorico estimado <br><input type="text" class="input-medium validDecimalNumber"   name="valor_calorico" value="<?php echo $this->formData['valor_calorico'] ?>" maxlength="50" style="width: 200px;" title="Por favor, indique valor calorico">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
 
                         <td> Tipo * <br>
@@ -63,7 +62,7 @@
                     </tr>
                     <tr><td colspan="2" height="20">&nbsp;</td></tr>
                     <tr>
-                        <td colspan="2" valign="top" style="text-align: top; vertical-align: top;">Descricao<br>
+                        <td colspan="2" valign="top" style="text-align: top; vertical-align: top;">Descreva detalhes desse produto como se estivesse no seu cardápio<br>
                             <textarea name="descricao" class="input-medium" style="width: 630px; height: 50px;"><?php echo $this->formData['descricao'] ?></textarea></td>
 
                     </tr>
@@ -188,11 +187,13 @@
             </form>
         </div>
     </div>
+<!--                        Resolvi tirar a possibilidade de o estabelecimento inserir item a item quais sao os ingredientes que compoem um produto.
+                            Acho que vai complicar muito.
 
     <div id="tab4">
 
         <div class="contentForm">
-            <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form4' onsubmit="return validateForm('form4');" >
+            <form action="<?php //echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form4' onsubmit="return validateForm('form4');" >
                     <fieldset style=" margin: 0; padding: 0;">
                         <legend>Ingrediente:</legend>
                         <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
@@ -206,7 +207,7 @@
                                 <td align="center"> Custo</td>
                                 <td align="center">Valor Caloricotd</td>
                             </tr>
-<?php
+<?php/*
                             foreach ($this->ingredienteEmpresaRec as $k => $v)
                             {
                                 if (!empty($this->formData4[$v['cod_ingrediente']]))
@@ -220,15 +221,17 @@
                                     $valor_calorico = '';
                                     $preco = '';
                                 }
+ *
+ */
 ?>
                                 <tr>
-                                    <td align="left"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
-                                    <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[preco][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $preco ?>" style="width: 200px;">
+                                    <td align="left"><input type="checkbox" value="<?php //echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php //echo $checked; ?>> <?php //echo $v['nome'] ?> </td>
+                                    <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[preco][<?php// echo $v['cod_ingrediente'] ?>]" value="<?php //echo $preco ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $valor_calorico ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php //echo $v['cod_ingrediente'] ?>]" value="<?php //echo $valor_calorico ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
-<?php } ?>
+<?php //} ?>
 
                             <tr>
                                 <td colspan="3" height="20">&nbsp;</td>
@@ -238,8 +241,8 @@
                     <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                         <tr>
                             <td><input type="hidden" name="emorFrom" value="4">
-                                <input type="hidden" name="action" value="<?php echo $this->action; ?>">
-                            <input type="hidden" name="produtoId" value="<?php echo $this->produtoId ?>">
+                                <input type="hidden" name="action" value="<?php //echo $this->action; ?>">
+                            <input type="hidden" name="produtoId" value="<?php //echo $this->produtoId ?>">
                             <input type="submit" name="Save" value="Salvar">
                         </td>
                     </tr>
@@ -247,7 +250,7 @@
             </form>
         </div>
     </div>
-
+-->
     <div id="tab5">
         <div class="contentForm">
             <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form5' name="form5" onsubmit="return validateForm('form5');" >

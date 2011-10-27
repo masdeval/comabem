@@ -33,7 +33,9 @@ class AdminAcl extends Zend_Acl{
 
                 /*Role Admin*/
 		$this->addRole(new Zend_Acl_Role("admin"),"gerente");
-		$this->allow("admin");
+                //Recursos de administrador
+               	$this->add(new Zend_Acl_Resource("estabelecimento:tabelaIngredienteCompartilhada"));
+   		$this->allow("admin");
 		
 	}
 
