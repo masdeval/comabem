@@ -4,7 +4,7 @@
         <ul>
             <li><a href="#tab1">Produto</a></li>
             <li><a href="#tab2">Imagens</a></li>
-            <li><a href="#tab3">Categorias Permitidas como adicionais</a></li>
+          <!--  <li><a href="#tab3">Categorias Permitidas como adicionais</a></li> -->
            <!-- <li><a href="#tab4">Ingredientes</a></li> -->
             <li><a href="#tab5">Tamanhos</a></li>
 
@@ -83,6 +83,7 @@
         </div>
 
     </div>
+
     <div id="tab2">
         <div class="contentForm">
             <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" name="form2" id='form2' enctype="multipart/form-data">
@@ -129,9 +130,9 @@
         </div>
     </div>
 
-    <div id="tab3">
+ <!--   <div id="tab3">
         <div class="contentForm">
-            <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form3' onsubmit="return validateForm('form3');" >
+            <form action="<?php //echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form3' onsubmit="return validateForm('form3');" >
                 <fieldset style=" margin: 0; padding: 0;">
                     <legend>Categorias Permitidas como adicionais</legend>
                     <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
@@ -139,10 +140,10 @@
                                 Indique quais sao as categorias ds ingredientes que estrao disponivies com adicionais para este produto. Informe tambem a quantidade que sara permitida em cada uma que for selecionada.
                             </td></tr>
                         <tr><td colspan="30">
-                                <span id='maxError' style="display: none; color: red;"><b>Maximum  <?php echo $this->formData['numero_max_adicionais'] ?> Records can be selectd.</b></span>
+                                <span id='maxError' style="display: none; color: red;"><b>Maximum  <?php //echo $this->formData['numero_max_adicionais'] ?> Records can be selectd.</b></span>
                             </td></tr>
                         <tr>
-<?php
+<?php   /*
                             $i = 0;
                             foreach ($this->categoriaIngredienteRec as $k => $v)
                             {
@@ -167,7 +168,7 @@
                                     $i = 0;
                                 } ?>
 <?php $i++;
-                            } ?>
+                            }                       */    ?>
                         </tr>
 
 
@@ -178,15 +179,15 @@
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>
                         <td><input type="hidden" name="emorFrom" value="3">
-                            <input type="hidden" name="action" value="<?php echo $this->action; ?>">
-                            <input type="hidden" name="produtoId" value="<?php echo $this->produtoId ?>">
+                            <input type="hidden" name="action" value="<?php //echo $this->action; ?>">
+                            <input type="hidden" name="produtoId" value="<?php //echo $this->produtoId ?>">
                             <input type="submit" name="Save" value="Salvar">
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
-    </div>
+    </div>      -->
 <!--                        Resolvi tirar a possibilidade de o estabelecimento inserir item a item quais sao os ingredientes que compoem um produto.
                             Acho que vai complicar muito.
 
@@ -275,12 +276,12 @@
 
 <?php if (!empty($this->totalPrco))
                                 { ?>
-                                    <tr>            
-                                        <td colspan="2" align="right"><b>Preco De Custo : R$ <?php echo $this->totalPrco; ?></b></td>
-                                    </tr>
+                     <!--               <tr>
+                                       <td colspan="2" align="right"><b>Preco De Custo : R$ <?php //echo $this->totalPrco; ?></b></td>                                  </tr>
 <?php } ?>
 
-                                <tr>
+                                <tr> -->
+                                    
                                     <td>Descricao &nbsp;&nbsp;&nbsp;<br>
                                         <input type="text" class="input-medium RQR required"  title='Por favor, indique a descrição' maxlength="20"  name="descricao" id="descricao" value="<?php echo $this->formData5['descricao'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
