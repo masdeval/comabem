@@ -1,0 +1,212 @@
+
+
+
+ - validacao CPF - ??  Zend Filter?
+
+ - aumentar campo e-mail nas telas - Ok
+
+ - adicionar botao de novo nas telas de cadastro - Ok
+
+ - vercomo funciona esquema de ACL com o Zend - Ok
+
+
+- O controller de erro e de login nao deveriam estar centralizados?
+
+- Tem como colocar os forms numa pasta embaixo da pasta dos modulos e tirar da pasta library para ficar mais 
+organizado? - sim, na verdade isso é o certo Ok
+
+- Nao consegui invalidar sessao no logout - parace que esta sim funcionando - Ok
+
+- Verificar se o checkDuplicateURL em Empqresa.php esta sendo disparado via Ajax e fazer o mesmo para a 
+aba de tipos de produtos da empresa quando tentar remover um tipo de produto incorretamente Ok
+
+- Na aba de tipo de produto em Emrpesa, acrescentar chekbox ao inves de text area Ok
+
+- Fazer um mapeamento de todos os relacionamentos que envolvem exclusao de chave estrangeira
+
+- trocar todos os direcionamentos $this->_helper->redirector->gotoUrl para $this->_forward 
+
+- Nao deixar campos texto serem submetidos como "em branco" quando nao puderem ser nulos - (Ok funcionario)
+
+- Organizer melhor a wiki de requisitos separando pelos modulos do sistema - ok
+
+- Acrescentar log na aplicação
+
+- Acrescentar i18n? - Acho que nao vale a pena o esforco agora Ok
+
+- Contratar no eLance para design web e trabalhos braçais
+
+- Os metodos edit dentro dos controllers sempre sao acionados a partir do proprio controller. POrtanto, 
+nao tem necessidade de receberem o id via parametro. Pode-se setar diretamete a variavel id na view 
+e entao encaminhar para a acao edit via _forward.
+
+- Acrescentar validacao de numero minimo de caracteres em um campo - (Ok funcionario)
+
+- criar a errorAction em todos os controllers. deve tratar inicialmente um edit que nao recebe ID
+
+- Verificar na tela de funcionario tamanho do campo CEP no banco, fone comercial e celular - (Ok)
+
+- fazer uma verificacao geral para ver se um usuario logado apenas esta vendo dados pertinentes a sua empresa - Ok
+
+- usar Zend Filter como no exemplo abaixo para validar a entrada dentro do controller? 
+
+$data = $this->_request->getParams();
+
+$validators = array(
+    'month'   => 'Digits',
+);
+
+$input = new Zend_Filter_Input($filters, $validators, $data);
+
+
+- Talvez mais para frente, por seguranca, fazer todos os comandos SQL de remocao e edicao de registros levarem em conta o cod_empresa. Atualmente apenas 
+as consultas estao fazenbdo 
+
+
+- Validacoes por Ajax precisam ter: checkCPF(this,<?php  echo empty($this->funcionarioId) ? "''" : $this->funcionarioId  ?>);" value="<?php echo $this->formData['cpf']?>			
+
+
+- RefaZer todas as GridView para que a funcao excluir nao passe os dados via Get
+
+- Substituir em todos os controllers forward("edit") pela chamada direta aa funcao editAction
+
+ - rever em todas as funcoes Add nos controllers a necessidade de setar action="edit", de separar insercao e atualizacao das abas detalhe e dar uma msg melhor quando 
+adiconar registro na aba detalhe sem antes ter escolhido um registro na aba mestre
+
+- Fazer as funcoes javascript de delecao submeter via post para os actions nos controllers e estes lerem os ids apenas via post. Padronizar no controller o campo
+chave como id<nome da tabela> (pois um campo assim ja existe em todos os formularios como hidden) e nao apenas id.
+
+- Nas telas que possuem abas, verificar nas telas detalhe se há necessidade de ter um if para diferenciar insercao de edicao.
+
+
+
+
+
+
+
+
+function formataCEP(campo){
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	tam = vr.length;
+
+	if ( tam <= 3 )
+		campo.value = vr;
+	if ( tam > 3 ) 
+		campo.value = vr.substr(0, tam-3 ) + '-' + vr.substr(tam-3, tam);
+}
+
+function formataHora(campo,teclapres) {
+	var tecla = teclapres.keyCode;
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	vr = vr.replace( ".", "" );
+	vr = vr.replace( ":", "" );
+	vr = vr.replace( ":", "" );
+	tam = vr.length + 1;
+
+	if ( tecla != 9 && tecla != 8 ){
+		if ( tam > 2 && tam < 5 )
+			campo.value = vr.substr( 0, tam - 2  ) + ':' + vr.substr( tam - 2, tam );
+	}
+}
+
+// Formata o campo valor
+function formataValor(campo) {
+	campo.value = filtraCampoValor(campo); 
+	vr = campo.value;
+	tam = vr.length;
+
+	if ( tam <= 2 ){ 
+ 		campo.value = vr ; }
+ 	if ( (tam > 2) && (tam <= 5) ){
+ 		campo.value = vr.substr( 0, tam - 2 ) + ',' + vr.substr( tam - 2, tam ) ; }
+ 	if ( (tam >= 6) && (tam <= 8) ){
+ 		campo.value = vr.substr( 0, tam - 5 ) + '.' + vr.substr( tam - 5, 3 ) + ',' + vr.substr( tam - 2, tam ) ; }
+ 	if ( (tam >= 9) && (tam <= 11) ){
+ 		campo.value = vr.substr( 0, tam - 8 ) + '.' + vr.substr( tam - 8, 3 ) + '.' + vr.substr( tam - 5, 3 ) + ',' + vr.substr( tam - 2, tam ) ; }
+ 	if ( (tam >= 12) && (tam <= 14) ){
+ 		campo.value = vr.substr( 0, tam - 11 ) + '.' + vr.substr( tam - 11, 3 ) + '.' + vr.substr( tam - 8, 3 ) + '.' + vr.substr( tam - 5, 3 ) + ',' + vr.substr( tam - 2, tam ) ; }
+ 	if ( (tam >= 15) && (tam <= 18) ){
+ 		campo.value = vr.substr( 0, tam - 14 ) + '.' + vr.substr( tam - 14, 3 ) + '.' + vr.substr( tam - 11, 3 ) + '.' + vr.substr( tam - 8, 3 ) + '.' + vr.substr( tam - 5, 3 ) + ',' + vr.substr( tam - 2, tam ) ;}
+ 		
+}
+
+
+
+// Formata o campo valor
+function formataNumerico(campo) {
+
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	tam = vr.length;
+}
+
+// limpa todos os caracteres especiais do campo solicitado
+function filtraCampo(campo){
+	var s = "";
+	var cp = "";
+	vr = campo.value;
+	tam = vr.length;
+	for (i = 0; i < tam ; i++) {  
+		if (vr.substring(i,i + 1) != "/" && vr.substring(i,i + 1) != "-" && vr.substring(i,i + 1) != "."  && vr.substring(i,i + 1) != "," ){
+		 	s = s + vr.substring(i,i + 1);}
+	}
+	campo.value = s;
+	return cp = campo.value
+}
+//limpa todos os caracteres especiais do campo solicitado
+function filtraCampoValor(campo){
+	var s = "";
+	var cp = "";
+	vr = campo.value;
+	tam = vr.length;
+	for (i = 0; i < tam ; i++) {  
+		if (vr.substring(i,i + 1) >= "0" && vr.substring(i,i + 1) <= "9"){
+		 	s = s + vr.substring(i,i + 1);}
+	} 
+	campo.value = s;
+	return cp = campo.value
+}
+
+
+
+function formataCPF(campo){
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	tam = vr.length ;
+	if ( tam <= 2 ){
+ 		campo.value = vr ;}
+	if ( tam > 2 && tam <= 5 ){
+		campo.value = vr.substr( 0, tam - 2 ) + '-' + vr.substr( tam - 2, tam );}
+	if ( tam >= 6 && tam <= 8 ){
+		campo.value = vr.substr( 0, tam - 5 ) + '.' + vr.substr(tam - 5, 3 ) + '-' + vr.substr( tam - 2, tam );}
+	if ( tam >= 9 && tam <= 11 ){
+		campo.value = vr.substr( 0, tam - 8 ) + '.' + vr.substr( tam - 8, 3 ) + '.' + vr.substr(tam - 5, 3 ) + '-' + vr.substr( tam - 2, tam );}
+
+}
+
+function formataTelefone(campo) {
+	campo.value = filtraCampo(campo);
+	vr = campo.value;
+	tam = vr.length;
+
+	if ( tam <= 4 )
+		campo.value = vr;
+	if ( tam > 4 ) 
+		campo.value = vr.substr(0, tam-4 ) + '-' + vr.substr(tam-4, tam);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
