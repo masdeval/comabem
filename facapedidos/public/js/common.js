@@ -1,4 +1,3 @@
-
 // limpa todos os caracteres especiais do campo solicitado
 function filtraCampo(campo){
 	var s = "";
@@ -114,9 +113,9 @@ function toggleImage(){
     $('#labelChange').hide();
     $('#labelRemove').hide();
     $('#labelChangeCancel').show();
-   
+
 }
-//Esse é o botao de cancelar
+//Esse Ã© o botao de cancelar
 function toggleImage2(){
     $('#changeImage').hide();
     $('#labelChange').show();
@@ -125,7 +124,7 @@ function toggleImage2(){
     $('#image').show();
     $('#labelChangeCancel').hide();
 }
-function removeImage(){  
+function removeImage(){
     $('#image').hide();
     $('#labelRemove').hide();
     $('#labelRemove').hide();
@@ -166,7 +165,7 @@ function delfuncionario(id){
         var url=base_url+'/funcionario/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
-        
+
     }
 }
 function delFuncionario_entregador(id){
@@ -195,7 +194,7 @@ function editaIngrediente(elem){
          var url='/estabelecimento/ingredients/edit';
          //if(elem.selectedIndex == 0) //caso o valor selecionado seja nulo (ou seja, a opcao 'Select')
            //  elem.options[elem.selectedIndex].value = 0; //faco isso para trazer uma tela vazia
-         document.getElementById('form1').action = url;     
+         document.getElementById('form1').action = url;
          document.getElementById('form1').submit();
  }
 
@@ -254,7 +253,7 @@ function delPromocao(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
 
         var url=base_url+'/produto/delete-Promocao/';
-        document.getElementById('form6').promocaoId.value=id;  
+        document.getElementById('form6').promocaoId.value=id;
         document.getElementById('form6').action = url;
         document.getElementById('form6').submit();
 
@@ -265,21 +264,21 @@ function savePromocao(id){
 
     if(!validateForm('form6'))
         return false;
-    
+
     document.getElementById('form6').promocaoId.value=id;
     document.getElementById('form6').submit();
 }
 
 
-/* É executado quando o combobox de tamanhos na aba Tamanhos é alterado */
+/* Ã‰ executado quando o combobox de tamanhos na aba Tamanhos Ã© alterado */
 
 function editTamanho(tamid,id)
 {
-    
+
     //var url=base_url+'/produto/edit/id/'+id+'/tamid/'+tamid; //antes estava so assim
 
-    //Esse caso é quando a funcao é chamada no link de adicionar um tamanho novo
-    //Nesse caso, deve-se apenas limpar os campos de tamanho no formulario e não há
+    //Esse caso Ã© quando a funcao Ã© chamada no link de adicionar um tamanho novo
+    //Nesse caso, deve-se apenas limpar os campos de tamanho no formulario e nÃ£o hÃ¡
     //um codigo de tamanho para ser preenchido no campo hidden tamanhoId que deve receber string vazia
     if(tamid == 0)
     {
@@ -289,9 +288,9 @@ function editTamanho(tamid,id)
             document.getElementById("numero_sabores_pizza").value = '';//pode ser que esse campo nao exista na tela. Dessa maneira nao vai travar nessa linha
         }
         catch(err){}
-        document.getElementById("tamanhoId").value = '';        
+        document.getElementById("tamanhoId").value = '';
         document.getElementById("tamanhoEdit").selectedIndex = 0; */
-        
+
         document.getElementById("tamanhoId").value = '';
         document.form5.action='/produto/edit/';
         document.form5.submit();
@@ -303,7 +302,7 @@ function editTamanho(tamid,id)
         document.getElementById('tamanhoId').value = tamid;
         document.form5.action='/produto/edit/';
         document.form5.submit();
-        
+
     /*
         //esse codigo cria um formulario HTML dinamicamente
         //achei que precisava fazer isso
