@@ -1,0 +1,94 @@
+
+{{{
+#!div  style="width:860px"
+ 
+= Requisitos =
+
+== Funcionalidades para o estabelecimento ==
+
+Aqui estão listadas as funcionalidades disponíveis aos estabelecimentos parceiros:
+
+   * FN-1 Cadastrar informações básicas da empresa, seu horário de funcionamento e funcionários
+   * FN-2 Configurar ingrediente:
+      * Ingrediente empresa (descrição, preço quando adicional, imagem): existe uma lista única de ingredientes para todo o sistema, todavia é possível para um estabelecimento inserir informações personalizadas. Assim, este pode: fornecer uma descrição particular para um ingrediente se deseja que esta apareça, o preço quando for utilizado como adicional (o qual pode ser usado para cálculo do custo total do produto) e uma foto . 
+      * Faz parte da configuração do ingrediente informar a quais categorias este pertence. Por exemplo, tomate pode fazer parte das categorias MOLHO e SALADA e já arroz faz parte apenas da categoria GUARNICAO. Este agrupamento personalizado de ingredientes em categorias é útil para o estabelecimento indicar posteriormente os ingredientes adicionais para um produto. 
+   * FN-3 ~~Cadastrar novo ingrediente: a tabela de ingredientes é única, porém um estabelecimento pode inserir um ingrediente faltante o qual será compartilhado para todos.~~
+   * Produtos:
+      * FN-4 Cadastrar produtos: permite cadastrar os produtos ofertados no cardápio inclusive, associando para cada um deles, todos os ingredientes que o compõem. Isto é feito na tabela ITENS_DE_UM_LANCHE. Nesta tabela poderá opcionalmente ser informado o custo (preço) daquele ingrediente no preparo do produto e também seu valor calórico (baseado na quantidade que é utilizada). A coluna cobrado_por_quilo influenciará se deve ou não ser solicitado ao cliente entrar com a quantidade que deseja de um determinado produto quando estiver efetuando seu pedido (RN-4). 
+      * FN-5 Cadastrar tamanho: não basta cadastrar o produto, é necessário também cadastrar os tamanhos ofertados. Um pedido estará associado a um ou vários produtos de um determinado tamanho.  Cada tamanho conterá informações úteis para o cálculo do preço final do produto (RN-2). Quando o produto for pizza haverá um campo para preenchimento do número de pedaços (RN-5).  
+      * FN-6 Categorias permitidas como adicional: a cada produto pode ser associado quais as categorias serão permitidas como adicional. Lembrando que para cada uma dessas categorias estão associados um conjunto de ingredientes. Ainda, para cada associação de categoria e produto, pode-se informar a quantidade de adicionais permitido ao cliente escolher. Dessa forma o estabelecimento tem uma maneira flexível de configurar essas possibilidades. 
+      * FN-7 Promoção: permite cadastrar as promoções vigentes com sua data inicial, data de expiração e um anúncio que pode ser apresentado para fazer a propaganda da promoção. Promoções devem ser cadastradas individualmente para cada tamanho do produto.
+
+   * FN-8 Entregas: Para cada pedido o estabelecimento associará um entregador e assim terá um controle sobre a quantidade de entregas e a distancia de cada uma delas (RN-7). Baseado nisso e na quilometragem da moto/carro terá um melhor controle de seus entregadores.
+
+   * Estatísticas - o sistema trará as seguintes informações estratégicas para o parceiro:
+
+      * FN-9 Quantidade de visualizações de seus produtos
+      * FN-10 Quantidade de negócios fechados (pedidos)  e seu valor
+      * FN-11 Diferença média entre o custo dos produtos e seus preços de venda
+      * FN-12 Ver a nota que seus produtos receberam dos clientes
+      * FN-13 Um ranking informando como está o preço praticado de seu produto em comparação com a de outros fornecedores
+      * FN-14 Ver a nota que seus produtos receberam dos clientes
+      * FN-15 Um ranking informando como está o preço praticado de seu produto em comparação com a de outros fornecedores 
+
+
+== Funcionalidades para o usuário final ==
+
+   * FN-16 Buscar produto por estabelecimento
+   * FN-17 Buscar produto por preço
+   * FN-18 Buscar produto por distancia do estabelecimento
+   * FN-19 Buscar produto promocional
+   * FN-20 Buscar produto por valor calórico
+   * FN-21 Buscar produto por ingrediente(s)
+   * FN-22 Montar sua própria pizza (RN-1)
+   * FN-23 Pagar com cartão de credito
+   * FN-24 Dar nota para um lanche
+   * FN-25 Compartilhar seu pedido no facebook
+   * FN-26 Fazer um pedido: um cliente, após ter escolhido um produto usando uma das muitas opções de busca, registrará seu pedido. Isto envolve:
+      * escolher o tamanho do produto;
+      * escolher os opcionais (PEDIDO_PERSONALIZADO); (RN-1,RN-3)
+      * se o produto for pizza, escolher os sabores (baseado no tamanho da pizza e no número de sabores permitido);(RN-1)
+      * se o produto for cobrado por quilo, indicar a quantidade desejada (ITEM_PEDIDO); (RN-4)
+      * informar a quantidade desejada (em itens) de um determinado produto (ITEM_PEDIDO);
+      * cadastrar suas informações pessoais para entrega caso ainda não tenha cadastro.
+
+== Regras de Negócio == 
+
+   * RN-1 Esquema de lanches personalizados
+
+[[Image(lanche_personalizado.jpg)]]
+
+Uma flexibilidade importante da aplicação é permitir aos usuários montarem seus lanches e aos estabelecimentos terem um controle de como isso será feito. Existem duas maneiras de personalizar um pedido:
+
+      * acrescentar adicionais a um lanche pré-existente e
+      * montar um lanche totalmente novo, que não existe no cardápio, escolhendo todos os ingredientes que este terá.
+
+As duas opções requerem um prévio e cuidadoso cadastramento pelo estabelecimento de quais serão as opções que seus clientes terão para fazerem tais escolhas. O site Faça Pedidos foi projetado para propiciar um prático e completo mecanismo de controle. Primeiramente, foi elaborada  uma lista de categorias para classificação dos ingredientes. Algumas categorias são: GUARNIÇÃO, TEMPERO, PIZZA, SANDUÍCHE, MOLHO E GERAL. Cada estabelecimento poderá categorizar  os ingredientes de uma ou mais formas, criando grupos de ingredientes que poderão ser utilizados em  situações pertinentes. Assim, por exemplo, suponha que um estabelecimento queira, para seus pratos quentes, disponibilizar os adicionais em três grupos: outras guarnições fora as que já vem no prato, o molho da salada e os sachês de tempero que devem ser enviados. Mas vejam só que coincidência! Esses três grupos enquadram-se justamente em três categorias já existentes. Então como ficariam os cadastros necessários para tratarem desse caso:
+
+      * Na tabela CATEGORIA_INGREDIENTE_EMPRESA o estabelecimento fará as associações necessárias para criar os “grupos” de guarnições (arroz, mandioca frita), temperos (pimenta, sal) e molhos (tártaro, rosê). 
+      * Na tabela CATEGORIA_PERMITIDA_COMO_ADICIONAL deve ser configurado para cada produto, nesse exemplo para todos os pratos quentes, todas as categorias que serão apresentadas para o usuário como opções para personalização de seu pedido. Perceba que aqui deve-se informar quantos ingredientes serão permitidos em cada categoria. E o melhor, isso pode ser feito por produto individualmente. Assim, o estabelecimento pode, para o prato de Peixe a Urucum, dizer que o número de guarnições pode ser de até 5 e já para o prato de Bife à Cavalo esse número será de apenas 3 guarnições permitidas. 
+
+ Acho que ainda não está muito claro. Vamos para outro exemplo. Suponha que o usuário escolha uma pizza e queira escolher alguns adicionais. Basta que o estabelecimento tenha previamente cadastrado quais são os ingredientes que se enquadram na categoria pizza e tenha associado para cada pizza essa categoria (informando inclusive quantos adicionais serão permitido) e pronto. Quando o usuário entrar na opção de personalização de sua pizza aparecerá para este os ingredientes a mais pertinentes a uma pizza, o que provavelmente não conterá arroz, mandioca e nem molho tártaro. 
+
+Quando o sistema abre a opção para personalização ele lê em todas as tabelas envolvidas e apresenta as opções na tela de acordo com as configurações. Assim, a tabela PEDIDO_PERSONALIZADO conterá apenas ingredientes corretamente selecionados para aquele produto em questão.  
+
+   * RN-2 Cálculo de preços
+
+[[Image(calculo_precos.jpg)]]
+
+Uma questão importante em vendas pela web, onde será permitido ao usuário interações dinâmicas que podem alterar de várias formas o preço final, é a maneira que esse preço será calculado. O site Faça Pedido fornece mecanismos para registro individual de cada preço. De forma simples, o preço de um produto é seu preço normal (de acordo com seu tamanho) com o somatório dos preços de todos os adicionais escolhidos.   
+Porém, de forma mais profissional, o preço de um produto é composto pelo preço de cada ingrediente que o compõe (preço de custo) mais um acréscimo para considerar outras despesas e o lucro. Uma parte importante do cadastro do estabelecimento é informar na tabela ITENS_DE_UM_LANCHE o preço que cada ingrediente tem na preparação de um produto. Assim, se para um lanche X é usado 100g de Presunto de Parma o preço será um, se para outro lanche Y é usado 50g o preço evidentemente será menor. Com essa informação a aplicação calcula o preço de custo de um produto, baseado nos preços dos ingredientes que compõem o produto, e o apresenta como forma de auxílio para o estabelecimento calcular seu valor final.
+
+O estabelecimento cadastrará manualmente no campo PRECO, na tabela TAMANHO_PRODUTO, o preço final (real) de cada tamanho de seu produto.  
+Uma vez que o preço do produto foi estabelecido, seu preço final de venda deve ser acrescido dos adicionais que foram acrescentados. Para isso o sistema varrerá a tabela PEDIDO_PERSONALIZADO para encontrar quais são os ingredientes adicionais e depois a tabela INGREDIENTE_EMPRESA para encontrar o preço do ingrediente quando este for um adicional. Com todas essas informações disponíveis é possível então calcular o valor final de um pedido. 
+
+
+   * RN-3 Serão ofertados como adicionais somente aqueles ingredientes que tiverem o campo preco_quando_adicional preenchido. 
+   * RN-4 Se um produto estiver marcado como cobrado_por_quilo, no ato do cliente efetuar um pedido na tela deve aparecer um campo para o preenchimento da quantidade. Esse valor será armazenado na tabela ITEM_PEDIDO no campo quilos.
+   * RN-5 Quando o produto for pizza deve ser habilitado um campo para preenchimento do número de sabores permitidos na tabela TAMANHO_PRODUTO.
+   * RN-6 Controle de regiões válidas: não será permitido a um cliente consultar produtos de um estabelecimento que não atende na sua região.
+   * RN-7 Controle de entregas: o sistema calculará, dado vários pedidos em aberto, quais devem ser entregues em conjunto baseado no tempo que levará a última entrega. Isso será possível porque para cada destino teremos a informação da latitude e longitude do mesmo, e assim usaremos a API do mapa para otimizar as entregas. Exemplo: supondo que existam 30 pedidos em aberto o sistema calculará trajetórias envolvendo um ou mais pedidos de forma que a última entrega não ultrapasse um tempo máximo. Cada conjunto de pedidos que serão entregues por um entregador caracterizará uma viagem, a qual será automaticamente registrada pela aplicação com dados como: quilometros rodados e tempo de entrega.
+   * RN-08 Uma foto pode ter no máximo 100kb.
+   * ~~RN-09 Sempre que um ingrediente for cadastrado na tabela INGREDIENTE este deve ser incluido na tabela INGREDIENTE_EMPRESA para cada uma das empresas existente.~~ 
+   * ~~RN-10 A aplicação deve informar a lista de ingredientes ainda não configurados, i.e., aqueles com as tres colunas de configuracao em branco.~~
+   * ~~RN-11 Quando uma nova empresa for cadastrada a tabela INGREDIENTE_EMPRESA será automaticamente preenchida com todos os ingredientes disponíveis na tabela INGREDIENTE.~~
