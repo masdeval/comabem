@@ -124,19 +124,20 @@ CREATE SEQUENCE public.funcionario_cod_funcionario_seq;
 CREATE TABLE public.funcionario (
                 cod_funcionario INTEGER NOT NULL DEFAULT nextval('public.funcionario_cod_funcionario_seq'),
                 nome VARCHAR(50) NOT NULL,
-                cpf CHAR(14) NOT NULL,
+                cpf CHAR(11) NOT NULL,
                 data_nascimento DATE,
-                email VARCHAR(50),
+                email VARCHAR(30),
                 senha VARCHAR(10),
-                telefone_residencial CHAR(14),
-                telefone_comercial CHAR(14),
-                celular CHAR(14),
+                telefone_residencial VARCHAR(20) NOT NULL,
+                telefone_comercial VARCHAR(20) NOT NULL,
+                celular VARCHAR(20) NOT NULL,
+                removed CHAR(1) DEFAULT 0 NOT NULL,
                 endereco VARCHAR(50) NOT NULL,
                 numero SMALLINT NOT NULL,
                 bairro VARCHAR(45),
                 complemento VARCHAR(30),
-                cep CHAR(9) NOT NULL,
-                status_user INTEGER DEFAULT 1,
+                cep CHAR(8) NOT NULL,
+                status_user SMALLINT NOT NULL,
                 data_cadastro TIMESTAMP DEFAULT now(),
                 observacao TEXT,
                 CONSTRAINT funcionario_pkey PRIMARY KEY (cod_funcionario)
@@ -144,6 +145,10 @@ CREATE TABLE public.funcionario (
 
 
 ALTER SEQUENCE public.funcionario_cod_funcionario_seq OWNED BY public.funcionario.cod_funcionario;
+
+CREATE UNIQUE INDEX funcionario_idx
+ ON public.funcionario
+ ( cpf );
 
 CREATE TABLE public.privilege (
                 cod_funcionario INTEGER NOT NULL,
@@ -193,15 +198,15 @@ CREATE TABLE public.empresa (
                 numero SMALLINT NOT NULL,
                 cep CHAR(8) NOT NULL,
                 complemento VARCHAR(20),
-                valor_minimo_entrega DOUBLE PRECISION NOT NULL,
+                valor_minimo_entrega NUMERIC(14,2) NOT NULL,
                 nome_fantasia VARCHAR(100),
                 logo BYTEA,
-                telefone1 CHAR(10),
-                telefone2 CHAR(10),
+                telefone1 VARCHAR(20) NOT NULL,
+                telefone2 VARCHAR(20) NOT NULL,
                 bairro VARCHAR(30),
                 email VARCHAR(50),
                 url VARCHAR(10) NOT NULL,
-                removed SMALLINT DEFAULT 0,
+                removed SMALLINT DEFAULT 0 NOT NULL,
                 desativada SMALLINT DEFAULT 0,
                 data_cadastro TIMESTAMP,
                 cod_estrategia_cobranca_pizza INTEGER,
@@ -223,19 +228,27 @@ CREATE INDEX xpkempresa
  ON public.empresa USING BTREE
  ( cod_empresa );
 
+CREATE UNIQUE INDEX empresa_idx
+ ON public.empresa
+ ( url );
+
+CREATE UNIQUE INDEX empresa_idx1
+ ON public.empresa
+ ( cnpj );
+
 CREATE SEQUENCE public.produto_cod_produto_seq;
 
 CREATE TABLE public.produto (
                 cod_produto INTEGER NOT NULL DEFAULT nextval('public.produto_cod_produto_seq'),
                 nome VARCHAR(50) NOT NULL,
-                descricao VARCHAR(200),
+                descricao VARCHAR,
                 tempo_preparo_minutos SMALLINT,
                 valor_calorico DOUBLE PRECISION,
                 numero_max_adicionais SMALLINT,
                 fator_de_ajuste DOUBLE PRECISION,
                 cobrado_por_quilo BOOLEAN,
                 disponivel BOOLEAN,
-                removed SMALLINT DEFAULT 0,
+                removed SMALLINT DEFAULT 0 NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 cod_tipo_produto INTEGER NOT NULL,
                 CONSTRAINT produto_pkey PRIMARY KEY (cod_produto)
@@ -254,9 +267,9 @@ CREATE TABLE public.tamanho_produto (
                 cod_tamanho_produto INTEGER NOT NULL DEFAULT nextval('public.tamanho_produto_cod_tamanho_produto_seq'),
                 cod_produto INTEGER NOT NULL,
                 descricao VARCHAR(20) NOT NULL,
-                preco DOUBLE PRECISION NOT NULL,
+                preco NUMERIC(14,2) NOT NULL,
                 numero_sabores_pizza SMALLINT,
-                removed SMALLINT DEFAULT 0,
+                removed SMALLINT DEFAULT 0 NOT NULL,
                 CONSTRAINT tamanho_produto_pkey PRIMARY KEY (cod_tamanho_produto)
 );
 
@@ -274,7 +287,7 @@ CREATE INDEX tamanho_produto_fkindex1
 CREATE TABLE public.produto_venda_coletiva (
                 cod_venda_coletiva INTEGER NOT NULL,
                 cod_tamanho_produto INTEGER NOT NULL,
-                preco_promocional DOUBLE PRECISION NOT NULL,
+                preco_promocional NUMERIC(14,2) NOT NULL,
                 CONSTRAINT produto_venda_coletiva_pk PRIMARY KEY (cod_venda_coletiva, cod_tamanho_produto)
 );
 
@@ -286,9 +299,9 @@ CREATE TABLE public.promocao (
                 cod_produto INTEGER NOT NULL,
                 data_inicio TIMESTAMP NOT NULL,
                 data_fim TIMESTAMP NOT NULL,
-                preco_promocional DOUBLE PRECISION NOT NULL,
+                preco_promocional NUMERIC(14,2) NOT NULL,
                 anuncio TEXT,
-                removed SMALLINT DEFAULT 0,
+                removed SMALLINT DEFAULT 0 NOT NULL,
                 cod_tamanho_produto INTEGER NOT NULL,
                 CONSTRAINT promocao_pkey PRIMARY KEY (cod_promocao)
 );
@@ -344,8 +357,8 @@ CREATE TABLE public.ingrediente_empresa (
                 cod_empresa INTEGER NOT NULL,
                 descricao VARCHAR(200),
                 imagem BYTEA,
-                preco_quando_adicional DOUBLE PRECISION,
-                removed SMALLINT DEFAULT 0,
+                preco_quando_adicional NUMERIC(14,2) NOT NULL,
+                removed SMALLINT DEFAULT 0 NOT NULL,
                 CONSTRAINT ingrediente_empresa_pkey PRIMARY KEY (cod_ingrediente, cod_empresa)
 );
 
@@ -382,7 +395,7 @@ CREATE TABLE public.itens_de_um_lanche (
                 cod_produto INTEGER NOT NULL,
                 cod_ingrediente INTEGER NOT NULL,
                 cod_empresa INTEGER NOT NULL,
-                preco DOUBLE PRECISION,
+                preco NUMERIC(14,2) NOT NULL,
                 valor_calorico DOUBLE PRECISION,
                 CONSTRAINT itens_de_um_lanche_pkey PRIMARY KEY (cod_produto, cod_ingrediente, cod_empresa)
 );
@@ -432,7 +445,7 @@ CREATE INDEX ifk_rel_31
 CREATE TABLE public.funcionario_has_empresa (
                 cod_funcionario INTEGER NOT NULL,
                 cod_empresa INTEGER NOT NULL,
-                responsavel SMALLINT DEFAULT 0,
+                responsavel CHAR NOT NULL,
                 CONSTRAINT funcionario_has_empresa_pkey PRIMARY KEY (cod_funcionario, cod_empresa)
 );
 
@@ -458,19 +471,20 @@ CREATE SEQUENCE public.cliente_cod_cliente_seq;
 CREATE TABLE public.cliente (
                 cod_cliente INTEGER NOT NULL DEFAULT nextval('public.cliente_cod_cliente_seq'),
                 cod_cidade INTEGER NOT NULL,
-                nome VARCHAR(30) NOT NULL,
+                nome VARCHAR(50) NOT NULL,
                 data_nascimento DATE NOT NULL,
-                email VARCHAR(50) NOT NULL,
+                email VARCHAR(30) NOT NULL,
                 senha VARCHAR(20) NOT NULL,
-                telefone CHAR(14) NOT NULL,
-                celular CHAR(14),
+                telefone VARCHAR(20) NOT NULL,
+                celular VARCHAR(20) NOT NULL,
                 endereco VARCHAR(50) NOT NULL,
                 numero VARCHAR(10) NOT NULL,
                 bairro VARCHAR(45) NOT NULL,
                 complemento VARCHAR(30),
                 cep CHAR(9) NOT NULL,
-                status_usuario INTEGER DEFAULT 1 NOT NULL,
-                data_cadastro DATE DEFAULT now() NOT NULL,
+                cpf CHAR(11) NOT NULL,
+                status_usuario SMALLINT NOT NULL,
+                data_cadastro TIMESTAMP NOT NULL,
                 observacao TEXT,
                 CONSTRAINT cliente_pkey PRIMARY KEY (cod_cliente)
 );
@@ -500,7 +514,7 @@ CREATE TABLE public.pedido (
                 cod_entrega INTEGER NOT NULL,
                 cod_cliente INTEGER NOT NULL,
                 data DATE,
-                valor_total DOUBLE PRECISION,
+                valor_total NUMERIC(14,2) NOT NULL,
                 rua VARCHAR(50),
                 numero SMALLINT,
                 complemento VARCHAR(20),
@@ -508,6 +522,7 @@ CREATE TABLE public.pedido (
                 cep VARCHAR(8),
                 status_pagamento SMALLINT,
                 status_pedido SMALLINT,
+                telefone VARCHAR(20) NOT NULL,
                 CONSTRAINT pedido_pkey PRIMARY KEY (cod_pedido)
 );
 
