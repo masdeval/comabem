@@ -1,43 +1,84 @@
-<style>
-    a:link,
-    a:visited
-    {
-        color: #0398CA;
-    }
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+</head>
+<div align="center" width="80%">
 
-    span#zf-name
-    {
-        color: #91BE3F;
-    }
+    <div style="border: solid gray; margin: 50px;">
+        <form action="/portal/index/consulta" method="post" class="" id='form1'>
 
-    div#welcome
-    {
-        color: #FFFFFF;
-        background-image: url(http://framework.zend.com/images/bkg_header.jpg);
-        width:  600px;
-        height: 400px;
-        border: 2px solid #444444;
-        overflow: hidden;
-        text-align: center;
-    }
+            <h2>Entre com os critérios de pesquisa.</h2> 
 
-    div#more-information
-    {
-        background-image: url(http://framework.zend.com/images/bkg_body-bottom.gif);
-        height: 100%;
-    }
-</style>
-<div id="welcome">
-    <h1>Welcome to the <span id="zf-name">Zend Framework!</span></h1>
+            <div style="text-align: left; border: transparent; width: 380px; ">
+            Ex:  macarrão, massa verde, "Macarronada da Tia Dalva" 
+            <br>
+            Ex: catupiri, bacon, peito de peru
+            </div>
+            
+            <br>
+            <input type="textarea" name="criterio" style="width: 400px;">
+            <br>
+            <br>
+            Tipos de produtos:
+            <br><br>
 
-    <h3>This is your project's main page</h3>
+            <div style="width:450; height: 100;">
+            <?php
+            //formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
+            //cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
+            $i = 0;
+            foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto)
+            {
+            ?>
+                    <input type="checkbox" name="cod_tipo_produto[]" value="<?php echo $cod_tipo_produto ?>" class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
+     
+           <?php } ?>
+           </div>
 
-    <div id="more-information">
-        <p><img src="http://framework.zend.com/images/PoweredBy_ZF_4LightBG.png" /></p>
-        <p>
-            Helpful Links: <br />
-            <a href="http://framework.zend.com/">Zend Framework Website</a> |
-            <a href="http://framework.zend.com/manual/en/">Zend Framework Manual</a>
-        </p>
+           Caloria < que: <input type="text" name="caloria" style="width:50">
+
+
+
+           <br><br><br>
+            <input type="submit" value="Pesquisar">
+
+        </form>
     </div>
+
 </div>
+
+
+
+<?php
+
+	 
+	 for ($i = 0; $i < sizeof($this->resultado); $i++)
+         //foreach ((array) $this->resultado as $hit)
+         {
+	    //$hit = $this->resultado->fetch(PDO::FETCH_ASSOC);
+
+
+            echo "<div style=' clear:both; margin: 80px;' > \n";
+            echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/index/get-Imagem-Produto/id/".$this->resultado[$i]['cod_foto']."' width='141' height='auto' alt=''> </p> </div> \n";
+            echo "<div style='float: left; margin: 50px 1px 20px 21px; width:200px; color: red; font-size: large;'> <p style='display: block' > \n";
+            echo $this->resultado[$i]["nome"];
+            echo "</p> </div> <!-- nome do produto --> \n";                     
+            echo "<div style='float: left; margin: 60px 1px 20px 80px; width:200px; color: red; font-size: medium;'> \n";
+            echo $this->resultado[$i]["nome_empresa"];
+            echo "</div> <!-- nome da empresa --> \n";
+            //imprime os tamanhos disponiveis e precos do produto
+	    echo "<div style='float: left; margin: 60px 1px 20px 80px; width:200px; color: red; font-size: medium;'> \n";
+	    echo $this->resultado[$i]['tamanho']." => ".$this->resultado[$i]["preco"];
+	    $i++;
+	    while($this->resultado[$i]['cod_produto'] == $this->resultado[$i-1]['cod_produto'])
+	    {
+		echo "<br> \n";		
+		echo $this->resultado[$i]['tamanho']." => ".$this->resultado[$i]["preco"];
+		$i++;
+	    }
+	    $i--;
+
+            echo "</div></div> \n";
+         }
+?>
+
+
