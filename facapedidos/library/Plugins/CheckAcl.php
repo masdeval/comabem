@@ -12,7 +12,8 @@ class Plugins_CheckAcl extends Zend_Controller_Plugin_Abstract {
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
 
         //Deixa sempre passar tela de erro e de login
-        if ($request->getControllerName() == 'error' OR $request->getControllerName() == 'auth')
+        if ($request->getControllerName() == 'error' OR $request->getControllerName() == 'auth'
+		OR $request->getModuleName() == 'portal')
             return true;
 
         if (!$this->_accessValid($request)) {

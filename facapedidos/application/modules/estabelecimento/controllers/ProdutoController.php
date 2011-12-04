@@ -1,5 +1,7 @@
 <?php
 
+
+
 class Estabelecimento_ProdutoController extends Zend_Controller_Action
 {
 
@@ -73,15 +75,18 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
     {
         $formData = $this->getRequest()->getPost();
         $produtoId = $formData['produtoId'];
-
+        
         if ($formData['emorFrom'] == 1) //formulario principal de produto
         {
 
-            if (!empty($produtoId)) //aletracao de um produto
+            if (!empty($produtoId)) //alteracao de um produto
             {
                 try
                 {
                     $this->Produto->edit($formData, $this->empresaId, $produtoId);
+                    //insere tambem no lucene
+                    LuceneManager::criaDocumentoProduto($produtoId,$formData);
+                    
                 } catch (Exception $e)
                 {
                     $this->view->headline = "Problema ao editar registro. " . $e->getMessage();
@@ -96,6 +101,9 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
                 try
                 {
                     $produtoId = $this->Produto->add($formData, $this->empresaId);
+	            //insere tambem no lucene
+                    LuceneManager::criaDocumentoProduto($produtoId,$formData);
+
                 } catch (Exception $e)
                 {
                     $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
