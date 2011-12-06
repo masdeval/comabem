@@ -38,12 +38,17 @@ class Portal_IndexController extends Zend_Controller_Action
             {
                 $produtos .= $hit->cod_produto . ", ";
             }
-            $produtos .= "0"; //so porque fica uma virgula no final
+            $produtos .= "-1"; //so porque fica uma virgula no final
         }
 
         $this->view->resultado =  $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto);
         $this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
+	$this->view->pesquisa_facapedido_criterio = $criterios;
+	$this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;
+	$this->view->pesquisa_facapedido_caloria = $caloria;
+
         $this->_helper->viewRenderer("index");
+	
     }
 
     public function getImagemProdutoAction()
