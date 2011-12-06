@@ -19,7 +19,7 @@
             </div>
             
             <br>
-            <input type="textarea" name="criterio" style="width: 400px;">
+            <input type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
             <br>
             <br>
             Tipos de produtos:
@@ -32,13 +32,18 @@
             $i = 0;
             foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto)
             {
+		$checked = " ";
+		if(!empty($this->pesquisa_facapedido_tipo_produto) && in_array($cod_tipo_produto,$this->pesquisa_facapedido_tipo_produto))
+		{
+		    $checked = "checked";
+		}
             ?>
-                    <input type="checkbox" name="cod_tipo_produto[]" value="<?php echo $cod_tipo_produto ?>" class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
+		<input  type="checkbox" name="cod_tipo_produto[]" <?php echo $checked; ?> value="<?php echo $cod_tipo_produto ?>" class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
      
            <?php } ?>
            </div>
 
-           Caloria < que: <input type="text" name="caloria" style="width:50">
+           Caloria < que: <input type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
 
 
 
