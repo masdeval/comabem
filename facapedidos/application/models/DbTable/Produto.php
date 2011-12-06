@@ -94,7 +94,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	$where = "where P.removed <> 1 and TP.removed  <> 1 AND P.disponivel = true AND
 	P.cod_produto = TP.cod_produto AND
 	P.cod_tipo_produto = Tipo.cod_tipo_produto AND P.cod_empresa = E.cod_empresa AND E.cod_empresa
-	= HF.cod_empresa AND HF.dia_da_semana = '".date('l')."'";  //date('l') retorna o dia da semana 
+	= HF.cod_empresa AND HF.dia_da_semana = '".date('l')."' ";  //date('l') retorna o dia da semana
 
 	$order_by = " ORDER BY P.cod_produto";
 	$i = 0;
@@ -106,7 +106,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	      WHEN TransType = 4 THEN 3
 	      WHEN TransType = 2 THEN 4 END) */
 
-	    $order_by = "ORDER BY (CASE ";
+	    $order_by = " ORDER BY (CASE ";
 	    //cria a clausula order by de forma a garantir que o resultado da consulta siga
 	    //a ordem retornada pelo Lucene (que é a ordem dos codigos em $produtos)
 	    //Isso é necessário para garantir a ordem de relevancia do retorno do Lucene
