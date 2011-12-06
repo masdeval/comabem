@@ -82,16 +82,19 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 
     public function consultaQBE($produtos, $caloria, $tipos_produto)
     {
+	$hora_atual = "'".date('H').":".date('i').":00'";
+
 	$select = "select P.cod_produto, P.nome , FP.cod_foto, TP.preco, TP.descricao as tamanho, Tipo.nome as tipo,
-		    E.nome_fantasia as nome_empresa ";
+		    E.nome_fantasia as nome_empresa, HF.hora_inicio, HF.hora_fim ";
 
 	//pode ser que nao haja foto de um produto, por isso o LEFT JOIN
 	$from = "from produto P LEFT JOIN foto_produto FP ON (P.cod_produto = FP.cod_produto) ,
-	tamanho_produto TP, tipo_produto Tipo, empresa E ";
+	tamanho_produto TP, tipo_produto Tipo, empresa E, horario_funcionamento HF ";
 
 	$where = "where P.removed <> 1 and TP.removed  <> 1 AND P.disponivel = true AND
 	P.cod_produto = TP.cod_produto AND
-	P.cod_tipo_produto = Tipo.cod_tipo_produto AND P.cod_empresa = E.cod_empresa ";
+	P.cod_tipo_produto = Tipo.cod_tipo_produto AND P.cod_empresa = E.cod_empresa AND E.cod_empresa
+	= HF.cod_empresa AND HF.dia_da_semana = '".date('l')."'";  //date('l') retorna o dia da semana 
 
 	$order_by = " ORDER BY P.cod_produto";
 	$i = 0;

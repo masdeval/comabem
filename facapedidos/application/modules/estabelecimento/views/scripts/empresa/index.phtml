@@ -216,52 +216,70 @@
                     <div class="contentForm">
                         <fieldset style=" margin: 0; padding: 0;">
                             <legend>Horario:</legend>
+
+			<p><center>Deixe em branco os dias em que não houver atendimento</center></p>
+
                             <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
-                                <tr>
+			        <tr>
                                     <td align="center">&nbsp;</td>
                                     <td align="center"> Inicio do atendimento</td>
                                     <td align="center"> Fim do atendimento</td>
                                 </tr>
                                 <tr>
                                     <td align="center">&nbsp;</td>
-                                    <td align="center"> HH:MM</td>
-                                    <td align="center"> HH:MM</td>
+                                    <td align="center"> HH:MM </td>
+                                    <td align="center"> HH:MM (00:00 para meia noite)</td>
                                 </tr>
                                 <tr>
-                                    <td align="center">Segunda *</td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Segunda][hora_inicio]" value="<?php echo $this->formData3['Segunda']['hora_inicio'] ?>" style="width: 200px;">
+                                    <td align="center">Segunda</td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Monday][hora_inicio]" value="<?php echo $this->formData3['Monday']['hora_inicio'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Fim do atendimento'  name="val[Segunda][hora_fim]" value="<?php echo $this->formData3['Segunda']['hora_fim'] ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                </tr>
-                                <tr>
-                                    <td align="center">Terca *</td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Terca][hora_inicio]"  value="<?php echo $this->formData3['Terca']['hora_inicio'] ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Fim do atendimento'  name="val[Terca][hora_fim]" value="<?php echo $this->formData3['Terca']['hora_fim'] ?>" style="width: 200px;" >
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Monday][hora_fim]" value="<?php echo $this->formData3['Monday']['hora_fim'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
                                 <tr>
-                                    <td align="center">Quarta *</td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Quarta][hora_inicio]"  value="<?php echo $this->formData3['Quarta']['hora_inicio'] ?>" style="width: 200px;">
+                                    <td align="center">Terca</td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Tuesday][hora_inicio]"  value="<?php echo $this->formData3['Tuesday']['hora_inicio'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Fim do atendimento'  name="val[Quarta][hora_fim]" value="<?php echo $this->formData3['Quarta']['hora_fim'] ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                </tr>
-                                <tr>
-                                    <td align="center">Quinta *</td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Quinta][hora_inicio]"  value="<?php echo $this->formData3['Quinta']['hora_inicio'] ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Fim do atendimento'  name="val[Quinta][hora_fim]" value="<?php echo $this->formData3['Quinta']['hora_fim'] ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Tuesday][hora_fim]" value="<?php echo $this->formData3['Tuesday']['hora_fim'] ?>" style="width: 200px;" >
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
                                 <tr>
-                                    <td align="center">Sexta *</td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Sexta][hora_inicio]"  value="<?php echo $this->formData3['Sexta']['hora_inicio'] ?>" style="width: 200px;">
+                                    <td align="center">Quarta</td>
+                                    <td align="center"><input type="text" class="input-medium validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Wednesday][hora_inicio]"  value="<?php echo $this->formData3['Wednesday']['hora_inicio'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium RQR required validTime"  title='Por favor, indique Fim do atendimento'  name="val[Sexta][hora_fim]" value="<?php echo $this->formData3['Sexta']['hora_fim'] ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium validTime"  title='Por favor, indique Fim do atendimento'  name="val[Wednesday][hora_fim]" value="<?php echo $this->formData3['Wednesday']['hora_fim'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
+                                <tr>
+                                    <td align="center">Quinta</td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Thursday][hora_inicio]"  value="<?php echo $this->formData3['Thursday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Thursday][hora_fim]" value="<?php echo $this->formData3['Thursday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td align="center">Sexta</td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Friday][hora_inicio]"  value="<?php echo $this->formData3['Friday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Friday][hora_fim]" value="<?php echo $this->formData3['Friday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+				<tr>
+                                    <td align="center">Sabado </td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Saturday][hora_inicio]"  value="<?php echo $this->formData3['Saturday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Saturday][hora_fim]" value="<?php echo $this->formData3['Saturday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td align="center">Domingo</td>
+                                    <td align="center"><input type="text" class="input-medium validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Sunday][hora_inicio]"  value="<?php echo $this->formData3['Sunday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Sunday][hora_fim]" value="<?php echo $this->formData3['Sunday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+
                                 <tr>
                                     <td colspan="3" height="20">&nbsp;</td>
                                 </tr>
