@@ -84,25 +84,3 @@ font-weight:700;
 display:none;
 border-color:#c00;
 }
-
-.botao_portal_vermelho
-{
-    background: url(http://facapedidos/img/barra_vermelho.png);
-    color: white;
-    margin: 0 auto;
-    max-width: 200px;    
-    cursor: pointer;
-    display: block;
-    text-align: center;
-}
-
-.botao_portal_amarelo
-{
-    background: url(http://facapedidos/img/barra_amarelo.png);
-    color: white;
-    margin: 0 auto;
-    max-width: 200px;
-    cursor: pointer;
-    display: block;
-    text-align: center;
-}
