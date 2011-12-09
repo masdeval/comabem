@@ -43,8 +43,8 @@ CREATE SEQUENCE public.promocao_venda_coletiva_cod_venda_coletiva_seq;
 
 CREATE TABLE public.promocao_venda_coletiva (
                 cod_venda_coletiva INTEGER NOT NULL DEFAULT nextval('public.promocao_venda_coletiva_cod_venda_coletiva_seq'),
-                data_inicio_venda TIMESTAMP NOT NULL,
-                data_fim_venda TIMESTAMP NOT NULL,
+                data_inicio_venda DATE NOT NULL,
+                data_fim_venda DATE NOT NULL,
                 num_necessario_participantes SMALLINT NOT NULL,
                 data_inicio_utilizacao DATE NOT NULL,
                 data_fim_utilizacao DATE NOT NULL,
@@ -297,8 +297,8 @@ CREATE SEQUENCE public.promocao_cod_promocao_seq;
 CREATE TABLE public.promocao (
                 cod_promocao INTEGER NOT NULL DEFAULT nextval('public.promocao_cod_promocao_seq'),
                 cod_produto INTEGER NOT NULL,
-                data_inicio TIMESTAMP NOT NULL,
-                data_fim TIMESTAMP NOT NULL,
+                data_inicio DATE NOT NULL,
+                data_fim DATE NOT NULL,
                 preco_promocional NUMERIC(14,2) NOT NULL,
                 anuncio TEXT,
                 removed SMALLINT DEFAULT 0 NOT NULL,
