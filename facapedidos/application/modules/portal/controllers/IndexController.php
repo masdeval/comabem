@@ -14,6 +14,7 @@ class Portal_IndexController extends Zend_Controller_Action
         $this->TipoProdutoDB = new DbTable_TipoProduto();
         $this->FotoProdutoDB = new DbTable_FotoProduto(Zend_Db_Table::getDefaultAdapter());
         $this->ProdutoDB = new DbTable_Produto(Zend_Db_Table::getDefaultAdapter());
+	$this->EmpresaDB = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
     }
 
     public function indexAction()
@@ -41,7 +42,19 @@ class Portal_IndexController extends Zend_Controller_Action
             $produtos .= "-1"; //so porque fica uma virgula no final
         }
 
-        $this->view->resultado =  $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto);
+        $resultado =  $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto);
+
+	//insere em resultado a situacao do estabelecimento informando se o mesmo
+	//esta aberto ou fechado
+	$hora_atual = date('H').":".date('i').":00";
+
+	for ($i = 0; $i < sizeof($resultado); $i++)
+	{
+	    $resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
+	}
+
+	
+	$this->view->resultado = $resultado;
         $this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
 	$this->view->pesquisa_facapedido_criterio = $criterios;
 	$this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;

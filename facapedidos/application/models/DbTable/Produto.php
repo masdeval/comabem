@@ -80,24 +80,37 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	$t = $this->_db->update('produto', $data, $where);
     }
 
-    public function consultaQBE($produtos, $caloria, $tipos_produto)
+    public function consultaQBE($produtos, $caloria, $tipos_produto, $cod_empresa='')
     {
-	$hora_atual = "'".date('H').":".date('i').":00'";
 
-	$select = "select P.cod_produto, P.nome , FP.cod_foto, TP.preco, TP.descricao as tamanho, Tipo.nome as tipo,
-		    E.nome_fantasia as nome_empresa, HF.hora_inicio, HF.hora_fim ";
+	$select = "select P.cod_produto, P.nome , FP.cod_foto, TP.preco, TP.descricao as tamanho, 
+	    Tipo.nome as tipo,E.nome_fantasia as nome_empresa, E.cod_empresa, E.url, Promo.preco_promocional ";
+
+	//pode ser que o estabelecimento nao funcione nesse dia da semana, por isso o LEFT JOIN
+	//LEFT JOIN horario_funcionamento HF ON (P.cod_empresa = HF.cod_empresa) ,
 
 	//pode ser que nao haja foto de um produto, por isso o LEFT JOIN
-	$from = "from produto P LEFT JOIN foto_produto FP ON (P.cod_produto = FP.cod_produto) ,
-	tamanho_produto TP, tipo_produto Tipo, empresa E, horario_funcionamento HF ";
+	$from = "from produto P LEFT JOIN foto_produto FP ON (P.cod_produto = FP.cod_produto),
+
+	tamanho_produto TP LEFT JOIN promocao Promo ON (TP.cod_tamanho_produto = Promo.cod_tamanho_produto
+	and Promo.data_inicio <= now() and Promo.data_fim >= now() and Promo.removed = 0 )
+	, tipo_produto Tipo, empresa E ";
 
 	$where = "where P.removed <> 1 and TP.removed  <> 1 AND P.disponivel = true AND
 	P.cod_produto = TP.cod_produto AND
-	P.cod_tipo_produto = Tipo.cod_tipo_produto AND P.cod_empresa = E.cod_empresa AND E.cod_empresa
-	= HF.cod_empresa AND HF.dia_da_semana = '".date('l')."' ";  //date('l') retorna o dia da semana
+	P.cod_tipo_produto = Tipo.cod_tipo_produto AND P.cod_empresa = E.cod_empresa ";
 
+	$i = 1;
+	if(!empty($cod_empresa))
+	{
+	    $where .= " AND E.cod_empresa = :".$i;
+	    $i++;
+	}
+
+	//preciso ordenar aqui para garantir que todos os produtos que forem retornados mais de uma vez
+	//por terem varios tamanhos aparecam juntos no resultado
 	$order_by = " ORDER BY P.cod_produto";
-	$i = 0;
+	
 	if (!empty($produtos))
 	{
 	    /* ORDER BY (CASE WHEN TransType = 9 THEN 0
@@ -111,19 +124,21 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    //a ordem retornada pelo Lucene (que é a ordem dos codigos em $produtos)
 	    //Isso é necessário para garantir a ordem de relevancia do retorno do Lucene
 	    $produtosArray = explode(",", $produtos);
+	    $k = 0;
 	    foreach ($produtosArray as $produto)
 	    {
-		$order_by .= " WHEN P.cod_produto = " . $produto . " THEN " . $i;
-		$i++;
+		$order_by .= " WHEN P.cod_produto = " . $produto . " THEN " . $k;
+		$k++;
 	    }
 	    $order_by .= " END)";
 
 	    //cria a sequencia de variaveis  para poder usar prepared statements
 	    $ids = " ";
-	    for ($i = 1; $i <= sizeof($produtosArray); $i++)
+	    for ($k = 1; $k <= sizeof($produtosArray); $k++)
 	    {
 		$ids .= " :" . $i;
-		if ($i < sizeof($produtosArray))
+		$i++;
+		if ($k < sizeof($produtosArray))
 		{
 		    $ids.=",";
 		}
@@ -135,6 +150,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	if (!empty($caloria))
 	{
 	    $where .= " and P.valor_calorico < :" . $i;
+	    $i++;
 	}
 
 	if (!empty($tipos_produto))
@@ -142,7 +158,8 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    $ids = " ";
 	    for ($k = 1; $k <= sizeof($tipos_produto); $k++)
 	    {
-		$ids .= " :" . ++$i;
+		$ids .= " :" . $i;
+		$i++;
 		if ($k < sizeof($tipos_produto))
 		{
 		    $ids.=",";
@@ -155,31 +172,43 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 
 	//    ********* Bind de parametros ********** 
 
-	$j = 0;
+	//date('l') retorna o dia da semana - > achei que ia precisar disso
+	//$stm->bindParam(':0', date('l') , PDO::PARAM_STR);
+
+	$j = 1;
+	if(!empty($cod_empresa))
+	{
+	    $stm->bindParam(':' . $j, $cod_empresa, PDO::PARAM_INT);
+	    $j++;
+	}
+
 	if (!empty($produtos))
 	{
-	    for ($j = 1; $j <= sizeof($produtosArray); $j++)
+	    for ($k = 1; $k <= sizeof($produtosArray); $k++)
 	    {
-		$stm->bindParam(':' . $j, $produtosArray[$j - 1], PDO::PARAM_INT);
+		$stm->bindParam(':' . $j, $produtosArray[$k - 1], PDO::PARAM_INT);
+		$j++;
 	    }
 	}
 
 	if (!empty($caloria))
 	{
 	    $stm->bindParam(':' . $j, $caloria, PDO::PARAM_INT);
+	    $j++;
 	}
 
 	if (!empty($tipos_produto))
 	{
 	    for ($k = 1; $k <= sizeof($tipos_produto); $k++)
 	    {
-		$stm->bindParam(':'.++$j, $tipos_produto[$k-1], PDO::PARAM_INT);
+		$stm->bindParam(':'.$j++, $tipos_produto[$k-1], PDO::PARAM_INT);
 	    }
 	}
 
 	$stm->execute();
 	return $stm->fetchAll(PDO::FETCH_ASSOC);
-	//return $stm;
+
+	
     }
 
 }
