@@ -136,7 +136,7 @@ function removeImage(){
 /*Tela de Empresa*/
 function delEmpresa(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
-        var url=base_url+'/empresa/delete/';
+        var url=base_url+'/estabelecimento/empresa/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
     }
@@ -144,7 +144,7 @@ function delEmpresa(id){
 function delTipos_de_produtos(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/empresa/delete-Tipos-De-Produtos/';
+        var url=base_url+'/estabelecimento/empresa/delete-Tipos-De-Produtos/';
         document.getElementById('form2').action = url;
         document.getElementById('form2').submit();
     }
@@ -152,7 +152,7 @@ function delTipos_de_produtos(id){
 function deleteHorario(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/empresa/delete-Horario/';
+        var url=base_url+'/estabelecimento/empresa/delete-Horario/';
         document.getElementById('form3').action = url;
         document.getElementById('form3').submit();
     }
@@ -162,7 +162,7 @@ function deleteHorario(id){
 function delfuncionario(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/funcionario/delete/';
+        var url=base_url+'/estabelecimento/funcionario/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
 
@@ -171,7 +171,7 @@ function delfuncionario(id){
 function delFuncionario_entregador(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/funcionario/delete-Funcionario-Entregador';
+        var url=base_url+'/estabelecimento/funcionario/delete-Funcionario-Entregador';
         document.getElementById('form2').action = url;
         document.getElementById('form2').submit();
     }
@@ -181,7 +181,7 @@ function delFuncionario_entregador(id){
 function delIngrediente(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/ingredients/delete/';
+        var url=base_url+'/estabelecimento/ingredients/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
     }
@@ -200,7 +200,7 @@ function editaIngrediente(elem){
 
 function getCategoria(elem,ing){
     var val=elem.options[elem.selectedIndex].value; //$('#cod_tipo_ingrediente').attr('value');
-    reqURL=base_url+'/ingredients/categoria/tipoing/'+val+'/ing/'+ing;
+    reqURL=base_url+'/estabelecimento/ingredients/categoria/tipoing/'+val+'/ing/'+ing;
 
     $.ajax({
         type: "GET",
@@ -219,7 +219,7 @@ function getCategoria(elem,ing){
 function delProduto(id){
     if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/produto/delete/';
+        var url=base_url+'/estabelecimento/produto/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
     }
@@ -243,7 +243,7 @@ function delTamanhos(id,tamid)
     }
 
     if(confirm('Tem certeza que deseja remover o registro?')){
-        var url=base_url+'/produto/delete-Tamanhos/';
+        var url=base_url+'/estabelecimento/produto/delete-Tamanhos/';
         document.form5.action = url;
         document.form5.submit();
     }
@@ -252,7 +252,7 @@ function delPromocao(id){
 
     if(confirm('Tem certeza que deseja remover o registro?')){
 
-        var url=base_url+'/produto/delete-Promocao/';
+        var url=base_url+'/estabelecimento/produto/delete-Promocao/';
         document.getElementById('form6').promocaoId.value=id;
         document.getElementById('form6').action = url;
         document.getElementById('form6').submit();
@@ -292,7 +292,7 @@ function editTamanho(tamid,id)
         document.getElementById("tamanhoEdit").selectedIndex = 0; */
 
         document.getElementById("tamanhoId").value = '';
-        document.form5.action='/produto/edit/';
+        document.form5.action='/estabelecimento/produto/edit/';
         document.form5.submit();
 
     }
@@ -300,7 +300,7 @@ function editTamanho(tamid,id)
     {
         document.getElementById('produtoId').value = id;
         document.getElementById('tamanhoId').value = tamid;
-        document.form5.action='/produto/edit/';
+        document.form5.action='/estabelecimento/produto/edit/';
         document.form5.submit();
 
     /*
