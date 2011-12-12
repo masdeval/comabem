@@ -137,7 +137,7 @@ CREATE TABLE public.funcionario (
                 bairro VARCHAR(45),
                 complemento VARCHAR(30),
                 cep CHAR(8) NOT NULL,
-                status_user SMALLINT NOT NULL,
+                status_user SMALLINT DEFAULT 0 NOT NULL,
                 data_cadastro TIMESTAMP DEFAULT now(),
                 observacao TEXT,
                 CONSTRAINT funcionario_pkey PRIMARY KEY (cod_funcionario)
@@ -260,6 +260,21 @@ ALTER SEQUENCE public.produto_cod_produto_seq OWNED BY public.produto.cod_produt
 CREATE INDEX xpkproduto
  ON public.produto USING BTREE
  ( cod_produto );
+
+CREATE SEQUENCE public.recado_cliente_cod_recado_cliente_seq;
+
+CREATE TABLE public.recado_cliente (
+                cod_recado_cliente INTEGER NOT NULL DEFAULT nextval('public.recado_cliente_cod_recado_cliente_seq'),
+                data DATE,
+                texto VARCHAR,
+                hora TIME,
+                cod_empresa INTEGER NOT NULL,
+                cod_produto INTEGER NOT NULL,
+                CONSTRAINT recado_cliente_pk PRIMARY KEY (cod_recado_cliente)
+);
+
+
+ALTER SEQUENCE public.recado_cliente_cod_recado_cliente_seq OWNED BY public.recado_cliente.cod_recado_cliente;
 
 CREATE SEQUENCE public.tamanho_produto_cod_tamanho_produto_seq;
 
@@ -829,6 +844,13 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+ALTER TABLE public.recado_cliente ADD CONSTRAINT empresa_recado_cliente_fk
+FOREIGN KEY (cod_empresa)
+REFERENCES public.empresa (cod_empresa)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
 ALTER TABLE public.categoria_permitida_como_adicional ADD CONSTRAINT categoria_permitida_como_adicional_cod_produto_fkey
 FOREIGN KEY (cod_produto)
 REFERENCES public.produto (cod_produto)
@@ -858,6 +880,13 @@ ON UPDATE CASCADE
 NOT DEFERRABLE;
 
 ALTER TABLE public.tamanho_produto ADD CONSTRAINT tamanho_produto_cod_produto_fkey
+FOREIGN KEY (cod_produto)
+REFERENCES public.produto (cod_produto)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.recado_cliente ADD CONSTRAINT produto_recado_cliente_fk
 FOREIGN KEY (cod_produto)
 REFERENCES public.produto (cod_produto)
 ON DELETE NO ACTION
