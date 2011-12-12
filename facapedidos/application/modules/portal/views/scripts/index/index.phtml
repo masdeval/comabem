@@ -3,14 +3,19 @@
 
     <link type="text/css" href="/css/portal.css" rel="stylesheet" />
 
+    <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    <script type="text/javascript" src="/js/portal.js"></script>
 
 </head>
+
+
 <div align="center" width="80%">
 
     <div style="border: solid gray; margin: 50px;">
         <form action="/portal/index/consulta" method="post" class="" id='form1'>
 
-            <h2>Entre com os critérios de pesquisa.</h2> 
+            <h2>Entre com os critérios de pesquisa</h2> 
 
             <div style="text-align: left; border: transparent; width: 380px; ">
 		Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
@@ -113,13 +118,12 @@
 		    else
 		    {
 			$hora_atual = date('H') . ":" . date('i') . ":00";
-
 			echo "<div style='float: left; margin: 60px 1px 20px 21px; width:150px;'> \n";
-			echo "<a class='botao_portal_amarelo' target='' title='Fechada nesse horário' href='#'>
-		 <span>Fechada nesse horário</span></a> <span class='msg_estabelecimento_fechado'>Clique no botão se deseja enviar à loja sua vontade
-		 de que ela estivesse aberta.</span></div>";
+			echo "<a class='botao_portal_amarelo' target=''	title='Fechada nesse horário' href='#' onclick='lojaFechada(".$this->resultado[$i]['cod_empresa'].",".$this->resultado[$i]['cod_produto'].",".$i. ")'".
+			" <span>Fechada nesse horário </span> </a> <span class='msg_estabelecimento_fechado' id='spanFechada".$i."'>Clique no botão se deseja enviar à loja sua vontade ".
+			" de que ela estivesse aberta. </span> </div>";
 		    }
-
+  
 		    echo "</div> \n";
 		}
 ?>
