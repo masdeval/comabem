@@ -112,7 +112,7 @@
 		    if ($this->resultado[$i]['isAberto'] == true)
 		    {
 			echo "<div style='float: left; margin: 60px 1px 20px 21px; width:150px;'> \n";
-			echo "<a class='botao_portal_vermelho' target='' title='Ir &agrave; Loja' href='http://facapedidos/" . $this->resultado[$i]['url'] . "?cod_produto=" . $this->resultado[$i]['cod_produto'] . "'>" .
+			echo "<a class='botao_portal_vermelho' target='' title='Ir &agrave; Loja' href='/" . $this->resultado[$i]['url'] . "?cod_produto=" . $this->resultado[$i]['cod_produto'] . "'>" .
 			"<span>Ir &agrave; Loja</span></a> </div>";
 		    }
 		    else
