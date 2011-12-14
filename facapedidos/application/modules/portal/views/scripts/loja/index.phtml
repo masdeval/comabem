@@ -5,31 +5,47 @@
 
 
 </head>
+
+
 <div align="center" width="80%">
 
     <div style="border: solid gray; margin: 50px;">
+
+	<?php
+	if ($this->isAberto == true)
+	{
+	    echo "<img src='/img/open.png' align='left' />";
+	}
+	else if ($this->isAberto == false)
+	{
+	    echo "<img src=/img/close.png align='left' />";
+	}
+	?>
+
         <form action="/portal/loja/consulta" method="post" class="" id='form1'>
 
             <h2>Entre com os critérios de pesquisa.</h2>
 
             <div style="text-align: left; border: transparent; width: 380px; ">
-            Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
-            <br>
-            Ex: catupiri, bacon, peito de peru
+		Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
+		<br>
+		Ex: catupiri, bacon, peito de peru
             </div>
 
 	    <input type="hidden" name="cod_empresa" value="<?php echo $this->cod_empresa; ?>">
+	    <input type="hidden" name="isAberto" value="<?php echo $this->isAberto; ?>">
+
 
             <br>
             <input type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
             <br>
             <br>
-        
-           Caloria < que: <input type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+
+	    Caloria < que: <input type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
 
 
 
-           <br><br><br>
+	    <br><br><br>
             <input type="submit" value="Pesquisar">
 
         </form>
@@ -40,55 +56,53 @@
 
 
 <?php
-
-
-	 for ($i = 0; $i < sizeof($this->resultado); $i++)
-         //foreach ((array) $this->resultado as $hit)
-         {
+	for ($i = 0; $i < sizeof($this->resultado); $i++)
+	//foreach ((array) $this->resultado as $hit)
+	{
 	    //$hit = $this->resultado->fetch(PDO::FETCH_ASSOC);
 
 
-            echo "<div style=' clear:both; margin: 80px; color:black;' > \n";
-            echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/index/get-Imagem-Produto/id/".$this->resultado[$i]['cod_foto']."' width='141' height='auto' alt=''> </p> </div> \n";
-            echo "<div style='float: left; margin: 50px 1px 20px 21px; width:100px; font-size: large;'> <p style='display: block' > \n";
-            echo $this->resultado[$i]["nome"];
-            echo "</p> </div> <!-- nome do produto --> \n";
-            echo "<div style='float: left; margin: 60px 1px 20px 80px; width:150px; font-size: medium;'> \n";
-            echo $this->resultado[$i]["nome_empresa"];
-            echo "</div> <!-- nome da empresa --> \n";
-            //imprime os tamanhos disponiveis e precos do produto
+	    echo "<div style=' clear:both; margin: 80px; color:black;' > \n";
+	    echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/index/get-Imagem-Produto/id/" . $this->resultado[$i]['cod_foto'] . "' width='141' height='auto' alt=''> </p> </div> \n";
+	    echo "<div style='float: left; margin: 50px 1px 20px 21px; width:100px; font-size: large;'> <p style='display: block' > \n";
+	    echo $this->resultado[$i]["nome"];
+	    echo "</p> </div> <!-- nome do produto --> \n";
+	    echo "<div style='float: left; margin: 60px 1px 20px 80px; width:150px; font-size: medium;'> \n";
+	    echo $this->resultado[$i]["nome_empresa"];
+	    echo "</div> <!-- nome da empresa --> \n";
+	    //imprime os tamanhos disponiveis e precos do produto
 	    echo "<div style='float: left; margin: 60px 1px 20px 80px; width:200px; font-size: medium;'> \n";
 	    if (!empty($this->resultado[$i]['preco_promocional']))
-		    {
-			echo ($this->resultado[$i]['tamanho']."=> De ");
-			echo $this->resultado[$i]["preco"];
-			echo (" por ");
-			echo $this->resultado[$i]["preco_promocional"];
-		    }
-		    else
-			echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
+	    {
+		echo ($this->resultado[$i]['tamanho'] . "=> De ");
+		echo $this->resultado[$i]["preco"];
+		echo (" por ");
+		echo $this->resultado[$i]["preco_promocional"];
+	    }
+	    else
+		echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
 
-		    $i++;
-		    while ($this->resultado[$i]['cod_produto'] == $this->resultado[$i - 1]['cod_produto'])
-		    {
-			echo "<br> \n";
+	    $i++;
+	    while ($this->resultado[$i]['cod_produto'] == $this->resultado[$i - 1]['cod_produto'])
+	    {
+		echo "<br> \n";
 
-			if (!empty($this->resultado[$i]['preco_promocional']))
-			{
-			    echo ($this->resultado[$i]['tamanho']."=> De ");
-			    echo $this->resultado[$i]["preco"];
-			    echo (" por ");
-			    echo $this->resultado[$i]["preco_promocional"];
-			}
-			else
-			    echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
-			$i++;
-		    }	    $i--;
+		if (!empty($this->resultado[$i]['preco_promocional']))
+		{
+		    echo ($this->resultado[$i]['tamanho'] . "=> De ");
+		    echo $this->resultado[$i]["preco"];
+		    echo (" por ");
+		    echo $this->resultado[$i]["preco_promocional"];
+		}
+		else
+		    echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
+		$i++;
+	    } $i--;
 	    echo "</div> <!-- precos -->";
 
 
-            echo "</div> \n";
-         }
+	    echo "</div> \n";
+	}
 ?>
 
 
