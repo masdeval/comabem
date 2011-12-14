@@ -28,6 +28,14 @@ class Portal_LojaController extends Zend_Controller_Action
     public function indexAction()
     {
 	$url_loja = $this->getRequest()->getParam("url_loja");
+
+	if (empty($url_loja))
+	{
+	    $this->_forward("index","index","portal");
+	    return;
+	}
+
+
 	//verifica se é uma URL valida
 	$cod_empresa = $this->EmpresaDB->checkUrlExist($url_loja);
 	if ($cod_empresa == false)
@@ -38,15 +46,13 @@ class Portal_LojaController extends Zend_Controller_Action
 	$this->view->cod_empresa = $cod_empresa;
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
 
-	//pode ser que chegou aqui via o botao Ir à Loja
+	//pode ser que chegou aqui via o botao "Ir à Loja"
 	$cod_produto = $this->getRequest()->getParam("cod_produto");
 	if (!empty($cod_produto))
 	{
 	    $this->consultaAction($cod_empresa, $cod_produto);
-	    //$this->getRequest()->clearParams();
-	    //$this->getRequest()->setParam("url_loja", $url_loja);
-	    //$this->_forward("index");
 	}
+	 
     }
 
     public function consultaAction($cod_empresa = '', $produtos = '')
@@ -57,6 +63,13 @@ class Portal_LojaController extends Zend_Controller_Action
 	{
 	    $cod_empresa = $this->getRequest()->getPost('cod_empresa');
 	}
+
+	if (empty($cod_empresa))
+	{
+	    $this->_forward("index","index","portal");
+	    return;
+	}
+
 	$criterios = $this->getRequest()->getPost('criterio');
 	$tipos_produto = $this->getRequest()->getPost('cod_tipo_produto');
 	$caloria = $this->getRequest()->getPost('caloria');
@@ -76,14 +89,9 @@ class Portal_LojaController extends Zend_Controller_Action
 
 	$resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $cod_empresa);
 
-	//insere em resultado a situacao do estabelecimento informando se o mesmo
-	//esta aberto ou fechado
+	//verifica se a loja esta aberta
 	$hora_atual = date('H') . ":" . date('i') . ":00";
-
-	for ($i = 0; $i < sizeof($resultado); $i++)
-	{
-	    $resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
-	}
+	$this->view->isAberto = $this->EmpresaDB->isAberto($cod_empresa, date('l'), $hora_atual);
 
 
 	$this->view->resultado = $resultado;
@@ -92,7 +100,6 @@ class Portal_LojaController extends Zend_Controller_Action
 	$this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;
 	$this->view->pesquisa_facapedido_caloria = $caloria;
 	$this->view->cod_empresa = $cod_empresa;
-
 
 	$this->_helper->viewRenderer("index");
     }
