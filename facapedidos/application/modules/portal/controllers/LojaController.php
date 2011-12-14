@@ -114,6 +114,18 @@ class Portal_LojaController extends Zend_Controller_Action
 	echo base64_decode($image);
     }
 
+
+    public function getLogoEmpresaAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $empresaId = $this->_getParam('id');
+        $image = $this->EmpresaDB->getImageData($empresaId);
+        header('Content-type: image/jpeg/png/gif/jpg');
+        echo base64_decode($image);
+    }
+
+
 }
 
 ?>
