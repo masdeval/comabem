@@ -14,7 +14,7 @@
 
 .botao_portal_vermelho
 {
-    background: url(http://facapedidos/img/barra_vermelho.png);
+    background: url(/img/barra_vermelho.png);
     color: white;
     margin: 0 auto;
     max-width: 200px;
@@ -25,7 +25,7 @@
 
 .botao_portal_amarelo
 {
-    background: url(http://facapedidos/img/barra_amarelo.png);
+    background: url(/img/barra_amarelo.png);
     color: white;
     margin: 0 auto;
     max-width: 200px;
