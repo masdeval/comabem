@@ -6,10 +6,13 @@ class Portal_IndexController extends Zend_Controller_Action
     public $TipoProdutoDB;
     public $ProdutoDB;
     public $FotoProdutoDB;
+    private $session;
+
 
     public function init()
     {
 	/* Initialize action controller here */
+	$this->session = new Zend_Session_Namespace('default');
 	$this->_helper->layout()->disableLayout();
 	$this->TipoProdutoDB = new DbTable_TipoProduto();
 	$this->FotoProdutoDB = new DbTable_FotoProduto(Zend_Db_Table::getDefaultAdapter());
@@ -111,15 +114,12 @@ class Portal_IndexController extends Zend_Controller_Action
 
      public function limparCarrinhoAction()
     {
-
 	if (isset($this->session))
 	{
 	    $this->session->__unset("carrinho");
 	}
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
-
 	$this->_helper->viewRenderer("index");
-
 
     }
 

@@ -98,6 +98,11 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 	    coluna.className = "itensPedido";
 	    coluna.id = "colunaQuantidade"+cod_tamanho_produto;
 	    coluna.innerHTML = "1";
+
+	    //insere botao de exclusao de item
+	    coluna = rowProduto.insertCell(5);
+	    coluna.innerHTML = "<img src='/img/minus_circle.png' onclick='javascript:deleteProdutoCarrinhoAjax("+cod_empresa+","+cod_tamanho_produto+")'> ";
+
 	}
     }
     else
@@ -139,6 +144,11 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 	coluna.className = "itensPedido";
 	coluna.id = "colunaQuantidade"+cod_tamanho_produto;
 	coluna.innerHTML = "1";
+
+	//insere botao de exclusao de item
+	coluna = rowProduto.insertCell(5);
+	coluna.innerHTML = "<img src='/img/minus_circle.png' onclick='javascript:deleteProdutoCarrinhoAjax("+cod_empresa+","+cod_tamanho_produto+")'> ";
+
 
     }
 }
@@ -225,23 +235,19 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 
 function deleteProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto)
 {
+    var Quantidade = parseInt(document.getElementById("colunaQuantidade"+cod_tamanho_produto).innerHTML);
+    
+    if(Quantidade > 0)
+	document.getElementById("colunaQuantidade"+cod_tamanho_produto).innerHTML = Quantidade - 1;
 
-    reqURL='/portal/loja/add-Produto-Carrinho/cod_empresa/'+cod_empresa+'/cod_tamanho_produto/'+cod_tamanho_produto;
 
+    reqURL='/portal/loja/delete-Produto-Carrinho/cod_empresa/'+cod_empresa+'/cod_tamanho_produto/'+cod_tamanho_produto;
 
     $.ajax({
 	type: "POST",
 	url:reqURL,
 	success: function(r) {
 	    r=jQuery.trim(r);
-	    //alert(r)
-	    if(r=='Fail'){
-
-		$('#spanFechada'+indiceMsg).html('Não foi possível enviar mensagem. Tente daqui alguns instantes.');
-	    }
-	    else{
-		$('#spanFechada'+indiceMsg).html('Mensagem enviada com sucesso.');
-	    }
 	}
     });
 
@@ -278,13 +284,26 @@ function recebeCarrinhoJSON()
 	url:reqURL,
 	success: function(carrinho) {
 
-	    // json_object = eval( "(" + carrinho + ")" );
-	    json_object = JSON.parse(carrinho);
-	    //Usa a biblioteca mootools para criar um objeto hash a partir do objeto JSON
-	    //Isso foi necessario para poder obter as chaves do array multidimensional que vem do PHP
-	    var json_hash = new Hash(json_object);
+	    var json_object;
+	    if(carrinho != 'undefined' && carrinho != null && carrinho != "" )
+	    {
+		try
+		{
+		    json_object = JSON.parse(carrinho);
 
-	    imprimeCarrinho(json_object, json_hash);
+		}
+		catch( e)
+		{
+		    json_object  = eval( "(" + carrinho + ")" );
+		}
+
+		//Usa a biblioteca mootools para criar um objeto hash a partir do objeto JSON
+		//Isso foi necessario para poder obter as chaves do array multidimensional que vem do PHP
+		var json_hash = new Hash(json_object);
+
+		imprimeCarrinho(json_object, json_hash);
+
+	    }
 	
 	}
     });
@@ -325,8 +344,14 @@ function imprimeCarrinho(carrinho, hash)
 
 	//obtem as chaves referente aos produtos escolhidos da empresa
 	var lista_produtos = (new Hash(hash.get(cod_empresa))).getKeys();
+	//agora precisa tirar a chave 'nome_empresa' para nao atrapalhar
+	if(lista_produtos[0] == 'nome_empresa')
+	    lista_produtos.shift();
+	else if (lista_produtos[lista_produtos.length-1] == 'nome_empresa' )
+	    lista_produtos.pop();
+
 	//itera até o penultimo elemento porque o ultimo é lixo
-	for(z = 0; z < lista_produtos.length -1; z++)
+	for(z = 0; z < lista_produtos.length; z++)
 	{
 	    var cod_tamanho_produto = lista_produtos[z];
 	    //insere uma nova linha logo abaixo da linha rowEmpresa
@@ -353,6 +378,10 @@ function imprimeCarrinho(carrinho, hash)
 	    coluna.className = "itensPedido";
 	    coluna.id = "colunaQuantidade"+cod_tamanho_produto;
 	    coluna.innerHTML =  carrinho[cod_empresa][cod_tamanho_produto].quantidade;
+
+	    //insere botao de exclusao de item
+	    coluna = rowProduto.insertCell(5);
+	    coluna.innerHTML = "<img src='/img/minus_circle.png' onclick='javascript:deleteProdutoCarrinhoAjax("+cod_empresa+","+cod_tamanho_produto+")'> ";
 	
 	}
     }

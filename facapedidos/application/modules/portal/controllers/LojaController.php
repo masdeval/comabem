@@ -21,7 +21,6 @@ class Portal_LojaController extends Zend_Controller_Action
     public function init()
     {
 	$this->session = new Zend_Session_Namespace('default');
-
 	/* Initialize action controller here */
 	$this->_helper->layout()->disableLayout();
 	$this->TipoProdutoDB = new DbTable_TipoProduto();
@@ -187,9 +186,9 @@ class Portal_LojaController extends Zend_Controller_Action
 
 	if (isset($this->session->carrinho))
 	{
-	    if ($this->session->carrinho->isEmpresa($cod_empresa))//faz uma verificacao de seguranca para certificar que é a empresa correta
-		$this->session->carrinho->deleteProduto($cod_tamanho_produto);
+		$this->session->carrinho->deleteProduto($cod_empresa, $cod_tamanho_produto);
 	}
+	exit;
     }
 
    
@@ -208,7 +207,14 @@ class Portal_LojaController extends Zend_Controller_Action
 	{
 	  if(isset($this->session->carrinho))
 	  {
-	    echo json_encode($this->session->carrinho->getCarrinho());
+	      if($this->session->carrinho->getCarrinho() != null && sizeof($this->session->carrinho->getCarrinho()) > 0)
+	      {
+		echo json_encode($this->session->carrinho->getCarrinho());
+	      }
+	      else
+	      {
+		echo "";
+	      }
 	  }
 	}
 	exit;

@@ -63,7 +63,7 @@ class Carrinho
 	    {
 		if ($this->empresas[$cod_empresa][$cod_tamanho_produto]['quantidade'] == 1) //remove o produto
 		{
-		    unset($this->empresas[$cod_empresa][$cod_tamanho_produto]);
+		    unset($this->empresas[$cod_empresa]);
 		    //precisa verificar se existe mais algum produto para essa empresa
 		}
 		else
