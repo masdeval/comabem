@@ -360,8 +360,10 @@ function imprimeCarrinho(carrinho, hash)
 }
 
 
+//Esse codigo funciona como um include para nao ser necessario
+//incluir o .js de que o portal.js precisa em todos os HTML onde
+//ele eh carregado
 var jsFile = "/js/mootools/mootools-core-1.4.2-full-compat.js";
-
 var scriptExt = document.createElement('script');
 scriptExt.type = 'text/javascript';
 scriptExt.src = jsFile;
