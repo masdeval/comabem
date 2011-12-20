@@ -2,11 +2,15 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
     <link type="text/css" href="/css/portal.css" rel="stylesheet" />
+    <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    <script type="text/javascript" src="/js/portal.js"></script>
+  
 
 
 </head>
 
-<img src='/portal/loja/get-Logo-Empresa/id/<?php echo $this->cod_empresa?>' width='141' height='auto' alt=''>
+<img src='/portal/loja/get-Logo-Empresa/id/<?php echo $this->cod_empresa ?>' width='141' height='auto' alt=''>
 
 <div align="center" width="80%">
 
@@ -52,58 +56,124 @@
         </form>
     </div>
 
+
+    <!-- Imprime pedidos -->
+<div style="float:right;margin-right: 90px;">
+
+
+	<table id="tableListaPedido" >
+	    <tr>
+		  <form action="/portal/index/limpar-Carrinho" method="post" class="" >
+
+		<td align="center" colspan="5"><input type="submit" value="Limpar Carrinho"> <!--onclick="javascript:limparCarrinhoAjax()"--> </td>
+		</form>
+	    </tr>
+	    <tr>
+		<td align="center" colspan="5"><h4> Seu pedido </h4></td>
+	    </tr>
+	    <tr style="font-family: verdana; font-size: 11px;">
+		<th> Empresa </th> <th> Produto </th> <th> Tamanho </th> <th> Preço </th> <th>Qt</th>
+	    </tr>
+
+	</table>
+
+  </div>
+
+    
+	
 </div>
 
 
 
 <?php
 	for ($i = 0; $i < sizeof($this->resultado); $i++)
-	//foreach ((array) $this->resultado as $hit)
 	{
-	    //$hit = $this->resultado->fetch(PDO::FETCH_ASSOC);
+?>
+
+<div style=' clear:both; margin: 80px; color:black;'>
+    <div style='float: left; margin: 20px 1px 20px 21px; width:200px;'>
+	<p><img src='/portal/index/get-Imagem-Produto/id/<?php echo $this->resultado[$i]['cod_foto'] ?>' width='141' height='auto' alt=''>
+	</p>
+    </div>
+	
+    <div style='float: left; margin: 50px 1px 20px 21px; width:100px; font-size: large;'>
+	<p style='display: block' >
+	    <?php echo $this->resultado[$i]["nome"]; ?>
+    </p> </div> <!-- nome do produto -->
+
+    <div style='float: left; margin: 60px 1px 20px 80px; width:150px; font-size: medium;'>
+	<?php echo $this->resultado[$i]["nome_empresa"]; ?>
+        </div> <!-- nome da empresa -->
+
+        <!--	    //imprime os tamanhos disponiveis e precos do produto -->
+        <div style='float: left; margin: 60px 1px 20px 80px; width:400px; font-size: medium;'>
+	<?php
 
 
-	    echo "<div style=' clear:both; margin: 80px; color:black;' > \n";
-	    echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/index/get-Imagem-Produto/id/" . $this->resultado[$i]['cod_foto'] . "' width='141' height='auto' alt=''> </p> </div> \n";
-	    echo "<div style='float: left; margin: 50px 1px 20px 21px; width:100px; font-size: large;'> <p style='display: block' > \n";
-	    echo $this->resultado[$i]["nome"];
-	    echo "</p> </div> <!-- nome do produto --> \n";
-	    echo "<div style='float: left; margin: 60px 1px 20px 80px; width:150px; font-size: medium;'> \n";
-	    echo $this->resultado[$i]["nome_empresa"];
-	    echo "</div> <!-- nome da empresa --> \n";
-	    //imprime os tamanhos disponiveis e precos do produto
-	    echo "<div style='float: left; margin: 60px 1px 20px 80px; width:200px; font-size: medium;'> \n";
+	    //Sempre há pelo menos um tamanho, entao imprime esse
 	    if (!empty($this->resultado[$i]['preco_promocional']))
 	    {
+		$preco = (double) $this->resultado[$i]['preco_promocional'];
 		echo ($this->resultado[$i]['tamanho'] . "=> De ");
 		echo $this->resultado[$i]["preco"];
 		echo (" por ");
 		echo $this->resultado[$i]["preco_promocional"];
 	    }
 	    else
+	    {
+		$preco = (double) $this->resultado[$i]['preco'];
 		echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
+	    }
 
+	    //imprime o botao que vai permitir incluir no carrinho
+	    if($this->isAberto)
+	    {
+		echo "<img style='float:right;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['nome_empresa']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+	    }
+	
 	    $i++;
+	    //Esse laco verifica se existem outros tamanhos para o mesmo produto
 	    while ($this->resultado[$i]['cod_produto'] == $this->resultado[$i - 1]['cod_produto'])
 	    {
 		echo "<br> \n";
 
 		if (!empty($this->resultado[$i]['preco_promocional']))
 		{
+		    $preco = (double) $this->resultado[$i]['preco_promocional'];
 		    echo ($this->resultado[$i]['tamanho'] . "=> De ");
 		    echo $this->resultado[$i]["preco"];
 		    echo (" por ");
 		    echo $this->resultado[$i]["preco_promocional"];
 		}
 		else
+		{
+		    $preco = (double) $this->resultado[$i]['preco'];
 		    echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
-		$i++;
-	    } $i--;
-	    echo "</div> <!-- precos -->";
+		}
+	    //imprime o botao que vai permitir incluir no carrinho
+	    if($this->isAberto)
+	    {
+		echo "<img style='float:right;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['nome_empresa']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+	    }
 
+	    $i++;
 
-	    echo "</div> \n";
+	    }
+
+	    $i--;
+	?>
+    
+        </div> <!-- precos -->
+   </div>
+
+<?php
 	}
 ?>
 
+<script>
+
+recebeCarrinhoJSON();
+
+
+</script>
 
