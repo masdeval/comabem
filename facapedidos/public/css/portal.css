@@ -39,5 +39,19 @@
     font:62.5% "Trebuchet MS", sans-serif;
 }
 
+.itensPedido {
+
+    font-size:12px;
+    font-family: "Trebuchet MS" ,sans-serif;
+    color:Orange;
+}
+
+.empresaPedido {
+
+    font-weight: lighter;
+    font-size:12px;
+    font-family:verdana;
+    color:Black;
+}
 
 

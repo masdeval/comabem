@@ -10,13 +10,18 @@
  *
  * @author masdeval
  */
+
+
 class Portal_LojaController extends Zend_Controller_Action
 {
 
     //put your code here
+    private $session;
 
     public function init()
     {
+	$this->session = new Zend_Session_Namespace('default');
+
 	/* Initialize action controller here */
 	$this->_helper->layout()->disableLayout();
 	$this->TipoProdutoDB = new DbTable_TipoProduto();
@@ -31,7 +36,7 @@ class Portal_LojaController extends Zend_Controller_Action
 
 	if (empty($url_loja))
 	{
-	    $this->_forward("index","index","portal");
+	    $this->_forward("index", "index", "portal");
 	    return;
 	}
 
@@ -46,13 +51,8 @@ class Portal_LojaController extends Zend_Controller_Action
 	$this->view->cod_empresa = $cod_empresa;
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
 
-	//pode ser que chegou aqui via o botao "Ir à Loja"
-	$cod_produto = $this->getRequest()->getParam("cod_produto");
-	if (!empty($cod_produto))
-	{
-	    $this->consultaAction($cod_empresa, $cod_produto);
-	}
-	 
+	//pode ser que chegou aqui via o botao "Ir à Loja" com algum criterio de busca ja selecionado
+	$this->consultaAction($cod_empresa);
     }
 
     public function consultaAction($cod_empresa = '', $produtos = '')
@@ -66,7 +66,7 @@ class Portal_LojaController extends Zend_Controller_Action
 
 	if (empty($cod_empresa))
 	{
-	    $this->_forward("index","index","portal");
+	    $this->_forward("index", "index", "portal");
 	    return;
 	}
 
@@ -114,15 +114,104 @@ class Portal_LojaController extends Zend_Controller_Action
 	echo base64_decode($image);
     }
 
-
     public function getLogoEmpresaAction()
     {
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-        $empresaId = $this->_getParam('id');
-        $image = $this->EmpresaDB->getImageData($empresaId);
-        header('Content-type: image/jpeg/png/gif/jpg');
-        echo base64_decode($image);
+	$this->_helper->layout->disableLayout();
+	$this->_helper->viewRenderer->setNoRender(true);
+	$empresaId = $this->_getParam('id');
+	$image = $this->EmpresaDB->getImageData($empresaId);
+	header('Content-type: image/jpeg/png/gif/jpg');
+	echo base64_decode($image);
+    }
+
+    /*
+     * Adiciona um produto na sessão do usuario simulando um carrinho de compras.
+     */
+
+    public function addProdutoCarrinhoAction()
+    {
+	$this->_helper->layout->disableLayout();
+	$cod_tamanho_produto = $this->getRequest()->getParam("cod_tamanho_produto");
+	$cod_empresa = $this->getRequest()->getParam("cod_empresa");
+
+	if (empty($cod_tamanho_produto) || empty($cod_empresa))
+	    return;
+
+	$nome_empresa = $this->getRequest()->getParam("nome_empresa");
+	$nome_produto = $this->getRequest()->getParam("nome_produto");
+	$tamanho = $this->getRequest()->getParam("tamanho");
+	$preco = (double) $this->getRequest()->getParam("preco");
+
+	if (isset($this->session->carrinho))
+	{
+	    try
+	    {
+		$this->session->carrinho->addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho);
+		$status = 'Ok';
+	    }
+	    catch (Exception $e)
+	    {
+		$status = 'Fail';
+	    }
+	}
+	else
+	{
+	    try
+	    {
+		$this->session->__set("carrinho", new Carrinho());
+		$this->session->carrinho->addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho);
+		$status = 'Ok';
+	    }
+	    catch (Exception $e)
+	    {
+		$status = 'Fail';
+	    }
+	}
+
+	echo $status;
+	exit;
+    }
+
+    /*
+     * Remove um produto na sessão do usuario simulando um carrinho de compras.
+     */
+
+    public function deleteProdutoCarrinhoAction()
+    {
+	$this->_helper->layout->disableLayout();
+	$cod_tamanho_produto = $this->getRequest()->getParam("cod_tamanho_produto");
+	$cod_empresa = $this->getRequest()->getParam("cod_empresa");
+
+	if (empty($cod_tamanho_produto) || empty($cod_empresa))
+	    return;
+
+	if (isset($this->session->carrinho))
+	{
+	    if ($this->session->carrinho->isEmpresa($cod_empresa))//faz uma verificacao de seguranca para certificar que é a empresa correta
+		$this->session->carrinho->deleteProduto($cod_tamanho_produto);
+	}
+    }
+
+   
+    public function retornaCarrinhoJsonAction()
+    {
+
+	/*
+	 * Talvez fosse necessario usar essa implementacao alternativa do JSON para retornar
+	 * strings com acentos de forma correta. Estou usando a implementacao padrao do PHP e
+	 * por enquanto esta funcionando corretamente.
+	 */
+	//$json = new Services_JSON();
+	////echo $json->encode($this->session->carrinho->getCarrinho());
+
+	if (isset($this->session))
+	{
+	  if(isset($this->session->carrinho))
+	  {
+	    echo json_encode($this->session->carrinho->getCarrinho());
+	  }
+	}
+	exit;
     }
 
 

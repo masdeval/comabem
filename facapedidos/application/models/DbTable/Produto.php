@@ -83,7 +83,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
     public function consultaQBE($produtos, $caloria, $tipos_produto, $cod_empresa='')
     {
 
-	$select = "select P.cod_produto, P.nome , FP.cod_foto, TP.preco, TP.descricao as tamanho, 
+	$select = "select P.cod_produto, P.nome , FP.cod_foto, TP.cod_tamanho_produto, TP.preco, TP.descricao as tamanho,
 	    Tipo.nome as tipo,E.nome_fantasia as nome_empresa, E.cod_empresa, E.url, Promo.preco_promocional ";
 
 	//pode ser que o estabelecimento nao funcione nesse dia da semana, por isso o LEFT JOIN

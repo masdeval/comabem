@@ -33,11 +33,21 @@ class Portal_IndexController extends Zend_Controller_Action
 	if (!empty($criterios))
 	{
 	    $hits = LuceneManager::search($criterios);
-	    //obtem a lista de produtos em ordem crescente de relevancia e insere os ids em uma string
+	    //obtem a lista de empresas em ordem crescente de relevancia e insere os ids em uma string
 	    //para fazer select no banco
+	    $cod_empresa = "";
 	    foreach ($hits as $hit)
 	    {
-		$produtos .= $hit->cod_produto . ", ";
+		//Quero selecionar apenas uma vez uma determinada empresa no filtro da primeira pagina
+		if($cod_empresa == $hit->cod_empresa)
+		{
+			continue;
+		}
+		else
+		{
+		    $cod_empresa = $hit->cod_empresa;		
+		    $produtos .= $hit->cod_produto . ", ";
+		}
 	    }
 	    $produtos .= "-1"; //so porque fica uma virgula no final
 	}
@@ -48,13 +58,27 @@ class Portal_IndexController extends Zend_Controller_Action
 	//esta aberto ou fechado
 	$hora_atual = date('H') . ":" . date('i') . ":00";
 
+	$cod_empresa = "";
+	$novo_resultado = array();
+	$j = 0;
 	for ($i = 0; $i < sizeof($resultado); $i++)
 	{
-	    $resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
+	    if($cod_empresa == $resultado[$i]['cod_empresa'])
+	    {
+		continue;
+	    }
+	    else
+	    {
+		$cod_empresa = $resultado[$i]['cod_empresa'];
+		$resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
+		$novo_resultado[$j] = $resultado[$i];
+		$j++;
+	    }
+	    
 	}
 
 
-	$this->view->resultado = $resultado;
+	$this->view->resultado = $novo_resultado;
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
 	$this->view->pesquisa_facapedido_criterio = $criterios;
 	$this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;
@@ -82,6 +106,21 @@ class Portal_IndexController extends Zend_Controller_Action
 	$status = $this->RecadoClienteDB->registraSolicitacaoLojaAberta($cod_empresa,$cod_produto, $data, $hora_atual);
 	echo $status;
 	exit;
+    }
+
+
+     public function limparCarrinhoAction()
+    {
+
+	if (isset($this->session))
+	{
+	    $this->session->__unset("carrinho");
+	}
+	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
+
+	$this->_helper->viewRenderer("index");
+
+
     }
 
 }

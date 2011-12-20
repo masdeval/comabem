@@ -5,7 +5,7 @@ define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 class LuceneManager
 {
 
-    static function criaDocumentoProduto($produtoId,$produto)
+    static function criaDocumentoProduto($empresaId, $produtoId,$produto)
     {
 	Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive() );
 	$doc = new Zend_Search_Lucene_Document();
@@ -34,7 +34,8 @@ class LuceneManager
 
 	// Field is not indexed, but is stored in the index.
 	//$doc->addField(Zend_Search_Lucene_Field::UnIndexed('created', time()));
-
+	$doc->addField(Zend_Search_Lucene_Field::UnIndexed('cod_empresa', $empresaId));
+	
 	// Binary String valued Field that is not tokenized nor indexed,
 	// but is stored in the index.
 	//$doc->addField(Zend_Search_Lucene_Field::Binary('icon',$iconData));
