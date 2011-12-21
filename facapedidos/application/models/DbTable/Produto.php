@@ -97,7 +97,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	, tipo_produto Tipo, empresa E ";
 
 	$where = "where P.removed <> 1 and TP.removed  <> 1 AND P.disponivel = true AND
-	P.cod_produto = TP.cod_produto AND
+	P.cod_produto = TP.cod_produto AND E.desativada = false AND E.removed = 0 AND
 	P.cod_tipo_produto = Tipo.cod_tipo_produto AND P.cod_empresa = E.cod_empresa ";
 
 	$i = 1;
