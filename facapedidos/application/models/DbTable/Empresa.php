@@ -158,10 +158,10 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
     {
 	if (!empty($url))
 	{
-	    $query = $this->_db->query("SELECT cod_empresa FROM empresa where url='$url'");
+	    $query = $this->_db->query("SELECT cod_empresa, removed FROM empresa where url='$url'");
 	}
 	$res = $query->fetchAll();
-	if (count($res) > 0)
+	if (count($res) > 0 && $res[0]['removed'] == 0)
 	{
 	    return $res[0]['cod_empresa'];
 	}
@@ -177,14 +177,14 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 
     public function isAberto($cod_empresa, $dia_da_semana, $hora)
     {
-	$query = $this->_db->query("SELECT e.cod_empresa, hora_inicio, hora_fim
+	$query = $this->_db->query("SELECT e.cod_empresa, hora_inicio, hora_fim, desativada
 	                          FROM empresa e, horario_funcionamento hf
 				  WHERE e.cod_empresa = hf.cod_empresa and
 				  hf.dia_da_semana = '" . $dia_da_semana . "' and
 				  e.cod_empresa = " . $cod_empresa);
 	$res = $query->fetchAll();
 
-	if (count($res) <= 0)
+	if (count($res) <= 0 || $res[0]['desativada'] == true)
 	{
 	    return false;
 	}
