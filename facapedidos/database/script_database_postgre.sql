@@ -60,7 +60,7 @@ CREATE TABLE public.tipo_produto (
                 cod_tipo_produto INTEGER NOT NULL DEFAULT nextval('public.tipo_produto_cod_tipo_produto_seq'),
                 nome VARCHAR(50),
                 foto BYTEA,
-                is_especialidade CHAR(1),
+                is_especialidade BOOLEAN,
                 CONSTRAINT tipo_produto_pkey PRIMARY KEY (cod_tipo_produto)
 );
 
@@ -207,7 +207,7 @@ CREATE TABLE public.empresa (
                 email VARCHAR(50),
                 url VARCHAR(10) NOT NULL,
                 removed SMALLINT DEFAULT 0 NOT NULL,
-                desativada SMALLINT DEFAULT 0,
+                desativada BOOLEAN DEFAULT false NOT NULL,
                 data_cadastro TIMESTAMP,
                 cod_estrategia_cobranca_pizza INTEGER,
                 CONSTRAINT empresa_pkey PRIMARY KEY (cod_empresa)
@@ -245,7 +245,6 @@ CREATE TABLE public.produto (
                 tempo_preparo_minutos SMALLINT,
                 valor_calorico DOUBLE PRECISION,
                 numero_max_adicionais SMALLINT,
-                fator_de_ajuste DOUBLE PRECISION,
                 cobrado_por_quilo BOOLEAN,
                 disponivel BOOLEAN,
                 removed SMALLINT DEFAULT 0 NOT NULL,
@@ -372,7 +371,7 @@ CREATE TABLE public.ingrediente_empresa (
                 cod_empresa INTEGER NOT NULL,
                 descricao VARCHAR(200),
                 imagem BYTEA,
-                preco_quando_adicional NUMERIC(14,2) NOT NULL,
+                preco_quando_adicional NUMERIC(14,2),
                 removed SMALLINT DEFAULT 0 NOT NULL,
                 CONSTRAINT ingrediente_empresa_pkey PRIMARY KEY (cod_ingrediente, cod_empresa)
 );
@@ -405,40 +404,6 @@ CREATE INDEX xif16ingrediente_empresa
 CREATE INDEX xpkingrediente_empresa
  ON public.ingrediente_empresa USING BTREE
  ( cod_ingrediente, cod_empresa );
-
-CREATE TABLE public.itens_de_um_lanche (
-                cod_produto INTEGER NOT NULL,
-                cod_ingrediente INTEGER NOT NULL,
-                cod_empresa INTEGER NOT NULL,
-                preco NUMERIC(14,2) NOT NULL,
-                valor_calorico DOUBLE PRECISION,
-                CONSTRAINT itens_de_um_lanche_pkey PRIMARY KEY (cod_produto, cod_ingrediente, cod_empresa)
-);
-
-
-CREATE INDEX ifk_rel_07
- ON public.itens_de_um_lanche USING BTREE
- ( cod_ingrediente, cod_empresa );
-
-CREATE INDEX itens_de_um_lanche_fkindex1
- ON public.itens_de_um_lanche USING BTREE
- ( cod_ingrediente, cod_empresa );
-
-CREATE INDEX itens_de_um_lanche_fkindex3
- ON public.itens_de_um_lanche USING BTREE
- ( cod_produto );
-
-CREATE INDEX xif12itens_de_um_lanche
- ON public.itens_de_um_lanche USING BTREE
- ( cod_produto );
-
-CREATE INDEX xif17itens_de_um_lanche
- ON public.itens_de_um_lanche USING BTREE
- ( cod_ingrediente, cod_empresa );
-
-CREATE INDEX xpkitens_de_um_lanche
- ON public.itens_de_um_lanche USING BTREE
- ( cod_produto, cod_ingrediente, cod_empresa );
 
 CREATE TABLE public.horario_funcionamento (
                 cod_empresa INTEGER NOT NULL,
@@ -526,18 +491,17 @@ CREATE SEQUENCE public.pedido_cod_pedido_seq;
 
 CREATE TABLE public.pedido (
                 cod_pedido INTEGER NOT NULL DEFAULT nextval('public.pedido_cod_pedido_seq'),
-                cod_entrega INTEGER NOT NULL,
-                cod_cliente INTEGER NOT NULL,
+                cod_cliente INTEGER,
                 data DATE,
                 valor_total NUMERIC(14,2) NOT NULL,
                 rua VARCHAR(50),
                 numero SMALLINT,
                 complemento VARCHAR(20),
-                tempo_entrega_minutos SMALLINT,
                 cep VARCHAR(8),
                 status_pagamento SMALLINT,
                 status_pedido SMALLINT,
                 telefone VARCHAR(20) NOT NULL,
+                notificacaoSMS BOOLEAN,
                 CONSTRAINT pedido_pkey PRIMARY KEY (cod_pedido)
 );
 
@@ -548,17 +512,9 @@ CREATE INDEX ifk_rel_29
  ON public.pedido USING BTREE
  ( cod_cliente );
 
-CREATE INDEX ifk_rel_33
- ON public.pedido USING BTREE
- ( cod_entrega );
-
 CREATE INDEX pedido_fkindex1
  ON public.pedido USING BTREE
  ( cod_cliente );
-
-CREATE INDEX pedido_fkindex2
- ON public.pedido USING BTREE
- ( cod_entrega );
 
 CREATE INDEX xif26pedido
  ON public.pedido USING BTREE
@@ -568,89 +524,65 @@ CREATE INDEX xpkpedido
  ON public.pedido USING BTREE
  ( cod_pedido );
 
-CREATE TABLE public.itens_pedido (
+CREATE TABLE public.pedido_empresa (
                 cod_pedido INTEGER NOT NULL,
-                cod_tamanho_produto INTEGER NOT NULL,
-                quantidade SMALLINT,
-                quilos DOUBLE PRECISION,
-                CONSTRAINT itens_pedido_pkey PRIMARY KEY (cod_pedido, cod_tamanho_produto)
+                cod_empresa INTEGER NOT NULL,
+                entregar BOOLEAN DEFAULT true,
+                observacao VARCHAR,
+                tempo_entrega_minutos SMALLINT,
+                cod_entrega INTEGER NOT NULL,
+                CONSTRAINT pedido_empresa_pk PRIMARY KEY (cod_pedido, cod_empresa)
 );
 
 
-CREATE INDEX ifk_rel_08
- ON public.itens_pedido USING BTREE
- ( cod_pedido );
+CREATE TABLE public.itens_pedido (
+                cod_tamanho_produto INTEGER NOT NULL,
+                cod_pedido INTEGER NOT NULL,
+                cod_empresa INTEGER NOT NULL,
+                quantidade SMALLINT,
+                quilos DOUBLE PRECISION,
+                CONSTRAINT itens_pedido_pkey PRIMARY KEY (cod_tamanho_produto, cod_pedido, cod_empresa)
+);
 
-CREATE INDEX itens_pedido_fkindex1
- ON public.itens_pedido USING BTREE
- ( cod_pedido );
 
-CREATE INDEX xif28pedido_produto
- ON public.itens_pedido USING BTREE
- ( cod_pedido );
+CREATE TABLE public.pedido_personalizado (
+                cod_tamanho_produto INTEGER NOT NULL,
+                cod_pedido INTEGER NOT NULL,
+                cod_empresa INTEGER NOT NULL,
+                cod_ingrediente INTEGER NOT NULL,
+                CONSTRAINT pedido_personalizado_pkey PRIMARY KEY (cod_tamanho_produto, cod_pedido, cod_empresa, cod_ingrediente)
+);
 
-CREATE INDEX xpkpedido_produto
- ON public.itens_pedido USING BTREE
- ( cod_pedido );
 
 CREATE TABLE public.sabores_pizza (
                 cod_outro_sabor_pizza INTEGER NOT NULL,
-                cod_produto INTEGER NOT NULL,
                 cod_tamanho_produto INTEGER NOT NULL,
                 cod_pedido INTEGER NOT NULL,
-                CONSTRAINT sabores_pizza_pkey PRIMARY KEY (cod_outro_sabor_pizza, cod_produto, cod_tamanho_produto, cod_pedido)
+                cod_empresa INTEGER NOT NULL,
+                CONSTRAINT sabores_pizza_pkey PRIMARY KEY (cod_outro_sabor_pizza, cod_tamanho_produto, cod_pedido, cod_empresa)
 );
 
-
-CREATE INDEX ifk_rel_30
- ON public.sabores_pizza USING BTREE
- ( cod_pedido, cod_produto );
-
-CREATE INDEX sabores_pizza_fkindex1
- ON public.sabores_pizza USING BTREE
- ( cod_pedido, cod_produto );
 
 CREATE INDEX sabores_pizza_fkindex2
  ON public.sabores_pizza USING BTREE
  ( cod_outro_sabor_pizza );
 
-CREATE TABLE public.pedido_personalizado (
-                cod_empresa INTEGER NOT NULL,
-                cod_ingrediente INTEGER NOT NULL,
-                cod_pedido INTEGER NOT NULL,
-                cod_tamanho_produto INTEGER NOT NULL,
-                CONSTRAINT pedido_personalizado_pkey PRIMARY KEY (cod_empresa, cod_ingrediente, cod_pedido, cod_tamanho_produto)
-);
+CREATE SEQUENCE public.categoria_empresa_cod_tipo_ingrediente_seq;
 
-
-CREATE INDEX ifk_rel_12
- ON public.pedido_personalizado USING BTREE
- ( cod_pedido );
-
-CREATE INDEX pedido_personalizado_fkindex1
- ON public.pedido_personalizado USING BTREE
- ( cod_pedido );
-
-CREATE INDEX pedido_personalizado_fkindex2
- ON public.pedido_personalizado USING BTREE
- ( cod_ingrediente, cod_empresa );
-
-CREATE SEQUENCE public.categoria_ingrediente_cod_tipo_ingrediente_seq;
-
-CREATE TABLE public.categoria_ingrediente (
-                cod_tipo_ingrediente INTEGER NOT NULL DEFAULT nextval('public.categoria_ingrediente_cod_tipo_ingrediente_seq'),
+CREATE TABLE public.categoria_empresa (
+                cod_categoria_empresa INTEGER NOT NULL DEFAULT nextval('public.categoria_empresa_cod_tipo_ingrediente_seq'),
                 nome VARCHAR(40) NOT NULL,
-                CONSTRAINT categoria_ingrediente_pkey PRIMARY KEY (cod_tipo_ingrediente)
+                CONSTRAINT categoria_ingrediente_pkey PRIMARY KEY (cod_categoria_empresa)
 );
 
 
-ALTER SEQUENCE public.categoria_ingrediente_cod_tipo_ingrediente_seq OWNED BY public.categoria_ingrediente.cod_tipo_ingrediente;
+ALTER SEQUENCE public.categoria_empresa_cod_tipo_ingrediente_seq OWNED BY public.categoria_empresa.cod_categoria_empresa;
 
 CREATE TABLE public.categoria_permitida_como_adicional (
                 cod_produto INTEGER NOT NULL,
-                cod_tipo_ingrediente INTEGER NOT NULL,
-                qtd_max_adicionais SMALLINT NOT NULL,
-                CONSTRAINT categoria_permitida_como_adicional_pkey PRIMARY KEY (cod_produto, cod_tipo_ingrediente)
+                cod_categoria_empresa INTEGER NOT NULL,
+                qtd_max_adicionais SMALLINT,
+                CONSTRAINT categoria_permitida_como_adicional_pkey PRIMARY KEY (cod_produto, cod_categoria_empresa)
 );
 
 
@@ -658,33 +590,21 @@ CREATE INDEX ifk_rel_47
  ON public.categoria_permitida_como_adicional USING BTREE
  ( cod_produto );
 
-CREATE INDEX ifk_rel_48
- ON public.categoria_permitida_como_adicional USING BTREE
- ( cod_tipo_ingrediente );
-
 CREATE INDEX tipo_ingrediente_empresa_has_produto_fkindex2
  ON public.categoria_permitida_como_adicional USING BTREE
  ( cod_produto );
 
 CREATE TABLE public.categoria_ingrediente_empresa (
-                cod_tipo_ingrediente INTEGER NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 cod_ingrediente INTEGER NOT NULL,
-                CONSTRAINT categoria_ingrediente_empresa_pkey PRIMARY KEY (cod_tipo_ingrediente, cod_empresa, cod_ingrediente)
+                cod_categoria_empresa INTEGER NOT NULL,
+                CONSTRAINT categoria_ingrediente_empresa_pkey PRIMARY KEY (cod_empresa, cod_ingrediente, cod_categoria_empresa)
 );
 
-
-CREATE INDEX ifk_rel_44
- ON public.categoria_ingrediente_empresa USING BTREE
- ( cod_tipo_ingrediente );
 
 CREATE INDEX ifk_rel_45
  ON public.categoria_ingrediente_empresa USING BTREE
  ( cod_ingrediente, cod_empresa );
-
-CREATE INDEX tipo_ingrediente_has_ingrediente_empresa_fkindex1
- ON public.categoria_ingrediente_empresa USING BTREE
- ( cod_tipo_ingrediente );
 
 CREATE INDEX tipo_ingrediente_has_ingrediente_empresa_fkindex2
  ON public.categoria_ingrediente_empresa USING BTREE
@@ -802,7 +722,7 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.pedido ADD CONSTRAINT pedido_cod_entrega_fkey
+ALTER TABLE public.pedido_empresa ADD CONSTRAINT entrega_pedido_empresa_fk
 FOREIGN KEY (cod_entrega)
 REFERENCES public.entrega (cod_entrega)
 ON DELETE NO ACTION
@@ -851,6 +771,13 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+ALTER TABLE public.pedido_empresa ADD CONSTRAINT empresa_pedido_empresa_fk
+FOREIGN KEY (cod_empresa)
+REFERENCES public.empresa (cod_empresa)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
 ALTER TABLE public.categoria_permitida_como_adicional ADD CONSTRAINT categoria_permitida_como_adicional_cod_produto_fkey
 FOREIGN KEY (cod_produto)
 REFERENCES public.produto (cod_produto)
@@ -863,13 +790,6 @@ FOREIGN KEY (cod_produto)
 REFERENCES public.produto (cod_produto)
 ON DELETE CASCADE
 ON UPDATE CASCADE
-NOT DEFERRABLE;
-
-ALTER TABLE public.itens_de_um_lanche ADD CONSTRAINT itens_de_um_lanche_cod_produto_fkey
-FOREIGN KEY (cod_produto)
-REFERENCES public.produto (cod_produto)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE public.sabores_pizza ADD CONSTRAINT sabores_pizza_cod_outro_sabor_pizza_fkey
@@ -921,14 +841,7 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.itens_de_um_lanche ADD CONSTRAINT itens_de_um_lanche_cod_ingrediente_fkey
-FOREIGN KEY (cod_ingrediente, cod_empresa)
-REFERENCES public.ingrediente_empresa (cod_ingrediente, cod_empresa)
-ON DELETE NO ACTION
-ON UPDATE NO ACTION
-NOT DEFERRABLE;
-
-ALTER TABLE public.pedido_personalizado ADD CONSTRAINT pedido_personalizado_cod_ingrediente_fkey
+ALTER TABLE public.pedido_personalizado ADD CONSTRAINT ingrediente_empresa_pedido_personalizado_fk
 FOREIGN KEY (cod_ingrediente, cod_empresa)
 REFERENCES public.ingrediente_empresa (cod_ingrediente, cod_empresa)
 ON DELETE NO ACTION
@@ -949,37 +862,44 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.itens_pedido ADD CONSTRAINT itens_pedido_cod_pedido_fkey
+ALTER TABLE public.pedido_empresa ADD CONSTRAINT pedido_pedido_empresa_fk
 FOREIGN KEY (cod_pedido)
 REFERENCES public.pedido (cod_pedido)
-ON DELETE CASCADE
-ON UPDATE CASCADE
-NOT DEFERRABLE;
-
-ALTER TABLE public.pedido_personalizado ADD CONSTRAINT pedido_personalizado_cod_pedido_fkey
-FOREIGN KEY (cod_pedido, cod_tamanho_produto)
-REFERENCES public.itens_pedido (cod_pedido, cod_tamanho_produto)
-ON DELETE CASCADE
-ON UPDATE CASCADE
-NOT DEFERRABLE;
-
-ALTER TABLE public.sabores_pizza ADD CONSTRAINT sabores_pizza_cod_pedido_fkey
-FOREIGN KEY (cod_pedido, cod_tamanho_produto)
-REFERENCES public.itens_pedido (cod_pedido, cod_tamanho_produto)
-ON DELETE CASCADE
-ON UPDATE CASCADE
-NOT DEFERRABLE;
-
-ALTER TABLE public.categoria_ingrediente_empresa ADD CONSTRAINT categoria_ingrediente_empresa_cod_tipo_ingrediente_fkey
-FOREIGN KEY (cod_tipo_ingrediente)
-REFERENCES public.categoria_ingrediente (cod_tipo_ingrediente)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.categoria_permitida_como_adicional ADD CONSTRAINT categoria_permitida_como_adicional_cod_tipo_ingrediente_fkey
-FOREIGN KEY (cod_tipo_ingrediente)
-REFERENCES public.categoria_ingrediente (cod_tipo_ingrediente)
+ALTER TABLE public.itens_pedido ADD CONSTRAINT pedido_empresa_itens_pedido_fk
+FOREIGN KEY (cod_pedido, cod_empresa)
+REFERENCES public.pedido_empresa (cod_pedido, cod_empresa)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.sabores_pizza ADD CONSTRAINT itens_pedido_sabores_pizza_fk
+FOREIGN KEY (cod_tamanho_produto, cod_pedido, cod_empresa)
+REFERENCES public.itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.pedido_personalizado ADD CONSTRAINT itens_pedido_pedido_personalizado_fk
+FOREIGN KEY (cod_tamanho_produto, cod_pedido, cod_empresa)
+REFERENCES public.itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.categoria_ingrediente_empresa ADD CONSTRAINT categoria_empresa_categoria_ingrediente_empresa_fk
+FOREIGN KEY (cod_categoria_empresa)
+REFERENCES public.categoria_empresa (cod_categoria_empresa)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.categoria_permitida_como_adicional ADD CONSTRAINT categoria_empresa_categoria_permitida_como_adicional_fk
+FOREIGN KEY (cod_categoria_empresa)
+REFERENCES public.categoria_empresa (cod_categoria_empresa)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
