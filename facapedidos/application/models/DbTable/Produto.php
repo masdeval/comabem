@@ -54,7 +54,6 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    'tempo_preparo_minutos' => (int) $formData['tempo_preparo_minutos'],
 	    'valor_calorico' => (float) $formData['valor_calorico'],
 	    'numero_max_adicionais' => (int) $formData['numero_max_adicionais'],
-	    'fator_de_ajuste' => (float) $formData['fator_de_ajuste'],
 	    'cobrado_por_quilo' => $formData['cobrado_por_quilo'],
 	    'disponivel' => $formData['disponivel'],
 	);
