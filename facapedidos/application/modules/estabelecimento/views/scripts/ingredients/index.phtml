@@ -106,13 +106,13 @@
         <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
           <tr>
           <?php $i=0;foreach($this->categoriaIngredienteRec as $k=>$v) {
-              if(in_array($v['cod_tipo_ingrediente'],(array)$this->categoriaIngredienteEmpresa)){
+              if(in_array($v['cod_categoria_empresa'],(array)$this->categoriaIngredienteEmpresa)){
                   $checked="checked";
               }else{
                   $checked='';
               }
               ?>
-            <td> <input type="checkbox" name="cod_tipo_ingrediente[]" value="<?php echo $v['cod_tipo_ingrediente']?>" <?php echo $checked ?>> <?php echo $v['nome']?>   </td>
+            <td> <input type="checkbox" name="cod_categoria_empresa[]" value="<?php echo $v['cod_categoria_empresa']?>" <?php echo $checked ?>> <?php echo $v['nome']?>   </td>
             <?php if($i>=4){ echo '</tr><tr>';$i=0;}?>
             <?php $i++;}?>
           </tr>
@@ -148,8 +148,8 @@
                 <td> Escolha a categoria * </td>
 
 
-      <td colspan="10"><?php $attribs =array("class"=>'input-medium RQR required', "title"=>'Por favor, indique Ingredients' ,'style'=>'width:200px','onchange'=>"getCategoria(this,'$this->ingredienteId')");
-echo $this->formSelect('cod_tipo_ingrediente', $this->formData['categoria_ingrediente'], $attribs, $this->categoriaIngredienteOption); ?>
+      <td colspan="10"><?php $attribs =array("class"=>'input-medium RQR required', "title"=>'Por favor, indique Ingredients' ,'style'=>'width:200px','onchange'=>"getCategoria(this,$this->ingredienteId)");
+echo $this->formSelect('cod_categoria_empresa', $this->formData['cod_categoria_empresa'], $attribs, $this->categoriaIngredienteOption); ?>
               <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
               </tr>
               

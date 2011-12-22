@@ -20,10 +20,10 @@
           //echo '<pre>';print_r($formData);echo '</pre>';
           //exit;
           $this->_db->delete('categoria_permitida_como_adicional', "cod_produto =$cod_produto");
-          foreach($formData['cp']['cod_tipo_ingrediente'] as $k=>$v){
+          foreach($formData['cp']['cod_categoria_empresa'] as $k=>$v){
               $data=array(
                          'cod_produto'=>$cod_produto,
-                         'cod_tipo_ingrediente'=>$v,
+                         'cod_categoria_empresa'=>$v,
                          'qtd_max_adicionais'=>(int)$formData['cp']['qtd_max_adicionais'][$v][0],
                        );
                        $this->insert($data);

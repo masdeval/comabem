@@ -4,7 +4,7 @@
         <ul>
             <li><a href="#tab1">Produto</a></li>
             <li><a href="#tab2">Imagens</a></li>
-          <!--  <li><a href="#tab3">Categorias Permitidas como adicionais</a></li> -->
+            <li><a href="#tab3">Categorias Permitidas como Adicional</a></li>
            <!-- <li><a href="#tab4">Ingredientes</a></li> -->
             <li><a href="#tab5">Tamanhos</a></li>
 
@@ -32,19 +32,9 @@
                     <tr>
                         <td> Tempo Preparo Minutos <br><input type="text" class="input-medium validNumber"  name="tempo_preparo_minutos" maxlength="3" value="<?php echo $this->formData['tempo_preparo_minutos'] ?>" style="width: 200px;">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> </td>
-                        <td> Max Adicionais<br><input type="text" class="input-medium validNumber"  name="numero_max_adicionais" maxlength="14" value="<?php echo $this->formData['numero_max_adicionais'] ?>" id='maxAdicionais' style="width: 200px;">
-                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                       <!-- <td> Max Adicionais<br><input type="text" class="input-medium validNumber"  name="numero_max_adicionais" maxlength="14" value="<?php echo $this->formData['numero_max_adicionais'] ?>" id='maxAdicionais' style="width: 200px;">
+                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td> -->
                     </tr>
-                  <!--  <tr>
-                        <td colspan="2">
-                            <table><tr>
-                                    <td> Fator De Ajuste<br><input type="text" class="input-medium validDecimalNumber"  name="fator_de_ajuste" maxlength="14" value="<?php //echo $this->formData['fator_de_ajuste'] ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> </td>
-                                    <td>Este Um Valor percentual qua sera aplicado sobre o preco de custo visando  o calculo da valor final</td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>  -->
                     
                     <tr>
                         <td>Cobrado Por Quilo ?<input type="checkbox" value="1" name="cobrado_por_quilo" <?php if ($this->formData['cobrado_por_quilo'] == 1)
@@ -130,27 +120,27 @@
         </div>
     </div>
 
- <!--   <div id="tab3">
+    <div id="tab3">
         <div class="contentForm">
-            <form action="<?php //echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form3' onsubmit="return validateForm('form3');" >
+            <form action="/estabelecimento/produto/add" method="post" class="frm" id='form3' onsubmit="return validateForm('form3');" >
                 <fieldset style=" margin: 0; padding: 0;">
-                    <legend>Categorias Permitidas como adicionais</legend>
+                    <legend>Categorias Permitidas como Adicional</legend>
                     <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                         <tr><td colspan="30">
-                                Indique quais sao as categorias ds ingredientes que estrao disponivies com adicionais para este produto. Informe tambem a quantidade que sara permitida em cada uma que for selecionada.
+                                Indique quais sao as categorias ds ingredientes que estrao disponivies com adicionais para este produto. Informe tambem a quantidade que será permitida em cada uma que for selecionada.
                             </td></tr>
                         <tr><td colspan="30">
-                                <span id='maxError' style="display: none; color: red;"><b>Maximum  <?php //echo $this->formData['numero_max_adicionais'] ?> Records can be selectd.</b></span>
+                                <span id='maxError' style="display: none; color: red;"><b>Maximum  <?php echo $this->formData['numero_max_adicionais'] ?> Records can be selectd.</b></span>
                             </td></tr>
                         <tr>
-<?php   /*
+<?php   
                             $i = 0;
-                            foreach ($this->categoriaIngredienteRec as $k => $v)
+                            foreach ($this->CategoriaEmpresaRec as $k => $v)
                             {
-                                if (!empty($this->formData3[$v['cod_tipo_ingrediente']]))
+                                if (!empty($this->formData3[$v['cod_categoria_empresa']]))
                                 {
                                     $checked = "checked";
-                                    $val = $this->formData3[$v['cod_tipo_ingrediente']]['qtd_max_adicionais'];
+                                    $val = $this->formData3[$v['cod_categoria_empresa']]['qtd_max_adicionais'];
                                 } else
                                 {
                                     $checked = '';
@@ -158,8 +148,8 @@
                                 }
 ?>
                                 <td>
-                                    <input type="checkbox" name="cp[cod_tipo_ingrediente][]" value="<?php echo $v['cod_tipo_ingrediente'] ?>" <?php echo $checked ?> class="checkMax"> <?php echo $v['nome'] ?>
-                                    <input type="text" class="input-medium validNumber"  name="cp[qtd_max_adicionais][<?php echo $v['cod_tipo_ingrediente'] ?>][]" maxlength="3" value="<?php echo $val ?>" style="width: 70px;" title="This field is required">
+                                    <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php echo $v['cod_categoria_empresa'] ?>" <?php echo $checked ?> class="checkMax"> <?php echo $v['nome'] ?>
+                                    <input type="text" class="input-medium validNumber"  name="cp[qtd_max_adicionais][<?php echo $v['cod_categoria_empresa'] ?>][]" maxlength="3" value="<?php echo $val ?>" style="width: 70px;" title="This field is required">
                                     <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
                                 </td>
 <?php if ($i >= 2)
@@ -168,7 +158,7 @@
                                     $i = 0;
                                 } ?>
 <?php $i++;
-                            }                       */    ?>
+                            }                           ?>
                         </tr>
 
 
@@ -179,17 +169,17 @@
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>
                         <td><input type="hidden" name="emorFrom" value="3">
-                            <input type="hidden" name="action" value="<?php //echo $this->action; ?>">
-                            <input type="hidden" name="produtoId" value="<?php //echo $this->produtoId ?>">
+                            <input type="hidden" name="action" value="<?php  echo $this->action; ?>">
+                            <input type="hidden" name="produtoId" value="<?php echo $this->produtoId ?>">
                             <input type="submit" name="Save" value="Salvar">
                         </td>
                     </tr>
                 </table>
             </form>
         </div>
-    </div>      -->
+    </div>      
 <!--                        Resolvi tirar a possibilidade de o estabelecimento inserir item a item quais sao os ingredientes que compoem um produto.
-                            Acho que vai complicar muito.
+                            Acho que vai complicar muito. Nem existe mais essa tabela
 
     <div id="tab4">
 

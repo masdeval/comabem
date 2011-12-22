@@ -10,7 +10,7 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
     public $HorarioFuncionamento;
     public $Ingrediente;
     public $CategoriaIngrediente;
-    public $IngredienteEmpresa;
+    //public $IngredienteEmpresa;
     public $session;
     public $db;
     public $empresaId; //empresa que o usuario logado que instanciou esta classe pertence
@@ -32,10 +32,10 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
         $this->TiposProdutosEmpresa = new DbTable_TiposProdutosEmpresa($this->db);
         $this->HorarioFuncionamento = new DbTable_HorarioFuncionamento($this->db);
         $this->Ingrediente = new DbTable_Ingrediente();
-        $this->CategoriaIngrediente = new DbTable_CategoriaIngrediente();
+        $this->CategoriaEmpresa = new DbTable_CategoriaEmpresa();
         $this->CategoriaIngredienteEmpresa = new DbTable_CategoriaIngredienteEmpresa($this->db);
         $this->IngredienteEmpresa = new DbTable_IngredienteEmpresa($this->db);
-        $this->ItensDeUmLanche = new DbTable_ItensDeUmLanche($this->db);
+        //$this->ItensDeUmLanche = new DbTable_ItensDeUmLanche($this->db);
         $this->view->pageTitle = 'Ingredientes';
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
     }
@@ -45,8 +45,8 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
         $this->view->empresaId = $this->empresaId;
         $this->view->ingredienteJaCustomizadoOption = $this->IngredienteEmpresa->getIngredientesJaCustomizadosDropDown($this->empresaId);
         $this->view->ingredienteAindaNaoCustomizadoOption = $this->IngredienteEmpresa->getIngredientesAindaNaoCustomizadosDropDown($this->empresaId);
-        $this->view->categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
-        $this->view->categoriaIngredienteOption = $this->CategoriaIngrediente->getOptionDropDown();
+        $this->view->categoriaIngredienteRec = $this->CategoriaEmpresa->getRecords($this->empresaId);
+        $this->view->categoriaIngredienteOption = $this->CategoriaEmpresa->getOptionDropDown($this->empresaId);
         $this->view->ingredienteEmpresa = $this->IngredienteEmpresa->getRecords($this->empresaId);
     }
 
@@ -141,7 +141,7 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
                 $this->editAction($ingredienteId);
             }
         }
-        if ($formData['emorFrom'] == 2)
+        if ($formData['emorFrom'] == 2) //tela de, dado uma categoria, associa-la com varios ingredientes de uma so vez
         {
             try
             {
@@ -172,12 +172,12 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
         $this->view->categoriaIngredienteEmpresa = $categoriaIngredienteEmpresa;
         $this->view->ingredienteJaCustomizadoOption = $this->IngredienteEmpresa->getIngredientesJaCustomizadosDropDown($this->empresaId);
         $this->view->ingredienteAindaNaoCustomizadoOption = $this->IngredienteEmpresa->getIngredientesAindaNaoCustomizadosDropDown($this->empresaId);
-        $categoriaIngredienteRec = $this->CategoriaIngrediente->getRecords();
-        $this->view->categoriaIngredienteRec = $categoriaIngredienteRec;
-        $categoriaIngredienteOption = $this->CategoriaIngrediente->getOptionDropDown();
-        $this->view->categoriaIngredienteOption = $categoriaIngredienteOption;
-        $ingredienteEmpresaRec = $this->IngredienteEmpresa->getRecords($this->empresaId);
-        $this->view->ingredienteEmpresa = $ingredienteEmpresaRec;
+        
+        $this->view->categoriaIngredienteRec = $this->CategoriaEmpresa->getRecords($empresaId);
+        
+        $this->view->categoriaIngredienteOption = $this->CategoriaEmpresa->getOptionDropDown($empresaId);
+        //$ingredienteEmpresaRec = $this->IngredienteEmpresa->getRecords($this->empresaId);
+        //$this->view->ingredienteEmpresa = $ingredienteEmpresaRec;
         $this->view->title = 'Empresa';
         $this->view->action = 'edit';
         $this->view->empresaId = $empresaId;
@@ -271,15 +271,15 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
     /*
      * Na tela de ingredientes existe uma aba onde eh possivel observar, dada uma categoria, quais ingredientes
      * customizados pela empresa estao nesta categoria. Quando o combobox para escolher a categoria eh acionado
-     * eh esta funcao eh chamada via ajax para povoar a tela.
+     * esta funcao eh chamada via ajax para povoar a tela.
      */
 
     public function categoriaAction()
     {
         $ingredienteId = $this->_getParam('ing', '');
-        $cod_tipo_ingrediente = $this->_getParam('tipoing', '');
+        $cod_categoria_empresa = $this->_getParam('tipoing', '');
         $ingredienteEmpresaRec = $this->IngredienteEmpresa->getRecords($this->empresaId);
-        $categoriaIngredienteEmpresaAssocair = $this->CategoriaIngredienteEmpresa->getRecordsAssocair($this->empresaId, $cod_tipo_ingrediente);
+        $categoriaIngredienteEmpresaAssocair = $this->CategoriaIngredienteEmpresa->getRecordsAssocair($this->empresaId, $cod_categoria_empresa);
         $i = 0;
         $resp = "<tr> ";
 
