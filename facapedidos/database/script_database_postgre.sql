@@ -572,6 +572,7 @@ CREATE SEQUENCE public.categoria_empresa_cod_tipo_ingrediente_seq;
 CREATE TABLE public.categoria_empresa (
                 cod_categoria_empresa INTEGER NOT NULL DEFAULT nextval('public.categoria_empresa_cod_tipo_ingrediente_seq'),
                 nome VARCHAR(40) NOT NULL,
+                cod_empresa INTEGER NOT NULL,
                 CONSTRAINT categoria_ingrediente_pkey PRIMARY KEY (cod_categoria_empresa)
 );
 
@@ -772,6 +773,13 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE public.pedido_empresa ADD CONSTRAINT empresa_pedido_empresa_fk
+FOREIGN KEY (cod_empresa)
+REFERENCES public.empresa (cod_empresa)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.categoria_empresa ADD CONSTRAINT empresa_categoria_empresa_fk
 FOREIGN KEY (cod_empresa)
 REFERENCES public.empresa (cod_empresa)
 ON DELETE NO ACTION
