@@ -7,6 +7,10 @@ class LuceneManager
 
     static function criaDocumentoProduto($empresaId, $produtoId,$produto)
     {
+	$DbTable_Empresa = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
+
+	$empresa = $DbTable_Empresa->getSingleData($empresaId);
+
 	Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive() );
 	$doc = new Zend_Search_Lucene_Document();
 	//cria ou abre o indice
@@ -44,7 +48,9 @@ class LuceneManager
 	//descricao do produto
 	$doc->addField(Zend_Search_Lucene_Field::Text('descricao', utf8_decode($produto['descricao'])),"UTF-8");
 	//nome do produto
-	$doc->addField(Zend_Search_Lucene_Field::Text('nome', utf8_decode($produto['nome'])),"UTF-8");
+	$doc->addField(Zend_Search_Lucene_Field::Text('nome_produto', utf8_decode($produto['nome'])),"UTF-8");
+	//nome da empresa
+	$doc->addField(Zend_Search_Lucene_Field::Text('nome_empresa', utf8_decode($empresa['nome_fantasia'])),"UTF-8");
 
 	// Field is tokenized and indexed, but is not stored in the index.
 	//$doc->addField(Zend_Search_Lucene_Field::UnStored('contents','My document content'));
