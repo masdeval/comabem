@@ -452,18 +452,18 @@ CREATE TABLE public.cliente (
                 cod_cliente INTEGER NOT NULL DEFAULT nextval('public.cliente_cod_cliente_seq'),
                 cod_cidade INTEGER NOT NULL,
                 nome VARCHAR(50) NOT NULL,
-                data_nascimento DATE NOT NULL,
+                data_nascimento DATE,
                 email VARCHAR(30) NOT NULL,
                 senha VARCHAR(20) NOT NULL,
-                telefone VARCHAR(20) NOT NULL,
-                celular VARCHAR(20) NOT NULL,
-                endereco VARCHAR(50) NOT NULL,
-                numero VARCHAR(10) NOT NULL,
-                bairro VARCHAR(45) NOT NULL,
+                telefone VARCHAR(20),
+                celular VARCHAR(20),
+                endereco VARCHAR(50),
+                numero VARCHAR(10),
+                bairro VARCHAR(45),
                 complemento VARCHAR(30),
-                cep CHAR(9) NOT NULL,
-                cpf CHAR(11) NOT NULL,
-                status_usuario SMALLINT NOT NULL,
+                cep CHAR(9),
+                cpf CHAR(11),
+                status_usuario SMALLINT,
                 data_cadastro TIMESTAMP NOT NULL,
                 observacao TEXT,
                 CONSTRAINT cliente_pkey PRIMARY KEY (cod_cliente)
@@ -501,7 +501,6 @@ CREATE TABLE public.pedido (
                 status_pagamento SMALLINT,
                 status_pedido SMALLINT,
                 telefone VARCHAR(20) NOT NULL,
-                notificacaoSMS BOOLEAN,
                 CONSTRAINT pedido_pkey PRIMARY KEY (cod_pedido)
 );
 
@@ -531,6 +530,7 @@ CREATE TABLE public.pedido_empresa (
                 observacao VARCHAR,
                 tempo_entrega_minutos SMALLINT,
                 cod_entrega INTEGER NOT NULL,
+                notificacaoSMS BOOLEAN NOT NULL,
                 CONSTRAINT pedido_empresa_pk PRIMARY KEY (cod_pedido, cod_empresa)
 );
 
