@@ -10,6 +10,15 @@
 
 </head>
 
+    <?php
+
+	if(!empty($this->nomeCliente))
+	    echo "<p>Bem vindo".  $this->nomeCliente ."! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
+
+
+    ?>
+
+
 <img src='/portal/loja/get-Logo-Empresa/id/<?php echo $this->cod_empresa ?>' width='141' height='auto' alt=''>
 
 <div align="center" width="80%">
@@ -67,6 +76,13 @@
 
 		<td align="center" colspan="5"><input type="submit" value="Limpar Carrinho"> <!--onclick="javascript:limparCarrinhoAjax()"--> </td>
 		</form>
+
+	    	  <form action="/portal/pedido/fechar-Pedido" method="post" class="" >
+
+		<td align="center" colspan="5"><input type="submit" value="Fechar Pedido">  </td>
+		</form>
+
+
 	    </tr>
 	    <tr>
 		<td align="center" colspan="5"><h4> Seu pedido </h4></td>
@@ -164,6 +180,14 @@
 	?>
     
         </div> <!-- precos -->
+
+    <div style=' clear:both; '>
+	Descrição do produto:
+	<p style='font-size: smaller;' >
+	    <?php echo $this->resultado[$i]["descricao"]; ?>
+    </p> </div> <!-- nome do produto -->
+
+
    </div>
 
 <?php

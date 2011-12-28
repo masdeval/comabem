@@ -82,7 +82,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
     public function consultaQBE($produtos, $caloria, $tipos_produto, $cod_empresa='')
     {
 
-	$select = "select P.cod_produto, P.nome , FP.cod_foto, TP.cod_tamanho_produto, TP.preco, TP.descricao as tamanho,
+	$select = "select P.cod_produto, P.nome , P.descricao, FP.cod_foto, TP.cod_tamanho_produto, TP.preco, TP.descricao as tamanho,
 	    Tipo.nome as tipo,E.nome_fantasia as nome_empresa, E.cod_empresa, E.url, Promo.preco_promocional ";
 
 	//pode ser que o estabelecimento nao funcione nesse dia da semana, por isso o LEFT JOIN
@@ -210,6 +210,40 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	
     }
 
+
+    /*
+     * Obtem todas as informacoes de um produto necessarias para configuracao do pedido
+     */
+    public function configuracaoProduto($cod_produto)
+    {
+	$select = " SELECT Tipo_Produto.nome as tipo_produto, Produto.tempo_preparo_minutos, Produto.cobrado_por_quilo, Produto.descricao, Categoria_Empresa.nome as categoria_adicional, ".
+	" Categoria_Permitida_Como_Adicional.qtd_max_adicionais , Ingrediente.nome as nome_ingrediente, Ingrediente.cod_ingrediente, ".
+	" Ingrediente_Empresa.preco_quando_adicional ";
+
+	$from = " FROM Tipo_Produto, Produto, Categoria_Empresa, Categoria_Permitida_Como_Adicional, Ingrediente, Ingrediente_Empresa, Categoria_Ingrediente_Empresa ";
+
+	$where = " WHERE Tipo_Produto.cod_tipo_produto = Produto.cod_tipo_produto AND Produto.cod_produto = Categoria_Permitida_Como_Adicional.cod_produto AND ".
+	" Categoria_Permitida_Como_Adicional.cod_categoria_empresa = Categoria_Empresa.cod_categoria_empresa AND Categoria_Empresa.cod_categoria_empresa = ".
+	" Categoria_Ingrediente_Empresa.cod_categoria_empresa AND Categoria_Ingrediente_Empresa.cod_ingrediente = Ingrediente_Empresa.cod_ingrediente AND ".
+	" Ingrediente_Empresa.cod_ingrediente = Ingrediente.cod_ingrediente AND Produto.cod_produto = :1 ";
+
+	$order_by = " order by Categoria_Empresa.nome ";
+
+	$stm = $this->_db->prepare($select . $from . $where . $order_by);
+
+	$stm->bindParam(':1', $cod_produto, PDO::PARAM_INT);
+
+	$stm->execute();
+	return $stm->fetchAll(PDO::FETCH_ASSOC);
+
+
+    }
+
+
+
 }
+
+
+
 
 ?>
