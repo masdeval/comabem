@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Fazer Pagamento</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script type="text/javascript" src="/js/validation-new.js"></script>
+    <link type="text/css" href="/css/portal.css" rel="stylesheet" />
+    <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+ 
+
+  </head>
+  <body>
+    <h4><?php echo $this->headline?></h4>
+
+    
+      <form action="/portal/pedido/pagamento" method="POST" id="form1" onsubmit="return validateForm('form1')">
+
+  <div style="border: solid gray; margin-right: 50%; clear: both;">
+
+	<p> Confirmar endereço de entrega </p>
+	E-mail para contato sobre essa compra: <?php echo $this->emailCliente ?>
+
+	<br><br>
+	* Telefone com DDD: <input type="text" name="endereco[telefone]" class="RQR required" title="Por favor, indique um telefone." value="<?php echo $this->telefoneCliente ?>">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	* Rua: <input type="text" name="endereco[rua]" title="Por favor, informe a rua." class="RQR required validAlphaNumeric">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	* Número: <input type="text" name="endereco[numero]" title="Por favor, informe o número." class="RQR required validNumber">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	Complemento (apto, casa de fundos, etc): <input type="text" name="endereco[complemento]">
+	<br>
+</div>
+
+<div style="border: solid gray;  margin-top:20px; margin-right: 50%; clear:both; ">
+
+<p>Escolher forma de pagamento</p>
+
+</div>
+
+	  <div style="float: left;  margin-top: 30px;">
+	  <input type="submit" value="Efetuar Pagamento">
+	  </div>
+    </form>
+    
+  </body>
+</html>

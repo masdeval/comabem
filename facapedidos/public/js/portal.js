@@ -101,7 +101,7 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 
 	    //insere botao de exclusao de item
 	    coluna = rowProduto.insertCell(5);
-	    coluna.innerHTML = "<img src='/img/minus_circle.png' onclick='javascript:deleteProdutoCarrinhoAjax("+cod_empresa+","+cod_tamanho_produto+")'> ";
+	    coluna.innerHTML = "<img src='/img/minus_circle.png' onclick='javascript:removeUmaUnidadeProdutoCarrinhoActionAjax("+cod_empresa+","+cod_tamanho_produto+")'> ";
 
 	}
     }
@@ -147,7 +147,7 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 
 	//insere botao de exclusao de item
 	coluna = rowProduto.insertCell(5);
-	coluna.innerHTML = "<img src='/img/minus_circle.png' onclick='javascript:deleteProdutoCarrinhoAjax("+cod_empresa+","+cod_tamanho_produto+")'> ";
+	coluna.innerHTML = "<img src='/img/minus_circle.png' onclick='javascript:removeUmaUnidadeProdutoCarrinhoActionAjax("+cod_empresa+","+cod_tamanho_produto+")'> ";
 
 
     }
@@ -233,7 +233,7 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 
 */
 
-function deleteProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto)
+function removeUmaUnidadeProdutoCarrinhoActionAjax(cod_empresa,cod_tamanho_produto)
 {
     var Quantidade = parseInt(document.getElementById("colunaQuantidade"+cod_tamanho_produto).innerHTML);
     
@@ -241,13 +241,31 @@ function deleteProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto)
 	document.getElementById("colunaQuantidade"+cod_tamanho_produto).innerHTML = Quantidade - 1;
 
 
-    reqURL='/portal/loja/delete-Produto-Carrinho/cod_empresa/'+cod_empresa+'/cod_tamanho_produto/'+cod_tamanho_produto;
+    reqURL='/portal/loja/remove-Uma-Unidade-Produto-Carrinho/cod_empresa/'+cod_empresa+'/cod_tamanho_produto/'+cod_tamanho_produto;
 
     $.ajax({
 	type: "POST",
 	url:reqURL,
 	success: function(r) {
 	    r=jQuery.trim(r);
+	}
+    });
+
+
+}
+
+function recalcularQuantidadeAjax(cod_empresa,cod_tamanho)
+{
+    var qt = document.getElementById('quantidade_'+cod_empresa+'_'+cod_tamanho).value;
+
+    reqURL='/portal/pedido/recalcular-Quantidade/cod_empresa/'+cod_empresa+'/cod_tamanho/'+cod_tamanho+'/qt/'+qt;
+
+    $.ajax({
+	type: "POST",
+	url:reqURL,
+	success: function(r) {
+	    window.location.reload(true);
+	    
 	}
     });
 
@@ -381,12 +399,33 @@ function imprimeCarrinho(carrinho, hash)
 
 	    //insere botao de exclusao de item
 	    coluna = rowProduto.insertCell(5);
-	    coluna.innerHTML = "<img src='/img/minus_circle.png' onclick='javascript:deleteProdutoCarrinhoAjax("+cod_empresa+","+cod_tamanho_produto+")'> ";
+	    coluna.innerHTML = "<img src='/img/minus_circle.png' onclick='javascript:removeUmaUnidadeProdutoCarrinhoActionAjax("+cod_empresa+","+cod_tamanho_produto+")'> ";
 	
 	}
     }
 
 }
+
+
+function checkMailAjax(mail)
+{
+
+       $.ajax({
+	type: "POST",
+	url:"/portal/cliente/check-Mail-Ajax/email/"+mail,
+	success: function(r) {
+	    r=jQuery.trim(r);
+
+	    if(r == 'Fail')
+		{
+		    $("#spanMail").html("Esse e-mail já foi cadastrado. Favor escolher outro.");
+		}
+	}
+    });
+
+
+}
+
 
 
 //Esse codigo funciona como um include para nao ser necessario

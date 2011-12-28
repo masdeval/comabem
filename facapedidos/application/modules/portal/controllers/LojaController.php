@@ -10,8 +10,6 @@
  *
  * @author masdeval
  */
-
-
 class Portal_LojaController extends Zend_Controller_Action
 {
 
@@ -20,13 +18,16 @@ class Portal_LojaController extends Zend_Controller_Action
 
     public function init()
     {
-	$this->session = new Zend_Session_Namespace('default');
+	$this->session = new Zend_Session_Namespace('compra');
 	/* Initialize action controller here */
 	$this->_helper->layout()->disableLayout();
 	$this->TipoProdutoDB = new DbTable_TipoProduto();
 	$this->FotoProdutoDB = new DbTable_FotoProduto(Zend_Db_Table::getDefaultAdapter());
 	$this->ProdutoDB = new DbTable_Produto(Zend_Db_Table::getDefaultAdapter());
 	$this->EmpresaDB = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
+
+	if (isset($this->session->cliente))
+	    $this->view->nomeCliente = $this->session->cliente->getNomeExibicao();
     }
 
     public function indexAction()
@@ -124,7 +125,7 @@ class Portal_LojaController extends Zend_Controller_Action
     }
 
     /*
-     * Adiciona um produto na sessão do usuario simulando um carrinho de compras.
+     * Adiciona uma certa quantidade de itens de um produto no carrinho de compras.
      */
 
     public function addProdutoCarrinhoAction()
@@ -172,10 +173,10 @@ class Portal_LojaController extends Zend_Controller_Action
     }
 
     /*
-     * Remove um produto na sessão do usuario simulando um carrinho de compras.
+     * Remove uma unidade de um produto que está no carrinho de compras.
      */
 
-    public function deleteProdutoCarrinhoAction()
+    public function removeUmaUnidadeProdutoCarrinhoAction()
     {
 	$this->_helper->layout->disableLayout();
 	$cod_tamanho_produto = $this->getRequest()->getParam("cod_tamanho_produto");
@@ -186,12 +187,11 @@ class Portal_LojaController extends Zend_Controller_Action
 
 	if (isset($this->session->carrinho))
 	{
-		$this->session->carrinho->deleteProduto($cod_empresa, $cod_tamanho_produto);
+	    $this->session->carrinho->deleteProduto($cod_empresa, $cod_tamanho_produto);
 	}
 	exit;
     }
 
-   
     public function retornaCarrinhoJsonAction()
     {
 
@@ -205,21 +205,20 @@ class Portal_LojaController extends Zend_Controller_Action
 
 	if (isset($this->session))
 	{
-	  if(isset($this->session->carrinho))
-	  {
-	      if($this->session->carrinho->getCarrinho() != null && sizeof($this->session->carrinho->getCarrinho()) > 0)
-	      {
-		echo json_encode($this->session->carrinho->getCarrinho());
-	      }
-	      else
-	      {
-		echo "";
-	      }
-	  }
+	    if (isset($this->session->carrinho))
+	    {
+		if ($this->session->carrinho->getCarrinho() != null && sizeof($this->session->carrinho->getCarrinho()) > 0)
+		{
+		    echo json_encode($this->session->carrinho->getCarrinho());
+		}
+		else
+		{
+		    echo "";
+		}
+	    }
 	}
 	exit;
     }
-
 
 }
 

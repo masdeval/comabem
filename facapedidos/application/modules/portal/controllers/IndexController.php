@@ -8,17 +8,18 @@ class Portal_IndexController extends Zend_Controller_Action
     public $FotoProdutoDB;
     private $session;
 
-
     public function init()
     {
 	/* Initialize action controller here */
-	$this->session = new Zend_Session_Namespace('default');
+	$this->session = new Zend_Session_Namespace('compra');
 	$this->_helper->layout()->disableLayout();
 	$this->TipoProdutoDB = new DbTable_TipoProduto();
 	$this->FotoProdutoDB = new DbTable_FotoProduto(Zend_Db_Table::getDefaultAdapter());
 	$this->ProdutoDB = new DbTable_Produto(Zend_Db_Table::getDefaultAdapter());
 	$this->EmpresaDB = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
 	$this->RecadoClienteDB = new DbTable_RecadoCliente();
+	if (isset($this->session->cliente))
+	    $this->view->nomeCliente = $this->session->cliente->getNomeExibicao();
     }
 
     public function indexAction()
@@ -42,13 +43,13 @@ class Portal_IndexController extends Zend_Controller_Action
 	    foreach ($hits as $hit)
 	    {
 		//Quero selecionar apenas uma vez uma determinada empresa no filtro da primeira pagina
-		if($cod_empresa == $hit->cod_empresa)
+		if ($cod_empresa == $hit->cod_empresa)
 		{
-			continue;
+		    continue;
 		}
 		else
 		{
-		    $cod_empresa = $hit->cod_empresa;		
+		    $cod_empresa = $hit->cod_empresa;
 		    $produtos .= $hit->cod_produto . ", ";
 		}
 	    }
@@ -66,7 +67,7 @@ class Portal_IndexController extends Zend_Controller_Action
 	$j = 0;
 	for ($i = 0; $i < sizeof($resultado); $i++)
 	{
-	    if($cod_empresa == $resultado[$i]['cod_empresa'])
+	    if ($cod_empresa == $resultado[$i]['cod_empresa'])
 	    {
 		continue;
 	    }
@@ -77,7 +78,6 @@ class Portal_IndexController extends Zend_Controller_Action
 		$novo_resultado[$j] = $resultado[$i];
 		$j++;
 	    }
-	    
 	}
 
 
@@ -104,15 +104,14 @@ class Portal_IndexController extends Zend_Controller_Action
     {
 	$cod_empresa = $this->_getParam('codEmpresa', '');
 	$cod_produto = $this->_getParam('codProduto', '');
-	$data = date('d') . "/" . date('m') . "/" . date('Y');//ano com 4 digitos
+	$data = date('d') . "/" . date('m') . "/" . date('Y'); //ano com 4 digitos
 	$hora_atual = date('H') . ":00";
-	$status = $this->RecadoClienteDB->registraSolicitacaoLojaAberta($cod_empresa,$cod_produto, $data, $hora_atual);
+	$status = $this->RecadoClienteDB->registraSolicitacaoLojaAberta($cod_empresa, $cod_produto, $data, $hora_atual);
 	echo $status;
 	exit;
     }
 
-
-     public function limparCarrinhoAction()
+    public function limparCarrinhoAction()
     {
 	if (isset($this->session))
 	{
@@ -120,7 +119,6 @@ class Portal_IndexController extends Zend_Controller_Action
 	}
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
 	$this->_helper->viewRenderer("index");
-
     }
 
 }

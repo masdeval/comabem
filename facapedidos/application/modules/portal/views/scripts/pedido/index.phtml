@@ -1,0 +1,103 @@
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link type="text/css" href="/css/portal.css" rel="stylesheet" />
+    <link type="text/css" href="/js/jui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
+
+
+    <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    <script type="text/javascript" src="/js/portal.js"></script>
+    <script type="text/javascript" src="/js/validation-new.js"></script>
+
+
+</head>
+
+<body>
+
+    <form action="/portal/pedido/concluir-Compra" method="POST" id="form1" onsubmit="return validateForm('form1')" >
+    <input type="submit" value="Concluir Compra">
+
+    <?php
+
+    //descobre quais são os ids das empresas que estao no array $empresas
+    $cod_empresas = array_keys($this->carrinho);
+    $total = 0.0;
+
+	foreach ($cod_empresas as $key_empresa)
+	{    
+
+	    ?>
+
+     <!-- Box para uma empresa -->
+      <div style="border: solid gray; margin: 50px;">
+      <input type="hidden" name="cod_empresas[]" value="<?php echo $key_empresa ?>">
+
+      <h4><?php echo $this->carrinho[$key_empresa]['nome_empresa'] ?> </h4>
+
+      <br>
+
+      Deseja entrega? <input type="checkbox" name="configuracoes[<?php echo $key_empresa ?>][entregar]" value="1" checked>
+      <br>
+      Deseja receber mensagem de texto no celular quando o pedido estiver pronto?
+      <input type="checkbox" name="configuracoes[<?php echo $key_empresa ?>][sms]" value="1" >
+      
+      <?php
+
+	    //encontra os produtos escolhidos de uma empresa especifica
+	    //vai vir na primeira posicao a palavra 'nome_empresa' que deve ser descartada
+	     $cod_tamanho_produtos = array_keys($this->carrinho[$key_empresa]);
+	     unset($cod_tamanho_produtos[0]);//retira o lixo
+
+	    foreach($cod_tamanho_produtos as $key_tamanho_produto)
+	    {
+		$total_parcial = 0.0;
+
+		?>
+      <ul>
+	  <li> <?php  echo $this->carrinho[$key_empresa][$key_tamanho_produto]['nome_produto'] ?>
+	  <br>
+		Tamanho escolhido:  <?php  echo $this->carrinho[$key_empresa][$key_tamanho_produto]['tamanho'] ?>
+		<br>
+		Preço: <?php  $valor = (float) $this->carrinho[$key_empresa][$key_tamanho_produto]['preco']; echo $valor; ?>
+		<?php  $total_parcial += $valor; ?>
+		<br>
+		Quantidade: <?php
+			    $qt = (int) $this->carrinho[$key_empresa][$key_tamanho_produto]['quantidade'];
+			    ?>
+
+		<input type="text" size="2" id="quantidade_<?php echo $key_empresa ?>_<?php echo $key_tamanho_produto ?>" maxlength="2" class="input-medium RQR required validNumber" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][quantidade]" value="<?php echo $qt ?>">
+		<input type="button" name="recalcular" value="Recalcular" onclick="recalcularQuantidadeAjax(<?php echo $key_empresa ?>,<?php echo $key_tamanho_produto ?>)">
+		<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' ></span></div>
+		<br>
+		Total parcial: <?php  echo ($total_parcial *= $qt); ?>
+
+   		<input type="hidden" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][total_parcial]" value="<?php echo $total_parcial ?>">
+	  </li>
+
+      </ul>
+
+ 
+    <?php
+	    $total += $total_parcial;
+	    }//fecha foreach($cod_tamanho_produtos as $key_tamanho_produto)
+
+	echo "Digite aqui as observações sobre seu pedido:<br>";
+        echo "<input type='text' size='100' name='configuracoes[".$key_empresa."][observacao]'>";
+
+	echo "</div>";
+
+	
+	}//fecha foreach ($cod_empresas as $key_empresa)
+	echo "Total da compra: ".$total;
+    ?>
+
+
+     </form>
+</body>
+
+ <script type="text/javascript">
+
+
+
+</script>

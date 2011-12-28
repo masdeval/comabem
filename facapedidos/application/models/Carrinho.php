@@ -76,6 +76,30 @@ class Carrinho
 	}
     }
 
+    public function alterarQuantidadeProduto($cod_empresa, $cod_tamanho_produto, $quantidade)
+    {
+	if (array_key_exists($cod_empresa, $this->empresas))
+	{
+
+	    if (array_key_exists($cod_tamanho_produto, $this->empresas[$cod_empresa]))
+	    {
+		if ($quantidade == 0) //remove o produto
+		{
+		    unset($this->empresas[$cod_empresa][$cod_tamanho_produto]);
+		    //precisa verificar se existe mais algum produto para essa empresa
+		    if(sizeof($this->empresas[$cod_empresa]) == 1) //nesse caso sobrou apenas o array empresas[$cod_empresa]['nome_empresa']
+			    unset($this->empresas[$cod_empresa]);
+		}
+		else
+		{
+		    $this->empresas[$cod_empresa][$cod_tamanho_produto]['quantidade'] = $quantidade;
+		}
+	    }
+	}
+
+
+    }
+
 }
 
 ?>
