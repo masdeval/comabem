@@ -160,7 +160,7 @@ class Portal_LojaController extends Zend_Controller_Action
 	    try
 	    {
 		$this->session->__set("carrinho", new Carrinho());
-		$this->session->carrinho->addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho);
+		$this->session->carrinho->addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho, $quantidade);
 		$status = 'Ok';
 	    }
 	    catch (Exception $e)
