@@ -144,7 +144,8 @@
 	    //imprime o botao que vai permitir incluir no carrinho
 	    if($this->isAberto)
 	    {
-		echo "<img style='float:right;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['nome_empresa']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+		echo "<img style='margin-left:10px; margin-right:10px;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['nome_empresa']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+		echo "<input type='text' size='2' maxlength='2' value='1' id='quantidade_".$this->cod_empresa."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
 	    }
 	
 	    $i++;
@@ -169,7 +170,9 @@
 	    //imprime o botao que vai permitir incluir no carrinho
 	    if($this->isAberto)
 	    {
-		echo "<img style='float:right;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['nome_empresa']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+		echo "<img style='margin-left:10px; margin-right:10px;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['nome_empresa']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+		echo "<input type='text' size='2' maxlength='2' value='1' id='quantidade_".$this->cod_empresa."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
+
 	    }
 
 	    $i++;

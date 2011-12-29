@@ -133,10 +133,11 @@ class Portal_LojaController extends Zend_Controller_Action
 	$this->_helper->layout->disableLayout();
 	$cod_tamanho_produto = $this->getRequest()->getParam("cod_tamanho_produto");
 	$cod_empresa = $this->getRequest()->getParam("cod_empresa");
-
+	
 	if (empty($cod_tamanho_produto) || empty($cod_empresa))
 	    return;
 
+	$quantidade = (int) $this->getRequest()->getParam("quantidade");
 	$nome_empresa = $this->getRequest()->getParam("nome_empresa");
 	$nome_produto = $this->getRequest()->getParam("nome_produto");
 	$tamanho = $this->getRequest()->getParam("tamanho");
@@ -146,7 +147,7 @@ class Portal_LojaController extends Zend_Controller_Action
 	{
 	    try
 	    {
-		$this->session->carrinho->addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho);
+		$this->session->carrinho->addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho, $quantidade);
 		$status = 'Ok';
 	    }
 	    catch (Exception $e)

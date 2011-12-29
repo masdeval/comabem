@@ -27,30 +27,30 @@ class Carrinho
 	return $this->empresas;
     }
 
-    public function addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho)
+    public function addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho, $quantidade)
     {
 	if (!array_key_exists($cod_empresa, $this->empresas))//este é o primeiro produto adicionado dessa empresa
 	{
 	    $this->empresas[$cod_empresa]['nome_empresa'] = $nome_empresa;
 	    $this->empresas[$cod_empresa][$cod_tamanho_produto] = array(
 		"nome_produto" => $nome_produto,
-		"preco" => $preco,
+		"preco" => (double)$preco,
 		"tamanho" => $tamanho,
-		"quantidade" => (int) 1,
+		"quantidade" => (int) $quantidade,
 	    );
 	}
 	else if (!array_key_exists($cod_tamanho_produto, $this->empresas[$cod_empresa])) //novo produto adicionado em uma empresa ja utilizada
 	{
 	    $this->empresas[$cod_empresa][$cod_tamanho_produto] = array(
 		"nome_produto" => $nome_produto,
-		"preco" => $preco,
+		"preco" => (double) $preco,
 		"tamanho" => $tamanho,
-		"quantidade" => (int) 1,
+		"quantidade" => (int) $quantidade,
 	    );
 	}
 	else
 	{
-	    $this->empresas[$cod_empresa][$cod_tamanho_produto]['quantidade']++;
+	    $this->empresas[$cod_empresa][$cod_tamanho_produto]['quantidade'] += $quantidade;
 	}
     }
 
