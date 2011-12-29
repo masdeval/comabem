@@ -29,8 +29,8 @@ function lojaFechada(cod_empresa,cod_produto,indiceMsg)
 
 function addProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto,nome_empresa, nome_produto, tamanho,preco)
 {
-
-    reqURL='/portal/loja/add-Produto-Carrinho/nome_empresa/'+nome_empresa+'/cod_empresa/'+cod_empresa+'/cod_tamanho_produto/'+cod_tamanho_produto+'/nome_produto/'+nome_produto+"/tamanho/"+tamanho+"/preco/"+preco;
+    var qt = document.getElementById("quantidade_"+cod_empresa+"_"+cod_tamanho_produto).value;
+    reqURL='/portal/loja/add-Produto-Carrinho/nome_empresa/'+nome_empresa+'/cod_empresa/'+cod_empresa+'/cod_tamanho_produto/'+cod_tamanho_produto+'/nome_produto/'+nome_produto+"/tamanho/"+tamanho+"/preco/"+preco+"/quantidade/"+qt;
 
 
     $.ajax({
@@ -45,7 +45,7 @@ function addProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto,nome_empresa, no
 
 	    }
 	    else{ 
-		atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa, nome_produto, tamanho,preco);
+		atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa, nome_produto, tamanho,preco,qt);
 	    }
 	}
     });
@@ -59,7 +59,7 @@ function addProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto,nome_empresa, no
  * Versao com tabela.
  *
  */
-function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa, nome_produto, tamanho,preco)
+function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa, nome_produto, tamanho,preco,qt)
 {
 
     if(document.getElementById("row"+cod_empresa))//empresa ja existe
@@ -67,7 +67,7 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 	if(document.getElementById("colunaProduto"+cod_tamanho_produto))//produto ja existe
 	{
 	    var Quantidade = document.getElementById("colunaQuantidade"+cod_tamanho_produto);
-	    Quantidade.innerHTML = parseInt(Quantidade.innerHTML) + 1;
+	    Quantidade.innerHTML = parseInt(Quantidade.innerHTML) + parseInt(qt);
 	}
 	else
 	{
@@ -97,7 +97,7 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 	    coluna = rowProduto.insertCell(4);
 	    coluna.className = "itensPedido";
 	    coluna.id = "colunaQuantidade"+cod_tamanho_produto;
-	    coluna.innerHTML = "1";
+	    coluna.innerHTML = qt;
 
 	    //insere botao de exclusao de item
 	    coluna = rowProduto.insertCell(5);
@@ -143,7 +143,7 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 	coluna = rowProduto.insertCell(4);
 	coluna.className = "itensPedido";
 	coluna.id = "colunaQuantidade"+cod_tamanho_produto;
-	coluna.innerHTML = "1";
+	coluna.innerHTML = qt;
 
 	//insere botao de exclusao de item
 	coluna = rowProduto.insertCell(5);
