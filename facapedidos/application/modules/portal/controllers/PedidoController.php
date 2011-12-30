@@ -111,7 +111,6 @@ class Portal_PedidoController extends Zend_Controller_Action
 	$this->view->emailCliente = $this->session->cliente->getEmail();
 	$this->view->tefeloneCliente = $this->session->cliente->getTelefone();
 
-
 	//Apresentar como endereco de entrega o endereco que o usuario utilizou para se localizar no site logo no início
 	//Buscar enderecos de entrega que o cliente ja utilizou antes para apresentar opcao na tela??
 	//compatibiliza o que esta em configuracoes com o carrinho na sessao
@@ -134,6 +133,8 @@ class Portal_PedidoController extends Zend_Controller_Action
 	try
 	{
 	    $this->PedidoDB->cadastrarPedido($endereco, $this->session->configuracoesPedido, $this->session->cliente);
+	    unset($this->session->configuracoesPedido);
+	    unset($this->session->carrinho);
 	}
 	catch (Exception $e)
 	{
@@ -171,6 +172,17 @@ class Portal_PedidoController extends Zend_Controller_Action
 	$this->fecharPedidoAction();
 
 	exit;
+    }
+
+    public function continuarComprandoAction()
+    {
+	$this->_helper->layout->disableLayout();
+	if (isset($this->session->configuracoesPedido))
+	{
+	    unset($this->session->configuracoesPedido);
+	}
+
+	$this->_forward("index","index","portal");
     }
 
 }
