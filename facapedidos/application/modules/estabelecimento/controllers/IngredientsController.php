@@ -10,7 +10,6 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
     public $HorarioFuncionamento;
     public $Ingrediente;
     public $CategoriaIngrediente;
-    //public $IngredienteEmpresa;
     public $session;
     public $db;
     public $empresaId; //empresa que o usuario logado que instanciou esta classe pertence
@@ -141,7 +140,7 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
                 $this->editAction($ingredienteId);
             }
         }
-        if ($formData['emorFrom'] == 2) //tela de, dado uma categoria, associa-la com varios ingredientes de uma so vez
+        else if ($formData['emorFrom'] == 2) //tela de, dado uma categoria, associa-la com varios ingredientes de uma so vez
         {
             try
             {
@@ -158,31 +157,48 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
 
             $this->_helper->redirector->gotoUrl($this->caminho . "/gridView");
         }
+	//Cadastrar nova categoria
+	else if ($formData['emorFrom'] == 3 || $formData['emorFrom'] == 4)
+        {
+	    $this->_helper->viewRenderer('index');
+
+	    try
+	    {
+		$this->CategoriaEmpresa->add($this->getRequest()->getPost('categoria'));
+		$this->editAction();
+	    }
+	    catch(Exception $e)
+	    {
+               $this->view->headline = "Problema ao inserir nova categoria. " . $e->getMessage();
+	       $this->errorAction();
+               return;
+	    }
+	}
+
     }
 
     public function editAction($ingredienteId = '')
     {
-        $empresaId = $this->empresaId;
+	$empresaId = $this->empresaId;
+        $this->view->ingredienteJaCustomizadoOption = $this->IngredienteEmpresa->getIngredientesJaCustomizadosDropDown($this->empresaId);
+        $this->view->ingredienteAindaNaoCustomizadoOption = $this->IngredienteEmpresa->getIngredientesAindaNaoCustomizadosDropDown($this->empresaId);
+        $this->view->categoriaIngredienteRec = $this->CategoriaEmpresa->getRecords($empresaId);
+        $this->view->categoriaIngredienteOption = $this->CategoriaEmpresa->getOptionDropDown($empresaId);
+        $this->_helper->viewRenderer('index');
+        $this->view->empresaId = $empresaId;
+
         if (empty($ingredienteId))
             $ingredienteId = $this->getRequest()->getPost('ingredienteId');
 
+	if(empty ($ingredienteId))
+	    return;
+
+	$categoriaIngredienteEmpresa = $this->CategoriaIngredienteEmpresa->getRecords($ingredienteId, $empresaId);
+	$this->view->categoriaIngredienteEmpresa = $categoriaIngredienteEmpresa;
         $formData = $this->IngredienteEmpresa->getSingleData($ingredienteId, $empresaId);
-        $categoriaIngredienteEmpresa = $this->CategoriaIngredienteEmpresa->getRecords($ingredienteId, $empresaId);
-        $this->view->formData = $formData;
-        $this->view->categoriaIngredienteEmpresa = $categoriaIngredienteEmpresa;
-        $this->view->ingredienteJaCustomizadoOption = $this->IngredienteEmpresa->getIngredientesJaCustomizadosDropDown($this->empresaId);
-        $this->view->ingredienteAindaNaoCustomizadoOption = $this->IngredienteEmpresa->getIngredientesAindaNaoCustomizadosDropDown($this->empresaId);
-        
-        $this->view->categoriaIngredienteRec = $this->CategoriaEmpresa->getRecords($empresaId);
-        
-        $this->view->categoriaIngredienteOption = $this->CategoriaEmpresa->getOptionDropDown($empresaId);
-        //$ingredienteEmpresaRec = $this->IngredienteEmpresa->getRecords($this->empresaId);
-        //$this->view->ingredienteEmpresa = $ingredienteEmpresaRec;
-        $this->view->title = 'Empresa';
+        $this->view->formData = $formData;       
         $this->view->action = 'edit';
-        $this->view->empresaId = $empresaId;
         $this->view->ingredienteId = $ingredienteId;
-        $this->_helper->viewRenderer('index');
     }
 
     public function do_upload()

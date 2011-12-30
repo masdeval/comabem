@@ -20,5 +20,15 @@
           }
           return $result;
       }
+      
+      public function add($data)
+      {
+	$id = $this->insert($data);
+
+	return $id;
+
+
+      }
+
   }
 ?>
