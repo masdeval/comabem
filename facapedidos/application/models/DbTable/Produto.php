@@ -35,7 +35,6 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    'tempo_preparo_minutos' => (int) $formData['tempo_preparo_minutos'],
 	    'valor_calorico' => (float) $formData['valor_calorico'],
 	    'numero_max_adicionais' => (int) $formData['numero_max_adicionais'],
-	    'fator_de_ajuste' => (float) $formData['fator_de_ajuste'],
 	    'cobrado_por_quilo' => $formData['cobrado_por_quilo'],
 	    'disponivel' => $formData['disponivel'],
 	);
@@ -87,7 +86,6 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 
 	//pode ser que o estabelecimento nao funcione nesse dia da semana, por isso o LEFT JOIN
 	//LEFT JOIN horario_funcionamento HF ON (P.cod_empresa = HF.cod_empresa) ,
-
 	//pode ser que nao haja foto de um produto, por isso o LEFT JOIN
 	$from = "from produto P LEFT JOIN foto_produto FP ON (P.cod_produto = FP.cod_produto),
 
@@ -100,16 +98,16 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	P.cod_tipo_produto = Tipo.cod_tipo_produto AND P.cod_empresa = E.cod_empresa ";
 
 	$i = 1;
-	if(!empty($cod_empresa))
+	if (!empty($cod_empresa))
 	{
-	    $where .= " AND E.cod_empresa = :".$i;
+	    $where .= " AND E.cod_empresa = :" . $i;
 	    $i++;
 	}
 
 	//preciso ordenar aqui para garantir que todos os produtos que forem retornados mais de uma vez
 	//por terem varios tamanhos aparecam juntos no resultado
 	$order_by = " ORDER BY P.cod_produto";
-	
+
 	if (!empty($produtos))
 	{
 	    /* ORDER BY (CASE WHEN TransType = 9 THEN 0
@@ -167,15 +165,14 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    $where .= " and P.cod_tipo_produto in ( " . $ids . " ) ";
 	}
 
-	$stm = $this->_db->prepare($select . $from . $where . $order_by );
+	$stm = $this->_db->prepare($select . $from . $where . $order_by);
 
-	//    ********* Bind de parametros ********** 
-
+	//    ********* Bind de parametros **********
 	//date('l') retorna o dia da semana - > achei que ia precisar disso
 	//$stm->bindParam(':0', date('l') , PDO::PARAM_STR);
 
 	$j = 1;
-	if(!empty($cod_empresa))
+	if (!empty($cod_empresa))
 	{
 	    $stm->bindParam(':' . $j, $cod_empresa, PDO::PARAM_INT);
 	    $j++;
@@ -200,32 +197,30 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	{
 	    for ($k = 1; $k <= sizeof($tipos_produto); $k++)
 	    {
-		$stm->bindParam(':'.$j++, $tipos_produto[$k-1], PDO::PARAM_INT);
+		$stm->bindParam(':' . $j++, $tipos_produto[$k - 1], PDO::PARAM_INT);
 	    }
 	}
 
 	$stm->execute();
 	return $stm->fetchAll(PDO::FETCH_ASSOC);
-
-	
     }
-
 
     /*
      * Obtem todas as informacoes de um produto necessarias para configuracao do pedido
      */
+
     public function configuracaoProduto($cod_produto)
     {
-	$select = " SELECT Tipo_Produto.nome as tipo_produto, Produto.tempo_preparo_minutos, Produto.cobrado_por_quilo, Produto.descricao, Categoria_Empresa.nome as categoria_adicional, ".
-	" Categoria_Permitida_Como_Adicional.qtd_max_adicionais , Ingrediente.nome as nome_ingrediente, Ingrediente.cod_ingrediente, ".
-	" Ingrediente_Empresa.preco_quando_adicional ";
+	$select = " SELECT Tipo_Produto.nome as tipo_produto, Produto.tempo_preparo_minutos, Produto.cobrado_por_quilo, Produto.descricao, Produto.numero_max_adicionais, Categoria_Empresa.nome as categoria_adicional, " .
+		" Categoria_Permitida_Como_Adicional.qtd_max_adicionais , Ingrediente.nome as nome_ingrediente, Ingrediente.cod_ingrediente, " .
+		" Ingrediente_Empresa.preco_quando_adicional ";
 
 	$from = " FROM Tipo_Produto, Produto, Categoria_Empresa, Categoria_Permitida_Como_Adicional, Ingrediente, Ingrediente_Empresa, Categoria_Ingrediente_Empresa ";
 
-	$where = " WHERE Tipo_Produto.cod_tipo_produto = Produto.cod_tipo_produto AND Produto.cod_produto = Categoria_Permitida_Como_Adicional.cod_produto AND ".
-	" Categoria_Permitida_Como_Adicional.cod_categoria_empresa = Categoria_Empresa.cod_categoria_empresa AND Categoria_Empresa.cod_categoria_empresa = ".
-	" Categoria_Ingrediente_Empresa.cod_categoria_empresa AND Categoria_Ingrediente_Empresa.cod_ingrediente = Ingrediente_Empresa.cod_ingrediente AND ".
-	" Ingrediente_Empresa.cod_ingrediente = Ingrediente.cod_ingrediente AND Produto.cod_produto = :1 ";
+	$where = " WHERE Tipo_Produto.cod_tipo_produto = Produto.cod_tipo_produto AND Produto.cod_produto = Categoria_Permitida_Como_Adicional.cod_produto AND " .
+		" Categoria_Permitida_Como_Adicional.cod_categoria_empresa = Categoria_Empresa.cod_categoria_empresa AND Categoria_Empresa.cod_categoria_empresa = " .
+		" Categoria_Ingrediente_Empresa.cod_categoria_empresa AND Categoria_Ingrediente_Empresa.cod_ingrediente = Ingrediente_Empresa.cod_ingrediente AND " .
+		" Ingrediente_Empresa.cod_ingrediente = Ingrediente.cod_ingrediente AND Produto.cod_produto = :1 ";
 
 	$order_by = " order by Categoria_Empresa.nome ";
 
@@ -235,15 +230,24 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 
 	$stm->execute();
 	return $stm->fetchAll(PDO::FETCH_ASSOC);
-
-
     }
 
+    public function getSaboresPizza($cod_empresa)
+    {
 
+	$query = " select produto.nome, produto.cod_produto
+            from produto , tipo_produto
+            where produto.cod_tipo_produto = tipo_produto.cod_tipo_produto
+            and cod_empresa = :1 and tipo_produto.nome = 'Pizza'";
+
+	$stm = $this->_db->prepare($query);
+
+	$stm->bindParam(':1', $cod_empresa, PDO::PARAM_INT);
+
+	$stm->execute();
+	return $stm->fetchAll(PDO::FETCH_ASSOC);
+    }
 
 }
-
-
-
 
 ?>
