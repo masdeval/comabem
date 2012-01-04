@@ -32,8 +32,8 @@
                     <tr>
                         <td> Tempo Preparo Minutos <br><input type="text" class="input-medium validNumber"  name="tempo_preparo_minutos" maxlength="3" value="<?php echo $this->formData['tempo_preparo_minutos'] ?>" style="width: 200px;">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> </td>
-                       <!-- <td> Max Adicionais<br><input type="text" class="input-medium validNumber"  name="numero_max_adicionais" maxlength="14" value="<?php echo $this->formData['numero_max_adicionais'] ?>" id='maxAdicionais' style="width: 200px;">
-                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td> -->
+                        <td> Máximo de adicionais que serão permitidos <br><input type="text" class="input-medium validNumber"  name="numero_max_adicionais" maxlength="14" value="<?php echo $this->formData['numero_max_adicionais'] ?>" id='maxAdicionais' style="width: 200px;">
+                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td> 
                     </tr>
                     
                     <tr>
@@ -127,7 +127,7 @@
                     <legend>Categorias Permitidas como Adicional</legend>
                     <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                         <tr><td colspan="30">
-                                Indique quais sao as categorias ds ingredientes que estrao disponivies com adicionais para este produto. Informe tambem a quantidade que será permitida em cada uma que for selecionada.
+                                Indique quais sao as categorias ds ingredientes que estrao disponivies com adicionais para este produto. 
                             </td></tr>
                         <tr><td colspan="30">
                                 <span id='maxError' style="display: none; color: red;"><b>Maximum  <?php echo $this->formData['numero_max_adicionais'] ?> Records can be selectd.</b></span>
@@ -149,7 +149,7 @@
 ?>
                                 <td>
                                     <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php echo $v['cod_categoria_empresa'] ?>" <?php echo $checked ?> class="checkMax"> <?php echo $v['nome'] ?>
-                                    <input type="text" class="input-medium validNumber"  name="cp[qtd_max_adicionais][<?php echo $v['cod_categoria_empresa'] ?>][]" maxlength="3" value="<?php echo $val ?>" style="width: 70px;" title="This field is required">
+                                   <!-- <input type="text" class="input-medium validNumber"  name="cp[qtd_max_adicionais][<?php //echo $v['cod_categoria_empresa'] ?>][]" maxlength="3" value="<?php //echo $val ?>" style="width: 70px;" title="This field is required"> -->
                                     <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
                                 </td>
 <?php if ($i >= 2)
