@@ -62,18 +62,19 @@ class Portal_IndexController extends Zend_Controller_Action
 	//esta aberto ou fechado
 	$hora_atual = date('H') . ":" . date('i') . ":00";
 
-	$cod_empresa = "";
+	$empresa_ja_apresentada = array();
 	$novo_resultado = array();
 	$j = 0;
 	for ($i = 0; $i < sizeof($resultado); $i++)
 	{
-	    if ($cod_empresa == $resultado[$i]['cod_empresa'])
+	    if (array_key_exists($resultado[$i]['cod_empresa'], $empresa_ja_apresentada))
 	    {
 		continue;
 	    }
 	    else
 	    {
-		$cod_empresa = $resultado[$i]['cod_empresa'];
+		//quero apresentar empresas apenas uma vez
+		$empresa_ja_apresentada[$resultado[$i]['cod_empresa']] = $resultado[$i]['cod_empresa'];
 		$resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
 		$novo_resultado[$j] = $resultado[$i];
 		$j++;
@@ -116,6 +117,8 @@ class Portal_IndexController extends Zend_Controller_Action
 	if (isset($this->session))
 	{
 	    $this->session->__unset("carrinho");
+	    $this->session->__unset("configuracoesPedido");
+	    
 	}
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
 	$this->_helper->viewRenderer("index");
