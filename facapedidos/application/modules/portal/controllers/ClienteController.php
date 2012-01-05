@@ -136,6 +136,8 @@ class Portal_ClienteController extends Zend_Controller_Action
 	{
 	    unset($this->session->cliente);
 	    unset($this->session->carrinho);
+	    unset($this->session->configuracoesPedido);
+
 	}
 
 	$this->view->headline = "Logout efetuado com sucesso";
