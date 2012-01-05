@@ -86,9 +86,9 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 
 	//pode ser que o estabelecimento nao funcione nesse dia da semana, por isso o LEFT JOIN
 	//LEFT JOIN horario_funcionamento HF ON (P.cod_empresa = HF.cod_empresa) ,
+
 	//pode ser que nao haja foto de um produto, por isso o LEFT JOIN
 	$from = "from produto P LEFT JOIN foto_produto FP ON (P.cod_produto = FP.cod_produto),
-
 	tamanho_produto TP LEFT JOIN promocao Promo ON (TP.cod_tamanho_produto = Promo.cod_tamanho_produto
 	and Promo.data_inicio <= now() and Promo.data_fim >= now() and Promo.removed = 0 )
 	, tipo_produto Tipo, empresa E ";
@@ -215,12 +215,16 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 		" Categoria_Permitida_Como_Adicional.qtd_max_adicionais , Ingrediente.nome as nome_ingrediente, Ingrediente.cod_ingrediente, " .
 		" Ingrediente_Empresa.preco_quando_adicional ";
 
-	$from = " FROM Tipo_Produto, Produto, Categoria_Empresa, Categoria_Permitida_Como_Adicional, Ingrediente, Ingrediente_Empresa, Categoria_Ingrediente_Empresa ";
 
-	$where = " WHERE Tipo_Produto.cod_tipo_produto = Produto.cod_tipo_produto AND Produto.cod_produto = Categoria_Permitida_Como_Adicional.cod_produto AND " .
-		" Categoria_Permitida_Como_Adicional.cod_categoria_empresa = Categoria_Empresa.cod_categoria_empresa AND Categoria_Empresa.cod_categoria_empresa = " .
-		" Categoria_Ingrediente_Empresa.cod_categoria_empresa AND Categoria_Ingrediente_Empresa.cod_ingrediente = Ingrediente_Empresa.cod_ingrediente AND " .
-		" Ingrediente_Empresa.cod_ingrediente = Ingrediente.cod_ingrediente AND Produto.cod_produto = :1 ";
+	$from = " from Produto LEFT JOIN Categoria_Permitida_Como_Adicional ON (Produto.cod_produto = Categoria_Permitida_Como_Adicional.cod_produto)
+	LEFT JOIN Categoria_Empresa ON (Categoria_Permitida_Como_Adicional.cod_categoria_empresa = Categoria_Empresa.cod_categoria_empresa)
+	LEFT JOIN Categoria_Ingrediente_Empresa ON (Categoria_Empresa.cod_categoria_empresa =
+	Categoria_Ingrediente_Empresa.cod_categoria_empresa)
+	LEFT JOIN Ingrediente_Empresa ON (Categoria_Ingrediente_Empresa.cod_ingrediente = Ingrediente_Empresa.cod_ingrediente)
+	LEFT JOIN Ingrediente ON (Ingrediente_Empresa.cod_ingrediente = Ingrediente.cod_ingrediente ), Tipo_produto";
+
+	$where = " WHERE Tipo_Produto.cod_tipo_produto = Produto.cod_tipo_produto AND Produto.cod_produto = :1 ";
+
 
 	$order_by = " order by Categoria_Empresa.nome ";
 
