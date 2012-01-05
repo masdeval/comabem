@@ -127,10 +127,7 @@
                     <legend>Categorias Permitidas como Adicional</legend>
                     <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                         <tr><td colspan="30">
-                                Indique quais sao as categorias ds ingredientes que estrao disponivies com adicionais para este produto. 
-                            </td></tr>
-                        <tr><td colspan="30">
-                                <span id='maxError' style="display: none; color: red;"><b>Maximum  <?php echo $this->formData['numero_max_adicionais'] ?> Records can be selectd.</b></span>
+                                Indique quais são as categorias de ingredientes que estarão disponívies com adicionais para este produto.
                             </td></tr>
                         <tr>
 <?php   
@@ -140,15 +137,15 @@
                                 if (!empty($this->formData3[$v['cod_categoria_empresa']]))
                                 {
                                     $checked = "checked";
-                                    $val = $this->formData3[$v['cod_categoria_empresa']]['qtd_max_adicionais'];
+                                    
                                 } else
                                 {
                                     $checked = '';
-                                    $val = '';
+                                    
                                 }
 ?>
                                 <td>
-                                    <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php echo $v['cod_categoria_empresa'] ?>" <?php echo $checked ?> class="checkMax"> <?php echo $v['nome'] ?>
+                                    <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php echo $v['cod_categoria_empresa'] ?>" <?php echo $checked ?> > <?php echo $v['nome'] ?>
                                    <!-- <input type="text" class="input-medium validNumber"  name="cp[qtd_max_adicionais][<?php //echo $v['cod_categoria_empresa'] ?>][]" maxlength="3" value="<?php //echo $val ?>" style="width: 70px;" title="This field is required"> -->
                                     <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
                                 </td>
