@@ -6,7 +6,7 @@
  * 
  */
 class Plugins_layout extends Zend_Controller_Plugin_Abstract {
-	//TODO - Insert your code here
+
 	
 
 	public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request){
