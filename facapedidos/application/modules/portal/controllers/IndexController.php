@@ -10,9 +10,6 @@ class Portal_IndexController extends Zend_Controller_Action
 
     public function init()
     {
-	/*TODO - Aqui deve entrar a timezone de onde o cliente se encontra*/
-	date_default_timezone_set('America/Campo_Grande');
-
 	/* Initialize action controller here */
 	$this->session = new Zend_Session_Namespace('compra');
 	$this->_helper->layout()->disableLayout();
@@ -22,7 +19,11 @@ class Portal_IndexController extends Zend_Controller_Action
 	$this->EmpresaDB = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
 	$this->RecadoClienteDB = new DbTable_RecadoCliente();
 	if (isset($this->session->cliente))
+	{
 	    $this->view->nomeCliente = $this->session->cliente->getNomeExibicao();
+	    date_default_timezone_set($this->session->cliente->getTimezone());
+
+	}
     }
 
     public function indexAction()
