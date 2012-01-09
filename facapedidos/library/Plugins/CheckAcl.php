@@ -35,7 +35,7 @@ class Plugins_CheckAcl extends Zend_Controller_Plugin_Abstract {
          $session = new Zend_Session_Namespace('default');
          if (isset($session->user))
          {
-            $view->navigation($navContainer)->setRole(new Zend_Acl_Role($session->user->role));
+            $view->navigation()->setRole(new Zend_Acl_Role($session->user->role));
          }
 
         }
