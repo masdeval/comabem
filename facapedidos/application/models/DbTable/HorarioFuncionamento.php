@@ -13,8 +13,8 @@
           $query = $this->_db->query("SELECT * FROM horario_funcionamento where  cod_empresa =$cod_empresa ");
           $res = $query->fetchAll();
           foreach ($res as $k => $row) {
-              $result[$row[dia_da_semana]]['hora_inicio'] = $row['hora_inicio'];
-              $result[$row[dia_da_semana]]['hora_fim'] = $row['hora_fim'];
+              $result[$row['dia_da_semana']]['hora_inicio'] = $row['hora_inicio'];
+              $result[$row['dia_da_semana']]['hora_fim'] = $row['hora_fim'];
           }
           return $result;
       }
