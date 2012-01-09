@@ -26,6 +26,7 @@ class User  //implements Zend_Acl_Role_Interface
     public $resources;
     public $role;
     public $empresa;
+    public $timezone = "America/Campo_Grande";
 
     public function _construct(){}
    /* public function _construct($name, $id, $resources, $role){
