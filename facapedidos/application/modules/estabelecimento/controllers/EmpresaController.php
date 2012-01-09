@@ -67,6 +67,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
 
         if ($formData['emorFrom'] == 1)//formulario de empresa
         {
+	    $fileName = "";
             if (!empty($formData['flagRemoverImagem']))
                 $fileName = "remover";
 
