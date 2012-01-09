@@ -16,9 +16,6 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
 
     public function init()
     {
-	/*TODO - Aqui deve entrar a timezone de onde o cliente se encontra*/
-	date_default_timezone_set('America/Campo_Grande');
-
         $this->_helper->layout()->setLayout('tela_cadastro_layout');
         $this->db = Zend_Db_Table::getDefaultAdapter();
         $this->Funcionario = new DbTable_Funcionario($this->db);
@@ -30,6 +27,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         if (isset($this->session->user))
         {
             $this->empresaId = $this->session->user->empresa;
+	    date_default_timezone_set($this->session->user->timezone);
         }
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
 
