@@ -10,6 +10,9 @@ class Portal_IndexController extends Zend_Controller_Action
 
     public function init()
     {
+	/*TODO - Aqui deve entrar a timezone de onde o cliente se encontra*/
+	date_default_timezone_set('America/Campo_Grande');
+
 	/* Initialize action controller here */
 	$this->session = new Zend_Session_Namespace('compra');
 	$this->_helper->layout()->disableLayout();
@@ -32,6 +35,7 @@ class Portal_IndexController extends Zend_Controller_Action
 	$criterios = $this->getRequest()->getPost('criterio');
 	$tipos_produto = $this->getRequest()->getPost('cod_tipo_produto');
 	$caloria = $this->getRequest()->getPost('caloria');
+	$produtos = "";
 
 	//primeiro busca com o lucene
 	if (!empty($criterios))
