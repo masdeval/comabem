@@ -21,8 +21,6 @@ class Portal_IndexController extends Zend_Controller_Action
 	if (isset($this->session->cliente))
 	{
 	    $this->view->nomeCliente = $this->session->cliente->getNomeExibicao();
-	    date_default_timezone_set($this->session->cliente->getTimezone());
-
 	}
     }
 
@@ -65,6 +63,7 @@ class Portal_IndexController extends Zend_Controller_Action
 
 	//insere em resultado a situacao do estabelecimento informando se o mesmo
 	//esta aberto ou fechado
+	
 	$hora_atual = date('H') . ":" . date('i') . ":00";
 
 	$empresa_ja_apresentada = array();
