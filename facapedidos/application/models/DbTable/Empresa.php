@@ -48,6 +48,10 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 
     public function editEmpresa($formData, $id, $logoFileName)
     {
+
+	/*TODO - Aqui deve entrar a timezone de onde o cliente se encontra*/
+	date_default_timezone_set('America/Campo_Grande');
+
 	$now = date("Y-m-d H:i:s");
 	$data = array('razao_social' => $formData['razao_social'],
 	    'cnpj' => $formData['cnpj'],
