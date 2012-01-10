@@ -59,7 +59,7 @@ class DbTable_TiposProdutosEmpresa extends Zend_Db_Table_Abstract {
         $query = $this->_db->query("SELECT TP.nome,TP.cod_tipo_produto FROM tipos_produtos_empresa TPE LEFT JOIN tipo_produto TP ON (TPE.cod_tipo_produto=TP.cod_tipo_produto) where  TPE.cod_empresa =$cod_empresa ");
         $res = $query->fetchAll();
         foreach ($res as $k => $row) {
-            $result[$row[cod_tipo_produto]] = $row['nome'];
+            $result[$row['cod_tipo_produto']] = $row['nome'];
         }
         return $result;
     }
