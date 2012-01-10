@@ -65,7 +65,7 @@ class DbTable_TamanhoProduto extends Zend_Db_Table_Abstract
         $result[''] = 'Select To edit';
         foreach ($res as $k => $row)
         {
-            $result[$row[cod_tamanho_produto]] = $row['descricao'];
+            $result[$row['cod_tamanho_produto']] = $row['descricao'];
         }
         return $result;
     }
