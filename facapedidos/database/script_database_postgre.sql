@@ -408,8 +408,8 @@ CREATE INDEX xpkingrediente_empresa
 CREATE TABLE public.horario_funcionamento (
                 cod_empresa INTEGER NOT NULL,
                 dia_da_semana VARCHAR(10) NOT NULL,
-                hora_inicio TIME NOT NULL,
-                hora_fim TIME NOT NULL,
+                hora_inicio TIME,
+                hora_fim TIME,
                 CONSTRAINT horario_funcionamento_pk PRIMARY KEY (cod_empresa, dia_da_semana)
 );
 
@@ -450,7 +450,6 @@ CREATE SEQUENCE public.cliente_cod_cliente_seq;
 
 CREATE TABLE public.cliente (
                 cod_cliente INTEGER NOT NULL DEFAULT nextval('public.cliente_cod_cliente_seq'),
-                cod_cidade INTEGER NOT NULL,
                 nome VARCHAR(50) NOT NULL,
                 data_nascimento DATE,
                 email VARCHAR(30) NOT NULL,
@@ -472,13 +471,9 @@ CREATE TABLE public.cliente (
 
 ALTER SEQUENCE public.cliente_cod_cliente_seq OWNED BY public.cliente.cod_cliente;
 
-CREATE INDEX ifk_rel_28
- ON public.cliente USING BTREE
- ( cod_cidade );
-
-CREATE INDEX tb_usuario_fkindex1
- ON public.cliente USING BTREE
- ( cod_cidade );
+CREATE UNIQUE INDEX cliente_idx
+ ON public.cliente
+ ( email );
 
 CREATE TABLE public.participantes_venda_coletiva (
                 cod_venda_coletiva INTEGER NOT NULL,
@@ -492,15 +487,16 @@ CREATE SEQUENCE public.pedido_cod_pedido_seq;
 CREATE TABLE public.pedido (
                 cod_pedido INTEGER NOT NULL DEFAULT nextval('public.pedido_cod_pedido_seq'),
                 cod_cliente INTEGER,
-                data DATE,
-                valor_total NUMERIC(14,2) NOT NULL,
-                rua VARCHAR(50),
-                numero SMALLINT,
+                data TIMESTAMP NOT NULL,
+                valor_total NUMERIC(14,2),
+                rua VARCHAR(50) NOT NULL,
+                numero SMALLINT NOT NULL,
                 complemento VARCHAR(20),
                 cep VARCHAR(8),
                 status_pagamento SMALLINT,
                 status_pedido SMALLINT,
                 telefone VARCHAR(20) NOT NULL,
+                cod_cidade INTEGER,
                 CONSTRAINT pedido_pkey PRIMARY KEY (cod_pedido)
 );
 
@@ -526,11 +522,11 @@ CREATE INDEX xpkpedido
 CREATE TABLE public.pedido_empresa (
                 cod_pedido INTEGER NOT NULL,
                 cod_empresa INTEGER NOT NULL,
-                entregar BOOLEAN DEFAULT true,
+                entregar BOOLEAN DEFAULT true NOT NULL,
                 observacao VARCHAR,
                 tempo_entrega_minutos SMALLINT,
-                cod_entrega INTEGER NOT NULL,
-                notificacaoSMS BOOLEAN NOT NULL,
+                cod_entrega INTEGER,
+                notificacaoSMS BOOLEAN DEFAULT true NOT NULL,
                 CONSTRAINT pedido_empresa_pk PRIMARY KEY (cod_pedido, cod_empresa)
 );
 
@@ -550,7 +546,8 @@ CREATE TABLE public.pedido_personalizado (
                 cod_pedido INTEGER NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 cod_ingrediente INTEGER NOT NULL,
-                CONSTRAINT pedido_personalizado_pkey PRIMARY KEY (cod_tamanho_produto, cod_pedido, cod_empresa, cod_ingrediente)
+                indice INTEGER NOT NULL,
+                CONSTRAINT pedido_personalizado_pkey PRIMARY KEY (cod_tamanho_produto, cod_pedido, cod_empresa, cod_ingrediente, indice)
 );
 
 
@@ -559,7 +556,8 @@ CREATE TABLE public.sabores_pizza (
                 cod_tamanho_produto INTEGER NOT NULL,
                 cod_pedido INTEGER NOT NULL,
                 cod_empresa INTEGER NOT NULL,
-                CONSTRAINT sabores_pizza_pkey PRIMARY KEY (cod_outro_sabor_pizza, cod_tamanho_produto, cod_pedido, cod_empresa)
+                indice INTEGER NOT NULL,
+                CONSTRAINT sabores_pizza_pkey PRIMARY KEY (cod_outro_sabor_pizza, cod_tamanho_produto, cod_pedido, cod_empresa, indice)
 );
 
 
@@ -567,17 +565,17 @@ CREATE INDEX sabores_pizza_fkindex2
  ON public.sabores_pizza USING BTREE
  ( cod_outro_sabor_pizza );
 
-CREATE SEQUENCE public.categoria_empresa_cod_tipo_ingrediente_seq;
+CREATE SEQUENCE public.categoria_empresa_cod_categoria_empresa_seq;
 
 CREATE TABLE public.categoria_empresa (
-                cod_categoria_empresa INTEGER NOT NULL DEFAULT nextval('public.categoria_empresa_cod_tipo_ingrediente_seq'),
+                cod_categoria_empresa INTEGER NOT NULL DEFAULT nextval('public.categoria_empresa_cod_categoria_empresa_seq'),
                 nome VARCHAR(40) NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 CONSTRAINT categoria_ingrediente_pkey PRIMARY KEY (cod_categoria_empresa)
 );
 
 
-ALTER SEQUENCE public.categoria_empresa_cod_tipo_ingrediente_seq OWNED BY public.categoria_empresa.cod_categoria_empresa;
+ALTER SEQUENCE public.categoria_empresa_cod_categoria_empresa_seq OWNED BY public.categoria_empresa.cod_categoria_empresa;
 
 CREATE TABLE public.categoria_permitida_como_adicional (
                 cod_produto INTEGER NOT NULL,
@@ -674,14 +672,14 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.cliente ADD CONSTRAINT cliente_cod_cidade_fkey
+ALTER TABLE public.empresa ADD CONSTRAINT empresa_cod_cidade_fkey
 FOREIGN KEY (cod_cidade)
 REFERENCES public.tb_cidade (cod_cidade)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.empresa ADD CONSTRAINT empresa_cod_cidade_fkey
+ALTER TABLE public.pedido ADD CONSTRAINT tb_cidade_pedido_fk
 FOREIGN KEY (cod_cidade)
 REFERENCES public.tb_cidade (cod_cidade)
 ON DELETE NO ACTION
