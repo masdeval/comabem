@@ -1625,10 +1625,10 @@
     <column id="COL617" populated="true" UUID="5767dc1d-3fd7-49ba-a50b-68c77e595936" autoIncrement="false" defaultValue="" name="dia_da_semana" nullable="0" physicalName="dia_da_semana" precision="10" primaryKeySeq="1" referenceCount="1" scale="0" source-column-ref="COL162" sourceDataTypeName="varchar" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL618" populated="true" UUID="3dd2a635-d311-46a7-bce4-2a9c5da7dc98" autoIncrement="false" defaultValue="" name="hora_inicio" nullable="0" physicalName="hora_inicio" precision="0" referenceCount="1" scale="0" source-column-ref="COL160" sourceDataTypeName="time" type="92" userDefinedTypeUUID="10d6960f-169d-47c2-860a-37341342b1d5" >
+    <column id="COL618" populated="true" UUID="3dd2a635-d311-46a7-bce4-2a9c5da7dc98" autoIncrement="false" defaultValue="" name="hora_inicio" nullable="1" physicalName="hora_inicio" precision="0" referenceCount="1" scale="0" source-column-ref="COL160" sourceDataTypeName="time" type="92" userDefinedTypeUUID="10d6960f-169d-47c2-860a-37341342b1d5" >
      <remarks></remarks>
     </column>
-    <column id="COL619" populated="true" UUID="f37dbbef-75d6-49ca-9323-648d998306e2" autoIncrement="false" defaultValue="" name="hora_fim" nullable="0" physicalName="hora_fim" precision="0" referenceCount="1" scale="0" source-column-ref="COL161" sourceDataTypeName="time" type="92" userDefinedTypeUUID="10d6960f-169d-47c2-860a-37341342b1d5" >
+    <column id="COL619" populated="true" UUID="f37dbbef-75d6-49ca-9323-648d998306e2" autoIncrement="false" defaultValue="" name="hora_fim" nullable="1" physicalName="hora_fim" precision="0" referenceCount="1" scale="0" source-column-ref="COL161" sourceDataTypeName="time" type="92" userDefinedTypeUUID="10d6960f-169d-47c2-860a-37341342b1d5" >
      <remarks></remarks>
     </column>
     </folder>
@@ -2526,7 +2526,7 @@
   <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  </compare-dm-settings>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="1.0" viewportX="273" viewportY="657" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="1.0" viewportX="1152" viewportY="1035" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB462" x="1168" y="151" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB468" x="1200" y="265" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB482" x="1460" y="159" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
