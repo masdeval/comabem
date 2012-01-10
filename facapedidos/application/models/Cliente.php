@@ -23,7 +23,7 @@ class Cliente {
     {
 	$this->id = $id;
 	$this->nomeCompleto = $nome;
-	$aux = split(" ",$nome);
+	$aux = explode(" ",$nome);
 	$this->nomeExibicao = $aux[0];
 	$this->email = $email;
 	$this->telefone = $telefone;
