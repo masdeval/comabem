@@ -96,16 +96,67 @@ function formataCPF(campo){
 
 }
 
-function formataTelefone(campo) {
-	campo.value = filtraCampo(campo);
-	vr = campo.value;
-	tam = vr.length;
+  function formataTelefone(objForm, strField, sMask, evtKeyPress) {
+	var i, nCount, sValue, fldLen, mskLen,bolMask, sCod, nTecla;
 
-	if ( tam <= 4 )
-		campo.value = vr;
-	if ( tam > 4 )
-		campo.value = vr.substr(0, tam-4 ) + '-' + vr.substr(tam-4, tam);
-}
+
+	nTecla = evtKeyPress.keyCode;
+	if(nTecla == null)
+	    nTecla = evtKeyPress.which;
+
+	sValue = objForm[strField].value;
+
+	// Limpa todos os caracteres de formatação que
+	// já estiverem no campo.
+	sValue = sValue.toString().replace( "-", "" );
+	sValue = sValue.toString().replace( "-", "" );
+	sValue = sValue.toString().replace( ".", "" );
+	sValue = sValue.toString().replace( ".", "" );
+	sValue = sValue.toString().replace( "/", "" );
+	sValue = sValue.toString().replace( "/", "" );
+	sValue = sValue.toString().replace( "(", "" );
+	sValue = sValue.toString().replace( "(", "" );
+	sValue = sValue.toString().replace( ")", "" );
+	sValue = sValue.toString().replace( ")", "" );
+	sValue = sValue.toString().replace( " ", "" );
+	sValue = sValue.toString().replace( " ", "" );
+	sValue = sValue.toString().replace( ":", "" );
+	fldLen = sValue.length;
+	mskLen = sMask.length;
+
+	i = 0;
+	nCount = 0;
+	sCod = "";
+	mskLen = fldLen;
+
+	while (i <= mskLen) {
+	    bolMask = ((sMask.charAt(i) == "-") || (sMask.charAt(i) == ".") || (sMask.charAt(i) == "/"))
+	    bolMask = bolMask || ((sMask.charAt(i) == "(") || (sMask.charAt(i) == ")") || (sMask.charAt(i) == " "))
+	    bolMask = bolMask || (sMask.charAt(i) == ":")
+
+	    if (bolMask) {
+		sCod += sMask.charAt(i);
+		mskLen++; }
+	    else {
+		sCod += sValue.charAt(nCount);
+		nCount++;
+	    }
+
+	    i++;
+	}
+
+	objForm[strField].value = sCod;
+
+	if (nTecla != 8) { // backspace
+	    if (sMask.charAt(i-1) == "9") { // apenas números...
+		return ((nTecla > 47) && (nTecla < 58)); } // números de 0 a 9
+	    else { // qualquer caracter...
+		return true;
+	    } }
+	else {
+	    return true;
+	}
+    }
 
 
 function toggleImage(){

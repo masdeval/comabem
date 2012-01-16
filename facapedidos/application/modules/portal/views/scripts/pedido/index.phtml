@@ -15,10 +15,10 @@
 
 <body>
 
-    <form action="/portal/pedido/concluir-Compra" method="POST" id="form1" onsubmit="return validateForm('form1')" >
+    <form action="/portal/pedido/concluir-Compra" method="POST" name="form1" id="form1" onsubmit="return validateForm('form1')" >
 
-	<input type="submit" value="Concluir Compra" name="acao">
-	<input type="submit" value="Continuar Comprando" name ="acao">
+	<input type="submit" value="Concluir Compra">
+	<input type="submit" value="Continuar Comprando" onsubmit="javascript:document.form1.action='/portal/pedido/continuar-Comprando'">
 
 	<?php
 	//descobre quais são os ids das empresas que estao no array $empresas

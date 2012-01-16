@@ -6,7 +6,8 @@
     <link type="text/css" href="/css/portal.css" rel="stylesheet" />
     <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
- 
+     <script type="text/javascript" src="/js/common.js"></script>
+
 
   </head>
   <body>
@@ -16,7 +17,7 @@
 	<input type="submit" value="Continuar Comprando">
     </form>
 
-      <form action="/portal/pedido/pagamento" method="POST" id="form1" onsubmit="return validateForm('form1')">
+      <form action="/portal/pedido/pagamento" method="POST" id="form1" name="form1" onsubmit="return validateForm('form1')">
 
   <div style="border: solid gray; margin-right: 50%; clear: both;">
 
@@ -24,13 +25,13 @@
 	E-mail para contato sobre essa compra: <?php echo $this->emailCliente ?>
 
 	<br><br>
-	* Telefone com DDD: <input type="text" name="endereco[telefone]" class="RQR required" title="Por favor, indique um telefone." value="<?php echo $this->telefoneCliente ?>">
+	* Telefone com DDD: <input type="text" maxlength="14" onkeypress="return formataTelefone(document.form1, 'endereco[telefone]', '(99) 9999-9999', event)" name="endereco[telefone]" class="RQR required" title="Por favor, indique um telefone." value="<?php echo $this->telefoneCliente ?>">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
 	* Rua: <input type="text" name="endereco[rua]" title="Por favor, informe a rua." class="RQR required validAlphaNumeric">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
-	* Número: <input type="text" name="endereco[numero]" title="Por favor, informe o número." class="RQR required validNumber">
+	* Número: <input type="text" maxlength="4" name="endereco[numero]" title="Por favor, informe o número." class="RQR required validNumber">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
 	Complemento (apto, casa de fundos, etc): <input type="text" name="endereco[complemento]">
@@ -39,7 +40,8 @@
 
 <div style="border: solid gray;  margin-top:20px; margin-right: 50%; clear:both; ">
 
-<p>Escolher forma de pagamento</p>
+<!-- <p>Escolher forma de pagamento</p>
+<input type="radio" checked name="forma_pagamento" value="<?php //echo FormasPagamentoEnum::$PagSeguro?>">  -->
 
 </div>
 

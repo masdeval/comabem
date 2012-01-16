@@ -119,6 +119,10 @@ class Portal_PedidoController extends Zend_Controller_Action
 	    $this->view->configuracoesJaFeitas = $this->session->configuracoesPedido;
     }
 
+    /*
+     * Chega aqui quando o usuario escolhe a opcao "Concluir Compra" ou "Continuar Comprando" 
+     */
+
     public function concluirCompraAction()
     {
 	$configuracoes = $this->getRequest()->getPost('configuracoes');
@@ -133,7 +137,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 		if ($key_tamanho == 'entregar' || $key_tamanho == 'sms' || $key_tamanho == 'observacao')
 		    continue;
 
-		//verifica se realmente a quant idade foi alterada
+		//verifica se realmente a quantidade foi alterada
 		//nao deve zerar as configuracoes quando o usuario nem mexeu na quantidade
 		if ($detalhes['quantidade'] != null && $detalhes['quantidade'] >= 0 && $detalhes['quantidade'] != $carrinho[$key_empresa][$key_tamanho]['quantidade'])
 		{
@@ -146,21 +150,17 @@ class Portal_PedidoController extends Zend_Controller_Action
 	    }
 	}
 
-	if ($this->getRequest()->getPost('acao') == 'Concluir Compra')
-	{
-	    $this->_helper->viewRenderer("concluir_compra");
-	    $this->view->emailCliente = $this->session->cliente->getEmail();
-	    $this->view->tefeloneCliente = $this->session->cliente->getTelefone();
-	}
-	else //continuar comprando
-	{
-	    $this->_forward("index", "index", "portal");
-	}
-
-	//Apresentar como endereco de entrega o endereco que o usuario utilizou para se localizar no site logo no início
-	//Buscar enderecos de entrega que o cliente ja utilizou antes para apresentar opcao na tela??
+	$this->_helper->viewRenderer("concluir_compra");
+	$this->view->emailCliente = $this->session->cliente->getEmail();
+	$this->view->telefoneCliente = $this->session->cliente->getTelefone();
+//TODO - Apresentar como endereco de entrega o endereco que o usuario utilizou para se localizar no site logo no início
+//TODO - Buscar enderecos de entrega que o cliente ja utilizou antes para apresentar opcao na tela??
     }
 
+    /*
+     * Entra aqui quando o usuário já escolheu a forma de pagamento. Será cadastrodo seu pedido na base de dados e
+     * encaminhado para a tela do player de pagamento escolhido.
+     */
     public function pagamentoAction()
     {
 	$this->_helper->viewRenderer("concluir_pagamento");
@@ -168,25 +168,74 @@ class Portal_PedidoController extends Zend_Controller_Action
 
 	if (!isset($this->session->configuracoesPedido) || !isset($this->session->cliente))
 	{
-	    $this->view->headline = "Por algum motivo seu pedido não foi encontrado. Provavelmente transcorreu muito tempo desde o seu último acesso. Favor refazer o pedido.";
-	    $this->view->emailCliente = $this->session->cliente->getEmail();
-	    $this->view->tefeloneCliente = $this->session->cliente->getTelefone();
-
+	    $this->view->headline = "Por algum motivo seu pedido não foi encontrado. Provavelmente transcorreu muito tempo desde o seu último acesso. Por favor refaça seu pedido.";
 	    $this->_helper->viewRenderer("concluir_compra");
 	}
 
+	$this->view->emailCliente = $this->session->cliente->getEmail();
+	$this->view->tefeloneCliente = $this->session->cliente->getTelefone();
+
+	if (empty($endereco))
+	{
+	    $this->view->headline = "O endereço deve ser preenchido.";
+	    $this->_helper->viewRenderer("concluir_compra");
+	}
+
+	//cadastra pedido
 	try
 	{
-	    $this->PedidoDB->cadastrarPedido($endereco, $this->session->configuracoesPedido, $this->session->cliente);
+	    $pedidoObject = new Pedido();
+	    $pedidoObject->setCliente($this->session->cliente);
+
+	    // A variavel $pedidoObject voltara povoada com os dados do pedido necessarios para criacao de uma transacao generica de pagamento
+	    $id_pedido = $this->PedidoDB->cadastrarPedido($endereco, $this->session->carrinho->getCarrinho(), $this->session->configuracoesPedido, $this->session->cliente, $pedidoObject);
+
 	    unset($this->session->configuracoesPedido);
 	    unset($this->session->carrinho);
+	    $this->session->id_pedido = $id_pedido;
 	}
 	catch (Exception $e)
 	{
-	    $this->view->headline = "Houve um erro no processamento de sua solicitação. Erro: " . $e->getMessage();
-	    $this->view->emailCliente = $this->session->cliente->getEmail();
-	    $this->view->tefeloneCliente = $this->session->cliente->getTelefone();
+	    $this->view->headline = "Houve um erro no processamento da sua solicitação. Erro: " . $e->getMessage();
 	    $this->_helper->viewRenderer("concluir_compra");
+	    return;
+	}
+
+	//$forma_pagamento = $this->getRequest()->getPost('forma_pagamento');
+	$forma_pagamento = FormasPagamentoEnum::$PagSeguro;
+	//Inicia transacao de pagamento
+	switch ($forma_pagamento)
+	{
+	    case FormasPagamentoEnum::$PagSeguro:
+
+		$gerenciadorPagamento = new PagSeguroAdapter();
+		$gerenciadorPagamento->enviaPagamento($pedidoObject);
+		break;
+	}
+    }
+
+    /*
+     * Recebe o retorno automatico de uma transacao do PAgSeguro
+     */
+    public function notificacaoPagSeguroAction()
+    {
+	$this->_helper->viewRenderer("concluir_pagamento");
+
+	//Usa a API do PagSeguro para fazer uma consulta aa transacao relacionada com a notificacao recebida
+
+	/* Tipo de notificação recebida */
+	$type = $this->getRequest()->getParam('notificationType');
+
+	/* Código da notificação recebida */
+	$code = $this->getRequest()->getParam('notificationCode');
+
+	/* Verificando tipo de notificação recebida */
+	//if ($type === 'transaction')
+	{
+	    $gerenciadorPagamento = new PagSeguroAdapter();
+	    $transacao = $gerenciadorPagamento->getStatusPagamento($code);//retorna um objeto TransacaoPagamento
+	    //Atualiza na tabela Pedido o status do pagamento de acordo com os valores possiveis em StatusPagamentoEnum
+	    $this->PedidoDB->alterarStatusPedido($transacao->getCodPedido(), $transacao->getStatus());
 	}
     }
 
@@ -218,7 +267,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 		    continue;
 
 		//verifica se realmente a quantidade foi alterada
-		//nao deve zerar as configuracoes quando o usuario nem mexeu na quantidade 
+		//nao deve zerar as configuracoes quando o usuario nem mexeu na quantidade
 		if ($detalhes['quantidade'] != null && $detalhes['quantidade'] >= 0 && $detalhes['quantidade'] != $carrinho[$key_empresa][$key_tamanho]['quantidade'])
 		{
 		    $this->session->carrinho->alterarQuantidadeProduto($key_empresa, $key_tamanho, $detalhes['quantidade']);
@@ -238,9 +287,17 @@ class Portal_PedidoController extends Zend_Controller_Action
     public function continuarComprandoAction()
     {
 	$this->_helper->layout->disableLayout();
-
-
 	$this->_forward("index", "index", "portal");
+    }
+
+    /*
+     * Recebe o retorno automatico logo apos uma compra ter sido aprovada em algum player de pagamento
+     */
+    public function retornoAutomaticoIntegradorAction()
+    {
+	$this->_helper->viewRenderer("concluir_pagamento");
+
+
     }
 
 }

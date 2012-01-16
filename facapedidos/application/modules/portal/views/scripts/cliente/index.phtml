@@ -5,6 +5,7 @@
     <link type="text/css" href="/js/jui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
 
     <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
     <script type="text/javascript" src="/js/portal.js"></script>
     <script type="text/javascript" src="/js/validation-new.js"></script>
@@ -29,14 +30,14 @@
     <?php } ?>
 
     <div style="border:solid; float:left; margin-right: 80px;" >
-    <form action="/portal/cliente/criar-Conta" method="POST" class="frm" id='form1' onsubmit="return validaTermoAceite(this);">
+    <form action="/portal/cliente/criar-Conta" method="POST" class="frm" name="form1" id='form1' onsubmit="return validaTermoAceite(this);">
 
 	<h3>Crie sua conta</h3>
 	<br>
 	* Email: <input type="text" class="input-medium RQR required validEmail" title="Por favor, indique o email." name="cliente[email]" value="<?php echo $this->cliente['email'] ?>"  onblur="checkMailAjax(this.value);">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' id="spanMail"></span></div>
 	<br>
-	* Nome completo: <input type="text" class="input-medium RQR required" title="Por favor, indique seu nome." name="cliente[nome]" value="<?php echo $this->cliente['nome'] ?>">
+	* Nome completo: <input type="text"  class="input-medium RQR required" title="Por favor, indique seu nome." name="cliente[nome]" value="<?php echo $this->cliente['nome'] ?>">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
 	* Senha: <input type="password" class="input-medium RQR required" title="Por favor, entre com uma senha." id="senha" name="cliente[senha]">
@@ -45,7 +46,7 @@
 	* Confirme senha: <input type="password" class="input-medium RQR required" tithe="Por favor, repita a senha." id="senha_repetida" name="cliente[senha_repetida]">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
-	Telefone para contato com DDD: <input type="text" name="cliente[telefone]" value="<?php $this->cliente['telefone'] ?>">
+	* Telefone para contato com DDD: <input type="text" maxlength="14" onkeypress="return formataTelefone(document.form1, 'cliente[telefone]', '(99) 9999-9999', event)" class="input-medium RQR required" title="Por favor, indique um telefone." name="cliente[telefone]" value="<?php $this->cliente['telefone'] ?>">
 	<br><br>
 	<input type="checkbox"  id="aceite" name="cliente[aceite]" checked> Estou de acordo com os <a href="#">termos e condicões </a> do site.
 
@@ -125,5 +126,8 @@ function isEmpty(str) {
 function isBlank(str) {
     return (!str || /^\s*$/.test(str));
 }
+
+
+  
 
 </script>

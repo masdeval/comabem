@@ -1,0 +1,63 @@
+{2012/01/12 14:46:22} [Info] PaymentService.Register(PaymentRequest(Reference=83,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/12 14:48:34} [Info] PaymentService.Register(PaymentRequest(Reference=84,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/12 14:48:34} [Error] Exception: CURL library is required. 
+{2012/01/12 15:38:31} [Info] PaymentService.Register(PaymentRequest(Reference=85,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/12 15:38:36} [Error] PaymentService.Register(PaymentRequest(Reference=85,     SenderEmail=masdeval@yahoo.com.br)) - error [HTTP 400] - BAD_REQUEST [11014] - senderPhone invalid value: 8118-9719 
+{2012/01/12 15:46:07} [Info] PaymentService.Register(PaymentRequest(Reference=86,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/12 15:46:17} [Info] PaymentService.Register(PaymentRequest(Reference=86,     SenderEmail=masdeval@yahoo.com.br)) - end {1}EB91413B4D4DC6C4448FEF88D24CA517 
+{2012/01/12 15:49:52} [Info] PaymentService.Register(PaymentRequest(Reference=87,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/12 15:49:57} [Info] PaymentService.Register(PaymentRequest(Reference=87,     SenderEmail=masdeval@yahoo.com.br)) - end {1}49A7B5E89A9AD7E774E1BFA2E64D5921 
+{2012/01/12 17:03:40} [Info] PaymentService.Register(PaymentRequest(Reference=88,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/12 17:03:42} [Info] PaymentService.Register(PaymentRequest(Reference=88,     SenderEmail=masdeval@yahoo.com.br)) - end {1}CE1DE42BF0F0BDF55424EFB4CC75A0F9 
+{2012/01/16 12:11:24} [Info] PaymentService.Register(PaymentRequest(Reference=89,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/16 12:11:28} [Info] PaymentService.Register(PaymentRequest(Reference=89,     SenderEmail=masdeval@yahoo.com.br)) - end {1}A5A7BF046666D15994DFAF907FF15787 
+{2012/01/16 12:12:35} [Info] NotificationService.CheckTransaction(notificationCode=929EF4-4E419B419BC3-4EE4B26F99F8-43211D) - begin 
+{2012/01/16 12:12:35} [Info] NotificationService.CheckTransaction(notificationCode=929EF4-4E419B419BC3-4EE4B26F99F8-43211D) - end Transaction(Code=B60D29EF-1C21-42DD-9364-006E0C423B64, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T13:12:03.000-02:00, Reference=89, status=1, itemsCount=1)) 
+{2012/01/16 13:33:10} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:33:12} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - error [HTTP 400] - BAD_REQUEST [13001] - invalid notification code value: B60D29EF-1C21-42DD-9364-006E0C423B64 
+{2012/01/16 13:36:00} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:36:00} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - error [HTTP 400] - BAD_REQUEST [13001] - invalid notification code value: B60D29EF-1C21-42DD-9364-006E0C423B64 
+{2012/01/16 13:36:03} [Info] TransactionSearchService.SearchByCode(B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:36:04} [Info] TransactionSearchService.SearchByCode(transactionCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - end Transaction(Code=B60D29EF-1C21-42DD-9364-006E0C423B64, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T13:12:03.000-02:00, Reference=89, status=1, itemsCount=1) 
+{2012/01/16 13:37:58} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:37:58} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - error [HTTP 400] - BAD_REQUEST [13001] - invalid notification code value: B60D29EF-1C21-42DD-9364-006E0C423B64 
+{2012/01/16 13:37:59} [Info] TransactionSearchService.SearchByCode(B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:38:00} [Info] TransactionSearchService.SearchByCode(transactionCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - end Transaction(Code=B60D29EF-1C21-42DD-9364-006E0C423B64, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T13:12:03.000-02:00, Reference=89, status=1, itemsCount=1) 
+{2012/01/16 13:40:26} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:40:28} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - error [HTTP 400] - BAD_REQUEST [13001] - invalid notification code value: B60D29EF-1C21-42DD-9364-006E0C423B64 
+{2012/01/16 13:40:28} [Info] TransactionSearchService.SearchByCode(B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:40:30} [Info] TransactionSearchService.SearchByCode(transactionCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - end Transaction(Code=B60D29EF-1C21-42DD-9364-006E0C423B64, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T13:12:03.000-02:00, Reference=89, status=1, itemsCount=1) 
+{2012/01/16 13:41:45} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:41:46} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - error [HTTP 400] - BAD_REQUEST [13001] - invalid notification code value: B60D29EF-1C21-42DD-9364-006E0C423B64 
+{2012/01/16 13:41:46} [Info] TransactionSearchService.SearchByCode(B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:41:50} [Info] TransactionSearchService.SearchByCode(transactionCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - end Transaction(Code=B60D29EF-1C21-42DD-9364-006E0C423B64, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T13:12:03.000-02:00, Reference=89, status=1, itemsCount=1) 
+{2012/01/16 13:44:33} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:44:34} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - error [HTTP 400] - BAD_REQUEST [13001] - invalid notification code value: B60D29EF-1C21-42DD-9364-006E0C423B64 
+{2012/01/16 13:44:35} [Info] TransactionSearchService.SearchByCode(B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:44:35} [Info] TransactionSearchService.SearchByCode(transactionCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - end Transaction(Code=B60D29EF-1C21-42DD-9364-006E0C423B64, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T13:12:03.000-02:00, Reference=89, status=1, itemsCount=1) 
+{2012/01/16 13:48:01} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:48:02} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - error [HTTP 400] - BAD_REQUEST [13001] - invalid notification code value: B60D29EF-1C21-42DD-9364-006E0C423B64 
+{2012/01/16 13:48:02} [Info] TransactionSearchService.SearchByCode(B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:48:03} [Info] TransactionSearchService.SearchByCode(transactionCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - end Transaction(Code=B60D29EF-1C21-42DD-9364-006E0C423B64, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T13:12:03.000-02:00, Reference=89, status=1, itemsCount=1) 
+{2012/01/16 13:49:00} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:49:01} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - error [HTTP 400] - BAD_REQUEST [13001] - invalid notification code value: B60D29EF-1C21-42DD-9364-006E0C423B64 
+{2012/01/16 13:49:01} [Info] TransactionSearchService.SearchByCode(B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 13:49:01} [Info] TransactionSearchService.SearchByCode(transactionCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - end Transaction(Code=B60D29EF-1C21-42DD-9364-006E0C423B64, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T13:12:03.000-02:00, Reference=89, status=1, itemsCount=1) 
+{2012/01/16 13:51:50} [Info] PaymentService.Register(PaymentRequest(Reference=90,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/16 13:51:51} [Info] PaymentService.Register(PaymentRequest(Reference=90,     SenderEmail=masdeval@yahoo.com.br)) - end {1}8FCB0EF66A6AE10CC45AFF8C58A31B52 
+{2012/01/16 13:52:55} [Info] NotificationService.CheckTransaction(notificationCode=6F567E-CF52CB52CB8D-ADD4E2EFA602-6D2F43) - begin 
+{2012/01/16 13:52:56} [Info] NotificationService.CheckTransaction(notificationCode=6F567E-CF52CB52CB8D-ADD4E2EFA602-6D2F43) - end Transaction(Code=C1262E65-3A9E-415F-85BB-C482160FF368, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T14:52:27.000-02:00, Reference=90, status=1, itemsCount=1)) 
+{2012/01/16 14:10:05} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 14:10:05} [Info] NotificationService.CheckTransaction(notificationCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - error [HTTP 400] - BAD_REQUEST [13001] - invalid notification code value: B60D29EF-1C21-42DD-9364-006E0C423B64 
+{2012/01/16 14:10:05} [Info] TransactionSearchService.SearchByCode(B60D29EF-1C21-42DD-9364-006E0C423B64) - begin 
+{2012/01/16 14:10:06} [Info] TransactionSearchService.SearchByCode(transactionCode=B60D29EF-1C21-42DD-9364-006E0C423B64) - end Transaction(Code=B60D29EF-1C21-42DD-9364-006E0C423B64, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T13:12:03.000-02:00, Reference=89, status=1, itemsCount=1) 
+{2012/01/16 14:45:33} [Info] PaymentService.Register(PaymentRequest(Reference=91,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/16 14:45:34} [Info] PaymentService.Register(PaymentRequest(Reference=91,     SenderEmail=masdeval@yahoo.com.br)) - end {1}BCE648F9CFCFAAB4441D3FBA3FE97206 
+{2012/01/16 16:10:48} [Info] PaymentService.Register(PaymentRequest(Reference=92,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/16 16:10:51} [Info] PaymentService.Register(PaymentRequest(Reference=92,     SenderEmail=masdeval@yahoo.com.br)) - end {1}CFD47D2C1B1B0C0334A8FF8B18A10158 
+{2012/01/16 16:12:04} [Info] NotificationService.CheckTransaction(notificationCode=D35EB9-483D6E3D6E44-A3341B4FBBB8-3F072E) - begin 
+{2012/01/16 16:12:05} [Info] NotificationService.CheckTransaction(notificationCode=D35EB9-483D6E3D6E44-A3341B4FBBB8-3F072E) - end Transaction(Code=FCA73829-B79D-428C-9E08-9B861392F455, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T17:11:36.000-02:00, Reference=92, status=1, itemsCount=1)) 
+{2012/01/16 16:14:17} [Info] PaymentService.Register(PaymentRequest(Reference=93,     SenderEmail=masdeval@yahoo.com.br)) - begin 
+{2012/01/16 16:14:18} [Info] PaymentService.Register(PaymentRequest(Reference=93,     SenderEmail=masdeval@yahoo.com.br)) - end {1}F9A2D25E0909C7AFF4A47FB2A60F5A1D 
+{2012/01/16 16:16:24} [Info] NotificationService.CheckTransaction(notificationCode=CF8E52-49CCC9CCC92D-0AA4745FB0EF-D8D07E) - begin 
+{2012/01/16 16:16:25} [Info] NotificationService.CheckTransaction(notificationCode=CF8E52-49CCC9CCC92D-0AA4745FB0EF-D8D07E) - end Transaction(Code=0C982C04-8161-414B-8FCE-AF01158BDAEA, SenderEmail=christiancleber@gmail.com, Date=2012-01-16T17:15:12.000-02:00, Reference=93, status=1, itemsCount=1)) 

@@ -17,16 +17,17 @@ class Cliente {
     private $nomeCompleto;
     private $email;
     private $telefone;
+    private $ddd;
 
 
-    public function __construct($id, $nome, $email, $telefone = '')
+    public function __construct($id, $nome, $email, $telefone)
     {
 	$this->id = $id;
 	$this->nomeCompleto = $nome;
 	$aux = explode(" ",$nome);
 	$this->nomeExibicao = $aux[0];
 	$this->email = $email;
-	$this->telefone = $telefone;
+	$this->telefone = $telefone;	
     }
 
     public function getId()
@@ -44,9 +45,19 @@ class Cliente {
 	return $this->nomeCompleto;
     }
 
+    public function getTelefoneSemDDD()
+    {
+	return substr($this->telefone,5);
+    }
+
     public function getTelefone()
     {
 	return $this->telefone;
+    }
+
+    public function getDDD()
+    {
+	return substr($this->telefone,1,2);
     }
 
     public function getEmail()
