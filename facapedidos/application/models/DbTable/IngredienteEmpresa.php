@@ -69,6 +69,13 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
         return $result;
     }
 
+    public function getPrecoAdicional($ingredienteId, $empresaId)
+    {
+        $query = $this->_db->query("SELECT preco_quando_adicional FROM ingrediente_empresa where cod_ingrediente='$ingredienteId' AND cod_empresa=$empresaId and removed=0");
+        $result = $query->fetchAll();        
+        return (float) $result[0]['preco_quando_adicional'];
+    }
+
     public function addRecord($formData, $cod_ingrediente, $cod_empresa, $logoFileName)
     {
         $now = date("Y-m-d H:i:s");
