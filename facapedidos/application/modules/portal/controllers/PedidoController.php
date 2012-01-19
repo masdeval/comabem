@@ -134,7 +134,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 	{
 	    foreach ($tamanhos as $key_tamanho => $detalhes)
 	    {
-		if ($key_tamanho == 'entregar' || $key_tamanho == 'sms' || $key_tamanho == 'observacao')
+		if (!is_numeric($key_tamanho))
 		    continue;
 
 		//verifica se realmente a quantidade foi alterada
@@ -263,7 +263,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 	{
 	    foreach ($tamanhos as $key_tamanho => $detalhes)
 	    {
-		if ($key_tamanho == 'entregar' || $key_tamanho == 'sms' || $key_tamanho == 'observacao')
+		if (!is_numeric($key_tamanho))
 		    continue;
 
 		//verifica se realmente a quantidade foi alterada
