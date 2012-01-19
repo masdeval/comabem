@@ -249,9 +249,9 @@ function editaIngrediente(elem){
          document.getElementById('form1').submit();
  }
 
-function getCategoria(elem,ing){
+function getCategoria(elem){
     var val=elem.options[elem.selectedIndex].value; //$('#cod_tipo_ingrediente').attr('value');
-    reqURL=base_url+'/estabelecimento/ingredients/categoria/tipoing/'+val+'/ing/'+ing;
+    reqURL=base_url+'/estabelecimento/ingredients/categoria/tipoing/'+val;
 
     $.ajax({
         type: "GET",

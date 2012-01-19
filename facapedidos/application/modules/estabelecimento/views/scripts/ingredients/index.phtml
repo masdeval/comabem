@@ -1,4 +1,4 @@
-<h2><?php echo $this->headline; ?></h2>
+    <h2><?php echo $this->headline; ?></h2>
 
 <div id="tabs" style="width: 714px;">
   <ul>
@@ -192,7 +192,7 @@ Ainda não tem a categoria que precisa? Cadastre uma agora.
                 <td> Escolha a categoria * </td>
 
 
-      <td colspan="10"><?php $attribs =array("class"=>'input-medium RQR required', "title"=>'Por favor, indique Ingredients' ,'style'=>'width:200px','onchange'=>"getCategoria(this,$this->ingredienteId)");
+      <td colspan="10"><?php $attribs =array("class"=>'input-medium RQR required', "title"=>'Por favor, indique Ingredients' ,'style'=>'width:200px','onchange'=>"getCategoria(this)");
 echo $this->formSelect('cod_categoria_empresa', $this->formData['cod_categoria_empresa'], $attribs, $this->categoriaIngredienteOption); ?>
               <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
               </tr>
