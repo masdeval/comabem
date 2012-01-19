@@ -292,7 +292,6 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
 
     public function categoriaAction()
     {
-        $ingredienteId = $this->_getParam('ing', '');
         $cod_categoria_empresa = $this->_getParam('tipoing', '');
         $ingredienteEmpresaRec = $this->IngredienteEmpresa->getRecords($this->empresaId);
         $categoriaIngredienteEmpresaAssocair = $this->CategoriaIngredienteEmpresa->getRecordsAssocair($this->empresaId, $cod_categoria_empresa);
@@ -308,7 +307,7 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
             {
                 $checked = '';
             }
-            $resp.="<td> <input type='checkbox' name='cod_ingrediente[]' value='$v[cod_ingrediente]' $checked> $v[nome]   </td>";
+            $resp.="<td> <input type='checkbox' name='cod_ingrediente[]' value='".$v['cod_ingrediente']."' $checked>". $v['nome']."  </td>";
             if ($i >= 5)
             {
                 $resp.='</tr><tr>';
