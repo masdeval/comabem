@@ -21,7 +21,7 @@
 	<input type="submit" value="Continuar Comprando" onsubmit="javascript:document.form1.action='/portal/pedido/continuar-Comprando'">
 
 	<?php
-	//descobre quais são os ids das empresas que estao no array $empresas
+	//descobre quais são os ids das empresas que estao no array do carrinho em $this->carrinho
 	$cod_empresas = array_keys($this->carrinho);
 	$total = 0.0;
 	$total_adicionais = 0.0;
