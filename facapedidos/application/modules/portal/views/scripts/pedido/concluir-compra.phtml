@@ -17,7 +17,190 @@
 	<input type="submit" value="Continuar Comprando">
     </form>
 
-      <form action="/portal/pedido/pagamento" method="POST" id="form1" name="form1" onsubmit="return validateForm('form1')">
+  <div style="border: solid gray;  clear: both;">
+
+<p> Resumo da sua compra </p>
+
+  <?php
+	//descobre quais são os ids das empresas que estao no array do carrinho em $this->carrinho
+	$cod_empresas = array_keys($this->carrinho);
+	$total = 0.0;
+	$total_adicionais = 0.0;
+
+	foreach ($cod_empresas as $key_empresa)
+	{
+	?>
+
+    	<!-- Box para uma empresa -->
+    	<div style="border: solid gray; margin: 50px;">
+
+    	    <h5><?php echo $this->carrinho[$key_empresa]['nome_empresa'] ?> </h5>
+
+	    <?php
+	    //encontra os produtos escolhidos de uma empresa especifica
+	    //vai vir na primeira posicao a palavra 'nome_empresa' que deve ser descartada
+	    $cod_tamanho_produtos = array_keys($this->carrinho[$key_empresa]);
+	    unset($cod_tamanho_produtos[0]); //retira a chave 'nome_empresa'
+
+	    foreach ($cod_tamanho_produtos as $key_tamanho_produto)
+	    {
+		$total_parcial = 0.0;
+		$total_parcial_adicionais = 0.0;
+
+		$qt = (int) $this->carrinho[$key_empresa][$key_tamanho_produto]['quantidade'];
+
+	    ?>
+    	    <ul>
+    		<li> <?php echo $qt. " " .$this->carrinho[$key_empresa][$key_tamanho_produto]['nome_produto']." " ?>
+    		    
+        		tamanho <?php echo $this->carrinho[$key_empresa][$key_tamanho_produto]['tamanho'].". " ?>
+		    
+    		Preço unitário: <?php $valor = (float) $this->carrinho[$key_empresa][$key_tamanho_produto]['preco'];
+		    echo $valor; ?>
+		    <?php $total_parcial += $valor; ?>
+		    <?php
+		    //se sim, entao existe categoria permitida como adicional
+		    if (isset($this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['adicionais']))
+		    //if (isset($this->configuracoes[$key_empresa][$key_tamanho_produto][0]))
+		    {
+			//cria as opcoes para incluir os adicionais
+			//itera no numero de itens do produto escolhido
+			//para cada item deve ser possivel configurar os adicionais se existirem
+			for ($i = 1; $i <= $qt; $i++)
+			{
+			     
+			   // echo "<table class='tableFrm' cellspacing='8' cellpadding='0' border='0'>";
+			   // echo "<tr>";
+			    $j = 0;
+			    $k = 0;
+
+			    //itera nas categorias permitidas
+			    $flag = true;
+			    while (isset($this->configuracoes[$key_empresa][$key_tamanho_produto][$j]))
+			    {
+				$categoria = $this->configuracoes[$key_empresa][$key_tamanho_produto][$j];
+
+				$ingredientes = $categoria['ingredientes'];
+
+				foreach ($ingredientes as $cod_ingrediente => $valor)
+				{
+			    	    //pode ser que o usuario ja configurou alguma coisa e deve-se apresentar aqui
+				    //primeiro verifica se no array de configuracao existe algo sobre adicionais
+				    
+				    if (isset($this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['adicionais'][$i]))
+				    {
+					//se existe, deve-se verificar se o ingrediente que se quer imprimir ja foi selecionado antes
+					//para isso tem-se que iterar em todos os codigos de ingredientes relacionados com essa empresa e esse produto
+					foreach ((array) $this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['adicionais'][$i] as $cod_ingrediente_ja_escolhido)
+					{
+					    //se achou algum, marca como checado
+					    if ($cod_ingrediente == $cod_ingrediente_ja_escolhido)
+					    {
+						$total_parcial_adicionais += $valor['preco_adicional'];
+						if($flag)
+						{
+						    echo "<br><br> Adicionais escolhidos: ". $valor['nome_ingrediente'] . " (R$ " . $valor['preco_adicional'] . ") ";
+						    $flag = false;
+						}
+						else
+						    echo $valor['nome_ingrediente'] . " (R$ " . $valor['preco_adicional'] . ") ";
+
+						//echo '<td>' . $valor['nome_ingrediente'] . " (R$ " . $valor['preco_adicional'] . ") </td>";
+						break;
+					    }
+					}
+				    }
+
+				    if ($k >= 6)
+				    {
+					//echo '</tr><tr>';
+					$k = 0;
+				    }
+				    $k++;
+				}
+				$j++;
+			    }
+	
+			    //echo "</tr>";
+			    //echo "</table>  ";
+			}
+		
+		    }
+		    ?>
+		    <?php
+
+		    //se sim, entao existe produto é uma pizza e pode ser escolhido varios sabores
+		    if (strcasecmp($this->configuracoes[$key_empresa][$key_tamanho_produto]['tipo_produto'], 'pizza') == 0 && $this->configuracoes[$key_empresa][$key_tamanho_produto]['numero_sabores_pizza'] > 1)
+		    {
+			//cria as opcoes para incluir os adicionais
+			//itera no numero de itens do produto escolhido
+			//para cada item deve ser possivel configurar os adicionais se existirem
+			for ($i = 1; $i <= $qt; $i++)
+			{
+			    $k = 0;
+			    $flag = true;
+			    $sabores_pizza = $this->configuracoes[$key_empresa][$key_tamanho_produto]['sabores_pizza'];
+
+			    foreach ($sabores_pizza as $pizza)
+			    {
+
+				if (isset($this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['sabores_pizza'][$i]))
+				{
+				    foreach ((array) $this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['sabores_pizza'][$i] as $cod_pizza_ja_escolhida)
+				    {
+					//se achou algum, marca como checado
+					if ($pizza['cod_produto'] == $cod_pizza_ja_escolhida)
+					{
+					    if($flag)
+					    {
+						echo '<br><br> Sabores adicionais da pizza: ' . $pizza['nome'] . " ";
+						$flag = false;
+					    }
+					    else
+						echo $pizza['nome'] . " ";
+
+					    break;
+					    
+					}
+				    }
+				}
+				if ($k >= 6)
+				{
+				    $k = 0;
+				}
+				$k++;
+			    }
+			}
+		    }
+
+		    ?>
+
+		    <br><br>
+		Total: <?php ($total_parcial *= $qt); echo ($total_parcial + $total_parcial_adicionais) ?>
+
+		    <input type="hidden" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][total_parcial]" value="<?php echo $total_parcial ?>">
+		    <input type="hidden" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][total_parcial_adicionais]" value="<?php echo $total_parcial_adicionais ?>">
+
+		</li>
+
+	    </ul>
+
+
+<?php
+		    $total += $total_parcial;
+		    $total_adicionais += $total_parcial_adicionais;
+		}//fecha foreach($cod_tamanho_produtos as $key_tamanho_produto)
+
+		echo "</div>";
+	    }//fecha foreach ($cod_empresas as $key_empresa)
+	    echo "Total da compra: " . $total . " + <span id='spanTotalAdicionais'>" . $total_adicionais . "</span> = <span id='spanTotalCompra'>" . ($total + $total_adicionais) . "</span>";
+?>
+
+</div>
+
+
+
+  <form action="/portal/pedido/pagamento" method="POST" id="form1" name="form1" onsubmit="return validateForm('form1')">
 
   <div style="border: solid gray; margin-right: 50%; clear: both;">
 

@@ -18,7 +18,7 @@
     <form action="/portal/pedido/concluir-Compra" method="POST" name="form1" id="form1" onsubmit="return validateForm('form1')" >
 
 	<input type="submit" value="Concluir Compra">
-	<input type="submit" value="Continuar Comprando" onsubmit="javascript:document.form1.action='/portal/pedido/continuar-Comprando'">
+	<input type="button" value="Continuar Comprando" onclick="javascript:document.getElementById('form1').action='/portal/pedido/continuar-Comprando',document.getElementById('form1').submit()">
 
 	<?php
 	//descobre quais são os ids das empresas que estao no array do carrinho em $this->carrinho
@@ -77,7 +77,7 @@
 		    <br><br>
 
 		    <?php
-//se sim, entao existe categoria permitida como adicional
+		    //se sim, entao existe categoria permitida como adicional
 		    if (isset($this->configuracoes[$key_empresa][$key_tamanho_produto][0]))
 		    {
 			echo "<input type='button' id='botao_adicionais_" . $key_empresa . "_" . $key_tamanho_produto . "' value='Apresentar Adicionais' onclick='panelAdicionais(" . $key_empresa . "," . $key_tamanho_produto . ")'/>";
