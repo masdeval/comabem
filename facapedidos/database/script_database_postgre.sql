@@ -122,7 +122,7 @@ CREATE INDEX xpkingrediente
 CREATE SEQUENCE public.funcionario_cod_funcionario_seq;
 
 CREATE TABLE public.funcionario (
-                cod_funcionario INTEGER NOT NULL DEFAULT nextval('public.funcionario_cod_funcionario_seq'),
+                cod_funcionario BIGINT NOT NULL DEFAULT nextval('public.funcionario_cod_funcionario_seq'),
                 nome VARCHAR(50) NOT NULL,
                 cpf CHAR(11) NOT NULL,
                 data_nascimento DATE,
@@ -151,14 +151,14 @@ CREATE UNIQUE INDEX funcionario_idx
  ( cpf );
 
 CREATE TABLE public.privilege (
-                cod_funcionario INTEGER NOT NULL,
+                cod_funcionario BIGINT NOT NULL,
                 cod_role INTEGER NOT NULL,
                 CONSTRAINT privilege_pk PRIMARY KEY (cod_funcionario, cod_role)
 );
 
 
 CREATE TABLE public.funcionario_entregador (
-                cod_funcionario INTEGER NOT NULL,
+                cod_funcionario BIGINT NOT NULL,
                 modelo_moto VARCHAR(30),
                 consumo DOUBLE PRECISION,
                 total_km DOUBLE PRECISION,
@@ -177,7 +177,7 @@ CREATE INDEX ifk_rel_32
 
 CREATE TABLE public.entrega (
                 cod_entrega INTEGER NOT NULL,
-                cod_funcionario INTEGER NOT NULL,
+                cod_funcionario BIGINT NOT NULL,
                 km_total DOUBLE PRECISION,
                 CONSTRAINT entrega_pkey PRIMARY KEY (cod_entrega)
 );
@@ -239,7 +239,7 @@ CREATE UNIQUE INDEX empresa_idx1
 CREATE SEQUENCE public.produto_cod_produto_seq;
 
 CREATE TABLE public.produto (
-                cod_produto INTEGER NOT NULL DEFAULT nextval('public.produto_cod_produto_seq'),
+                cod_produto BIGINT NOT NULL DEFAULT nextval('public.produto_cod_produto_seq'),
                 nome VARCHAR(50) NOT NULL,
                 descricao VARCHAR,
                 tempo_preparo_minutos SMALLINT,
@@ -263,12 +263,12 @@ CREATE INDEX xpkproduto
 CREATE SEQUENCE public.recado_cliente_cod_recado_cliente_seq;
 
 CREATE TABLE public.recado_cliente (
-                cod_recado_cliente INTEGER NOT NULL DEFAULT nextval('public.recado_cliente_cod_recado_cliente_seq'),
+                cod_recado_cliente BIGINT NOT NULL DEFAULT nextval('public.recado_cliente_cod_recado_cliente_seq'),
                 data DATE,
                 texto VARCHAR,
                 hora TIME,
                 cod_empresa INTEGER NOT NULL,
-                cod_produto INTEGER NOT NULL,
+                cod_produto BIGINT NOT NULL,
                 CONSTRAINT recado_cliente_pk PRIMARY KEY (cod_recado_cliente)
 );
 
@@ -278,8 +278,8 @@ ALTER SEQUENCE public.recado_cliente_cod_recado_cliente_seq OWNED BY public.reca
 CREATE SEQUENCE public.tamanho_produto_cod_tamanho_produto_seq;
 
 CREATE TABLE public.tamanho_produto (
-                cod_tamanho_produto INTEGER NOT NULL DEFAULT nextval('public.tamanho_produto_cod_tamanho_produto_seq'),
-                cod_produto INTEGER NOT NULL,
+                cod_tamanho_produto BIGINT NOT NULL DEFAULT nextval('public.tamanho_produto_cod_tamanho_produto_seq'),
+                cod_produto BIGINT NOT NULL,
                 descricao VARCHAR(20) NOT NULL,
                 preco NUMERIC(14,2) NOT NULL,
                 numero_sabores_pizza SMALLINT,
@@ -300,7 +300,7 @@ CREATE INDEX tamanho_produto_fkindex1
 
 CREATE TABLE public.produto_venda_coletiva (
                 cod_venda_coletiva INTEGER NOT NULL,
-                cod_tamanho_produto INTEGER NOT NULL,
+                cod_tamanho_produto BIGINT NOT NULL,
                 preco_promocional NUMERIC(14,2) NOT NULL,
                 CONSTRAINT produto_venda_coletiva_pk PRIMARY KEY (cod_venda_coletiva, cod_tamanho_produto)
 );
@@ -309,14 +309,14 @@ CREATE TABLE public.produto_venda_coletiva (
 CREATE SEQUENCE public.promocao_cod_promocao_seq;
 
 CREATE TABLE public.promocao (
-                cod_promocao INTEGER NOT NULL DEFAULT nextval('public.promocao_cod_promocao_seq'),
+                cod_promocao BIGINT NOT NULL DEFAULT nextval('public.promocao_cod_promocao_seq'),
                 cod_produto INTEGER NOT NULL,
                 data_inicio DATE NOT NULL,
                 data_fim DATE NOT NULL,
                 preco_promocional NUMERIC(14,2) NOT NULL,
                 anuncio TEXT,
                 removed SMALLINT DEFAULT 0 NOT NULL,
-                cod_tamanho_produto INTEGER NOT NULL,
+                cod_tamanho_produto BIGINT NOT NULL,
                 CONSTRAINT promocao_pkey PRIMARY KEY (cod_promocao)
 );
 
@@ -335,7 +335,7 @@ CREATE SEQUENCE public.foto_produto_cod_foto_seq;
 
 CREATE TABLE public.foto_produto (
                 cod_foto INTEGER NOT NULL DEFAULT nextval('public.foto_produto_cod_foto_seq'),
-                cod_produto INTEGER NOT NULL,
+                cod_produto BIGINT NOT NULL,
                 foto BYTEA,
                 CONSTRAINT foto_produto_pkey PRIMARY KEY (cod_foto)
 );
@@ -423,7 +423,7 @@ CREATE INDEX ifk_rel_31
  ( cod_empresa );
 
 CREATE TABLE public.funcionario_has_empresa (
-                cod_funcionario INTEGER NOT NULL,
+                cod_funcionario BIGINT NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 responsavel CHAR NOT NULL,
                 CONSTRAINT funcionario_has_empresa_pkey PRIMARY KEY (cod_funcionario, cod_empresa)
@@ -485,7 +485,7 @@ CREATE TABLE public.participantes_venda_coletiva (
 CREATE SEQUENCE public.pedido_cod_pedido_seq;
 
 CREATE TABLE public.pedido (
-                cod_pedido INTEGER NOT NULL DEFAULT nextval('public.pedido_cod_pedido_seq'),
+                cod_pedido BIGINT NOT NULL DEFAULT nextval('public.pedido_cod_pedido_seq'),
                 cod_cliente INTEGER,
                 data TIMESTAMP NOT NULL,
                 valor_total NUMERIC(14,2),
@@ -520,7 +520,7 @@ CREATE INDEX xpkpedido
  ( cod_pedido );
 
 CREATE TABLE public.pedido_empresa (
-                cod_pedido INTEGER NOT NULL,
+                cod_pedido BIGINT NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 entregar BOOLEAN DEFAULT true NOT NULL,
                 observacao VARCHAR,
@@ -532,8 +532,8 @@ CREATE TABLE public.pedido_empresa (
 
 
 CREATE TABLE public.itens_pedido (
-                cod_tamanho_produto INTEGER NOT NULL,
-                cod_pedido INTEGER NOT NULL,
+                cod_tamanho_produto BIGINT NOT NULL,
+                cod_pedido BIGINT NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 quantidade SMALLINT,
                 quilos DOUBLE PRECISION,
@@ -542,8 +542,8 @@ CREATE TABLE public.itens_pedido (
 
 
 CREATE TABLE public.pedido_personalizado (
-                cod_tamanho_produto INTEGER NOT NULL,
-                cod_pedido INTEGER NOT NULL,
+                cod_tamanho_produto BIGINT NOT NULL,
+                cod_pedido BIGINT NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 cod_ingrediente INTEGER NOT NULL,
                 indice INTEGER NOT NULL,
@@ -552,9 +552,9 @@ CREATE TABLE public.pedido_personalizado (
 
 
 CREATE TABLE public.sabores_pizza (
-                cod_outro_sabor_pizza INTEGER NOT NULL,
-                cod_tamanho_produto INTEGER NOT NULL,
-                cod_pedido INTEGER NOT NULL,
+                cod_outro_sabor_pizza BIGINT NOT NULL,
+                cod_tamanho_produto BIGINT NOT NULL,
+                cod_pedido BIGINT NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 indice INTEGER NOT NULL,
                 CONSTRAINT sabores_pizza_pkey PRIMARY KEY (cod_outro_sabor_pizza, cod_tamanho_produto, cod_pedido, cod_empresa, indice)
@@ -568,7 +568,7 @@ CREATE INDEX sabores_pizza_fkindex2
 CREATE SEQUENCE public.categoria_empresa_cod_categoria_empresa_seq;
 
 CREATE TABLE public.categoria_empresa (
-                cod_categoria_empresa INTEGER NOT NULL DEFAULT nextval('public.categoria_empresa_cod_categoria_empresa_seq'),
+                cod_categoria_empresa BIGINT NOT NULL DEFAULT nextval('public.categoria_empresa_cod_categoria_empresa_seq'),
                 nome VARCHAR(40) NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 CONSTRAINT categoria_ingrediente_pkey PRIMARY KEY (cod_categoria_empresa)
@@ -578,8 +578,8 @@ CREATE TABLE public.categoria_empresa (
 ALTER SEQUENCE public.categoria_empresa_cod_categoria_empresa_seq OWNED BY public.categoria_empresa.cod_categoria_empresa;
 
 CREATE TABLE public.categoria_permitida_como_adicional (
-                cod_produto INTEGER NOT NULL,
-                cod_categoria_empresa INTEGER NOT NULL,
+                cod_produto BIGINT NOT NULL,
+                cod_categoria_empresa BIGINT NOT NULL,
                 qtd_max_adicionais SMALLINT,
                 CONSTRAINT categoria_permitida_como_adicional_pkey PRIMARY KEY (cod_produto, cod_categoria_empresa)
 );
@@ -596,7 +596,7 @@ CREATE INDEX tipo_ingrediente_empresa_has_produto_fkindex2
 CREATE TABLE public.categoria_ingrediente_empresa (
                 cod_empresa INTEGER NOT NULL,
                 cod_ingrediente INTEGER NOT NULL,
-                cod_categoria_empresa INTEGER NOT NULL,
+                cod_categoria_empresa BIGINT NOT NULL,
                 CONSTRAINT categoria_ingrediente_empresa_pkey PRIMARY KEY (cod_empresa, cod_ingrediente, cod_categoria_empresa)
 );
 
