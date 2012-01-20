@@ -132,7 +132,7 @@ class DbTable_PedidoDAO extends Zend_Db_Table_Abstract
 				    'indice' => $indice,
 				);
 
-				$SaboresPizzaDB->add($data);
+				$saboresPizzaDB->add($data);
 			    }
 			}
 		    }

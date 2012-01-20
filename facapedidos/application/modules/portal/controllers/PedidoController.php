@@ -22,6 +22,59 @@ class Portal_PedidoController extends Zend_Controller_Action
 	    $this->view->nomeCliente = $this->session->cliente->getNomeExibicao();
     }
 
+    private function obtemDadosProduto($key_empresa,$key_tamanho,&$configuracao_produto)
+    {
+	//obtem as informacoes de tamanho
+	try
+	{
+	    $tamanho_produto = $this->TamanhoProdutoDB->getRecords($key_tamanho);
+	}
+	catch (Exception $e)
+	{
+	    continue;
+	}
+	//retorna um array indexado de 0
+	$configuracoes = $this->ProdutoDB->configuracaoProduto($tamanho_produto['cod_produto']);
+	$j = 0;
+	for ($i = 0; $i < count($configuracoes); $i++)
+	{
+
+	    $configuracao_produto[$key_empresa][$key_tamanho]['tipo_produto'] = $configuracoes[$i]['tipo_produto'];
+	    $configuracao_produto[$key_empresa][$key_tamanho]['numero_sabores_pizza'] = $tamanho_produto['numero_sabores_pizza'];
+	    if (strcasecmp($configuracao_produto[$key_empresa][$key_tamanho]['tipo_produto'], "pizza") == 0 && ((int) $configuracao_produto[$key_empresa][$key_tamanho]['numero_sabores_pizza']) > 0)
+		$configuracao_produto[$key_empresa][$key_tamanho]['sabores_pizza'] = $this->ProdutoDB->getSaboresPizza($key_empresa);
+	    $configuracao_produto[$key_empresa][$key_tamanho]['tempo_preparo_minutos'] = $configuracoes[$i]['tempo_preparo_minutos'];
+	    $configuracao_produto[$key_empresa][$key_tamanho]['cobrado_por_quilo'] = $configuracoes[$i]['cobrado_por_quilo'];
+	    $configuracao_produto[$key_empresa][$key_tamanho]['descricao'] = $configuracoes[$i]['descricao'];
+	    $configuracao_produto[$key_empresa][$key_tamanho]['max_adicionais'] = $configuracoes[$i]['numero_max_adicionais'];
+
+	    $nome_categoria = $configuracoes[$i]['categoria_adicional'];
+	    $qtd_max_adicionais = $configuracoes[$i]['qtd_max_adicionais'];
+
+	    $ingredientes = array();
+	    //itera em todos os ingredientes de uma categoria se existir
+	    if (!empty($nome_categoria))
+	    {
+		while ($nome_categoria == $configuracoes[$i]['categoria_adicional'])
+		{
+		    $ingredientes[$configuracoes[$i]['cod_ingrediente']]['nome_ingrediente'] = $configuracoes[$i]['nome_ingrediente'];
+		    $ingredientes[$configuracoes[$i]['cod_ingrediente']]['preco_adicional'] = $configuracoes[$i]['preco_quando_adicional'];
+		    $i++;
+		}
+		$i--;
+
+		$configuracao_produto[$key_empresa][$key_tamanho][$j] = array(
+		    "nome_categoria" => $nome_categoria,
+		    "qtd_max_adicionais" => $qtd_max_adicionais,
+		    "ingredientes" => $ingredientes,
+		);
+		$j++;
+	    }
+	}
+
+	return $configuracao_produto;
+    }
+
     public function fecharPedidoAction()
     {
 	$this->_helper->layout->disableLayout();
@@ -55,7 +108,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 
 	foreach ($cod_empresas as $key_empresa)
 	{
-	    //obtem todos os produtos dessa empresa
+	    //obtem todos os produtos que o usuario escolheu dessa empresa
 	    $cod_tamanho_produtos = array_keys($empresas[$key_empresa]);
 
 	    foreach ($cod_tamanho_produtos as $key_tamanho)
@@ -63,53 +116,9 @@ class Portal_PedidoController extends Zend_Controller_Action
 		if (!is_numeric($key_tamanho))
 		    continue;
 
-		//obtem as informacoes de tamanho
-		try
-		{
-		    $tamanho_produto = $this->TamanhoProdutoDB->getRecords($key_tamanho);
-		}
-		catch (Exception $e)
-		{
-		    continue;
-		}
-		//retorna um array indexado de 0
-		$configuracoes = $this->ProdutoDB->configuracaoProduto($tamanho_produto['cod_produto']);
-		$j = 0;
-		for ($i = 0; $i < count($configuracoes); $i++)
-		{
+		//concatena os arrays
+		$this->obtemDadosProduto($key_empresa,$key_tamanho,$configuracao_produtos);
 
-		    $configuracao_produtos[$key_empresa][$key_tamanho]['tipo_produto'] = $configuracoes[$i]['tipo_produto'];
-		    $configuracao_produtos[$key_empresa][$key_tamanho]['numero_sabores_pizza'] = $tamanho_produto['numero_sabores_pizza'];
-		    if (strcasecmp($configuracao_produtos[$key_empresa][$key_tamanho]['tipo_produto'], "pizza") == 0 && ((int) $configuracao_produtos[$key_empresa][$key_tamanho]['numero_sabores_pizza']) > 0)
-			$configuracao_produtos[$key_empresa][$key_tamanho]['sabores_pizza'] = $this->ProdutoDB->getSaboresPizza($key_empresa);
-		    $configuracao_produtos[$key_empresa][$key_tamanho]['tempo_preparo_minutos'] = $configuracoes[$i]['tempo_preparo_minutos'];
-		    $configuracao_produtos[$key_empresa][$key_tamanho]['cobrado_por_quilo'] = $configuracoes[$i]['cobrado_por_quilo'];
-		    $configuracao_produtos[$key_empresa][$key_tamanho]['descricao'] = $configuracoes[$i]['descricao'];
-		    $configuracao_produtos[$key_empresa][$key_tamanho]['max_adicionais'] = $configuracoes[$i]['numero_max_adicionais'];
-
-		    $nome_categoria = $configuracoes[$i]['categoria_adicional'];
-		    $qtd_max_adicionais = $configuracoes[$i]['qtd_max_adicionais'];
-
-		    $ingredientes = array();
-		    //itera em todos os ingredientes de uma categoria se existir
-		    if (!empty($nome_categoria))
-		    {
-			while ($nome_categoria == $configuracoes[$i]['categoria_adicional'])
-			{
-			    $ingredientes[$configuracoes[$i]['cod_ingrediente']]['nome_ingrediente'] = $configuracoes[$i]['nome_ingrediente'];
-			    $ingredientes[$configuracoes[$i]['cod_ingrediente']]['preco_adicional'] = $configuracoes[$i]['preco_quando_adicional'];
-			    $i++;
-			}
-			$i--;
-
-			$configuracao_produtos[$key_empresa][$key_tamanho][$j] = array(
-			    "nome_categoria" => $nome_categoria,
-			    "qtd_max_adicionais" => $qtd_max_adicionais,
-			    "ingredientes" => $ingredientes,
-			);
-			$j++;
-		    }
-		}
 	    }
 	}
 
@@ -128,14 +137,19 @@ class Portal_PedidoController extends Zend_Controller_Action
 	$configuracoes = $this->getRequest()->getPost('configuracoes');
 	$this->session->configuracoesPedido = $configuracoes;
 	$carrinho = $this->session->carrinho->getCarrinho();
+	$configuracao_produtos = array(); //controla os adicionais que um produto poderá ter
+
 	//a quantidade pode ter sido alterada e isso deve se refletir no carrinho
-	//isso faz com que seja mantida a ultima escolhe de quantidades na tela do usuario
+	//isso faz com que seja mantida a ultima escolha de quantidades na tela do usuario
 	foreach ($configuracoes as $key_empresa => $tamanhos)
 	{
 	    foreach ($tamanhos as $key_tamanho => $detalhes)
 	    {
 		if (!is_numeric($key_tamanho))
 		    continue;
+
+		//Esse codigo eh para obter as informacoes dos produtos escolhidos pelo usuario para poder imprimir um resumo de seu pedido na tela		
+		$this->obtemDadosProduto($key_empresa,$key_tamanho,$configuracao_produtos);
 
 		//verifica se realmente a quantidade foi alterada
 		//nao deve zerar as configuracoes quando o usuario nem mexeu na quantidade
@@ -153,14 +167,17 @@ class Portal_PedidoController extends Zend_Controller_Action
 	$this->_helper->viewRenderer("concluir_compra");
 	$this->view->emailCliente = $this->session->cliente->getEmail();
 	$this->view->telefoneCliente = $this->session->cliente->getTelefone();
-//TODO - Apresentar como endereco de entrega o endereco que o usuario utilizou para se localizar no site logo no início
-//TODO - Buscar enderecos de entrega que o cliente ja utilizou antes para apresentar opcao na tela??
+	$this->view->carrinho = $this->session->carrinho->getCarrinho();
+	$this->view->configuracoesJaFeitas = $this->session->configuracoesPedido;
+	$this->view->configuracoes = $configuracao_produtos;
+
     }
 
     /*
      * Entra aqui quando o usuário já escolheu a forma de pagamento. Será cadastrodo seu pedido na base de dados e
      * encaminhado para a tela do player de pagamento escolhido.
      */
+
     public function pagamentoAction()
     {
 	$this->_helper->viewRenderer("concluir_pagamento");
@@ -170,6 +187,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 	{
 	    $this->view->headline = "Por algum motivo seu pedido não foi encontrado. Provavelmente transcorreu muito tempo desde o seu último acesso. Por favor refaça seu pedido.";
 	    $this->_helper->viewRenderer("concluir_compra");
+	    return;
 	}
 
 	$this->view->emailCliente = $this->session->cliente->getEmail();
@@ -179,6 +197,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 	{
 	    $this->view->headline = "O endereço deve ser preenchido.";
 	    $this->_helper->viewRenderer("concluir_compra");
+	    return;
 	}
 
 	//cadastra pedido
@@ -217,6 +236,7 @@ class Portal_PedidoController extends Zend_Controller_Action
     /*
      * Recebe o retorno automatico de uma transacao do PAgSeguro
      */
+
     public function notificacaoPagSeguroAction()
     {
 	$this->_helper->viewRenderer("concluir_pagamento");
@@ -233,7 +253,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 	//if ($type === 'transaction')
 	{
 	    $gerenciadorPagamento = new PagSeguroAdapter();
-	    $transacao = $gerenciadorPagamento->getStatusPagamento($code);//retorna um objeto TransacaoPagamento
+	    $transacao = $gerenciadorPagamento->getStatusPagamento($code); //retorna um objeto TransacaoPagamento
 	    //Atualiza na tabela Pedido o status do pagamento de acordo com os valores possiveis em StatusPagamentoEnum
 	    $this->PedidoDB->alterarStatusPedido($transacao->getCodPedido(), $transacao->getStatus());
 	}
@@ -293,11 +313,10 @@ class Portal_PedidoController extends Zend_Controller_Action
     /*
      * Recebe o retorno automatico logo apos uma compra ter sido aprovada em algum player de pagamento
      */
+
     public function retornoAutomaticoIntegradorAction()
     {
 	$this->_helper->viewRenderer("concluir_pagamento");
-
-
     }
 
 }
