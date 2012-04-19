@@ -19,6 +19,8 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 
     public function addEmpresa($formData, $logoFileName)
     {
+
+	date_default_timezone_set($formData['timezone']);
 	$now = date("Y-m-d H:i:s");
 	$data = array('razao_social' => $formData['razao_social'],
 	    'cnpj' => $formData['cnpj'],
@@ -35,7 +37,8 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 	    'url' => $formData['url'],
 	    'desativada' => (int) $formData['desativada'],
 	    'cod_cidade' => (int) $formData['cod_cidade'],
-	    'data_cadastro' => $now,);
+	    'data_cadastro' => $now,
+	    'timezone' => $formData['timezone']);
 	$id = $this->insert($data);
 
 	$logoFileName = bin2hex($logoFileName);
@@ -48,11 +51,6 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 
     public function editEmpresa($formData, $id, $logoFileName)
     {
-
-	/*TODO - Aqui deve entrar a timezone de onde o cliente se encontra*/
-	date_default_timezone_set('America/Campo_Grande');
-
-	$now = date("Y-m-d H:i:s");
 	$data = array('razao_social' => $formData['razao_social'],
 	    'cnpj' => $formData['cnpj'],
 	    'rua' => $formData['rua'],
@@ -67,7 +65,8 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 	    'email' => $formData['email'],
 	    'url' => $formData['url'],
 	    'desativada' => (int) $formData['desativada'],
-	    'cod_cidade' => (int) $formData['cod_cidade'],);
+	    'cod_cidade' => (int) $formData['cod_cidade'],
+	    'timezone'=> $formData['timezone']);
 
 
 	if ($logoFileName == "remover")
@@ -174,6 +173,15 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 	    return false;
 	}
     }
+
+     public function getTimezone($id)
+    {
+	$query = $this->_db->query("SELECT timezone FROM empresa where cod_empresa='$id' and removed <> 1");
+	$result = $query->fetchAll();
+	$result = $result[0]['timezone'];
+	return $result;
+    }
+
 
     /*
      * Retorna se um estabelecimento esta aberto ou fechado num determinado dia e hora
