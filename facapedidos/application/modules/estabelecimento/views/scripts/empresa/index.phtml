@@ -112,13 +112,30 @@
                                 <input type="text" class="input-medium"  name="telefone2" maxlength="20" value="<?php echo $this->formData['telefone2'] ?>" style="width: 200px;"></td>
                         </tr>
                         <tr>
-                            <td colspan="3"> Cidade *<br>
+                            <td> Cidade *
 <?php
                                 $attribs = array("class" => 'input-medium RQR required', "title" => 'Por favor, indique Cidade', 'style' => 'width:200px');
                                 // echo form_dropdown('cod_cidade', $cidadeOption, $formData['cod_cidade'],$extra);
                                 echo $this->formSelect('cod_cidade', $this->formData['cod_cidade'], $attribs, $this->cidadeOption);
 ?>
                                 <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+
+			  <td> Fuso Horário
+			    <select name="timezone" id="timezone" class="input-medium RQR required" title="Por favor, indique o fuso horário" style="width:200px">
+				<option value="America/Manaus" label="America/Manaus" <?php echo ($this->formData['timezone'] == 'America/Manaus') ? "selected" : ""  ?>  >Manaus</option>
+				<option value="America/Sao_Paulo" label="America/Sao_Paulo" <?php echo ($this->formData['timezone'] == 'America/Sao_Paulo') ? "selected" : ""  ?> >Sao_Paulo</option>
+				<option value="America/Recife" label="America/Recife" <?php echo ($this->formData['timezone'] == 'America/Recife') ? "selected" : ""  ?> >Recife</option>
+				<option value="America/Bahia" label="America/Bahia" <?php echo ($this->formData['timezone'] == 'America/Bahia') ? "selected" : ""  ?> >Bahia</option>
+				<option value="America/Fortaleza" label="America/Fortaleza" <?php echo ($this->formData['timezone'] == 'America/Fortaleza') ? "selected" : ""  ?>  >Fortaleza</option>
+				<option value="America/Porto_Velho" label="America/Porto_Velho" <?php echo ($this->formData['timezone'] == 'America/Porto_Velho') ? "selected" : ""  ?>  >Porto_Velho</option>
+				<option value="America/Boa_Vista" label="America/Boa_Vista" <?php echo ($this->formData['timezone'] == 'America/Boa_Vista') ? "selected" : ""  ?>  >Boa_Vista</option>
+				<option value="America/Campo_Grande" label="America/Campo_Grande" <?php echo ($this->formData['timezone'] == 'America/Campo_Grande') ? "selected" : ""  ?>  >Campo_Grande</option>
+
+				</select>
+			       <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+
+			  </td>
+
                         </tr>
                     </table>
                 </fieldset>

@@ -63,9 +63,6 @@ class Portal_IndexController extends Zend_Controller_Action
 
 	//insere em resultado a situacao do estabelecimento informando se o mesmo
 	//esta aberto ou fechado
-	
-	$hora_atual = date('H') . ":" . date('i') . ":00";
-
 	$empresa_ja_apresentada = array();
 	$novo_resultado = array();
 	$j = 0;
@@ -77,6 +74,9 @@ class Portal_IndexController extends Zend_Controller_Action
 	    }
 	    else
 	    {
+
+		date_default_timezone_set($resultado[$i]['timezone']);//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
+		$hora_atual = date('H') . ":" . date('i') . ":00";
 		//quero apresentar empresas apenas uma vez
 		$empresa_ja_apresentada[$resultado[$i]['cod_empresa']] = $resultado[$i]['cod_empresa'];
 		$resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
@@ -109,6 +109,9 @@ class Portal_IndexController extends Zend_Controller_Action
     {
 	$cod_empresa = $this->_getParam('codEmpresa', '');
 	$cod_produto = $this->_getParam('codProduto', '');
+
+	date_default_timezone_set($this->EmpresaDB->getTimezone($cod_empresa));//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
+
 	$data = date('d') . "/" . date('m') . "/" . date('Y'); //ano com 4 digitos
 	$hora_atual = date('H') . ":00";
 	$status = $this->RecadoClienteDB->registraSolicitacaoLojaAberta($cod_empresa, $cod_produto, $data, $hora_atual);
