@@ -205,6 +205,7 @@ CREATE TABLE public.empresa (
                 telefone2 VARCHAR(20) NOT NULL,
                 bairro VARCHAR(30),
                 email VARCHAR(50),
+                timezone VARCHAR NOT NULL,
                 url VARCHAR(10) NOT NULL,
                 removed SMALLINT DEFAULT 0 NOT NULL,
                 desativada BOOLEAN DEFAULT false NOT NULL,
