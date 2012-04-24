@@ -169,6 +169,148 @@ SELECT pg_catalog.setval('tipo_produto_cod_tipo_produto_seq', 8, true);
 
 
 
+
+
+
+
+
+--
+-- TOC entry 1954 (class 0 OID 0)
+-- Dependencies: 1628
+-- Name: cliente_cod_cliente_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+ SELECT pg_catalog.setval('cliente_cod_cliente_seq', 22, true);
+
+
+--
+-- TOC entry 1955 (class 0 OID 0)
+-- Dependencies: 1631
+-- Name: pedido_cod_pedido_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+ SELECT pg_catalog.setval('pedido_cod_pedido_seq', 99, true);
+
+
+
+ALTER TABLE produto DISABLE TRIGGER ALL;
+
+INSERT INTO produto (cod_produto, nome, descricao, tempo_preparo_minutos, valor_calorico, numero_max_adicionais, cobrado_por_quilo, disponivel, removed, cod_empresa, cod_tipo_produto) VALUES (5, 'Marguerita', 'Pizza com queijo fresco e selecionado, manjericão, azeite de oliva, tomates e orégano', 23, 234, 0, NULL, true, 0, 37, 8);
+INSERT INTO produto (cod_produto, nome, descricao, tempo_preparo_minutos, valor_calorico, numero_max_adicionais, cobrado_por_quilo, disponivel, removed, cod_empresa, cod_tipo_produto) VALUES (6, 'Lombo ao Creme', 'Pizza de lombo ao creme', 18, 345, 0, NULL, true, 0, 37, 8);
+INSERT INTO produto (cod_produto, nome, descricao, tempo_preparo_minutos, valor_calorico, numero_max_adicionais, cobrado_por_quilo, disponivel, removed, cod_empresa, cod_tipo_produto) VALUES (7, 'Calabreza', 'Pizza de borda recheada com calabreza', 16, 389, 0, NULL, NULL, 0, 37, 8);
+
+
+ALTER TABLE produto ENABLE TRIGGER ALL;
+
+--
+-- TOC entry 1933 (class 0 OID 26108)
+-- Dependencies: 1618 1932
+-- Data for Name: tamanho_produto; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+ALTER TABLE tamanho_produto DISABLE TRIGGER ALL;
+
+INSERT INTO tamanho_produto (cod_tamanho_produto, cod_produto, descricao, preco, numero_sabores_pizza, removed) VALUES (13, 5, 'Grande', 28.00, 2, 0);
+INSERT INTO tamanho_produto (cod_tamanho_produto, cod_produto, descricao, preco, numero_sabores_pizza, removed) VALUES (14, 5, 'Média', 25.00, 1, 0);
+INSERT INTO tamanho_produto (cod_tamanho_produto, cod_produto, descricao, preco, numero_sabores_pizza, removed) VALUES (15, 6, 'Grande', 29.00, 2, 0);
+INSERT INTO tamanho_produto (cod_tamanho_produto, cod_produto, descricao, preco, numero_sabores_pizza, removed) VALUES (16, 7, 'Grande', 34.00, 3, 0);
+
+
+ALTER TABLE tamanho_produto ENABLE TRIGGER ALL;
+
+
+
+--
+-- TOC entry 1947 (class 0 OID 26190)
+-- Dependencies: 1629
+-- Data for Name: cliente; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO cliente (cod_cliente, nome, data_nascimento, email, senha, telefone, celular, endereco, numero, bairro, complemento, cep, cpf, status_usuario, data_cadastro, observacao) VALUES (21, 'Aparicio de Souza', NULL, 'daccds@hotmail.com', 'apacoco', '(99) 9999-9999', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-01-10 17:53:29', NULL);
+INSERT INTO cliente (cod_cliente, nome, data_nascimento, email, senha, telefone, celular, endereco, numero, bairro, complemento, cep, cpf, status_usuario, data_cadastro, observacao) VALUES (22, 'Aparicio de Souza', NULL, 'csdsd@hotmail.com', 'apacv', '(99) 9999-9999', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2012-01-10 17:58:13', NULL);
+
+
+--
+-- TOC entry 1948 (class 0 OID 26208)
+-- Dependencies: 1632 1947
+-- Data for Name: pedido; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (90, 19, '2012-01-16 13:51:50', NULL, 'fsdfdsf', 444, '', NULL, NULL, 1, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (89, 19, '2012-01-16 12:11:23', NULL, 'gfdgfdg', 444, '', NULL, NULL, 1, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (91, 19, '2012-01-16 14:45:33', NULL, 'dsvdsvdsv', 3232, '', NULL, NULL, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (92, 19, '2012-01-16 16:10:48', NULL, 'gdfgfd', 3232, '', NULL, NULL, 1, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (93, 19, '2012-01-16 16:14:16', NULL, 'khkhu', 777, '', NULL, NULL, 1, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (97, 19, '2012-01-20 10:55:28', NULL, 'vfds', 333, '', NULL, NULL, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (98, 19, '2012-01-20 10:57:54', NULL, 'grgre', 444, '', NULL, NULL, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (99, 19, '2012-01-20 11:00:22', NULL, 'bdfgbdfg', 33, '', NULL, NULL, 3, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (96, 19, '2012-01-20 10:46:39', NULL, 'vfdvfdvfd', 444, '', NULL, NULL, 3, '(67) 8118-9719');
+
+
+--
+-- TOC entry 1949 (class 0 OID 26218)
+-- Dependencies: 1633 1948
+-- Data for Name: pedido_empresa; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO pedido_empresa (cod_pedido, cod_empresa, entregar, observacao, tempo_entrega_minutos, cod_entrega, "notificacaoSMS") VALUES (89, 37, true, '', NULL, NULL, false);
+INSERT INTO pedido_empresa (cod_pedido, cod_empresa, entregar, observacao, tempo_entrega_minutos, cod_entrega, "notificacaoSMS") VALUES (90, 37, true, '', NULL, NULL, false);
+INSERT INTO pedido_empresa (cod_pedido, cod_empresa, entregar, observacao, tempo_entrega_minutos, cod_entrega, "notificacaoSMS") VALUES (91, 37, true, '', NULL, NULL, false);
+INSERT INTO pedido_empresa (cod_pedido, cod_empresa, entregar, observacao, tempo_entrega_minutos, cod_entrega, "notificacaoSMS") VALUES (92, 37, true, '', NULL, NULL, false);
+INSERT INTO pedido_empresa (cod_pedido, cod_empresa, entregar, observacao, tempo_entrega_minutos, cod_entrega, "notificacaoSMS") VALUES (93, 37, true, '', NULL, NULL, false);
+INSERT INTO pedido_empresa (cod_pedido, cod_empresa, entregar, observacao, tempo_entrega_minutos, cod_entrega, "notificacaoSMS") VALUES (96, 37, true, '', NULL, NULL, false);
+INSERT INTO pedido_empresa (cod_pedido, cod_empresa, entregar, observacao, tempo_entrega_minutos, cod_entrega, "notificacaoSMS") VALUES (97, 37, true, '', NULL, NULL, false);
+INSERT INTO pedido_empresa (cod_pedido, cod_empresa, entregar, observacao, tempo_entrega_minutos, cod_entrega, "notificacaoSMS") VALUES (98, 37, true, '', NULL, NULL, false);
+INSERT INTO pedido_empresa (cod_pedido, cod_empresa, entregar, observacao, tempo_entrega_minutos, cod_entrega, "notificacaoSMS") VALUES (99, 37, true, '', NULL, NULL, false);
+
+
+--
+-- TOC entry 1950 (class 0 OID 26227)
+-- Dependencies: 1634 1949
+-- Data for Name: itens_pedido; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (9, 89, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (9, 90, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (10, 91, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (10, 92, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (8, 93, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (13, 96, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (8, 97, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (10, 97, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (9, 97, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (13, 97, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (15, 97, 37, 2, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (13, 98, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (15, 98, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (9, 98, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (8, 98, 37, 2, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (10, 98, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (8, 99, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (10, 99, 37, 1, NULL);
+INSERT INTO itens_pedido (cod_tamanho_produto, cod_pedido, cod_empresa, quantidade, quilos) VALUES (15, 99, 37, 1, NULL);
+
+
+--
+-- TOC entry 1951 (class 0 OID 26232)
+-- Dependencies: 1635 1950
+-- Data for Name: pedido_personalizado; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+INSERT INTO pedido_personalizado (cod_tamanho_produto, cod_pedido, cod_empresa, cod_ingrediente, indice) VALUES (8, 97, 37, 6, 1);
+INSERT INTO pedido_personalizado (cod_tamanho_produto, cod_pedido, cod_empresa, cod_ingrediente, indice) VALUES (8, 97, 37, 2, 1);
+
+
+-- Completed on 2012-04-24 14:31:35
+
+--
+-- PostgreSQL database dump complete
+--
+
+
+
+
+
 --
 -- TOC entry 2124 (class 0 OID 24606)
 -- Dependencies: 1594
