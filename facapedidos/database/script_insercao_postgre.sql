@@ -236,15 +236,15 @@ INSERT INTO cliente (cod_cliente, nome, data_nascimento, email, senha, telefone,
 -- Data for Name: pedido; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (90, 19, '2012-01-16 13:51:50', NULL, 'fsdfdsf', 444, '', NULL, NULL, 1, '(67) 8118-9719');
-INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (89, 19, '2012-01-16 12:11:23', NULL, 'gfdgfdg', 444, '', NULL, NULL, 1, '(67) 8118-9719');
-INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (91, 19, '2012-01-16 14:45:33', NULL, 'dsvdsvdsv', 3232, '', NULL, NULL, 0, '(67) 8118-9719');
-INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (92, 19, '2012-01-16 16:10:48', NULL, 'gdfgfd', 3232, '', NULL, NULL, 1, '(67) 8118-9719');
-INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (93, 19, '2012-01-16 16:14:16', NULL, 'khkhu', 777, '', NULL, NULL, 1, '(67) 8118-9719');
-INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (97, 19, '2012-01-20 10:55:28', NULL, 'vfds', 333, '', NULL, NULL, 0, '(67) 8118-9719');
-INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (98, 19, '2012-01-20 10:57:54', NULL, 'grgre', 444, '', NULL, NULL, 0, '(67) 8118-9719');
-INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (99, 19, '2012-01-20 11:00:22', NULL, 'bdfgbdfg', 33, '', NULL, NULL, 3, '(67) 8118-9719');
-INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (96, 19, '2012-01-20 10:46:39', NULL, 'vfdvfdvfd', 444, '', NULL, NULL, 3, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (90, 19, '2012-01-16 13:51:50', NULL, 'fsdfdsf', 444, '', NULL, 1, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (89, 19, '2012-01-16 12:11:23', NULL, 'gfdgfdg', 444, '', NULL, 1, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (91, 19, '2012-01-16 14:45:33', NULL, 'dsvdsvdsv', 3232, '', NULL, 0, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (92, 19, '2012-01-16 16:10:48', NULL, 'gdfgfd', 3232, '', NULL, 1, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (93, 19, '2012-01-16 16:14:16', NULL, 'khkhu', 777, '', NULL, 1, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (97, 19, '2012-01-20 10:55:28', NULL, 'vfds', 333, '', NULL, 0, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (98, 19, '2012-01-20 10:57:54', NULL, 'grgre', 444, '', NULL, 0, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (99, 19, '2012-01-20 11:00:22', NULL, 'bdfgbdfg', 33, '', NULL, 3, 0, '(67) 8118-9719');
+INSERT INTO pedido (cod_pedido, cod_cliente, data, valor_total, rua, numero, complemento, cep, status_pagamento, status_pedido, telefone) VALUES (96, 19, '2012-01-20 10:46:39', NULL, 'vfdvfdvfd', 444, '', NULL, 3, 0, '(67) 8118-9719');
 
 
 --
