@@ -48,6 +48,9 @@ class Portal_ClienteController extends Zend_Controller_Action
 	{
 	    unset($formData['senha_repetida']);
 	    unset($formData['aceite']);
+
+	     /*TODO Melhorar o timezone para obter valor de acordo com localizacao do usuario*/
+	    date_default_timezone_set("America/Sao_Paulo");
 	    $formData['data_cadastro'] = date("Y-m-d H:i:s");
 	    $id = $this->ClienteDB->add($formData);
 	    $this->_helper->viewRenderer('index');
