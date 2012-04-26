@@ -2367,7 +2367,7 @@
     <column id="COL863" populated="true" UUID="8cd07dc6-cfb9-43a9-9208-762e3a0fc57d" autoIncrement="false" defaultValue="" name="cod_entrega" nullable="1" physicalName="cod_entrega" precision="0" referenceCount="1" scale="0" sourceDataTypeName="int4" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL864" populated="true" UUID="bb4843e3-fa2d-4fcf-93b5-bb3e90684642" autoIncrement="false" autoIncrementSequenceName="pedido_empresa_notificacaoSMS_seq" defaultValue="true" name="notificacaoSMS" nullable="0" physicalName="notificacaoSMS" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
+    <column id="COL864" populated="true" UUID="bb4843e3-fa2d-4fcf-93b5-bb3e90684642" autoIncrement="false" autoIncrementSequenceName="pedido_empresa_notificacaosms_seq" defaultValue="true" name="notificacaosms" nullable="0" physicalName="notificacaosms" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="16" userDefinedTypeUUID="a26374aa-3026-4bb8-b564-eb2e186dfa5d" >
      <remarks></remarks>
     </column>
     </folder>
@@ -2529,7 +2529,7 @@
   <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  </compare-dm-settings>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="1.0" viewportX="48" viewportY="926" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="1.0" viewportX="0" viewportY="1035" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB462" x="1168" y="151" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB468" x="1200" y="265" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB482" x="1460" y="159" bgColor="0xf0f0f0" fgColor="0x000000" rounded="false" dashed="false"/>
