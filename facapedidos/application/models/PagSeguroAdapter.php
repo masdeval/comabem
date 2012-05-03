@@ -10,7 +10,7 @@
  *
  * @author masdeval
  */
-require_once('domain/PaymentRequest.class.php');
+require_once('domain/PagSeguroPaymentRequest.class.php');
 
 class PagSeguroAdapter extends GerenciadorPagamento
 {
@@ -19,7 +19,7 @@ class PagSeguroAdapter extends GerenciadorPagamento
 
     public function enviaPagamento(Pedido $pedido)
     {
-	$paymentRequest = new PaymentRequest();
+	$paymentRequest = new PagSeguroPaymentRequest();
 	$paymentRequest->setCurrency("BRL");
 	//relaciona o numero do pedido aa transacao de pagamento que sera criada no PagSeguro
 	$paymentRequest->setReference($pedido->getId());
@@ -49,7 +49,7 @@ class PagSeguroAdapter extends GerenciadorPagamento
 	/* Obtendo o objeto Transaction a partir do código de notificação */
 	try
 	{
-	    $transaction = NotificationService::checkTransaction(PagSeguroConfig::getAccountCredentials(),$codigo);
+	    $transaction = PagSeguroNotificationService::checkTransaction(PagSeguroConfig::getAccountCredentials(),$codigo);
 	}
 	catch(Exception $e)
 	{}
@@ -57,7 +57,7 @@ class PagSeguroAdapter extends GerenciadorPagamento
 	{
 	    try
 	    {
-		$transaction = TransactionSearchService::searchByCode(PagSeguroConfig::getAccountCredentials(),$codigo);
+		$transaction = PagSeguroTransactionSearchService::searchByCode(PagSeguroConfig::getAccountCredentials(),$codigo);
 	    }
 	    catch(Exception $e)
 	    {
