@@ -34,10 +34,10 @@
 
 	<h3>Crie sua conta</h3>
 	<br>
-	* Email: <input type="text" class="input-medium RQR required validEmail" title="Por favor, indique o email." name="cliente[email]" value="<?php echo $this->cliente['email'] ?>"  onblur="checkMailAjax(this.value);">
+	* Email: <input type="text" class="input-medium RQR required validEmail" title="Por favor, indique o email." name="cliente[email]" value="<?php //echo $this->cliente['email'] ?>"  onblur="checkMailAjax(this.value);">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' id="spanMail"></span></div>
 	<br>
-	* Nome completo: <input type="text"  class="input-medium RQR required" title="Por favor, indique seu nome." name="cliente[nome]" value="<?php echo $this->cliente['nome'] ?>">
+	* Nome completo: <input type="text"  class="input-medium RQR required" title="Por favor, indique seu nome." name="cliente[nome]" value="<?php //echo $this->cliente['nome'] ?>">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
 	* Senha: <input type="password" class="input-medium RQR required" title="Por favor, entre com uma senha." id="senha" name="cliente[senha]">
@@ -46,7 +46,7 @@
 	* Confirme senha: <input type="password" class="input-medium RQR required" tithe="Por favor, repita a senha." id="senha_repetida" name="cliente[senha_repetida]">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
-	* Telefone celular com DDD: <input type="text" maxlength="14" onkeypress="return formataTelefone(document.form1, 'cliente[telefone]', '(99) 9999-9999', event)" class="input-medium RQR required" title="Por favor, indique um telefone." name="cliente[telefone]" value="<?php $this->cliente['telefone'] ?>">
+	* Telefone celular com DDD: <input type="text" maxlength="14" onkeypress="return formataTelefone(document.form1, 'cliente[celular]', '(99) 9999-9999', event)" class="input-medium RQR required" title="Por favor, indique um telefone." name="cliente[celular]" value="<?php //echo $this->cliente['celular'] ?>">
 	<br><br>
 	<input type="checkbox"  id="aceite" name="cliente[aceite]" checked> Estou de acordo com os <a href="#">termos e condicões </a> do site.
 

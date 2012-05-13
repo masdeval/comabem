@@ -57,7 +57,7 @@ class Portal_ClienteController extends Zend_Controller_Action
 	    $this->view->headline = "Cadastro efetuado com sucesso.";
 
 	    //cria cliente na sessao
-	    $cliente = new Cliente($id, $formData['nome'], $formData['email'], $formData['telefone']);
+	    $cliente = new Cliente($id, $formData['nome'], $formData['email'], $formData['celular']);
 	    $this->session->cliente = $cliente;
 
 	    if ((boolean) $this->getRequest()->getPost('isFecharPedido'))
