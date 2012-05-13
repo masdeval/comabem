@@ -70,7 +70,7 @@ class DbTable_ClienteDAO extends Zend_Db_Table_Abstract
 	if(count($result) <= 0)//senha nao confere
 	    return 3;
 
-	return new Cliente($cliente['cod_cliente'], $cliente['nome'], $cliente['email'], $cliente['telefone']);
+	return new Cliente($cliente['cod_cliente'], $cliente['nome'], $cliente['email'], $cliente['celular']);
     }
 
 }

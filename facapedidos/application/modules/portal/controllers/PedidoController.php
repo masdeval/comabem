@@ -166,7 +166,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 
 	$this->_helper->viewRenderer("concluir_compra");
 	$this->view->emailCliente = $this->session->cliente->getEmail();
-	$this->view->telefoneCliente = $this->session->cliente->getTelefone();
+	$this->view->telefoneCliente = $this->session->cliente->getTelefoneCelular();
 	$this->view->carrinho = $this->session->carrinho->getCarrinho();
 	$this->view->configuracoesJaFeitas = $this->session->configuracoesPedido;
 	$this->view->configuracoes = $configuracao_produtos;
@@ -255,7 +255,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 	    $gerenciadorPagamento = new PagSeguroAdapter();
 	    $transacao = $gerenciadorPagamento->getStatusPagamento($code); //retorna um objeto TransacaoPagamento
 	    //Atualiza na tabela Pedido o status do pagamento de acordo com os valores possiveis em StatusPagamentoEnum
-	    $this->PedidoDB->alterarStatusPedido($transacao->getCodPedido(), $transacao->getStatus());
+	    $this->PedidoDB->alterarStatusPagamento($transacao->getCodPedido(), $transacao->getStatus());
 	}
     }
 

@@ -16,7 +16,7 @@ class Cliente {
     private $nomeExibicao;
     private $nomeCompleto;
     private $email;
-    private $telefone;
+    private $celular;
     private $ddd;
 
 
@@ -27,7 +27,7 @@ class Cliente {
 	$aux = explode(" ",$nome);
 	$this->nomeExibicao = $aux[0];
 	$this->email = $email;
-	$this->telefone = $telefone;	
+	$this->celular = $telefone;
     }
 
     public function getId()
@@ -45,19 +45,19 @@ class Cliente {
 	return $this->nomeCompleto;
     }
 
-    public function getTelefoneSemDDD()
+    public function getTelefoneCelularSemDDD()
     {
-	return substr($this->telefone,5);
+	return substr($this->celular,5);
     }
 
-    public function getTelefone()
+    public function getTelefoneCelular()
     {
-	return $this->telefone;
+	return $this->celular;
     }
 
     public function getDDD()
     {
-	return substr($this->telefone,1,2);
+	return substr($this->celular,1,2);
     }
 
     public function getEmail()
