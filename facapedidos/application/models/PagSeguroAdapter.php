@@ -26,7 +26,7 @@ class PagSeguroAdapter extends GerenciadorPagamento
 	//informando dados do comprador
 	$paymentRequest->setSenderName($pedido->getCliente()->getNomeCompleto());
 	$paymentRequest->setSenderEmail($pedido->getCliente()->getEmail());
-	$paymentRequest->setSenderPhone($pedido->getCliente()->getDDD(), str_replace("-", "", $pedido->getCliente()->getTelefoneSemDDD()));
+	$paymentRequest->setSenderPhone($pedido->getCliente()->getDDD(), str_replace("-", "", $pedido->getCliente()->getTelefoneCelularSemDDD()));
 	//setando os itens
 	$keys = array_keys($pedido->getItens());
 	$itens = $pedido->getItens();
