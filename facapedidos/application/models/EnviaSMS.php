@@ -12,6 +12,10 @@
 abstract class EnviaSMS {
     //put your code here
 
+    /*
+     * Envia um SMS. Retorna true se com sucesso ou false caso contrário.
+     *
+     */
     abstract function enviarSMS($fone, $msg);
 
 

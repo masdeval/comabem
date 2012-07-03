@@ -31,6 +31,7 @@ class EnviaSMSComtele extends EnviaSMS {
 
 	} catch (HttpException $ex) {
 	    echo $ex;
+	    return false;
 	}  
 
     }
