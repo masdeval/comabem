@@ -13,7 +13,7 @@ class EnviaSMSTorpedeiro extends EnviaSMS {
  
     protected $url_operadora = "http://services.torpedeiro.com/http/sendmsg";
     protected $username = "masdeval";
-    protected $password = "inglaterra2012";
+    protected $password = "";
 
   // "http://services.torpedeiro.com/http/sendmsg?
     //username=xxxxx&passwd=xxxxx&to=551188888888&content=Mensagem+teste"
@@ -29,6 +29,7 @@ class EnviaSMSTorpedeiro extends EnviaSMS {
 
 	} catch (HttpException $ex) {
 	    echo $ex;
+	    return false;
 	}
 
     }
