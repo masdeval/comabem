@@ -22,6 +22,7 @@ class AdminAcl extends Zend_Acl{
 		$this->add(new Zend_Acl_Resource("estabelecimento:ingredients"));
 	        $this->add(new Zend_Acl_Resource("estabelecimento:funcionario"));
 	        $this->add(new Zend_Acl_Resource("estabelecimento:produto"));
+	        $this->add(new Zend_Acl_Resource("estabelecimento:pedidos"));
            
                 //Privilegios de gerente
 		$this->allow("gerente","estabelecimento:empresa");
@@ -29,7 +30,7 @@ class AdminAcl extends Zend_Acl{
                 $this->allow("gerente","estabelecimento:funcionario");
                 $this->allow("gerente","estabelecimento:produto");
                 $this->allow("gerente","estabelecimento:index");
-
+		$this->allow("gerente","estabelecimento:pedidos");
 
                 /*Role Admin*/
 		$this->addRole(new Zend_Acl_Role("admin"),"gerente");

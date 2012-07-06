@@ -131,7 +131,6 @@ class Portal_PedidoController extends Zend_Controller_Action
     /*
      * Chega aqui quando o usuario escolhe a opcao "Concluir Compra" ou "Continuar Comprando" 
      */
-
     public function concluirCompraAction()
     {
 	$configuracoes = $this->getRequest()->getPost('configuracoes');
@@ -150,6 +149,10 @@ class Portal_PedidoController extends Zend_Controller_Action
 
 		//Esse codigo eh para obter as informacoes dos produtos escolhidos pelo usuario para poder imprimir um resumo de seu pedido na tela		
 		$this->obtemDadosProduto($key_empresa,$key_tamanho,$configuracao_produtos);
+
+		//como em $configuracao_produtos tem o tempo de preparo, aproveito para acrescentar isso em configuracaoesPedido pois
+		//sera necessario para ajudar no calculo do tempo de entrega e armazenar em PEDIDO_EMPRESA
+		$this->session->configuracoesPedido[$key_empresa][$key_tamanho]['tempo_preparo_minutos'] = $configuracao_produtos[$key_empresa][$key_tamanho]['tempo_preparo_minutos'];
 
 		//verifica se realmente a quantidade foi alterada
 		//nao deve zerar as configuracoes quando o usuario nem mexeu na quantidade
@@ -191,7 +194,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 	}
 
 	$this->view->emailCliente = $this->session->cliente->getEmail();
-	$this->view->tefeloneCliente = $this->session->cliente->getTelefone();
+	$this->view->tefeloneCliente = $this->session->cliente->getTelefoneCelular();
 
 	if (empty($endereco))
 	{

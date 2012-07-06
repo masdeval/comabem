@@ -417,9 +417,13 @@ function checkMailAjax(mail)
 	    r=jQuery.trim(r);
 
 	    if(r == 'Fail')
-		{
+	    {
 		    $("#spanMail").html("Esse e-mail já foi cadastrado. Favor escolher outro.");
-		}
+	    }
+	    else
+	    {
+		    $("#spanMail").html("");
+	    }
 	}
     });
 

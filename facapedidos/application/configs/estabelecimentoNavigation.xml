@@ -53,6 +53,17 @@
         <image></image>
      </ingredientes>
 
+  <pedidos>
+      <label>Pedidos</label>
+        <module>/estabelecimento</module>
+        <controller>/pedidos</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:pedidos</resource>
+        <image></image>
+     </pedidos>
+
+
   </nav>
 
 </config>
