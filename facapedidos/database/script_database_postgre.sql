@@ -495,7 +495,7 @@ CREATE TABLE public.pedido (
                 complemento VARCHAR(20),
                 cep VARCHAR(8),
                 status_pagamento SMALLINT,
-                status_pedido SMALLINT,
+                distancia NUMERIC(4,2) NOT NULL,
                 telefone VARCHAR(20) NOT NULL,
                 cod_cidade INTEGER,
                 CONSTRAINT pedido_pkey PRIMARY KEY (cod_pedido)
@@ -527,7 +527,8 @@ CREATE TABLE public.pedido_empresa (
                 observacao VARCHAR,
                 tempo_entrega_minutos SMALLINT,
                 cod_entrega INTEGER,
-                notificacaoSMS BOOLEAN DEFAULT true NOT NULL,
+                notificacaosms BOOLEAN DEFAULT true NOT NULL,
+                status_pedido SMALLINT NOT NULL,
                 CONSTRAINT pedido_empresa_pk PRIMARY KEY (cod_pedido, cod_empresa)
 );
 
