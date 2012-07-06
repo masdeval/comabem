@@ -30,6 +30,16 @@ $application = new Zend_Application(
     APPLICATION_PATH . '/configs/application.ini'
 );
 
+$smtp = new Zend_Mail_Transport_Smtp('smtp.gmail.com', array(
+    'auth' => 'login',
+    'username' => 'lanchefacil@lanchefacil.com',
+    'password' => 'lanchefacil',
+    'ssl' => 'ssl',
+    'port' => '465'
+));
+
+Zend_Mail::setDefaultTransport($smtp);
+
 
 $application->bootstrap()
             ->run();

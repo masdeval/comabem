@@ -1,17 +1,17 @@
 <?php
 
-abstract class StatusPagamentoEnum extends Enum
+abstract class StatusPedidoEnum extends Enum
 {
-
-   static $NAO_EFETUADO = 0;
-   static $EM_ANALISE;
-   static $CONCLUIDO;
-   static $RECUSADO;
+   static $ABERTO = 0;
+   static $REJEITADO;
+   static $EM_PREPARO;
+   static $PRONTO;
+   static $ENTREGANDO;
 
  
 }
 
-StatusPagamentoEnum::init();
+StatusPedidoEnum::init();
 
 /*
 final class StatusPagamentoEnum {
