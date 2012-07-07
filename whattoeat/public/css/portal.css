@@ -1,0 +1,57 @@
+/* 
+    Document   : portal
+    Created on : 07/12/2011, 11:40:17
+    Author     : masdeval
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+
+.botao_portal_vermelho
+{
+    background: url(/img/barra_vermelho.png);
+    color: white;
+    margin: 0 auto;
+    max-width: 200px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+
+.botao_portal_amarelo
+{
+    background: url(/img/barra_amarelo.png);
+    color: white;
+    margin: 0 auto;
+    max-width: 200px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+}
+
+.msg_estabelecimento_fechado
+{
+    font:62.5% "Trebuchet MS", sans-serif;
+}
+
+.itensPedido {
+
+    font-size:12px;
+    font-family: "Trebuchet MS" ,sans-serif;
+    color:Orange;
+}
+
+.empresaPedido {
+
+    font-weight: lighter;
+    font-size:12px;
+    font-family:verdana;
+    color:Black;
+}
+
+

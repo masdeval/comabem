@@ -1,0 +1,17 @@
+ <h2><?php echo $this->headline; ?></h2>
+<p>Faça o login para acessar o sistema</p>
+<div class="contentForm">
+<form action="<?php echo $this->baseUrl()?>/login/identify" method="post" class="frm" id='form1' onsubmit="return validateForm('form1');" enctype="multipart/form-data" >
+<div>
+<label>Username</label>
+<input type="text" name="username" value="" class="input-medium RQR required" style="width: 200px;"/>
+</div>
+<div>
+<label>Password</label>
+<input type="password" name="password" value="" class="input-medium RQR required" style="width: 200px;"/>
+</div>
+<div>
+<input type="submit" name="login" value="Login" />
+</div>
+</form>
+</div>

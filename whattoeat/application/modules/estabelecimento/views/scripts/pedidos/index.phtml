@@ -1,0 +1,55 @@
+<link type="text/css" href="/css/pedido.css" rel="stylesheet" />
+<script type="text/javascript" src="/js/controle_pedidos.js"></script>
+
+
+ <div style="border: solid gray; margin: 50px;">
+
+<strong>Pedidos Abertos</strong>
+
+<table  cellspacing="5" cellpadding="1">
+
+	<tr>
+	  <th> Pedido </th> <th>Solicitante</th>  <th>Telefone</th> <th> Entregar </th>
+	  <th> Distância </th> <th> Tempo </th>
+	</tr>
+
+	<?php
+        $cod_pedido;
+	for ($i = 0; $i < sizeof($this->pedidos); $i++)
+	{
+	    $cod_pedido = $this->pedidos[$i]["cod_pedido"];
+
+	    ?>
+
+	<tr style="color:red" align="center">
+	    <td> <?php echo $this->pedidos[$i]["cod_pedido"] ?> </td> <td> <?php echo $this->pedidos[$i]["nome"] ?> </td>
+	   <td> <?php echo $this->pedidos[$i]["telefone"] ?> </td> <td> <?php echo ($this->pedidos[$i]["entregar"] == 1) ? "Sim" : "Não" ?> </td>
+	   <td> <?php echo $this->pedidos[$i]["distancia"] ?> </td> <td> <?php echo $this->pedidos[$i]["tempo_entrega_minutos"] ?></td>  <td> <input type="button" onclick="rejeitar(<?php echo $this->pedidos[$i][cod_pedido] ?>,<?php echo $this->pedidos[$i][cod_empresa] ?>,'<?php echo $this->pedidos[$i][telefone] ?>','<?php echo $this->pedidos[$i][email] ?>')" value="Rejeitar"/> </td> <td> <input type="button" value="Preparar" onclick="preparar(<?php echo $this->pedidos[$i][cod_pedido] ?>,<?php echo $this->pedidos[$i][cod_empresa] ?>)">  </td> <td> <input type="button" value="Alterar tempo" onclick="alterarTempo(<?php echo $this->pedidos[$i][cod_pedido] ?>,<?php echo $this->pedidos[$i][cod_empresa] ?>,'<?php echo $this->pedidos[$i][telefone] ?>','<?php echo $this->pedidos[$i][email] ?>')"> <input id="<?php echo 'novo_tempo_'.$this->pedidos[$i][cod_pedido] ?>" type="text" size="2"> </td>
+        </tr>
+	<tr>
+	    <td colspan="6">
+
+	<?php echo $this->pedidos[$i]["nome_produto"] ?>, <?php echo $this->pedidos[$i]["tamanho"] ?>, <?php echo $this->pedidos[$i]["quantidade"] ?>
+<br>
+	     <?php  $i++;
+		    while ( strcmp($this->pedidos[$i]["cod_pedido"], $cod_pedido) == 0 )  //tem mais produtos para esse pedido
+		    {
+			
+?>
+	<?php echo $this->pedidos[$i]["nome_produto"] ?>, <?php echo $this->pedidos[$i]["tamanho"] ?>, <?php echo $this->pedidos[$i]["quantidade"] ?>
+<br>
+
+<?php $i++; }/*fim while*/  $i--; ?>
+</tr>
+<?php
+        }
+?>
+
+    </table>
+
+ </div>
+
+<script type="text/javascript">
+
+
+</script>

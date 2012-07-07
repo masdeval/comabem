@@ -1,0 +1,133 @@
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link type="text/css" href="/css/portal.css" rel="stylesheet" />
+    <link type="text/css" href="/js/jui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    <script type="text/javascript" src="/js/portal.js"></script>
+    <script type="text/javascript" src="/js/validation-new.js"></script>
+
+</head>
+
+<body>
+
+    <?php
+
+	if(!empty($this->nomeCliente))
+	    echo "<p>Bem vindo".  $this->nomeCliente ."!</p>";
+
+    ?>
+
+    <h2><?php echo $this->headline; ?></h2>
+
+    <?php if($this->isFecharPedido) {?>
+
+    <h2> Percebemos que você ainda não está logado. Por favor, crie sua conta ou faça login antes de continuar. </h2>
+
+    <?php } ?>
+
+    <div style="border:solid; float:left; margin-right: 80px;" >
+    <form action="/portal/cliente/criar-Conta" method="POST" class="frm" name="form1" id='form1' onsubmit="return validaTermoAceite(this);">
+
+	<h3>Crie sua conta</h3>
+	<br>
+	* Email: <input type="text" class="input-medium RQR required validEmail" title="Por favor, indique o email." name="cliente[email]" value="<?php //echo $this->cliente['email'] ?>"  onblur="checkMailAjax(this.value);">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' id="spanMail"></span></div>
+	<br>
+	* Nome completo: <input type="text"  class="input-medium RQR required" title="Por favor, indique seu nome." name="cliente[nome]" value="<?php //echo $this->cliente['nome'] ?>">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	* Senha: <input type="password" class="input-medium RQR required" title="Por favor, entre com uma senha." id="senha" name="cliente[senha]">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	* Confirme senha: <input type="password" class="input-medium RQR required" tithe="Por favor, repita a senha." id="senha_repetida" name="cliente[senha_repetida]">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	* Telefone celular com DDD: <input type="text" maxlength="14" onkeypress="return formataTelefone(document.form1, 'cliente[celular]', '(99) 9999-9999', event)" class="input-medium RQR required" title="Por favor, indique um telefone." name="cliente[celular]" value="<?php //echo $this->cliente['celular'] ?>">
+	<br><br>
+	<input type="checkbox"  id="aceite" name="cliente[aceite]" checked> Estou de acordo com os <a href="#">termos e condicões </a> do site.
+
+	<br>
+	Digite o código como aparece na imagem: <input type="text" name="captcha">
+	<br>
+	<br>
+	<!-- Essa flag indica se o usuario chegou aqui na tentativa de fechar um pedido -->
+	<input type="hidden" name="isFecharPedido" value="<?php echo $this->isFecharPedido ?>">
+	<input type="submit" name="criarConta" value="Criar Minha Conta">
+
+     </form>
+
+    </div>
+
+
+  <div style="border:solid; float:left; " >
+    <form action="/portal/cliente/login" method="POST" class="frm" id='form2' onsubmit="return validateForm('form2');">
+
+	<h3>Login</h3>
+	<br>
+	* Email: <input type="text" class="input-medium RQR required" title="Por favor, indique o email." name="email-login">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	* Senha: <input type="password" class="input-medium RQR required" title="Por favor, entre com uma senha." name="senha-login">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+
+	<!-- Essa flag indica se o usuario chegou aqui na tentativa de fechar um pedido -->
+	<input type="hidden" name="isFecharPedido" value="<?php echo $this->isFecharPedido ?>">
+
+	<input type="submit" name="login" value="Login">
+	<br>
+	<br>
+	<a href="/portal/cliente/logout"> Logout </a>
+     </form>
+
+    </div>
+
+
+
+
+
+
+</body>
+
+<script>
+
+ function validaTermoAceite(form)
+ {
+    var validacao =  validateForm('form1');
+
+    if(!form.aceite.checked)
+    {
+	alert("Você deve aceitar as condições antes de prosseguir.");
+	return false;
+
+    }
+    else if(!isEmpty(form.senha.value) && !isBlank(form.senha.value) && form.senha.value != form.senha_repetida.value)
+    {
+	alert("Senhas não conferem!");
+	return false;
+
+
+    }
+    else
+    {
+	return validacao;
+    }
+
+    
+ }
+
+function isEmpty(str) {
+    return (!str || 0 === str.length);
+}
+
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
+
+
+  
+
+</script>

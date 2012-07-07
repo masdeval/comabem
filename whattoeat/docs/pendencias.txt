@@ -1,0 +1,67 @@
+
+
+
+ - validacao CPF - ??  Zend Filter?
+
+
+- O controller de erro e de login nao deveriam estar centralizados?
+
+- Tem como colocar os forms numa pasta embaixo da pasta dos modulos e tirar da pasta library para ficar mais 
+organizado? - sim, na verdade isso é o certo Ok
+
+
+- Fazer um mapeamento de todos os relacionamentos que envolvem exclusao de chave estrangeira
+
+- Nao deixar campos texto serem submetidos como "em branco" quando nao puderem ser nulos - (Ok funcionario) Precisa mesmo disso?
+
+
+- Acrescentar log na aplicação
+
+- Acrescentar i18n? - Acho que nao vale a pena o esforco agora Ok
+
+- Acrescentar validacao de numero minimo de caracteres em um campo
+
+
+- usar Zend Filter como no exemplo abaixo para validar a entrada dentro do controller? 
+
+$data = $this->_request->getParams();
+
+$validators = array(
+    'month'   => 'Digits',
+);
+
+$input = new Zend_Filter_Input($filters, $validators, $data);
+
+
+- Talvez mais para frente, por seguranca, fazer todos os comandos SQL de remocao e edicao de registros levarem em conta o cod_empresa. Atualmente apenas 
+as consultas estao fazenbdo 
+
+
+- Validacoes por Ajax precisam ter: checkCPF(this,<?php  echo empty($this->funcionarioId) ? "''" : $this->funcionarioId  ?>);" value="<?php echo $this->formData['cpf']?>			
+
+
+- levar em consideracao na busca de lanches o horario de funcionamento do estabelecimento e o horario que a consulta esta sendo feita
+
+
+
+
+
+
+Olá. Estamos desenvolvendo um produto para ajudá-lo em suas vendas on-line. Nele você poderá cadastrar seu cardápio e realizar a venda de seus produtos de maneira profissional e segura, tudo pela internet.  
+
+Neste contato gostaríamos de saber sua opinião sobre esse serviço:
+
+() sim, considero algo útil e interessante para minha empresa
+
+() não tenho interesse em realizar a venda de meus produtos pela internet
+
+
+Agradecemos imensamente sua colaboração!
+
+Equipe Lanche Facil
+
+
+
+
+
+

@@ -1,0 +1,62 @@
+<div style="padding-left: 644px;"><input type="button" name="Save" value="New" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/funcionario/'"></div>
+<div class="dataDiv ui-corner-all" style="width: 700px;">
+  <table border="0" class="gridViewTable" width="100%">
+  <tr><td colspan="10"></td></tr>
+    <tr class="head">
+      <td>Nome </td>
+      <td>Empresa</td>
+      <td>Date</td>
+      <td>Option</td>
+    </tr>
+    <?php foreach ($this->paginator as $k=>$v) {?>
+    <tr>
+      <td><?php echo $v['nome'] ?></td>
+      <td><?php echo $v['empresa'] ?></td>
+      <td><?php echo date('d-m-Y',strtotime($v['data_cadastro'])); ?></td>
+      <td><form action="" method="post" id="gridForm"> <input type="hidden" value="" name="funcionarioId" id="cod_funcionario">
+              <!-- <a href="<?php //echo $this->baseUrl() ?>/estabelecimento/funcionario/delete/id/<?php //echo $v['cod_funcionario']?>" onclick="return confirm('Are you sure you want to delete?')">Delete</a> -->
+              <a href="#" onclick="javascript:removeGrid(<?php echo $v['cod_funcionario']?>)">Excluir</a>
+              &nbsp;&nbsp;
+              <!--<a href="<?php //echo $this->baseUrl() ?>/estabelecimento/funcionario/edit/id/<?php //echo $v['cod_funcionario']?>">Edit</a> -->
+              <a href="#" onclick="javascript:editaGrid(<?php echo $v['cod_funcionario']?>)">Editar</a>
+          </form></td>
+ </tr>
+    <?php }?>
+    <tr class="head">
+      <td colspan="6" align="right"><?php echo $paging ?></td>
+    </tr>
+  </table>
+</div>
+
+
+ <script type="text/javascript">
+
+    function removeGrid(valor){
+
+        if (confirm('Tem certeza que deseja remover o registro?'))
+        {
+         var url='/estabelecimento/funcionario/delete';
+         document.getElementById('gridForm').action = url;
+         document.getElementById('cod_funcionario').value = valor;
+         document.getElementById('gridForm').submit();
+        }
+
+    }
+
+  function editaGrid(valor){
+
+         var url='/estabelecimento/funcionario/edit';
+         document.getElementById('gridForm').action = url;
+         document.getElementById('cod_funcionario').value = valor;
+         document.getElementById('gridForm').submit();
+
+
+    }
+
+
+
+    </script>
+
+
+
+ <?php echo $this->paginationControl($this->paginator, 'Sliding', 'pagination.phtml'); ?>

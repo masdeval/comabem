@@ -1,0 +1,149 @@
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link type="text/css" href="/css/portal.css" rel="stylesheet" />
+
+    <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    <script type="text/javascript" src="/js/portal.js"></script>
+
+</head>
+
+    <?php
+
+	if(!empty($this->nomeCliente))
+	     echo "<p>Bem vindo".  $this->nomeCliente ."! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
+
+
+    ?>
+
+
+<div align="center" width="80%">
+
+    <div style="border: solid gray; margin: 50px;">
+        <form action="/portal/index/consulta" method="post" class="" id='form1'>
+
+            <h2>Entre com os critérios de pesquisa</h2> 
+
+            <div style="text-align: left; border: transparent; width: 380px; ">
+		Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
+		<br>
+		Ex: catupiri, bacon, peito de peru
+            </div>
+
+            <br>
+            <input type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
+            <br>
+            <br>
+            Tipos de produtos:
+            <br><br>
+
+            <div style="width:450; height: 100;">
+		<?php
+		//formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
+		//cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
+		$i = 0;
+		foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto)
+		{
+		    $checked = " ";
+		    if (!empty($this->pesquisa_facapedido_tipo_produto) && in_array($cod_tipo_produto, $this->pesquisa_facapedido_tipo_produto))
+		    {
+			$checked = "checked";
+		    }
+		?>
+    		<input  type="checkbox" name="cod_tipo_produto[]" <?php echo $checked; ?> value="<?php echo $cod_tipo_produto ?>" class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
+
+		<?php } ?>
+	    </div>
+
+	    Caloria < que: <input type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+
+
+
+	    <br><br><br>
+            <input type="submit" value="Pesquisar">
+
+        </form>
+    </div>
+
+
+    <div style="float:right;margin-right: 90px;">
+
+
+	<table id="tableListaPedido" >
+	    <tr>
+		  <form action="/portal/index/limpar-Carrinho" method="post" class="" >
+	
+		<td align="center" colspan="5"><input type="submit" value="Limpar Carrinho"> <!--onclick="javascript:limparCarrinhoAjax()"--> </td>
+		</form>
+
+  		  <form action="/portal/pedido/fechar-Pedido" method="post" class="" >
+
+		<td align="center" colspan="5"><input type="submit" value="Fechar Pedido">  </td>
+		</form>
+
+
+	    </tr>
+	    <tr>
+		<td align="center" colspan="5"><h4> Seu pedido </h4></td>
+	    </tr>
+	    <tr style="font-family: verdana; font-size: 11px;">
+		<th> Empresa </th> <th> Produto </th> <th> Tamanho </th> <th> Preço </th> <th>Qt</th>
+	    </tr>
+
+	</table>
+
+  </div>
+
+
+
+</div>
+
+
+
+<?php
+		for ($i = 0; $i < sizeof($this->resultado); $i++)
+		{
+		    echo "<div style=' clear:both; margin: 80px; color:black;' > \n";
+
+		    echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->resultado[$i]['cod_empresa'] . "' width='141' height='auto' alt=''> </p> </div> \n";
+		    echo "<div style='float: left; margin: 50px 1px 20px 21px; width:100px; font-size: large;'> <p style='display: block' > \n";
+		    echo $this->resultado[$i]["nome_empresa"];
+		    echo "</div> <!-- nome da empresa --> \n";
+
+
+		    //verifica se a empresa esta atendendo nesse horario
+		    if ($this->resultado[$i]['isAberto'] == true)
+		    {
+			echo "<div style='float: left; margin: 60px 1px 20px 21px; width:150px;'> \n";
+			echo "<a class='botao_portal_vermelho' target='' title='Ir &agrave; Loja' href='javascript:irLoja(\"" . $this->resultado[$i]['url'] . "\")'>" .
+			"<span>Ir &agrave; Loja</span></a> </div>";
+		    }
+		    else
+		    {
+			$hora_atual = date('H') . ":" . date('i') . ":00";
+			echo "<div style='float: left; margin: 60px 1px 20px 21px; width:150px;'> \n";
+			echo "<a class='botao_portal_amarelo' target=''	title='Fechada nesse horário' href='#' onclick='lojaFechada(".$this->resultado[$i]['cod_empresa'].",".$this->resultado[$i]['cod_produto'].",".$i. ")'".
+			" <span>Fechada nesse horário </span> </a> <span class='msg_estabelecimento_fechado' id='spanFechada".$i."'>Clique no botão se deseja enviar à loja sua vontade ".
+			" de que ela estivesse aberta. </span> </div>";
+		    }
+  
+		    echo "</div> \n";
+		}
+?>
+
+
+<script>
+
+recebeCarrinhoJSON();
+
+function irLoja(url)
+{
+    var form = document.getElementById("form1");
+    form.action = "/"+url;
+    form.submit();
+
+}
+
+
+</script>

@@ -1,0 +1,166 @@
+/*
+ ***************************************************************************
+ * RENDERIZAÇÕES BÁSICAS
+ *************************************************************************** 
+ */
+
+* {
+	margin:0;
+	padding:0;
+}
+.erros{color:#red;}
+body {
+	font-family:"Trebuchet MS", Helvetica, Arial, sans-serif;
+	line-height:180%;
+	font-size:small;
+	color:#333;
+	letter-spacing:normal;
+	word-spacing:1px;
+}
+
+a{
+	color:#346F97;
+	text-decoration: none;
+}
+
+li{
+	list-style:none outside none;
+}
+
+#botao{
+	background: #346F97;
+	font-size:14px;
+	font-weight:bold;
+	color:#FFFFFF;
+	height:19px;
+	border-style:none;
+}
+
+.clear {
+	clear:both;
+}
+
+/* Remove bordas do links em images */
+img {
+	border:0;
+}
+
+
+/*
+ ***************************************************************************
+ * CONTAINER PRINCIPAL DO LAYOUT        			    			       *
+ *************************************************************************** 
+ */
+#tudo {position:relative;
+	width:960px;
+	margin:0 auto;
+	
+}
+
+
+/*
+ ***************************************************************************
+ * TOPO DE TODAS AS PÁGINAS       			    						   *
+ *************************************************************************** 
+ */
+
+#topo{
+	width: 960px;
+	height: 250px;
+	position: relative;
+	display: block;
+}
+.container-topo{
+	width:960px;
+	float:left;	
+}
+#topo .last{
+	margin-top:10px;
+}
+#faturamento{
+	float: right;
+}
+
+#titulos{
+	float: left;
+}
+#infos{
+	margin-top: 15px;
+	text-align: left;
+	float: right;
+}
+#infos span{
+}
+#carrossel ul li:HOVER{
+	background: #fff !important;
+	border: 0 solid transparent !important;
+}
+#monitorar #menu_pedido{
+	background: #fff;
+	color: #333 !important;
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 0px;
+	-webkit-border-bottom-left-radius: 0px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	-moz-border-radius-bottomright: 0px;
+	-moz-border-radius-bottomleft: 0px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px; 
+	webkit-box-shadow: 0px 0px 15px #000;
+	-moz-box-shadow: 0px 0px 15px #000;
+	box-shadow: 0px 0px 15px #000;
+}
+#submenu{
+	font-weight:bold;
+	color:black;
+	height:30px;
+	position:absolute;
+	bottom:0px;
+	width:960px;
+}
+#submenu ul{display:none;text-align: center;}
+#submenu ul li {display:inline;margin-left:15px;}
+#submenu ul li a{color:black}
+#submenu ul li a:hover{color:#346F97}
+
+
+
+/*
+ ***************************************************************************
+ * CONTEUDO DO CONTAINER PRINCIPAL 										   *
+ *************************************************************************** 
+ */
+
+#container-principal{
+		min-height:500px; 
+}
+
+/*
+ ***************************************************************************
+ * RODAPÉ DE TODAS AS PÁGINAS 											   *
+ *************************************************************************** 
+ */
+
+#footer{
+	font-size:12px;
+	font-weight:bold;
+	color:#346F97;
+	width:960px;
+	border-top:1px solid #346F97;
+	bottom: 1px;
+}
+
+#footer ul{
+	text-align: center;
+}
+
+#footer ul li{
+	margin-left:15px;
+	display:inline;
+}
+
+
