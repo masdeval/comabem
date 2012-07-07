@@ -1,0 +1,206 @@
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <link type="text/css" href="/css/portal.css" rel="stylesheet" />
+    <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    <script type="text/javascript" src="/js/portal.js"></script>
+  
+
+
+</head>
+
+    <?php
+
+	if(!empty($this->nomeCliente))
+	    echo "<p>Bem vindo".  $this->nomeCliente ."! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
+
+
+    ?>
+
+
+<img src='/portal/loja/get-Logo-Empresa/id/<?php echo $this->cod_empresa ?>' width='141' height='auto' alt=''>
+
+<div align="center" width="80%">
+
+    <div style="border: solid gray; margin: 50px;">
+
+	<?php
+	if ($this->isAberto == true)
+	{
+	    echo "<img src='/img/open.png' align='left' />";
+	}
+	else if ($this->isAberto == false)
+	{
+	    echo "<img src=/img/close.png align='left' />";
+	}
+	?>
+
+        <form action="/portal/loja/consulta" method="post" class="" id='form1'>
+
+            <h2>Entre com os critérios de pesquisa.</h2>
+
+            <div style="text-align: left; border: transparent; width: 380px; ">
+		Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
+		<br>
+		Ex: catupiri, bacon, peito de peru
+            </div>
+
+	    <input type="hidden" name="cod_empresa" value="<?php echo $this->cod_empresa; ?>">
+	    <input type="hidden" name="isAberto" value="<?php echo $this->isAberto; ?>">
+
+
+            <br>
+            <input type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
+            <br>
+            <br>
+
+	    Caloria < que: <input type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+
+
+
+	    <br><br><br>
+            <input type="submit" value="Pesquisar">
+
+        </form>
+    </div>
+
+
+    <!-- Imprime pedidos -->
+<div style="float:right;margin-right: 90px;">
+
+
+	<table id="tableListaPedido" >
+	    <tr>
+		  <form action="/portal/index/limpar-Carrinho" method="post" class="" >
+
+		<td align="center" colspan="5"><input type="submit" value="Limpar Carrinho"> <!--onclick="javascript:limparCarrinhoAjax()"--> </td>
+		</form>
+
+	    	  <form action="/portal/pedido/fechar-Pedido" method="post" class="" >
+
+		<td align="center" colspan="5"><input type="submit" value="Fechar Pedido">  </td>
+		</form>
+
+
+	    </tr>
+	    <tr>
+		<td align="center" colspan="5"><h4> Seu pedido </h4></td>
+	    </tr>
+	    <tr style="font-family: verdana; font-size: 11px;">
+		<th> Empresa </th> <th> Produto </th> <th> Tamanho </th> <th> Preço </th> <th>Qt</th>
+	    </tr>
+
+	</table>
+
+  </div>
+
+    
+	
+</div>
+
+
+
+<?php
+	for ($i = 0; $i < sizeof($this->resultado); $i++)
+	{
+?>
+
+<div style=' clear:both; margin: 80px; color:black;'>
+    <div style='float: left; margin: 20px 1px 20px 21px; width:200px;'>
+	<p><img src='/portal/index/get-Imagem-Produto/id/<?php echo $this->resultado[$i]['cod_foto'] ?>' width='141' height='auto' alt=''>
+	</p>
+    </div>
+	
+    <div style='float: left; margin: 50px 1px 20px 21px; width:100px; font-size: large;'>
+	<p style='display: block' >
+	    <?php echo $this->resultado[$i]["nome"]; ?>
+    </p> </div> <!-- nome do produto -->
+
+    <div style='float: left; margin: 60px 1px 20px 80px; width:150px; font-size: medium;'>
+	<?php echo $this->resultado[$i]["nome_empresa"]; ?>
+        </div> <!-- nome da empresa -->
+
+        <!--	    //imprime os tamanhos disponiveis e precos do produto -->
+        <div style='float: left; margin: 60px 1px 20px 80px; width:400px; font-size: medium;'>
+	<?php
+
+
+	    //Sempre há pelo menos um tamanho, entao imprime esse
+	    if (!empty($this->resultado[$i]['preco_promocional']))
+	    {
+		$preco = (double) $this->resultado[$i]['preco_promocional'];
+		echo ($this->resultado[$i]['tamanho'] . "=> De ");
+		echo $this->resultado[$i]["preco"];
+		echo (" por ");
+		echo $this->resultado[$i]["preco_promocional"];
+	    }
+	    else
+	    {
+		$preco = (double) $this->resultado[$i]['preco'];
+		echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
+	    }
+
+	    //imprime o botao que vai permitir incluir no carrinho
+	    if($this->isAberto)
+	    {
+		echo "<img style='margin-left:10px; margin-right:10px;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['nome_empresa']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+		echo "<input type='text' size='2' maxlength='2' value='1' id='quantidade_".$this->cod_empresa."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
+	    }
+	
+	    $i++;
+	    //Esse laco verifica se existem outros tamanhos para o mesmo produto
+	    while ($this->resultado[$i]['cod_produto'] == $this->resultado[$i - 1]['cod_produto'])
+	    {
+		echo "<br> \n";
+
+		if (!empty($this->resultado[$i]['preco_promocional']))
+		{
+		    $preco = (double) $this->resultado[$i]['preco_promocional'];
+		    echo ($this->resultado[$i]['tamanho'] . "=> De ");
+		    echo $this->resultado[$i]["preco"];
+		    echo (" por ");
+		    echo $this->resultado[$i]["preco_promocional"];
+		}
+		else
+		{
+		    $preco = (double) $this->resultado[$i]['preco'];
+		    echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
+		}
+	    //imprime o botao que vai permitir incluir no carrinho
+	    if($this->isAberto)
+	    {
+		echo "<img style='margin-left:10px; margin-right:10px;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['nome_empresa']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+		echo "<input type='text' size='2' maxlength='2' value='1' id='quantidade_".$this->cod_empresa."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
+
+	    }
+
+	    $i++;
+
+	    }
+
+	    $i--;
+	?>
+    
+        </div> <!-- precos -->
+
+    <div style=' clear:both; '>
+	Descrição do produto:
+	<p style='font-size: smaller;' >
+	    <?php echo $this->resultado[$i]["descricao"]; ?>
+    </p> </div> <!-- nome do produto -->
+
+
+   </div>
+
+<?php
+	}
+?>
+
+<script>
+
+recebeCarrinhoJSON();
+
+
+</script>
+

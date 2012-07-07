@@ -1,0 +1,319 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl() ?>/js/empresa.js"></script>
+
+
+<h2><?php echo $this->headline; ?></h2>
+<div id="tabs" style="width: 714px;">
+    <ul>
+        <li><a href="#tabs-1">Empresa</a></li>
+        <li><a href="#tabs-2">Tipos de produtos</a></li>
+        <li><a href="#tabs-3">Horario</a></li>
+    </ul>
+    <div id="tabs-1">
+        <div class="contentForm">
+            <form action="<?php echo $this->baseUrl() ?>/estabelecimento/empresa/add" method="post" class="frm" id='form1' onsubmit="return validateForm('form1');" enctype="multipart/form-data" >
+                <table class="tableFrm" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                        <td width="70%"><table class="tableFrm" cellspacing="7">
+                                <tr>
+                                    <td> Razao Social * </td>
+                                    <td><input type="text" class="input-medium RQR required"  title='Por favor, indique Razao Social'  name="razao_social"  value="<?php echo $this->formData['razao_social'] ?>" maxlength="100"  style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td> Nome Fantasia </td>
+                                    <td><input type="text" class="input-medium" maxlength="100"  name="nome_fantasia" value="<?php echo $this->formData['nome_fantasia'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td> CNPJ (apenas números)</td>
+                                    <td><input type="text" class="input-medium RQR required validNumber" title="Por favor, indique um CNPJ." name="cnpj" maxlength="14" value="<?php echo $this->formData['cnpj'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td valign="top"> URL</td>
+                                    <td valign="top"> http://facapedido/
+
+                                        <!--
+                                        Antes estava assim. Eu desabilitei essa verificacao que ocorria somente na submissao e fiz outra que valida na tela.
+                                        Dessa forma pude retirar esse codigo de validacao ajax do arquivo validation-new tornando-o mais enxuto.
+                                        <input type="text" class="input-medium validAlphaNumeric ajaxcheck"  name="url" id='<?php //echo $this->formData['cod_empresa'] ?>' maxlength="10" value="<?php //echo $this->formData['url'] ?>" style="width: 200px;">  -->
+
+                                        <input type="text" class="input-medium validAlphaNumeric RQR required" title='Por favor, indique uma URL.' onblur="checkUrl(this, <?php  echo empty($this->empresaId) ? "''" : $this->empresaId?>);" name="url" maxlength="10" value="<?php echo $this->formData['url'] ?>" style="width: 200px;">
+
+
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' id='spanUrl'></span></div>
+                                        <br>
+                                        A url é como o site sera acessado pelos seus clientes</td>
+                                </tr>
+                            </table></td>
+
+                        <td width="30%"><?php if (!empty($this->formData['logo']))
+{ ?>
+                            <span id='image'><img src="<?php echo $this->baseUrl() ?>/estabelecimento/empresa/get-Image/id/<?php echo $this->formData['cod_empresa'] ?>" width="151" height="141" alt=""></span><br>
+                            <span id='changeImage' style="display: none;">
+                                <input type="file" name="userfile" id="userfile">
+                                <br>
+                            </span>
+                            <span onclick="toggleImage2()" id='labelChangeCancel' style="cursor: pointer; color: maroon;display:none;">Cancela</span>
+
+                            <br>
+                            <span onclick="toggleImage()" id='labelChange' style="cursor: pointer; color: blue;">Trocar</span>
+                            <span onclick="removeImage()" id='labelRemove' style="cursor: pointer; color: blue;">Remover</span>
+                            <input type="hidden" value="" name="flagRemoverImagem" id="flagRemoverImagem">
+<?php } else
+{
+ ?>
+                            Logo <br><input type="file" name="userfile">
+<?php } ?></td>
+                    </tr>
+                </table>
+                <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+                    <tr>
+                        <td colspan="5"><input type="checkbox" value="0" name="desativada" <?php if ($this->formData['desativada'] == 0)
+{
+    echo 'checked';
+} ?>>
+                            Empresa ativa? </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"> Email
+                            <input type="text" class="input-medium validEmail" maxlength="50"  name="email" value="<?php echo $this->formData['email'] ?>" style="width: 200px;">
+                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                        <td colspan="3"> Valor minimo para enterega *
+                            <input type="text"   name="valor_minimo_entrega" maxlength="14" value="<?php echo $this->formData['valor_minimo_entrega'] ?>" style="width: 200px;" class="input-medium RQR required validDecimalNumber"  title='Por favor, indique Valor minimo para enterega'>
+                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                    </tr>
+                </table>
+
+                <fieldset style=" margin: 0; padding: 0;">
+                    <legend>Endereço:</legend>
+                    <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+                        <tr>
+                            <td> Logradouro *&nbsp;&nbsp;&nbsp;<br>
+                                <input type="text" class="input-medium RQR required"  title='Por favor, indique Logradouro' maxlength="50"  name="rua" value="<?php echo $this->formData['rua'] ?>" style="width: 200px;">
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                            <td colspan="2"> Numero *<br>
+                                <input type="text" class="input-medium RQR  required validNumber"  title='Por favor, indique Numero'  name="numero" value="<?php echo $this->formData['numero'] ?>" style="width: 200px;">
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                        </tr>
+                        <tr>
+                            <td  > Complemento<br>
+                                <input type="text" class="input-medium"  name="complemento" maxlength="20" value="<?php echo $this->formData['complemento'] ?>" style="width: 200px;"></td>
+                            <td colspan="2"> CEP (apenas números)*<br>
+                                <input type="text" class="input-medium RQR required validNumber"  title='Por favor, indique CEP' maxlength="8"  name="cep" value="<?php echo $this->formData['cep'] ?>" style="width: 200px;">
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                        </tr>
+                        <tr>
+                            <td> Bairro
+                                <input type="text" class="input-medium" maxlength="30" name="bairro" value="<?php echo $this->formData['bairro'] ?>" style="width: 200px;"></td>
+                            <td> Telefone 1
+                                <input type="text" class="input-medium"  name="telefone1" maxlength="20" value="<?php echo $this->formData['telefone1'] ?>" style="width: 200px;"></td>
+                            <td> Telefone 2
+                                <input type="text" class="input-medium"  name="telefone2" maxlength="20" value="<?php echo $this->formData['telefone2'] ?>" style="width: 200px;"></td>
+                        </tr>
+                        <tr>
+                            <td> Cidade *
+<?php
+                                $attribs = array("class" => 'input-medium RQR required', "title" => 'Por favor, indique Cidade', 'style' => 'width:200px');
+                                // echo form_dropdown('cod_cidade', $cidadeOption, $formData['cod_cidade'],$extra);
+                                echo $this->formSelect('cod_cidade', $this->formData['cod_cidade'], $attribs, $this->cidadeOption);
+?>
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+
+			  <td> Fuso Horário
+			    <select name="timezone" id="timezone" class="input-medium RQR required" title="Por favor, indique o fuso horário" style="width:200px">
+				<option value="America/Manaus" label="America/Manaus" <?php echo ($this->formData['timezone'] == 'America/Manaus') ? "selected" : ""  ?>  >Manaus</option>
+				<option value="America/Sao_Paulo" label="America/Sao_Paulo" <?php echo ($this->formData['timezone'] == 'America/Sao_Paulo') ? "selected" : ""  ?> >Sao_Paulo</option>
+				<option value="America/Recife" label="America/Recife" <?php echo ($this->formData['timezone'] == 'America/Recife') ? "selected" : ""  ?> >Recife</option>
+				<option value="America/Bahia" label="America/Bahia" <?php echo ($this->formData['timezone'] == 'America/Bahia') ? "selected" : ""  ?> >Bahia</option>
+				<option value="America/Fortaleza" label="America/Fortaleza" <?php echo ($this->formData['timezone'] == 'America/Fortaleza') ? "selected" : ""  ?>  >Fortaleza</option>
+				<option value="America/Porto_Velho" label="America/Porto_Velho" <?php echo ($this->formData['timezone'] == 'America/Porto_Velho') ? "selected" : ""  ?>  >Porto_Velho</option>
+				<option value="America/Boa_Vista" label="America/Boa_Vista" <?php echo ($this->formData['timezone'] == 'America/Boa_Vista') ? "selected" : ""  ?>  >Boa_Vista</option>
+				<option value="America/Campo_Grande" label="America/Campo_Grande" <?php echo ($this->formData['timezone'] == 'America/Campo_Grande') ? "selected" : ""  ?>  >Campo_Grande</option>
+
+				</select>
+			       <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+
+			  </td>
+
+                        </tr>
+                    </table>
+                </fieldset>
+
+                <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+                    <tr>
+                        <td><input type="hidden" name="emorFrom" value="1">
+                            <input type="hidden" name="action" value="<?php echo $this->action; ?>">
+                            <input type="submit" name="Save" value="Salvar">
+                            <input type="hidden" name="empresaId" value="<?php echo $this->empresaId; ?>">
+                            <input type="button" name="Save" value="Remover" onclick="delEmpresa('<?php echo $this->empresaId; ?>')">
+                      <!--      <input type="button" name="Save" value="New" onclick="location.href='<?php //echo $this->baseUrl() ?>/estabelecimento/empresa/'">
+                            <input type="button" name="Save" value="Grid View" style="margin-left:  400px;" onclick="location.href='<?php //echo $this->url(array('controller' => 'empresa', 'action' => 'gridView')); ?>'"></td>  -->
+
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+
+
+    <div id="tabs-2">
+        <div class="contentForm">
+            <form action="<?php echo $this->baseUrl() ?>/estabelecimento/empresa/add" method="post" class="frm" id='form2' onsubmit="return validateForm('form2');">
+                <fieldset style=" margin: 0; padding: 0;">
+                    <legend>Tipos de produtos:</legend>
+                    <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+                        <tr>
+                            <td colspan="30"> Escolha os tipos de produtos comercializados em seu estabelecimento</td>
+                        </tr>
+    
+        
+                        <tr>                            
+                                <?php
+                                
+                                    //formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
+                                    //cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
+                                    $i = 0;
+                                    foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto)
+                                    {
+                                        $checked = '';
+                                        
+                                        foreach ((array)$this->formData2 as $tipo_produto_empresa_ja_tem)
+                                        {
+                                            if ($cod_tipo_produto == $tipo_produto_empresa_ja_tem) 
+                                            {
+                                                $checked = "checked";
+                                                break;
+                                            }
+                                            else
+                                                continue;
+                                        }
+                                ?>
+                                        <td>
+                                            <input type="checkbox" onchange="checkTipoProdutoDeletion(this,<?php echo $this->empresaId; ?>);" name="cod_tipo_produto[]" value="<?php echo $cod_tipo_produto ?>" <?php echo $checked ?> class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
+                                        </td>
+                                        <tr><td>
+                                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' id='spanTipoProduto'></span></div>
+                                        </td></tr>
+<?php if ($i >= 2)
+                                        {
+                                            echo '</tr><tr>';
+                                            $i = 0;
+                                        } ?>
+<?php
+                                        $i++;
+                                    }//fim do foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto)
+                                
+?>
+                                </tr>
+                
+     
+                                <tr>
+                                    <td colspan="3" height="20">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                        <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+                            <tr>
+                                <td><input type="hidden" name="emorFrom" value="2">
+                                    <input type="hidden" name="action" value="<?php echo $this->action; ?>">
+                                    <input type="hidden" name="empresaId" value="<?php echo $this->empresaId; ?>">
+                                    <input type="submit" name="Save" value="Salvar">
+                                    <input type="button" name="Save" value="Remover" onclick="delTipos_de_produtos('<?php echo $this->empresaId; ?>')">
+                                    <input type="button" name="Save" value="New" onclick="location.href='<?php echo $this->baseUrl() ?>/estabelecimento/empresa/'">
+
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div id="tabs-3">
+                <form action="<?php echo $this->baseUrl() ?>/estabelecimento/empresa/add" method="post" class="frm" id='form3' onsubmit="return validateForm('form3');" >
+                    <div class="contentForm">
+                        <fieldset style=" margin: 0; padding: 0;">
+                            <legend>Horario:</legend>
+
+			<p><center>Deixe em branco os dias em que não houver atendimento</center></p>
+
+                            <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+			        <tr>
+                                    <td align="center">&nbsp;</td>
+                                    <td align="center"> Inicio do atendimento</td>
+                                    <td align="center"> Fim do atendimento</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">&nbsp;</td>
+                                    <td align="center"> HH:MM </td>
+                                    <td align="center"> HH:MM (23:59 para meia noite)</td>
+                                </tr>
+                                <tr>
+                                    <td align="center">Segunda</td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Monday][hora_inicio]" value="<?php echo $this->formData3['Monday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Monday][hora_fim]" value="<?php echo $this->formData3['Monday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td align="center">Terca</td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Tuesday][hora_inicio]"  value="<?php echo $this->formData3['Tuesday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Tuesday][hora_fim]" value="<?php echo $this->formData3['Tuesday']['hora_fim'] ?>" style="width: 200px;" >
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td align="center">Quarta</td>
+                                    <td align="center"><input type="text" class="input-medium validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Wednesday][hora_inicio]"  value="<?php echo $this->formData3['Wednesday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium validTime"  title='Por favor, indique Fim do atendimento'  name="val[Wednesday][hora_fim]" value="<?php echo $this->formData3['Wednesday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td align="center">Quinta</td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Thursday][hora_inicio]"  value="<?php echo $this->formData3['Thursday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Thursday][hora_fim]" value="<?php echo $this->formData3['Thursday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td align="center">Sexta</td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Friday][hora_inicio]"  value="<?php echo $this->formData3['Friday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Friday][hora_fim]" value="<?php echo $this->formData3['Friday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+				<tr>
+                                    <td align="center">Sabado </td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Saturday][hora_inicio]"  value="<?php echo $this->formData3['Saturday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Saturday][hora_fim]" value="<?php echo $this->formData3['Saturday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+                                <tr>
+                                    <td align="center">Domingo</td>
+                                    <td align="center"><input type="text" class="input-medium validTime"  title='Por favor, indique Inicio do atendimento'  name="val[Sunday][hora_inicio]"  value="<?php echo $this->formData3['Sunday']['hora_inicio'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td align="center"><input type="text" class="input-medium  validTime"  title='Por favor, indique Fim do atendimento'  name="val[Sunday][hora_fim]" value="<?php echo $this->formData3['Sunday']['hora_fim'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3" height="20">&nbsp;</td>
+                                </tr>
+                            </table>
+                        </fieldset>
+                        <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+                            <tr>
+                                <td><input type="hidden" name="emorFrom" value="3">
+                                    <input type="hidden" name="empresaId" value="<?php echo $this->empresaId; ?>">
+                                    <input type="hidden" name="action" value="<?php echo $this->action; ?>">
+                                    <input type="submit" name="Save" value="Salvar" >
+                                    <input type="button" name="Save" value="Remover" onclick="deleteHorario('<?php echo $this->empresaId; ?>')">
+                                    <input type="button" name="Save" value="New" onclick="location.href='<?php echo $this->baseUrl() ?>/estabelecimento/empresa/'">
+                        </td>
+                    </tr>
+                </table>
+        </form>
+    </div>
+</div>
+</div>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : estabelecimentoNavigation.xml
+    Created on : 9 de Maio de 2011, 09:57
+    Author     : christian
+    Description:
+        Purpose of the document follows.
+-->
+
+<config>
+    
+    <nav>
+
+     <empresa>
+        <label>Empresa</label>
+        <module>/estabelecimento</module>
+        <controller>/empresa</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:empresa</resource>
+        <image>/img/xxx.png</image>
+
+     </empresa>
+
+     <produtos>
+      <label>Produtos</label>
+        <module>/estabelecimento</module>
+        <controller>/produto</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:produto</resource>
+        <image></image>
+     </produtos>
+
+  <funcionarios>
+      <label>Funcionarios</label>
+        <module>/estabelecimento</module>
+        <controller>/funcionario</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:funcionario</resource>
+        <image></image>
+     </funcionarios>
+
+  <ingredientes>
+      <label>Ingredientes</label>
+        <module>/estabelecimento</module>
+        <controller>/ingredients</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:ingredients</resource>
+        <image></image>
+     </ingredientes>
+
+  <pedidos>
+      <label>Pedidos</label>
+        <module>/estabelecimento</module>
+        <controller>/pedidos</controller>
+        <action>index</action>
+        <visible>1</visible>
+        <resource>estabelecimento:pedidos</resource>
+        <image></image>
+     </pedidos>
+
+
+  </nav>
+
+</config>
