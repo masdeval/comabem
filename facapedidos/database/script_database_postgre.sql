@@ -109,6 +109,7 @@ CREATE TABLE public.ingrediente (
                 cod_ingrediente INTEGER NOT NULL DEFAULT nextval('public.ingrediente_cod_ingrediente_seq'),
                 nome VARCHAR(50) NOT NULL,
                 imagem BYTEA,
+                valor_calorico DOUBLE PRECISION,
                 CONSTRAINT ingrediente_pkey PRIMARY KEY (cod_ingrediente)
 );
 
@@ -198,19 +199,25 @@ CREATE TABLE public.empresa (
                 numero SMALLINT NOT NULL,
                 cep CHAR(8) NOT NULL,
                 complemento VARCHAR(20),
-                valor_minimo_entrega NUMERIC(14,2) NOT NULL,
+                valor_minimo_entrega NUMERIC(14,2),
                 nome_fantasia VARCHAR(100),
                 logo BYTEA,
-                telefone1 VARCHAR(20) NOT NULL,
-                telefone2 VARCHAR(20) NOT NULL,
+                telefone1 VARCHAR(20),
+                telefone2 VARCHAR(20),
                 bairro VARCHAR(30),
                 email VARCHAR(50),
                 timezone VARCHAR NOT NULL,
-                url VARCHAR(10) NOT NULL,
+                url VARCHAR(10),
                 removed SMALLINT DEFAULT 0 NOT NULL,
                 desativada BOOLEAN DEFAULT false NOT NULL,
                 data_cadastro TIMESTAMP,
                 cod_estrategia_cobranca_pizza INTEGER,
+                website VARCHAR(50),
+                atende_diabetico BOOLEAN,
+                pouco_sal BOOLEAN,
+                sem_glutem BOOLEAN,
+                intolerancia_lactose BOOLEAN,
+                organicos BOOLEAN,
                 CONSTRAINT empresa_pkey PRIMARY KEY (cod_empresa)
 );
 
@@ -374,6 +381,7 @@ CREATE TABLE public.ingrediente_empresa (
                 imagem BYTEA,
                 preco_quando_adicional NUMERIC(14,2),
                 removed SMALLINT DEFAULT 0 NOT NULL,
+                preco_de_cem_gramas NUMERIC(14,2),
                 CONSTRAINT ingrediente_empresa_pkey PRIMARY KEY (cod_ingrediente, cod_empresa)
 );
 
@@ -405,6 +413,15 @@ CREATE INDEX xif16ingrediente_empresa
 CREATE INDEX xpkingrediente_empresa
  ON public.ingrediente_empresa USING BTREE
  ( cod_ingrediente, cod_empresa );
+
+CREATE TABLE public.ingrediente_empresa_produto (
+                cod_ingrediente INTEGER NOT NULL,
+                cod_empresa INTEGER NOT NULL,
+                cod_produto BIGINT NOT NULL,
+                quantidade_utilizada DOUBLE PRECISION,
+                CONSTRAINT ingrediente_empresa_produto_pk PRIMARY KEY (cod_ingrediente, cod_empresa, cod_produto)
+);
+
 
 CREATE TABLE public.horario_funcionamento (
                 cod_empresa INTEGER NOT NULL,
@@ -495,7 +512,7 @@ CREATE TABLE public.pedido (
                 complemento VARCHAR(20),
                 cep VARCHAR(8),
                 status_pagamento SMALLINT,
-                distancia NUMERIC(4,2) NOT NULL,
+                distancia NUMERIC(4,2),
                 telefone VARCHAR(20) NOT NULL,
                 cod_cidade INTEGER,
                 CONSTRAINT pedido_pkey PRIMARY KEY (cod_pedido)
@@ -528,7 +545,7 @@ CREATE TABLE public.pedido_empresa (
                 tempo_entrega_minutos SMALLINT,
                 cod_entrega INTEGER,
                 notificacaosms BOOLEAN DEFAULT true NOT NULL,
-                status_pedido SMALLINT NOT NULL,
+                status_pedido SMALLINT,
                 CONSTRAINT pedido_empresa_pk PRIMARY KEY (cod_pedido, cod_empresa)
 );
 
@@ -821,6 +838,13 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
+ALTER TABLE public.ingrediente_empresa_produto ADD CONSTRAINT produto_ingrediente_empresa_produto_fk
+FOREIGN KEY (cod_produto)
+REFERENCES public.produto (cod_produto)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
 ALTER TABLE public.itens_pedido ADD CONSTRAINT itens_pedido_cod_produto_fkey
 FOREIGN KEY (cod_tamanho_produto)
 REFERENCES public.tamanho_produto (cod_tamanho_produto)
@@ -850,6 +874,13 @@ ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
 ALTER TABLE public.pedido_personalizado ADD CONSTRAINT ingrediente_empresa_pedido_personalizado_fk
+FOREIGN KEY (cod_ingrediente, cod_empresa)
+REFERENCES public.ingrediente_empresa (cod_ingrediente, cod_empresa)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+ALTER TABLE public.ingrediente_empresa_produto ADD CONSTRAINT ingrediente_empresa_ingrediente_empresa_produto_fk
 FOREIGN KEY (cod_ingrediente, cod_empresa)
 REFERENCES public.ingrediente_empresa (cod_ingrediente, cod_empresa)
 ON DELETE NO ACTION
