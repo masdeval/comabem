@@ -38,7 +38,16 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 	    'desativada' => (int) $formData['desativada'],
 	    'cod_cidade' => (int) $formData['cod_cidade'],
 	    'data_cadastro' => $now,
-	    'timezone' => $formData['timezone']);
+	    'timezone' => $formData['timezone'],
+ 	    'website'=> $formData['website'],
+	    'atende_diabetico' => ($formData['atende_diabetico'] == 1) ? 'true' : 'false',
+	    'pouco_sal' => ($formData['pouco_sal'] == 1) ? 'true' : 'false',
+	    'sem_glutem' => ($formData['sem_glutem'] == 1) ? 'true' : 'false',
+	    'intolerancia_lactose' => ($formData['intolerancia_lactose'] == 1) ? 'true' : 'false',
+	    'organicos' => ($formData['organicos'] == 1) ? 'true' : 'false',
+
+
+	    );
 	$id = $this->insert($data);
 
 	$logoFileName = bin2hex($logoFileName);
@@ -66,7 +75,15 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 	    'url' => $formData['url'],
 	    'desativada' => (int) $formData['desativada'],
 	    'cod_cidade' => (int) $formData['cod_cidade'],
-	    'timezone'=> $formData['timezone']);
+	    'timezone'=> $formData['timezone'],
+	    'website'=> $formData['website'],
+	    'atende_diabetico' => ($formData['atende_diabetico'] == 1) ? 'true' : 'false',
+	    'pouco_sal' => ($formData['pouco_sal'] == 1) ? 'true' : 'false',
+	    'sem_glutem' => ($formData['sem_glutem'] == 1) ? 'true' : 'false',
+	    'intolerancia_lactose' => ($formData['intolerancia_lactose'] == 1) ? 'true' : 'false',
+	    'organicos' => ($formData['organicos'] == 1) ? 'true' : 'false',
+
+	    );
 
 
 	if ($logoFileName == "remover")
