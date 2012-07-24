@@ -62,7 +62,7 @@ class DbTable_TamanhoProduto extends Zend_Db_Table_Abstract
     {
         $query = $this->_db->query("SELECT cod_tamanho_produto,descricao FROM tamanho_produto where  cod_produto =$cod_produto AND removed=0 ");
         $res = $query->fetchAll();
-        $result[''] = 'Select To edit';
+        $result[''] = '';
         foreach ($res as $k => $row)
         {
             $result[$row['cod_tamanho_produto']] = $row['descricao'];
