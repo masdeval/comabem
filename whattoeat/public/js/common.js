@@ -328,27 +328,6 @@ function editTamanho(tamid,id)
 
     //var url=base_url+'/produto/edit/id/'+id+'/tamid/'+tamid; //antes estava so assim
 
-    //Esse caso Ã© quando a funcao Ã© chamada no link de adicionar um tamanho novo
-    //Nesse caso, deve-se apenas limpar os campos de tamanho no formulario e nÃ£o hÃ¡
-    //um codigo de tamanho para ser preenchido no campo hidden tamanhoId que deve receber string vazia
-    if(tamid == 0)
-    {
-        /*document.getElementById("descricao").value = '';
-        document.getElementById("preco").value = '';
-        try{
-            document.getElementById("numero_sabores_pizza").value = '';//pode ser que esse campo nao exista na tela. Dessa maneira nao vai travar nessa linha
-        }
-        catch(err){}
-        document.getElementById("tamanhoId").value = '';
-        document.getElementById("tamanhoEdit").selectedIndex = 0; */
-
-        document.getElementById("tamanhoId").value = '';
-        document.form5.action='/estabelecimento/produto/edit/';
-        document.form5.submit();
-
-    }
-    else
-    {
         document.getElementById('produtoId').value = id;
         document.getElementById('tamanhoId').value = tamid;
         document.form5.action='/estabelecimento/produto/edit/';
@@ -375,4 +354,33 @@ function editTamanho(tamid,id)
         document.getElementById('xxx').submit();
         */
     }
-}
+
+    function novoTamanho()
+    {
+	//Nesse caso, deve-se apenas limpar os campos de tamanho no formulario e nÃ£o hÃ¡
+	//um codigo de tamanho para ser preenchido no campo hidden tamanhoId que deve receber string vazia
+
+
+        document.getElementById('descricao').value = '';
+	document.getElementById('preco').value = '';
+	document.getElementById('numero_sabores_pizza').value = '';
+        document.getElementById("tamanhoId").value = '';
+ 	document.getElementById('tamanhoEdit').style.display = 'none';
+ 	document.getElementById('fieldsetPromocao').style.display = 'none';
+	document.getElementById('descricao').focus();
+
+
+    }
+
+  function cancel()
+    {
+	//Nesse caso, deve-se apenas limpar os campos de tamanho no formulario e nÃ£o hÃ¡
+	//um codigo de tamanho para ser preenchido no campo hidden tamanhoId que deve receber string vazia
+
+
+        document.getElementById('tamanhoId').value = '';
+        document.form5.action='/estabelecimento/produto/edit/';
+        document.form5.submit();
+
+
+    }
