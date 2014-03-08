@@ -31,6 +31,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	$this->TiposProdutosEmpresa = new DbTable_TiposProdutosEmpresa($this->db);
 	$this->CategoriaEmpresa = new DbTable_CategoriaEmpresa();
 	$this->CategoriaIngredienteEmpresa = new DbTable_CategoriaIngredienteEmpresa($this->db);
+       	$this->ItensDeUmLanche = new DbTable_ItensDeUmLanche($this->db);
 	$this->IngredienteEmpresa = new DbTable_IngredienteEmpresa($this->db);
 	$this->view->pageTitle = 'Produto';
 	$this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
@@ -340,7 +341,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 		$formData3[$v['cod_categoria_empresa']] = $v;
 	    }
 	    $this->view->formData3 = $formData3;
-	    //$b = $this->ItensDeUmLanche->getRecordsProduto($this->empresaId, $produtoId);
+	    $b = $this->ItensDeUmLanche->getRecordsProduto($this->empresaId, $produtoId);
 	    foreach ($b as $k => $v)
 	    {
 		$formData4[$v['cod_ingrediente']] = $v;
@@ -349,7 +350,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 
 	    $this->view->tamanhoDropDown = $this->TamanhoProduto->getDropDown($produtoId);
 	    //$this->view->totalPrco = $this->ItensDeUmLanche->getPreco($produtoId);
-	    //$this->view->totalCalorias = $this->ItensDeUmLanche->getCalorias($produtoId);
+	    $this->view->totalCalorias = $this->ItensDeUmLanche->getCalorias($produtoId);
 	}
 
 	//Trata a aba Tamanhos

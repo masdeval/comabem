@@ -34,7 +34,7 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
         $this->CategoriaEmpresa = new DbTable_CategoriaEmpresa();
         $this->CategoriaIngredienteEmpresa = new DbTable_CategoriaIngredienteEmpresa($this->db);
         $this->IngredienteEmpresa = new DbTable_IngredienteEmpresa($this->db);
-        //$this->ItensDeUmLanche = new DbTable_ItensDeUmLanche($this->db);
+        $this->ItensDeUmLanche = new DbTable_ItensDeUmLanche($this->db);
         $this->view->pageTitle = 'Ingredientes';
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
     }

@@ -5,11 +5,13 @@ define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 class LuceneManager
 {
 
-    static function criaDocumentoProduto($empresaId, $produtoId,$produto)
+    static function criaDocumentoProduto($empresaId, $produtoId, $produto)
     {
 	$DbTable_Empresa = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
-
+        $DbTable_Produto = new DbTable_Produto(Zend_Db_Table::getDefaultAdapter());
+        
 	$empresa = $DbTable_Empresa->getSingleData($empresaId);
+        $ingredientes = $DbTable_Produto->getIngredientes($produtoId);
 
 	Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive() );
 	$doc = new Zend_Search_Lucene_Document();
@@ -51,6 +53,13 @@ class LuceneManager
 	$doc->addField(Zend_Search_Lucene_Field::Text('nome_produto', utf8_decode($produto['nome'])),"UTF-8");
 	//nome da empresa
 	$doc->addField(Zend_Search_Lucene_Field::Text('nome_empresa', utf8_decode($empresa['nome_fantasia'])),"UTF-8");
+        
+        //Adiciona os ingredientes do produto
+        foreach ($ingredientes as $value) {
+            
+            $doc->addField(Zend_Search_Lucene_Field::Text('nome_ingrediente', utf8_decode($value)),"UTF-8");
+                        
+        }
 
 	// Field is tokenized and indexed, but is not stored in the index.
 	//$doc->addField(Zend_Search_Lucene_Field::UnStored('contents','My document content'));

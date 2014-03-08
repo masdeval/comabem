@@ -70,6 +70,18 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	$result = $result[0];
 	return $result;
     }
+  
+    /* Retorna os ingredientes de um produto */
+    public function getIngredientes($id)
+    {
+	$query = $this->_db->query("SELECT I.nome FROM produto P,  ingrediente_empresa_produto IEP, ingrediente I  "
+               
+                . " where (P.cod_produto=IEP.cod_produto) and (I.cod_ingrediente = IEP.cod_ingrediente) and P.cod_produto='$id'");
+	$result = $query->fetchAll();
+	$result = $result[0];
+	return $result;
+    }
+    
 
     public function deleteRecords($id)
     {
