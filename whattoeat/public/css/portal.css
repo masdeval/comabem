@@ -10,48 +10,68 @@
    TODO customize this sample style
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
-
-
-.botao_portal_vermelho
-{
-    background: url(/img/barra_vermelho.png);
-    color: white;
-    margin: 0 auto;
-    max-width: 200px;
-    cursor: pointer;
-    display: block;
-    text-align: center;
+body {
+	background: #FDFDFD;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	margin: 0;
 }
 
-.botao_portal_amarelo
-{
-    background: url(/img/barra_amarelo.png);
-    color: white;
-    margin: 0 auto;
-    max-width: 200px;
-    cursor: pointer;
-    display: block;
-    text-align: center;
+.logo {
+	background: url(../img/bg_logo.png) no-repeat;
+	margin: 0px 0px 0px 10em;
+	padding: -2px 0 0 0;
+	width: 276px;
+	height: 138px;
 }
 
-.msg_estabelecimento_fechado
-{
-    font:62.5% "Trebuchet MS", sans-serif;
+.logo img {
+	width: 12em;
+	margin: 18px 0 0 27px;
+}
+
+.topo {
+	height: 137px;
+	background: url(../img/bg_header.png) repeat-x;
+	margin: 0;
+	padding: 0;
+}
+
+.botao_portal_vermelho {
+	background: url(/img/barra_vermelho.png);
+	color: white;
+	margin: 0 auto;
+	max-width: 200px;
+	cursor: pointer;
+	display: block;
+	text-align: center;
+}
+
+.botao_portal_amarelo {
+	background: url(/img/barra_amarelo.png);
+	color: white;
+	margin: 0 auto;
+	max-width: 200px;
+	cursor: pointer;
+	display: block;
+	text-align: center;
+}
+
+.msg_estabelecimento_fechado {
+	font: 62.5% "Trebuchet MS", sans-serif;
 }
 
 .itensPedido {
-
-    font-size:12px;
-    font-family: "Trebuchet MS" ,sans-serif;
-    color:Orange;
+	font-size: 12px;
+	font-family: "Trebuchet MS", sans-serif;
+	color: Orange;
 }
 
 .empresaPedido {
-
-    font-weight: lighter;
-    font-size:12px;
-    font-family:verdana;
-    color:Black;
+	font-weight: lighter;
+	font-size: 12px;
+	font-family: verdana;
+	color: Black;
 }
-
-
