@@ -1,10 +1,20 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-    <link type="text/css" href="/css/portal.css" rel="stylesheet" />
-
+	<!-- Bootstrap core CSS -->
+	<link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	
+	<!-- Bootstrap theme -->
+	<link type="text/css" href="/bootstrap/bootstrap-theme.min.css" rel="stylesheet">
+	
+	<!-- Portal CSS-->
+	<link type="text/css" href="/css/portal.css" rel="stylesheet" />
+	
+	<!-- jQuery -->
     <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    
+    <!-- javascript Portal -->
     <script type="text/javascript" src="/js/portal.js"></script>
 
 </head>
@@ -23,7 +33,7 @@
 
 <div align="center" width="80%">
 
-    <div style="border: solid gray; margin: 50px;">
+    <div class="formBuscar">
         <form action="/portal/index/consulta" method="post" class="" id='form1'>
 
             <h2>Entre com os critérios de pesquisa</h2> 
@@ -35,7 +45,7 @@
             </div>
 
             <br>
-            <input type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
+            <input class="form-control" type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
             <br>
             <br>
             Tipos de produtos:
@@ -59,12 +69,12 @@
 		<?php } ?>
 	    </div>
 
-	    Caloria < que: <input type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+	    <p class="lead">Caloria < que: </p><input class="form-control" type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
 
 
 
 	    <br><br><br>
-            <input type="submit" value="Pesquisar">
+            <input class="btn btn-primary" type="submit" value="Pesquisar">
 
         </form>
     </div>
@@ -77,12 +87,12 @@
 	    <tr>
 		  <form action="/portal/index/limpar-Carrinho" method="post" class="" >
 	
-		<td align="center" colspan="5"><input type="submit" value="Limpar Carrinho"> <!--onclick="javascript:limparCarrinhoAjax()"--> </td>
+		<td align="center" colspan="5"><input class="btn btn-warning" type="submit" value="Limpar Carrinho"> <!--onclick="javascript:limparCarrinhoAjax()"--> </td>
 		</form>
 
   		  <form action="/portal/pedido/fechar-Pedido" method="post" class="" >
 
-		<td align="center" colspan="5"><input type="submit" value="Fechar Pedido">  </td>
+		<td align="center" colspan="5"><input class="btn btn-success" type="submit" value="Fechar Pedido">  </td>
 		</form>
 
 
