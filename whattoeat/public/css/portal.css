@@ -28,8 +28,8 @@ body {
 }
 
 .logo img {
-	width: 12em;
-	margin: 18px 0 0 27px;
+	width: 13em;
+	margin: 26px 0 0 48px;
 }
 
 .topo {
@@ -37,6 +37,12 @@ body {
 	background: url(../img/bg_header.png) repeat-x;
 	margin: 0;
 	padding: 0;
+}
+
+.formBuscar {
+	border: solid gray;
+	margin: 50px;
+	background: #FFBF00;
 }
 
 .botao_portal_vermelho {
