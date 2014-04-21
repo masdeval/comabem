@@ -38,7 +38,85 @@ body {
 	margin: 0;
 	padding: 0;
 }
-
+.conta {
+	width: 80em;
+	height: 100%;
+	margin: 0 auto;
+	position: relative;
+	
+}
+.criar-conta, .login-conta {
+	float: left;	 
+	
+	
+}
+.heading {
+	background: none repeat scroll 0% 0% #F9F8F8;
+	border: 1px solid #DEDEDE;
+	border-radius: 10px 10px 0px 0px;
+	height: auto !important;
+	margin-top: 33px;
+	min-height: inherit;
+	overflow: hidden;
+	padding: 15px 25px;
+	position: relative;
+}
+.main-content {
+background: none repeat scroll 0% 0% #FFF;
+border-top: 0px none;
+padding: 25px 0px;
+border: 1px solid #DDD;
+font-size: 14px;
+color: #222;
+}
+.columnListing {
+    display: inline-block;
+}
+ol, ul {
+    list-style: none outside none;
+}
+.columnListing .leftSide, .columnListing .rightSide {
+    float: left;
+    min-height: 525px;
+    padding: 30px;
+    position: relative;
+    width: 436px;
+}
+.option-callout {
+    background-color: #FFF;
+    background-image: -moz-linear-gradient(center top , #FFF, #FBFBFB);
+    border: 1px solid #DDD;
+    border-radius: 50%;
+    box-shadow: 2px 2px 2px #FFF, 1px 1px 1px #FFF inset;
+    color: #333;
+    display: block;
+    height: 40px;
+    left: 32.6em;
+    position: absolute;
+    text-align: center;
+    top: 27em;
+    width: 40px;
+}
+.columnListing .leftSide, .columnListing .rightSide {
+    float: left;
+    min-height: 525px;
+    padding: 30px;
+    position: relative;
+    width: 436px;
+}
+.columnListing .leftSide {
+    border-right: 1px solid #DDD;
+}
+.columnListing .leftSide,.columnListing .rightSide {
+    float: left;
+    min-height: 525px;
+    padding: 30px;
+    position: relative;
+    width: 436px;
+}
+.option-callout p {
+    margin-top: 10px;
+}
 .formBuscar {
 	border: solid gray;
 	margin: 50px;

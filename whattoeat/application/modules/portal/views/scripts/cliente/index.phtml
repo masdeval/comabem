@@ -1,6 +1,12 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
+	<!-- Bootstrap core CSS -->
+	<link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	
+	<!-- Bootstrap theme -->
+	<link type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+	
     <link type="text/css" href="/css/portal.css" rel="stylesheet" />
     <link type="text/css" href="/js/jui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
 
@@ -15,10 +21,10 @@
 <body>
 
 	<div class="topo">
-		<div class="logo">
-			<img src="../img/logotipo.png"/>
-		</div>
+		<div class="logo"><img src="/img/logotipo.png"></div>
 	</div>
+	<div class="conta">
+	<div class="heading">
     <?php
 
 	if(!empty($this->nomeCliente))
@@ -28,14 +34,19 @@
 
     <h2><?php echo $this->headline; ?></h2>
 
+	
     <?php if($this->isFecharPedido) {?>
 
     <h2> Percebemos que você ainda não está logado. Por favor, crie sua conta ou faça login antes de continuar. </h2>
 
     <?php } ?>
-
-    <div style="border:solid; float:left; margin-right: 80px;" >
-    <form action="/portal/cliente/criar-Conta" method="POST" class="frm" name="form1" id='form1' onsubmit="return validaTermoAceite(this);">
+	</div>
+	
+	
+    <div class="main-content" >
+    <ul class="columnListing">
+	<li class="leftSide">
+	<form action="/portal/cliente/criar-Conta" method="POST" class="frm" name="form1" id='form1' onsubmit="return validaTermoAceite(this);">
 
 	<h3>Crie sua conta</h3>
 	<br>
@@ -64,32 +75,36 @@
 	<input type="submit" name="criarConta" value="Criar Minha Conta">
 
      </form>
-
-    </div>
-
-
-  <div style="border:solid; float:left; " >
-    <form action="/portal/cliente/login" method="POST" class="frm" id='form2' onsubmit="return validateForm('form2');">
+	</li>
+ 
+	<li class="option-callout">
+		<p>ou</p>
+	</li>
+ 
+	<li class="rightSide">
+    <form action="/portal/cliente/login" method="POST" class="frm form-signin" role="form" id='form2' onsubmit="return validateForm('form2');">
 
 	<h3>Login</h3>
 	<br>
-	* Email: <input type="text" class="input-medium RQR required" title="Por favor, indique o email." name="email-login">
+	* Email: <input class="form-control" type="email" class="input-medium RQR required" title="Por favor, indique o email." name="email-login">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
-	* Senha: <input type="password" class="input-medium RQR required" title="Por favor, entre com uma senha." name="senha-login">
-	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	* Senha: <input class="form-control" type="password" class="input-medium RQR required" title="Por favor, entre com uma senha." name="senha-login">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div><br />
 
 	<!-- Essa flag indica se o usuario chegou aqui na tentativa de fechar um pedido -->
-	<input type="hidden" name="isFecharPedido" value="<?php echo $this->isFecharPedido ?>">
+	<input type="hidden" name="isFecharPedido" value="<?php echo $this->isFecharPedido ?>" >
 
-	<input type="submit" name="login" value="Login">
-	<br>
-	<br>
+	<input class="btn btn-lg btn-primary btn-block" type="submit" name="login" value="Login" />
+	<br />
+	<br />
 	<a href="/portal/cliente/logout"> Logout </a>
      </form>
-
+	 </li>
+	</ul>
     </div>
-
+	
+</div>
 
 
 
