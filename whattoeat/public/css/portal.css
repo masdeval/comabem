@@ -11,7 +11,7 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 body {
-	background: #FEFEFE;
+	background: #FEFEFE url(../img/bg.png);
 	width: 100%;
 	height: 100%;
 	margin: 0;
@@ -20,7 +20,7 @@ body {
 }
 
 .logo {
-	background: url(../img/bg_logo.png) no-repeat;
+	
 	margin: 0px 0px 0px 10em;
 	padding: -2px 0 0 0;
 	width: 276px;
@@ -28,15 +28,16 @@ body {
 }
 
 .logo img {
-	width: 13em;
+	width: 15em;
 	margin: 26px 0 0 48px;
 }
 
 .topo {
 	height: 137px;
-	background: url(../img/bg_header.png) repeat-x;
-	margin: 0;
+	background: #FFBF00;
+	margin: 0.5em 0 0 0;
 	padding: 0;
+	box-shadow: 3px 3px 0 #333;
 }
 .conta {
 	width: 80em;
