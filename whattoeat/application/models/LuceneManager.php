@@ -1,6 +1,6 @@
 <?php
 
-define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+//define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 
 class LuceneManager
 {
