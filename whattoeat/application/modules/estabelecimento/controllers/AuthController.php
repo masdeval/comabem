@@ -15,7 +15,7 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
     }
 
     public function loginAction() {
-        $form = new Form_Login();
+        $form = new Form_login();
         $success = false;
 
         if ($this->_request->isPost()) {
