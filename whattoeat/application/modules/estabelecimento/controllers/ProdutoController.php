@@ -91,7 +91,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 		    $this->errorAction();
 		    return;
 		}
-		$this->editAction($prdutoId);
+		$this->editAction($produtoId);
 		//$this->view->action = 'edit';
 		//$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
 	    }
@@ -336,12 +336,14 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	    $this->view->formData = $this->Produto->getSingleData($produtoId);
 	    $this->view->formData2 = $this->FotoProduto->getRecords($produtoId);
 	    $b = $this->CategoriaPermitidaComoAdicional->getRecords($produtoId);
+            $formData3="";
 	    foreach ($b as $k => $v)
 	    {
 		$formData3[$v['cod_categoria_empresa']] = $v;
 	    }
 	    $this->view->formData3 = $formData3;
 	    $b = $this->ItensDeUmLanche->getRecordsProduto($this->empresaId, $produtoId);
+            $formData4="";
 	    foreach ($b as $k => $v)
 	    {
 		$formData4[$v['cod_ingrediente']] = $v;
