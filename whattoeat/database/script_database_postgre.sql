@@ -419,6 +419,7 @@ CREATE TABLE public.ingrediente_empresa_produto (
                 cod_empresa INTEGER NOT NULL,
                 cod_produto BIGINT NOT NULL,
                 quantidade_utilizada DOUBLE PRECISION,
+                valor_calorico DOUBLE PRECISION,
                 CONSTRAINT ingrediente_empresa_produto_pk PRIMARY KEY (cod_ingrediente, cod_empresa, cod_produto)
 );
 
