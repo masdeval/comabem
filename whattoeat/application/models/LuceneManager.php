@@ -78,7 +78,7 @@ class LuceneManager
 	$index->optimize();
     }
 
-    static function search($criterios, $obj)
+    static function search($criterios)
     { 
 	Zend_Search_Lucene::setResultSetLimit(30);
 	Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding("UTF-8");        
