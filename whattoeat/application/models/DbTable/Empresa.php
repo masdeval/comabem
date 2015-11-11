@@ -34,7 +34,7 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 	    'telefone2' => $formData['telefone2'],
 	    'bairro' => $formData['bairro'],
 	    'email' => $formData['email'],
-	    'url' => $formData['url'],
+	    'url' =>  preg_replace('/\s+/', '',trim($formData['url'])),
 	    'desativada' => (int) $formData['desativada'],
 	    'cod_cidade' => (int) $formData['cod_cidade'],
 	    'data_cadastro' => $now,
@@ -72,7 +72,7 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 	    'telefone2' => $formData['telefone2'],
 	    'bairro' => $formData['bairro'],
 	    'email' => $formData['email'],
-	    'url' => $formData['url'],
+	    'url' => preg_replace('/\s+/', '',trim($formData['url'])),
 	    'desativada' => (int) $formData['desativada'],
 	    'cod_cidade' => (int) $formData['cod_cidade'],
 	    'timezone'=> $formData['timezone'],
@@ -95,11 +95,9 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract
 	    $logoFileName = bin2hex($logoFileName);
 	    if (!empty($logoFileName))
 	    {
-
-		$this->_db->query("UPDATE empresa SET logo=decode('{$logoFileName}' , 'hex')  WHERE cod_empresa = '$id' ");
+                $this->_db->query("UPDATE empresa SET logo=decode('{$logoFileName}' , 'hex')  WHERE cod_empresa = '$id' ");
 	    }
-	}
-
+	}       
 	$where[] = "cod_empresa = $id";
 	$t = $this->_db->update('empresa', $data, $where);
 	return $t;

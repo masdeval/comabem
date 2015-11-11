@@ -94,7 +94,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
     {
 
 	$select = "select P.cod_produto, P.nome , P.descricao, FP.cod_foto, TP.cod_tamanho_produto, TP.preco, TP.descricao as tamanho,
-	    Tipo.nome as tipo,E.nome_fantasia as nome_empresa, E.cod_empresa, E.url, E.timezone, Promo.preco_promocional ";
+	    Tipo.nome as tipo,E.razao_social as razao_social, E.cod_empresa, E.url, E.timezone, Promo.preco_promocional ";
 
 	//pode ser que o estabelecimento nao funcione nesse dia da semana, por isso o LEFT JOIN
 	//LEFT JOIN horario_funcionamento HF ON (P.cod_empresa = HF.cod_empresa) ,

@@ -207,7 +207,7 @@ CREATE TABLE public.empresa (
                 bairro VARCHAR(30),
                 email VARCHAR(50),
                 timezone VARCHAR NOT NULL,
-                url VARCHAR(10),
+                url VARCHAR(20) NOT NULL,
                 removed SMALLINT DEFAULT 0 NOT NULL,
                 desativada BOOLEAN DEFAULT false NOT NULL,
                 data_cadastro TIMESTAMP,

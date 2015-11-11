@@ -62,6 +62,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
 
     public function addAction()
     {
+                xdebug_break();
         $formData = $this->getRequest()->getPost();
         $id = $formData['empresaId']; //se tem Id é uma edicao
 
