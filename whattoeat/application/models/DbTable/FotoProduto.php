@@ -23,15 +23,15 @@ class DbTable_FotoProduto extends Zend_Db_Table_Abstract
         if (!empty($fileData))
         {
             $fileData = bin2hex($fileData);
-        }
-
-        if (!empty($fileData))
-        {
+        
             $data = array('cod_produto' => $cod_produto,
             );
             $id = $this->insert($data);
-
-            $this->_db->query("UPDATE foto_produto SET foto=decode('{$fileData}' , 'hex')  WHERE cod_foto = '$id' ");
+            $stm = $this->_db->prepare("UPDATE foto_produto SET foto=decode(:1 , 'hex')  WHERE cod_foto = :2 ");
+            $stm->bindParam(':1' , $fileData, PDO::PARAM_LOB);
+            $stm->bindParam(':2' , $id, PDO::PARAM_INT);
+            $stm->execute();            
+            
         }
         if (!empty($formData['cod_foto']))
         {

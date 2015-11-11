@@ -41,18 +41,19 @@ class Portal_LojaController extends Zend_Controller_Action
 	}
 
 
-	//verifica se é uma URL valida
-	$cod_empresa = $this->EmpresaDB->checkUrlExist($url_loja);
-	if ($cod_empresa == false)
+	//verifica se é uma URL valida. O retorno eh um array[0]['cod_empresa'] e array[0]['razao_social']
+	$array = $this->EmpresaDB->checkUrlExist($url_loja);
+	if ($array[0]['cod_empresa'] == false)
 	{
 	    $this->_helper->viewRenderer('pagina_nao_encontrada');
 	    return;
 	}
-	$this->view->cod_empresa = $cod_empresa;
+	$this->view->cod_empresa = $array[0]['cod_empresa'];
+        $this->view->razao_social = $array[0]['razao_social'];
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
 
 	//pode ser que chegou aqui via o botao "Ir à Loja" com algum criterio de busca ja selecionado
-	$this->consultaAction($cod_empresa);
+	$this->consultaAction($array[0]['cod_empresa']);
     }
 
     public function consultaAction($cod_empresa = '', $produtos = '')

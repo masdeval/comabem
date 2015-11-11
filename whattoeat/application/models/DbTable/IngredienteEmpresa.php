@@ -86,10 +86,16 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
         );
         $this->insert($data);
 
-        $logoFileName = bin2hex($logoFileName);
+        
         if (!empty($logoFileName))
         {
-            $this->_db->query("UPDATE ingrediente_empresa SET imagem=decode('{$logoFileName}' , 'hex')  WHERE cod_ingrediente = $cod_ingrediente AND cod_empresa=$cod_empresa ");
+            $logoFileName = bin2hex($logoFileName);
+            $stm = $this->_db->prepare("UPDATE ingrediente_empresa SET imagem=decode(:1 , 'hex')  WHERE cod_ingrediente = :2 AND cod_empresa=:3 ");
+            $stm->bindParam(':1' , $logoFileName, PDO::PARAM_LOB);
+            $stm->bindParam(':2' , $cod_ingrediente, PDO::PARAM_INT);
+            $stm->bindParam(':3' , $cod_empresa, PDO::PARAM_INT);
+            $stm->execute();            
+              
         }
 
         return ;
@@ -97,13 +103,13 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
 
     public function editRecord($formData, $cod_ingrediente, $cod_empresa, $logoFileName)
     {
+        xdebug_break();
         $data = array('cod_ingrediente' => $cod_ingrediente,
             'cod_empresa' => $cod_empresa,
             'descricao' => $formData['descricao'],
             'preco_quando_adicional' => (float) $formData['preco_quando_adicional'],
         );
-
-        $logoFileName = bin2hex($logoFileName);
+       
         if (!empty($logoFileName))
         {
             if ($logoFileName == "remover")
@@ -112,7 +118,12 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
             }
             else
             {
-                $this->getAdapter()->getConnection()->query("UPDATE ingrediente_empresa SET imagem=decode('{$logoFileName}' , 'hex')  WHERE cod_ingrediente = $cod_ingrediente AND cod_empresa=$cod_empresa ");
+                $logoFileName = bin2hex($logoFileName);
+                $stm = $this->_db->prepare("UPDATE ingrediente_empresa SET imagem=decode(:1 , 'hex')  WHERE cod_ingrediente = :2 AND cod_empresa=:3 ");
+                $stm->bindParam(':1' , $logoFileName, PDO::PARAM_LOB);
+                $stm->bindParam(':2' , $cod_ingrediente, PDO::PARAM_INT);
+                $stm->bindParam(':3' , $cod_empresa, PDO::PARAM_INT);
+                $stm->execute();            
             }
         }
         $where[] = "cod_ingrediente = $cod_ingrediente";

@@ -254,7 +254,7 @@ CREATE TABLE public.produto (
                 valor_calorico DOUBLE PRECISION,
                 numero_max_adicionais SMALLINT,
                 cobrado_por_quilo BOOLEAN,
-                disponivel BOOLEAN,
+                disponivel BOOLEAN DEFAULT TRUE,
                 removed SMALLINT DEFAULT 0 NOT NULL,
                 cod_empresa INTEGER NOT NULL,
                 cod_tipo_produto INTEGER NOT NULL,

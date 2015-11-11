@@ -33,20 +33,19 @@
               $data=array(
                          'cod_produto'=>$cod_produto,
                          'cod_empresa'=>$cod_empresa,
-                         'cod_ingrediente'=>$v,
-                         'preco'=>(float)$formData['ie']['preco'][$v],
+                         'cod_ingrediente'=>$v,                         
                          'valor_calorico'=>(float)$formData['ie']['valor_calorico'][$v],
                        );
                        $this->insert($data);
           }
       }
 
-      public function getPreco($cod_produto){
+      /*public function getPreco($cod_produto){
            $query = $this->_db->query("SELECT SUM(preco) as total FROM ingrediente_empresa_produto WHERE cod_produto=$cod_produto");
 
           $result = $query->fetchAll();
           return $result[0]['total'];
-      }
+      }*/
 
       public function getCalorias($cod_produto){
            $query = $this->_db->query("SELECT SUM(valor_calorico) as total FROM ingrediente_empresa_produto WHERE cod_produto=$cod_produto");

@@ -38,8 +38,7 @@ class DbTable_Ingrediente extends Zend_Db_Table_Abstract
 
     public function editRecord($formData, $ingredienteId, $logoFileName)
     {
-     
-        $logoFileName = bin2hex($logoFileName);
+            
         if (!empty($logoFileName))
         {
             if ($logoFileName == "remover")
@@ -48,7 +47,11 @@ class DbTable_Ingrediente extends Zend_Db_Table_Abstract
                 $this->getAdapter()->getConnection()->query("UPDATE ingrediente SET imagem=NULL  WHERE cod_ingrediente = $ingredienteId ");
             } else
             {
-                $this->_db->query("UPDATE ingrediente SET imagem=decode('{$logoFileName}' , 'hex')  WHERE cod_ingrediente = $ingredienteId ");
+                $logoFileName = bin2hex($logoFileName);
+                $stm = $this->_db->prepare("UPDATE ingrediente SET imagem=decode(:1 , 'hex')  WHERE cod_ingrediente = :2 ");
+                $stm->bindParam(':1' , $logoFileName, PDO::PARAM_LOB);
+                $stm->bindParam(':2' , $ingredienteId, PDO::PARAM_INT);
+                $stm->execute();            
             }
         }
 

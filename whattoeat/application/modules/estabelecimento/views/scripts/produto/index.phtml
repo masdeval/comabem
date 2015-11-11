@@ -192,8 +192,7 @@
                             <tr><td colspan="30">
 
                             <tr>
-                                <td align="center">&nbsp;</td>
-                                <td align="center"> Custo</td>
+                                <td align="center">&nbsp;</td>                                
                                 <td align="center">Valor Calorico</td>
                             </tr>
 <?php
@@ -201,8 +200,7 @@
                             {
                                 if (!empty($this->formData4[$v['cod_ingrediente']]))
                                 {
-                                    $checked = "checked";
-                                    $preco = $this->formData4[$v['cod_ingrediente']]['preco'];
+                                    $checked = "checked";                                    
                                     $valor_calorico = $this->formData4[$v['cod_ingrediente']]['valor_calorico'];
                                 } else
                                 {
@@ -214,8 +212,6 @@
 ?>
                                 <tr>
                                     <td align="left"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
-                                    <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[preco][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $preco ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                     <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $valor_calorico ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
