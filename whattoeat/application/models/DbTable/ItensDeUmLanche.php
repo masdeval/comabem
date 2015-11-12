@@ -35,6 +35,7 @@
                          'cod_empresa'=>$cod_empresa,
                          'cod_ingrediente'=>$v,                         
                          'valor_calorico'=>(float)$formData['ie']['valor_calorico'][$v],
+                         'quantidade_utilizada'=>(float)$formData['ie']['quantidade_utilizada'][$v],                  
                        );
                        $this->insert($data);
           }

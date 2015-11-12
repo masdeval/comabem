@@ -107,11 +107,11 @@ class Portal_ClienteController extends Zend_Controller_Action
 
 	$retorno = $this->ClienteDB->validaCliente($email, $senha);
 
-	if ($retorno == 2)//login nao encontrado
+	if (is_int($retorno) && $retorno == 2)//login nao encontrado
 	{
 	    $this->view->headline = "Email não confere!";
 	}
-	else if ($retorno == 3)
+	else if (is_int($retorno) && $retorno == 3)
 	{
 	    $this->view->headline = "Senha não confere!";
 	}

@@ -65,40 +65,49 @@
         </form>
     </div>
 
-
-    <!-- Imprime pedidos -->
-<div style="float:right;margin-right: 90px;">
-
-
-	<table id="tableListaPedido" >
-	    <tr>
-		  <form action="/portal/index/limpar-Carrinho" method="post" class="" >
-
-		<td align="center" colspan="5"><input type="submit" value="Limpar Carrinho"> <!--onclick="javascript:limparCarrinhoAjax()"--> </td>
-		</form>
-
-	    	  <form action="/portal/pedido/fechar-Pedido" method="post" class="" >
-
-		<td align="center" colspan="5"><input type="submit" value="Fechar Pedido">  </td>
-		</form>
-
-
-	    </tr>
-	    <tr>
-		<td align="center" colspan="5"><h4> Seu pedido </h4></td>
-	    </tr>
-	    <tr style="font-family: verdana; font-size: 11px;">
-		<th> Empresa </th> <th> Produto </th> <th> Tamanho </th> <th> Preço </th> <th>Qt</th>
-	    </tr>
-
-	</table>
-
-  </div>
+    
 
     
-	
-</div>
+    <!-- Imprime pedidos -->
+    
+ <div style="margin-right: 90px;">
+        
+          
+                  <div style="float: right; position: relative; ">
+	   
+        <input type="button" value="Continuar Comprando" onclick="location.href='http://whattoeat/portal'">       
+        
+    </div> 
 
+     
+	      <form action="/portal/index/limpar-Carrinho" method="post" class="" >
+                  <div style="float: right; position: relative; margin-right: 20px;">
+		<input class="btn btn-warning" type="submit" value="Limpar Carrinho"> 
+                </div>
+		</form>
+        
+  		  <form action="/portal/pedido/fechar-Pedido" method="post" class="" >
+                    <div style="float: right; margin-right: 20px; ">
+                <input class="btn btn-success" type="submit" value="Fechar Pedido"> 
+                </div>
+		</form>
+
+        
+        <div style="clear: both;"></div>
+	   
+     </div>
+
+    
+     
+<div style="float: right;margin-right: 90px;">
+<h4> Seu pedido </h4>
+        
+<table  id="tableListaPedido" style=" border-spacing: 10px; border-collapse: separate;" >  
+	</table>
+
+
+</div>    
+    
 
 
 <?php

@@ -343,14 +343,28 @@ function imprimeCarrinho(carrinho, hash)
 {
     //primeiro obtem a lista de cod_empresas
     var lista_empresas = hash.getKeys();
+    
+    var table = document.getElementById("tableListaPedido");
+    
+    //Insere o cabeçalho
+    var row = table.insertRow(table.rows.length);
+    var column_cabecalho = row.insertCell(0);
+    column_cabecalho.innerHTML = "Empresa";
+    column_cabecalho = row.insertCell(1);
+    column_cabecalho.innerHTML = 'Produto';
+    column_cabecalho = row.insertCell(2);
+    column_cabecalho.innerHTML = 'Tamanho';
+    column_cabecalho = row.insertCell(3);
+    column_cabecalho.innerHTML = 'Preço';
+    column_cabecalho = row.insertCell(4);
+    column_cabecalho.innerHTML = 'Qt';   
 
     for(x=0; x< lista_empresas.length; x++ )
     {
-	var cod_empresa = lista_empresas[x];
+	var cod_empresa = lista_empresas[x];	
+	var rowEmpresa = table.insertRow(row.rowIndex+1);
 
-	var table = document.getElementById("tableListaPedido");
-	var rowEmpresa = table.insertRow(table.rows.length);
-
+        //Insere o nome da empresa primeiro para dar uma identação antes de exibir seus produtos
 	rowEmpresa.id = "row"+cod_empresa;
 	rowEmpresa.className = "empresaPedido";
 	var coluna = rowEmpresa.insertCell(0);
