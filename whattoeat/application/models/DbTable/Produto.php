@@ -90,7 +90,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	$t = $this->_db->update('produto', $data, $where);
     }
 
-    public function consultaQBE($produtos, $caloria, $tipos_produto, $cod_empresa='')
+    public function consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece, $cod_empresa='')
     {
 
 	$select = "select P.cod_produto, P.nome , P.descricao, FP.cod_foto, TP.cod_tamanho_produto, TP.preco, TP.descricao as tamanho,
@@ -177,6 +177,40 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    $where .= " and P.cod_tipo_produto in ( " . $ids . " ) ";
 	}
 
+        if (!empty($empresa_oferece))
+	{
+            $where .= " and ( ";
+	    for ($k = 0; $k < sizeof($empresa_oferece); $k++)
+	    {                
+                if($empresa_oferece[$k] == 'diabetico')
+                {
+                    $where .= "E.atende_diabetico = :".$i." or ";
+                    $i++;
+                }
+                else if ($empresa_oferece[$k] == 'pouco_sal')
+                {
+                    $where .= "E.pouco_sal = :".$i." or ";
+                    $i++;
+                }
+                else if ($empresa_oferece[$k] == 'sem_glutem')
+                {
+                    $where .= "E.sem_glutem = :".$i." or ";
+                    $i++;
+                }
+                else if ($empresa_oferece[$k] == 'lactose')
+                {
+                    $where .= "E.intolerancia_lactose = :".$i." or ";
+                    $i++;
+                }
+                else if ($empresa_oferece[$k] == 'organico')
+                {
+                    $where .= "E.organicos = :".$i." or ";
+                    $i++;
+                }                                
+	    }
+	    $where .= " FALSE) ";
+	}
+        
 	$stm = $this->_db->prepare($select . $from . $where . $order_by);
 
 	//    ********* Bind de parametros **********
@@ -213,6 +247,15 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    }
 	}
 
+        if(!empty($empresa_oferece))
+        {
+            for($k=0; $k < sizeof($empresa_oferece); $k++)
+            {
+                $stm->bindValue(':'.$j, TRUE , PDO::PARAM_BOOL);
+                $j++;
+            }
+        }
+            
 	$stm->execute();
 	return $stm->fetchAll(PDO::FETCH_ASSOC);
     }

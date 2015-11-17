@@ -22,18 +22,23 @@ class Portal_IndexController extends Zend_Controller_Action
 	{
 	    $this->view->nomeCliente = $this->session->cliente->getNomeExibicao();
 	}
+        $this->view->pesquisa_facapedido_empresa_oferece = array();
     }
 
     public function indexAction()
     {
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
+        $this->view->pesquisa_facapedido_empresa_oferece = array();
+        
     }
 
     public function consultaAction()
-    {
+    {        
 	$criterios = $this->getRequest()->getPost('criterio');
 	$tipos_produto = $this->getRequest()->getPost('cod_tipo_produto');
 	$caloria = $this->getRequest()->getPost('caloria');
+        $empresa_oferece = $this->getRequest()->getPost('empresa_oferece');
+        if(!$empresa_oferece){$empresa_oferece=array();}
 	$produtos = "";
 
 	//primeiro busca com o lucene
@@ -59,7 +64,7 @@ class Portal_IndexController extends Zend_Controller_Action
 	    $produtos .= "-1"; //so porque fica uma virgula no final
 	}
 
-	$resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto);
+	$resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece);
 
 	//insere em resultado a situacao do estabelecimento informando se o mesmo
 	//esta aberto ou fechado
@@ -91,6 +96,7 @@ class Portal_IndexController extends Zend_Controller_Action
 	$this->view->pesquisa_facapedido_criterio = $criterios;
 	$this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;
 	$this->view->pesquisa_facapedido_caloria = $caloria;
+        $this->view->pesquisa_facapedido_empresa_oferece = $empresa_oferece;
 
 	$this->_helper->viewRenderer("index");
     }

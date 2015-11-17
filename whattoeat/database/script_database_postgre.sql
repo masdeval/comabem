@@ -251,7 +251,7 @@ CREATE TABLE public.produto (
                 nome VARCHAR(50) NOT NULL,
                 descricao VARCHAR,
                 tempo_preparo_minutos SMALLINT,
-                valor_calorico DOUBLE PRECISION,
+                valor_calorico DOUBLE PRECISION NOT NULL,
                 numero_max_adicionais SMALLINT,
                 cobrado_por_quilo BOOLEAN,
                 disponivel BOOLEAN DEFAULT TRUE,
