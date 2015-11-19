@@ -129,14 +129,18 @@
 <p style="padding-left: 50px;"><?php $this->headline; ?></p>
 
 
+
 <?php
 		for ($i = 0; $i < sizeof($this->resultado); $i++)
 		{
 		    echo "<div style=' clear:both; margin: 80px; color:black;' > \n";
 
 		    echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->resultado[$i]['cod_empresa'] . "' width='141' height='auto' alt=''> </p> </div> \n";
-		    echo "<div style='float: left; margin: 50px 1px 20px 21px; width:100px; font-size: large;'> <p style='display: block' > \n";
-		    echo $this->resultado[$i]["razao_social"];
+		    echo "<div style='float: left; margin: 20px 1px 20px 21px; width:300px; '>  \n";
+		    echo  "<div style='font-weight: bold;'>" . $this->resultado[$i]["razao_social"] . " </div> <br> \n";
+                    echo $this->resultado[$i]["rua"] . " " . $this->resultado[$i]["numero"]. " " . $this->resultado[$i]["complemento"] . " " . $this->resultado[$i]["bairro"] . " <br> \n";
+                    echo "Telefone 1: " . $this->resultado[$i]["telefone1"] . " Telefone 2 : " . $this->resultado[$i]["telefone2"] . " <br> \n";
+                    echo "email: " . $this->resultado[$i]["email"] . " <br> \n";
 		    echo "</div> <!-- nome da empresa --> \n";
 
 
