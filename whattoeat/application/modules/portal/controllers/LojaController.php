@@ -28,10 +28,13 @@ class Portal_LojaController extends Zend_Controller_Action
 
 	if (isset($this->session->cliente))
 	    $this->view->nomeCliente = $this->session->cliente->getNomeExibicao();
+        
+         $this->view->pesquisa_facapedido_empresa_oferece = array();
     }
 
     public function indexAction()
     {
+        
 	$url_loja = $this->getRequest()->getParam("url_loja");
 
 	if (empty($url_loja))
@@ -51,6 +54,7 @@ class Portal_LojaController extends Zend_Controller_Action
 	$this->view->cod_empresa = $array[0]['cod_empresa'];
         $this->view->razao_social = $array[0]['razao_social'];
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
+        $this->view->pesquisa_facapedido_empresa_oferece = array();
 
 	//pode ser que chegou aqui via o botao "Ir à Loja" com algum criterio de busca ja selecionado
 	$this->consultaAction($array[0]['cod_empresa']);
@@ -59,7 +63,7 @@ class Portal_LojaController extends Zend_Controller_Action
     public function consultaAction($cod_empresa = '', $produtos = '')
     {
 	//Obs: $produtos so estará preenchido se a funcao for chamada dentro da index
-        xdebug_break();
+  
 	if (empty($cod_empresa))
 	{
 	    $cod_empresa = $this->getRequest()->getPost('cod_empresa');
@@ -75,6 +79,7 @@ class Portal_LojaController extends Zend_Controller_Action
 	$tipos_produto = $this->getRequest()->getPost('cod_tipo_produto');
 	$caloria = $this->getRequest()->getPost('caloria');
         $empresa_oferece = $this->getRequest()->getPost('empresa_oferece');
+        if(!$empresa_oferece){$empresa_oferece=array();}
 
 	//primeiro busca com o lucene
 	if (!empty($criterios))
@@ -103,6 +108,7 @@ class Portal_LojaController extends Zend_Controller_Action
 	$this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;
 	$this->view->pesquisa_facapedido_caloria = $caloria;
 	$this->view->cod_empresa = $cod_empresa;
+        $this->view->pesquisa_facapedido_empresa_oferece = $empresa_oferece;
 
 	$this->_helper->viewRenderer("index");
     }

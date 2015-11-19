@@ -1,12 +1,21 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
-    <link type="text/css" href="/css/portal.css" rel="stylesheet" />
+	<!-- Bootstrap core CSS -->
+	<link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	
+	<!-- Bootstrap theme -->
+	<link type="text/css" href="/bootstrap/bootstrap-theme.min.css" rel="stylesheet">
+	
+	<!-- Portal CSS-->
+	<link type="text/css" href="/css/portal.css" rel="stylesheet" />
+	
+	<!-- jQuery -->
     <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    
+    <!-- javascript Portal -->
     <script type="text/javascript" src="/js/portal.js"></script>
-  
-
 
 </head>
 
@@ -30,7 +39,7 @@
 
 <div align="center" width="80%" style="clear:both;">
 
-    <div style="border: solid gray; margin: 50px;">
+    <div class="formBuscar">
 
 	<?php
 	if ($this->isAberto == true)
@@ -45,29 +54,65 @@
 
         <form action="/portal/loja/consulta" method="post" class="" id='form1'>
 
-            <h2>Entre com os critérios de pesquisa.</h2>
-
-            <div style="text-align: left; border: transparent; width: 380px; ">
-		Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
-		<br>
-		Ex: catupiri, bacon, peito de peru
-            </div>
-
-	    <input type="hidden" name="cod_empresa" value="<?php echo $this->cod_empresa; ?>">
+             <input type="hidden" name="cod_empresa" value="<?php echo $this->cod_empresa; ?>">
 	    <input type="hidden" name="isAberto" value="<?php echo $this->isAberto; ?>">
 
+            
+            
+            <h1>Entre com os critérios de pesquisa por favor. Você pode procurar por ingredientes específicos, lugares, pratos ou 
+            qualquer outro critério disponível para te trazer a opção mais certa para você!</h1> 
+
+            <div style="text-align: left; border: transparent; width: 380px; ">
+                 <p class="lead">Aqui você pode digitar qualquer termo para sua consulta:</p>
+                
+		Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
+		<br>
+		Ex: catupiri, bacon, "peito de peru", chia 
+            </div>
 
             <br>
-            <input type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
+            <input class="form-control" type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
             <br>
             <br>
+             <p class="lead">Culinária:</p>
+            
 
-	    Caloria < que: <input type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+            <div style="width:450; height: 100;">
+		<?php
+		//formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
+		//cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
+		$i = 0;
+		foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto)
+		{
+		    $checked = " ";
+		    if (!empty($this->pesquisa_facapedido_tipo_produto) && in_array($cod_tipo_produto, $this->pesquisa_facapedido_tipo_produto))
+		    {
+			$checked = "checked";
+		    }
+		?>
+    		<input  type="checkbox" name="cod_tipo_produto[]" <?php echo $checked; ?> value="<?php echo $cod_tipo_produto ?>" class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
 
+		<?php } ?>
+	    </div>
 
+            <p class="lead">Valor calórico até: </p><input class="form-control" type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+<br>
+            <br>
+            
+            <p class="lead">Listar apenas estabelecimentos que oferecem: </p>
+            
+            
+              <div style="width:450; height: 100;">
+		<input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabético
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('pouco_sal', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="pouco_sal" class=""> Produto com pouco sal
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('sem_glutem', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="sem_glutem" class=""> Produto sem glútem
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('lactose', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="lactose" class=""> Produto sem lactose
+		<input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgânico	
+              </div>
 
 	    <br><br><br>
-            <input type="submit" value="Pesquisar">
+            <input class="btn btn-primary" type="submit" value="Pesquisar">
+
 
         </form>
     </div>
@@ -82,7 +127,7 @@
           
                   <div style="float: right; position: relative; ">
 	   
-        <input type="button" value="Continuar Comprando" onclick="location.href='http://whattoeat/portal'">       
+        <input class="btn btn-warning" type="button" value="Continuar Comprando" onclick="location.href='<?php echo $this->baseUrl() ?>/portal/index'">       
         
     </div> 
 
@@ -199,9 +244,8 @@
     
         </div> <!-- precos -->
 
-    <div style=' clear:both; '>
-	Descrição do produto:
-	<p style='font-size: smaller;' >
+    <div style="clear:both; float:left; width:500px;">	
+	<p style='font-size: medium;'>Descrição do produto: 
 	    <?php echo $this->resultado[$i]["descricao"]; ?>
     </p> </div> <!-- nome do produto -->
 
