@@ -59,7 +59,7 @@ class Portal_LojaController extends Zend_Controller_Action
     public function consultaAction($cod_empresa = '', $produtos = '')
     {
 	//Obs: $produtos so estará preenchido se a funcao for chamada dentro da index
-
+        xdebug_break();
 	if (empty($cod_empresa))
 	{
 	    $cod_empresa = $this->getRequest()->getPost('cod_empresa');
@@ -74,6 +74,7 @@ class Portal_LojaController extends Zend_Controller_Action
 	$criterios = $this->getRequest()->getPost('criterio');
 	$tipos_produto = $this->getRequest()->getPost('cod_tipo_produto');
 	$caloria = $this->getRequest()->getPost('caloria');
+        $empresa_oferece = $this->getRequest()->getPost('empresa_oferece');
 
 	//primeiro busca com o lucene
 	if (!empty($criterios))
@@ -88,7 +89,7 @@ class Portal_LojaController extends Zend_Controller_Action
 	    $produtos .= "-1"; //so porque fica uma virgula no final
 	}
 
-	$resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $cod_empresa);
+	$resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto,  $empresa_oferece, $cod_empresa);
 
 	//verifica se a loja esta aberta
 	date_default_timezone_set($this->EmpresaDB->getTimezone($cod_empresa));//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local

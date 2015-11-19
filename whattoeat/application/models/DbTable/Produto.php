@@ -92,7 +92,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 
     public function consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece, $cod_empresa='')
     {
-
+        xdebug_break();
 	$select = "select P.cod_produto, P.nome , P.descricao, FP.cod_foto, TP.cod_tamanho_produto, TP.preco, TP.descricao as tamanho,
 	    Tipo.nome as tipo,E.razao_social as razao_social, E.cod_empresa, E.rua, E.numero, E.complemento, E.bairro, E.url, E.timezone, 
             E.telefone1, E.telefone2, E.email, Promo.preco_promocional ";
