@@ -153,12 +153,13 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract {
     }
 
     public function checkUrlExist($url) {
+        
         if (!empty($url)) {
             $query = $this->_db->query("SELECT razao_social, cod_empresa, removed FROM empresa where url='$url'");
         }
         $res = $query->fetchAll();
         if (count($res) > 0 && $res[0]['removed'] == 0) {
-            return $res;
+            return $res[0];
         } else {
             return false;
         }
