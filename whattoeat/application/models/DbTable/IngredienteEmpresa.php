@@ -103,7 +103,6 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
 
     public function editRecord($formData, $cod_ingrediente, $cod_empresa, $logoFileName)
     {
-        xdebug_break();
         $data = array('cod_ingrediente' => $cod_ingrediente,
             'cod_empresa' => $cod_empresa,
             'descricao' => $formData['descricao'],
