@@ -23,7 +23,8 @@
 
 	if(!empty($this->nomeCliente))
 	    echo "<p>Bem vindo".  $this->nomeCliente ."! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
-
+        if(!empty($this->resultado))
+        {
         echo "<div style=' padding-left: 50px; clear:both; margin: 40px; color:black;' > \n";
         echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->resultado[0]['cod_empresa'] . "' width='141' height='auto' alt=''> </p> </div> \n";
         echo "<div style='float: left; margin: 20px 1px 20px 21px; width:300px; '>  \n";
@@ -32,7 +33,7 @@
         echo "Telefone 1: " . $this->resultado[0]["telefone1"] . " Telefone 2 : " . $this->resultado[0]["telefone2"] . " <br> \n";
         echo "email: " . $this->resultado[0]["email"] . " <br> \n";
 	echo " </div>  \n";
-
+        }
 
     ?>
 
