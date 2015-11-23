@@ -68,24 +68,29 @@
                             <td> Logradouro *&nbsp;&nbsp;&nbsp;<br>
                                 <input type="text" class="input-medium RQR required"  title='Por favor, indique Logradouro' maxlength="50"  name="rua" value="<?php echo $this->formData['rua'] ?>" style="width: 200px;">
                                 <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                            <td colspan="2"> Numero *<br>
+                            <td> Numero *<br>
                                 <input type="text" class="input-medium RQR  required validNumber"  title='Por favor, indique Numero'  name="numero" value="<?php echo $this->formData['numero'] ?>" style="width: 200px;">
                                 <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                             <td> Complemento<br>
+                                <input type="text" class="input-medium"  name="complemento" maxlength="20" value="<?php echo $this->formData['complemento'] ?>" style="width: 200px;"></td>
+
                         </tr>
                         <tr>
-                            <td  > Complemento<br>
-                                <input type="text" class="input-medium"  name="complemento" maxlength="20" value="<?php echo $this->formData['complemento'] ?>" style="width: 200px;"></td>
-                            <td colspan="2"> CEP (apenas números)*<br>
+                            <td> CEP (apenas números)*<br>
                                 <input type="text" class="input-medium RQR required validNumber"  title='Por favor, indique CEP' maxlength="8"  name="cep" value="<?php echo $this->formData['cep'] ?>" style="width: 200px;">
                                 <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                                        <td> Bairro
+                                <input type="text" class="input-medium" maxlength="30" name="bairro" value="<?php echo $this->formData['bairro'] ?>" style="width: 200px;"></td>
+
                         </tr>
                         <tr>
-                            <td> Bairro
-                                <input type="text" class="input-medium" maxlength="30" name="bairro" value="<?php echo $this->formData['bairro'] ?>" style="width: 200px;"></td>
                             <td> Telefone 1
                                 <input type="text" class="input-medium"  name="telefone1" maxlength="20" value="<?php echo $this->formData['telefone1'] ?>" style="width: 200px;"></td>
                             <td> Telefone 2
                                 <input type="text" class="input-medium"  name="telefone2" maxlength="20" value="<?php echo $this->formData['telefone2'] ?>" style="width: 200px;"></td>
+                            <td> Website
+                                <input type="text" class="input-medium"  name="website" maxlength="20" value="<?php echo $this->formData['website'] ?>" style="width: 200px;"></td>
+
                         </tr>
                         <tr>
                             <td> Cidade *
