@@ -6,7 +6,7 @@
             <li><a href="#tab2">Imagens</a></li>
             <li><a href="#tab3">Categorias Permitidas como Adicional</a></li> 
             <li><a href="#tab4">Ingredientes</a></li> 
-            <li><a href="#tab5">Tamanhos</a></li>
+            <li><a href="#tab5">Promoções</a></li>
 
         </ul>
     </div>
@@ -70,6 +70,84 @@
                     </tr>
                 </table>
             </form>
+            
+          
+            
+            
+                        <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form5' name="form5" onsubmit="return validateForm('form5');" >
+                        <fieldset style=" margin: 0; padding: 0;">
+                            <legend>Tamanho</legend>
+                            <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+<?php if (count($this->tamanhoDropDown) > 1)
+                                { ?>
+                                    <tr>
+                                        <td colspan="2" align="left">
+                                            Selecione um tamanho para editar seu valor 
+
+<?php				    $attribs = array("class" => 'input-medium', 'id' => 'tamanhoEdit',  'style' => 'width:200px', 'onchange' => "editTamanho(this.value,'$this->produtoId')");
+                                    echo $this->formSelect('tamanhoEdit', $this->tamanhoId, $attribs, $this->tamanhoDropDown); ?>
+                                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> 
+                                        
+
+                                        </td>
+                                    </tr>
+<?php } ?>
+
+<?php if (!empty($this->totalPrco))
+                                { ?>
+                     <!--               <tr>
+                                       <td colspan="2" align="right"><b>Preco De Custo : R$ <?php //echo $this->totalPrco; ?></b></td>       -->                           </tr>
+<?php } ?>
+
+                          <!--      <tr> -->
+                                    
+                                    <td>Descricao &nbsp;&nbsp;&nbsp;<br>
+                                        <input type="text" class="input-medium RQR required"  title='Por favor, indique a descrição' maxlength="20"  name="descricao" id="descricao" value="<?php echo $this->formData5['descricao'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                    <td colspan="2"> Preco <br>
+                                        <input type="text" class="input-medium RQR required validDecimalNumber"  title='Por favor, indique o preço'  name="preco" id="preco" value="<?php echo $this->formData5['preco'] ?>" style="width: 200px;" maxlength="11">
+                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                            </tr>
+<?php //if ($this->formData['tipo'] == 'Pizza') { ?>
+                                <tr>
+                                    <td colspan="2">Se este produto é uma pizza, indique o número de sabores que o cliente pode escolher para esse tamanho<br>
+                                        <input type="text" class="input-medium validNumber " id="numero_sabores_pizza" name="numero_sabores_pizza" maxlength="3" value="<?php echo $this->formData5['numero_sabores_pizza'] ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                                    </td>
+
+                                </tr>
+                               
+<?php// } ?>
+                            
+                        </table>
+                    </fieldset>
+
+
+                    <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+                        <tr>
+                            <td><input type="hidden" name="emorFrom" value="5">
+                                <input type="submit" name="Save" value="Salvar">
+                                <input type="hidden" name="produtoId" id="produtoId" value="<?php echo $this->produtoId; ?>">
+                                <input type="hidden" name="tamanhoId" id="tamanhoId" value="<?php echo $this->tamanhoId; ?>">
+				<input type="button" value="Novo tamanho" onclick="novoTamanho()">
+				<input type="button" value="Cancelar" onclick="cancel()">
+
+
+<?php if (!empty($this->produtoId) && !empty($this->tamanhoId))
+                                { ?>
+                                    <input type="button" name="Save" value="Remover" onclick="delTamanhos('<?php echo $this->produtoId; ?>','<?php echo $this->tamanhoId; ?>')">
+<?php } ?>
+                                    <input type="button" name="Save" value="Grid View" style="margin-left:  200px;" onclick="location.href='<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
+                            </tr>
+                        </table>
+                    </form>
+
+            
+            
+   
+            
+            
+            
         </div>
 
     </div>
@@ -236,78 +314,13 @@
                     </tr>
                 </table>
             </form>
+            
+            
         </div>
     </div>
 
     <div id="tab5">
         <div class="contentForm">
-            <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form5' name="form5" onsubmit="return validateForm('form5');" >
-                        <fieldset style=" margin: 0; padding: 0;">
-                            <legend>Tamanho</legend>
-                            <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
-<?php if (count($this->tamanhoDropDown) > 1)
-                                { ?>
-                                    <tr>
-                                        <td colspan="2" align="left">
-                                            Selecione um tamanho para editar seu valor 
-
-<?php				    $attribs = array("class" => 'input-medium', 'id' => 'tamanhoEdit',  'style' => 'width:200px', 'onchange' => "editTamanho(this.value,'$this->produtoId')");
-                                    echo $this->formSelect('tamanhoEdit', $this->tamanhoId, $attribs, $this->tamanhoDropDown); ?>
-                                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> 
-                                        
-
-                                        </td>
-                                    </tr>
-<?php } ?>
-
-<?php if (!empty($this->totalPrco))
-                                { ?>
-                     <!--               <tr>
-                                       <td colspan="2" align="right"><b>Preco De Custo : R$ <?php //echo $this->totalPrco; ?></b></td>       -->                           </tr>
-<?php } ?>
-
-                          <!--      <tr> -->
-                                    
-                                    <td>Descricao &nbsp;&nbsp;&nbsp;<br>
-                                        <input type="text" class="input-medium RQR required"  title='Por favor, indique a descrição' maxlength="20"  name="descricao" id="descricao" value="<?php echo $this->formData5['descricao'] ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td colspan="2"> Preco <br>
-                                        <input type="text" class="input-medium RQR required validDecimalNumber"  title='Por favor, indique o preço'  name="preco" id="preco" value="<?php echo $this->formData5['preco'] ?>" style="width: 200px;" maxlength="11">
-                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                            </tr>
-<?php //if ($this->formData['tipo'] == 'Pizza') { ?>
-                                <tr>
-                                    <td colspan="2">Se este produto é uma pizza, indique o número de sabores que o cliente pode escolher para esse tamanho<br>
-                                        <input type="text" class="input-medium validNumber " id="numero_sabores_pizza" name="numero_sabores_pizza" maxlength="3" value="<?php echo $this->formData5['numero_sabores_pizza'] ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-                                    </td>
-
-                                </tr>
-                               
-<?php// } ?>
-                            
-                        </table>
-                    </fieldset>
-
-
-                    <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
-                        <tr>
-                            <td><input type="hidden" name="emorFrom" value="5">
-                                <input type="submit" name="Save" value="Salvar">
-                                <input type="hidden" name="produtoId" id="produtoId" value="<?php echo $this->produtoId; ?>">
-                                <input type="hidden" name="tamanhoId" id="tamanhoId" value="<?php echo $this->tamanhoId; ?>">
-				<input type="button" value="Novo tamanho" onclick="novoTamanho()">
-				<input type="button" value="Cancelar" onclick="cancel()">
-
-
-<?php if (!empty($this->produtoId) && !empty($this->tamanhoId))
-                                { ?>
-                                    <input type="button" name="Save" value="Remover" onclick="delTamanhos('<?php echo $this->produtoId; ?>','<?php echo $this->tamanhoId; ?>')">
-<?php } ?>
-                                    <input type="button" name="Save" value="Grid View" style="margin-left:  200px;" onclick="location.href='<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
-                            </tr>
-                        </table>
-                    </form>
 
 
 

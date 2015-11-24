@@ -46,22 +46,24 @@ class Portal_LojaController extends Zend_Controller_Action
 
 	//verifica se é uma URL valida. O retorno eh um array[0]['cod_empresa'] e array[0]['razao_social']
 	$array = $this->EmpresaDB->checkUrlExist($url_loja);
-	if ($array[0]['cod_empresa'] == false)
+	if ($array['cod_empresa'] == false)
 	{
 	    $this->_helper->viewRenderer('pagina_nao_encontrada');
 	    return;
 	}
-	$this->view->cod_empresa = $array[0]['cod_empresa'];
-        $this->view->razao_social = $array[0]['razao_social'];
+        
+	$this->view->cod_empresa = $array['cod_empresa'];
+        $this->view->razao_social = $array['razao_social'];
+       
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
         $this->view->pesquisa_facapedido_empresa_oferece = array();
 
 	//pode ser que chegou aqui via o botao "Ir à Loja" com algum criterio de busca ja selecionado
-	$this->consultaAction($array[0]['cod_empresa']);
+	$this->consultaAction($array['cod_empresa']);
     }
 
     public function consultaAction($cod_empresa = '', $produtos = '')
-    {
+    {                
 	//Obs: $produtos so estará preenchido se a funcao for chamada dentro da index
   
 	if (empty($cod_empresa))
@@ -80,7 +82,9 @@ class Portal_LojaController extends Zend_Controller_Action
 	$caloria = $this->getRequest()->getPost('caloria');
         $empresa_oferece = $this->getRequest()->getPost('empresa_oferece');
         if(!$empresa_oferece){$empresa_oferece=array();}
-
+        
+        
+    
 	//primeiro busca com o lucene
 	if (!empty($criterios))
 	{
@@ -109,6 +113,18 @@ class Portal_LojaController extends Zend_Controller_Action
 	$this->view->pesquisa_facapedido_caloria = $caloria;
 	$this->view->cod_empresa = $cod_empresa;
         $this->view->pesquisa_facapedido_empresa_oferece = $empresa_oferece;
+        //codigo necessario para apresentar no topo da pagina da loja suas informações 
+        $dados_empresa = $this->EmpresaDB->getSingleData($cod_empresa);
+        $this->view->razao_social = $dados_empresa['razao_social'];
+        $this->view->rua = $dados_empresa['rua'];
+        $this->view->numero = $dados_empresa['numero'];
+        $this->view->complemento = $dados_empresa['complemento'];
+        $this->view->bairro = $dados_empresa['bairro'];
+        $this->view->telefone1 = $dados_empresa['telefone1'];
+        $this->view->telefone2 = $dados_empresa['telefone2'];
+        $this->view->email = $dados_empresa['email'];
+        $this->view->website = $dados_empresa['website'];
+        
 
 	$this->_helper->viewRenderer("index");
     }

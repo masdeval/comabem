@@ -21,18 +21,21 @@
 
     <?php
 
+        //Traz no topo as informações do estabelecimento. Nao deu pra ser igual a index do portal porque do jeito que está lá a empresa vem como resultado 
+        //da busca por produto. Se não houver produto que case com a busca, também não vem empresa, e iria perder a informação que aparece no topo. 
+    
 	if(!empty($this->nomeCliente))
 	    echo "<p>Bem vindo".  $this->nomeCliente ."! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
-
+        
         echo "<div style=' padding-left: 50px; clear:both; margin: 40px; color:black;' > \n";
-        echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->resultado[0]['cod_empresa'] . "' width='141' height='auto' alt=''> </p> </div> \n";
+        echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->cod_empresa."' width='141' height='auto' alt=''> </p> </div> \n";
         echo "<div style='float: left; margin: 20px 1px 20px 21px; width:300px; '>  \n";
-        echo  "<div style='font-weight: bold;'>" . $this->resultado[0]["razao_social"] . " </div> <br> \n";
-        echo $this->resultado[0]["rua"] . " " . $this->resultado[0]["numero"]. " " . $this->resultado[0]["complemento"] . " " . $this->resultado[0]["bairro"] . " <br> \n";
-        echo "Telefone 1: " . $this->resultado[0]["telefone1"] . " Telefone 2 : " . $this->resultado[0]["telefone2"] . " <br> \n";
-        echo "email: " . $this->resultado[0]["email"] . " <br> \n";
-	echo " </div>  \n";
-
+        echo  "<div style='font-weight: bold;'>" . $this->razao_social . " </div> <br> \n";
+        echo $this->rua . " " . $this->numero. " " . $this->complemento . " " . $this->bairro . " <br> \n";
+        echo "Telefone 1: " . $this->telefone1 . " Telefone 2 : " . $this->telefone2 . " <br> \n";
+        echo "email: " . $this->email . " <br> \n";	
+        echo $this->website . " <br> \n";	echo " </div>  \n";
+        
 
     ?>
 
@@ -54,9 +57,8 @@
 
         <form action="/portal/loja/consulta" method="post" class="" id='form1'>
 
-             <input type="hidden" name="cod_empresa" value="<?php echo $this->cod_empresa; ?>">
+            <input type="hidden" name="cod_empresa" value="<?php echo $this->cod_empresa; ?>">
 	    <input type="hidden" name="isAberto" value="<?php echo $this->isAberto; ?>">
-
             
             
             <h1>Entre com os critérios de pesquisa por favor. Você pode procurar por ingredientes específicos, lugares, pratos ou 
@@ -246,7 +248,7 @@
 
     <div style="clear:both; float:left; width:500px;">	
 	<p style='font-size: medium;'>Descrição do produto: 
-	    <?php echo $this->resultado[$i]["descricao"]; ?>
+	    <?php echo $this->resultado[$i]["descricao"]." Valor calórico: ".$this->resultado[$i]["valor_calorico"]." cal"; ?>
     </p> </div> <!-- nome do produto -->
 
 
