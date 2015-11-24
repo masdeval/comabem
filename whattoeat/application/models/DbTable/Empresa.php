@@ -30,7 +30,7 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract {
             'telefone2' => $formData['telefone2'],
             'bairro' => $formData['bairro'],
             'email' => $formData['email'],
-            'url' => preg_replace('/\s+/', '', trim($formData['url'])),
+            'url' => preg_replace('/\s+/', '', $this->cleanURI(trim($formData['razao_social']))),
             'desativada' => (int) $formData['desativada'],
             'cod_cidade' => (int) $formData['cod_cidade'],
             'data_cadastro' => $now,
@@ -55,6 +55,46 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract {
         return $id;
     }
 
+    public function cleanURI($input) {
+        $map = array(
+            'á' => 'a',
+            'à' => 'a',
+            'ã' => 'a',
+            'â' => 'a',
+            'é' => 'e',
+            'ê' => 'e',
+            'í' => 'i',
+            'ó' => 'o',
+            'ô' => 'o',
+            'õ' => 'o',
+            'ú' => 'u',
+            'ü' => 'u',
+            'ç' => 'c',
+            'Á' => 'A',
+            'À' => 'A',
+            'Ã' => 'A',
+            'Â' => 'A',
+            'É' => 'E',
+            'Ê' => 'E',
+            'Í' => 'I',
+            'Ó' => 'O',
+            'Ô' => 'O',
+            'Õ' => 'O',
+            'Ú' => 'U',
+            'Ü' => 'U',
+            'Ç' => 'C'
+        );
+        return ereg_replace(
+                '[^a-z0-9-]', '', ereg_replace(
+                        ' +', '-',
+                        //strtr(utf8_decode(utf8_encode($input)),'ÀÁÃÂÉÊÍÓÕÔÚÜÇàáãâéêíóõôúüç','AAAAEEIOOOUUCaaaaeeiooouuc')
+                        strtr(
+                                strtolower(($input)), $map
+                        )
+                )
+        );
+    }
+
     public function editEmpresa($formData, $id, $logoFileName) {
         $data = array('razao_social' => $formData['razao_social'],
             'cnpj' => $formData['cnpj'],
@@ -68,7 +108,7 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract {
             'telefone2' => $formData['telefone2'],
             'bairro' => $formData['bairro'],
             'email' => $formData['email'],
-            'url' => preg_replace('/\s+/', '', trim($formData['url'])),
+            'url' => preg_replace('/\s+/', '', $this->cleanURI(trim($formData['razao_social']))),
             'desativada' => (int) $formData['desativada'],
             'cod_cidade' => (int) $formData['cod_cidade'],
             'timezone' => $formData['timezone'],
@@ -153,7 +193,7 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract {
     }
 
     public function checkUrlExist($url) {
-        
+
         if (!empty($url)) {
             $query = $this->_db->query("SELECT razao_social, cod_empresa, removed FROM empresa where url='$url'");
         }
