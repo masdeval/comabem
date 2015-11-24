@@ -94,6 +94,7 @@ class LuceneManager
 	foreach( $array_criterios as $item)
 	{
 	    $item = trim(strtolower($item));
+            $item = str_replace("-", " ", $item); //deu problema busca fuzzy usando -
 	    //$item = (utf8_decode($item));
 	    //$item = mb_convert_encoding($item,"utf-8","iso-8859-1");
 	    $query .= $item."~0.5 ";

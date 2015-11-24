@@ -150,10 +150,10 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
         $result = $query->fetchAll();
         if (!empty($result))
         {
-            return false;
+            return true;
         } else
         {
-            return true;
+            return false;
         }
     }
 
