@@ -117,24 +117,35 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
                 }
 
 
-                if (!$this->IngredienteEmpresa->checkDuplicateRec($this->empresaId, $ingredienteId))
+                /*if (!$this->IngredienteEmpresa->checkDuplicateRec($this->empresaId, $ingredienteId))
                 {
                     $this->view->headline = "Esse ingrediente já está cadastrado!";
                     $this->_forward("index");
                     return;
-                }
+                }*/
                 try
                 {
                     $this->db->beginTransaction();
-                    $this->IngredienteEmpresa->addRecord($formData, $ingredienteId, $this->empresaId, $fileName);
+                    //Se o ingrediente já existe significa que já tinha sido customizado uma vez, foi removido, e sua flag marcada para removido,                    
+                    if ($this->IngredienteEmpresa->checkDuplicateRec($this->empresaId, $ingredienteId))
+                    {
+                        $data['removed'] = 0;
+                        $where[] = "cod_empresa = $this->empresaId";
+                        $where[] = "cod_ingrediente = $ingredienteId";
+                        $t =  $this->db->update('ingrediente_empresa', $data, $where);        
+                    }
+                    else
+                    {
+                        $this->IngredienteEmpresa->addRecord($formData, $ingredienteId, $this->empresaId, $fileName);
+                    }
                     $this->CategoriaIngredienteEmpresa->updateRecord($formData, $ingredienteId, $this->empresaId);
                     $this->db->commit();
                 } catch (Exception $e)
                 {
                     $this->db->rollBack();
-                    $this->view->headline = "Problema ao editar registro. " . $e->getMessage();
+                    $this->view->headline = "Problema ao inserir registro. " . $e->getMessage();
                     $this->_forward("index");
-                    return;
+                    
                 }
                 //Se chegou aqui esse ingredienteId foi realmente inserido
                 $this->editAction($ingredienteId);
