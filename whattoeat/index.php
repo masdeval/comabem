@@ -1,6 +1,45 @@
 <?php
 
+// Define path to application directory
+defined('APPLICATION_PATH')
+    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/application'));
 
-header('location:public/index')
+// Define application environment
+defined('APPLICATION_ENV')
+    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
 
-?>
+// Ensure library/ is on include_path
+set_include_path(implode(PATH_SEPARATOR, array(
+    realpath(APPLICATION_PATH . '/../library'),
+    get_include_path(),
+)));
+
+set_include_path(implode(PATH_SEPARATOR, array(
+    realpath(APPLICATION_PATH . '/../library/PagSeguro'),
+    get_include_path(),
+)));
+
+
+/** Zend_Application */
+require_once 'Zend/Application.php';
+//require_once 'PagSeguroLibrary.php';
+
+// Create application, bootstrap, and run
+$application = new Zend_Application(
+    APPLICATION_ENV,
+    APPLICATION_PATH . '/configs/application.ini'
+);
+
+$smtp = new Zend_Mail_Transport_Smtp('smtp.gmail.com', array(
+    'auth' => 'login',
+    'username' => 'lanchefacil@lanchefacil.com',
+    'password' => 'lanchefacil',
+    'ssl' => 'ssl',
+    'port' => '465'
+));
+
+Zend_Mail::setDefaultTransport($smtp);
+
+
+$application->bootstrap()
+            ->run();
