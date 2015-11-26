@@ -4,7 +4,7 @@
         <ul>
             <li><a href="#tab1">Produto</a></li>
             <li><a href="#tab2">Imagens</a></li>
-            <li><a href="#tab3">Categorias Permitidas como Adicional</a></li> 
+            <!-- <li><a href="#tab3">Categorias Permitidas como Adicional</a></li> -->
             <li><a href="#tab4">Ingredientes</a></li> 
             <li><a href="#tab5">Promoções</a></li>
 
@@ -13,6 +13,7 @@
     <div id="tab1">
         <div class="contentForm">
             <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form1' onsubmit="return validateForm('form1');" enctype="multipart/form-data" >
+                
                 <table class="tableFrm" cellspacing="0" cellpadding="0" border="0">
                     <tr>
 
@@ -56,23 +57,33 @@
                             <textarea name="descricao" class="input-medium" style="width: 630px; height: 50px;"><?php echo $this->formData['descricao'] ?></textarea></td>
 
                     </tr>
+<?php  if($this->produtoId == '') { ?>                                        
+                    
+                    <tr>                        
+                        <td>Descricao do tamanho &nbsp;&nbsp;&nbsp;<br>
+                            <input type="text" class="input-medium RQR required"  title='Por favor, indique a descrição' maxlength="20"  name="descricao" id="descricao_tamanho" value="<?php echo $this->formData5['descricao'] ?>" style="width: 200px;">
+                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                        <td colspan="2"> Preco <br>
+                            <input type="text" class="input-medium RQR required validDecimalNumber"  title='Por favor, indique o preço'  name="preco" id="preco" value="<?php echo $this->formData5['preco'] ?>" style="width: 200px;" maxlength="11">
+                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                    </tr>
+<?php } ?>               
+                    
+                    
                 </table>
 
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>
                         <td><input type="hidden" name="emorFrom" value="1">
-                            <input type="submit" name="Save" value="Salvar">
-                            <input type="hidden" name="produtoId" value="<?php echo $this->produtoId; ?>">
-                            <input type="button" name="Save" value="Remover" onclick="delProduto('<?php echo $this->produtoId; ?>')">
-                            <input type="button" name="Save" value="New" onclick="location.href='<?php echo $this->baseUrl() ?>/estabelecimento/produto/'">
-                            <input type="button" name="Save" value="Grid View" style="margin-left:  400px;" onclick="location.href='<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
+                            <input type="submit" name="Save" value="Salvar" >
+                            <input type="hidden" id="produtoId" name="produtoId" value="<?php echo $this->produtoId; ?>">
+                            <input type="button" name="Remover" value="Remover" onclick="delProduto('<?php echo $this->produtoId; ?>')">
+                            <input type="button" name="Novo" value="Novo" onclick="location.href='<?php echo $this->baseUrl() ?>/estabelecimento/produto/'">
+                            <input type="button" name="Grid" value="Ver Grid" style="margin-left:  400px;" onclick="location.href='<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
 
                     </tr>
                 </table>
             </form>
-            
-          
-            
             
                         <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form5' name="form5" onsubmit="return validateForm('form5');" >
                         <fieldset style=" margin: 0; padding: 0;">
@@ -85,8 +96,10 @@
                                             Selecione um tamanho para editar seu valor 
 
 <?php				    $attribs = array("class" => 'input-medium', 'id' => 'tamanhoEdit',  'style' => 'width:200px', 'onchange' => "editTamanho(this.value,'$this->produtoId')");
-                                    echo $this->formSelect('tamanhoEdit', $this->tamanhoId, $attribs, $this->tamanhoDropDown); ?>
-                                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> 
+                                    echo $this->formSelect('tamanhoEdit', $this->tamanhoId, $attribs, $this->tamanhoDropDown); 
+?>
+                                   
+                                      <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> 
                                         
 
                                         </td>
@@ -120,7 +133,6 @@
 <?php// } ?>
                             
                         </table>
-                    </fieldset>
 
 
                     <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
@@ -140,14 +152,11 @@
                                     <input type="button" name="Save" value="Grid View" style="margin-left:  200px;" onclick="location.href='<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
                             </tr>
                         </table>
-                    </form>
+                            
+                    </fieldset>
 
-            
-            
-   
-            
-            
-            
+              </form>
+
         </div>
 
     </div>
@@ -156,7 +165,7 @@
         <div class="contentForm">
             <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" name="form2" id='form2' enctype="multipart/form-data">
                 <fieldset style=" margin: 0; padding: 0;">
-                    <legend>Imagens:</legend>
+                    <!--<legend>Imagem:</legend> -->
                     <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                         <tr>
                             <?php $i = 0;
@@ -198,8 +207,7 @@
         </div>
     </div>
 
-
-    
+    <!--
     <div id="tab3">
         <div class="contentForm">
             <form action="/estabelecimento/produto/add" method="post" class="frm" id='form3' onsubmit="return validateForm('form3');" >
@@ -225,12 +233,12 @@
                                 }
 ?>
                                 <td>
-                                    <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php echo $v['cod_categoria_empresa'] ?>" <?php echo $checked ?> > <?php echo $v['nome'] ?>
+                                    <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php //echo $v['cod_categoria_empresa'] ?>" <?php //echo $checked ?> > <?php //echo $v['nome'] ?>
                                     <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
                                 </td>
 <?php if ($i >= 2)
                                 {
-                                    echo '</tr><tr>';
+                                    //echo '</tr><tr>';
                                     $i = 0;
                                 } ?>
 <?php $i++;
@@ -245,8 +253,8 @@
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>
                         <td><input type="hidden" name="emorFrom" value="3">
-                            <input type="hidden" name="action" value="<?php  echo $this->action; ?>">
-                            <input type="hidden" name="produtoId" value="<?php echo $this->produtoId ?>">
+                            <input type="hidden" name="action" value="<?php  //echo $this->action; ?>">
+                            <input type="hidden" name="produtoId" value="<?php //echo $this->produtoId ?>">
                             <input type="submit" name="Save" value="Salvar">
                         </td>
                     </tr>
@@ -255,6 +263,7 @@
         </div>
     </div>      
 
+    -->
 
     
     <div id="tab4">
@@ -262,7 +271,7 @@
         <div class="contentForm">
             <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form4' onsubmit="return validateForm('form4');" >
                     <fieldset style=" margin: 0; padding: 0;">
-                        <legend>Ingrediente:</legend>
+                        <!--<legend>Ingrediente:</legend>-->
                         <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                             <tr><td colspan="30">
                                     Indique quais sao as ingredientes que compõem esse produto. Isso é muito importante para a aplicacao o ajudar em outras etapas.
@@ -274,8 +283,10 @@
                                 <td align="left">Quantidade em gramas </td>
                             </tr>
 <?php
-                            foreach ($this->ingredienteEmpresaRec as $k => $v)
-                            {
+                            for ($i = 0; $i < sizeof($this->ingredienteEmpresaRec); $i++)
+                            //foreach ($this->ingredienteEmpresaRec as $k => $v)
+                            {                                xdebug_break();
+                                $v = $this->ingredienteEmpresaRec[$i];
                                 if (!empty($this->formData4[$v['cod_ingrediente']]))
                                 {
                                     $checked = "checked";                                    
@@ -296,8 +307,44 @@
                                     <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
                                     <td align="left"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $quantidade_utilizada ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                </tr>
-<?php } ?>
+
+<?php 
+                                $i++;
+                                $v = $this->ingredienteEmpresaRec[$i];
+                                if($i < sizeof($this->ingredienteEmpresaRec))
+                                {
+                                    if (!empty($this->formData4[$v['cod_ingrediente']]))
+                                    {
+                                        $checked = "checked";                                    
+                                        //$valor_calorico = $this->formData4[$v['cod_ingrediente']]['valor_calorico'];
+                                        $quantidade_utilizada = $this->formData4[$v['cod_ingrediente']]['quantidade_utilizada'];
+                                    } else
+                                    {
+                                        $checked = '';
+                                        //$valor_calorico = '';
+                                        $quantidade_utilizada = '';
+                                        $preco = '';
+                                    }
+
+?>
+                                
+                                    <td align="left"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
+                                    <!-- <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php //echo $v['cod_ingrediente'] ?>]" value="<?php //echo $valor_calorico ?>" style="width: 200px;"> -->
+                                    <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
+                                    <td align="left"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $quantidade_utilizada ?>" style="width: 200px;">
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+
+<?php 
+                                }
+                                else
+                                {
+?>
+                               </tr>
+<?php
+                                    
+                                }
+
+                                } ?>
 
                             <tr>
                                 <td colspan="3" height="20">&nbsp;</td>

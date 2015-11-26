@@ -25,6 +25,11 @@ class DbTable_Ingrediente extends Zend_Db_Table_Abstract
         return $result;
     }
 
+    public function getRecords()
+    {
+        $dat = $this->fetchAll();        
+        return $dat;
+    }
     public function getImageData($ingredienteId)
     {
 

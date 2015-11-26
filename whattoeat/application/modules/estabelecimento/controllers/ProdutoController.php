@@ -32,7 +32,8 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	$this->CategoriaEmpresa = new DbTable_CategoriaEmpresa();
 	$this->CategoriaIngredienteEmpresa = new DbTable_CategoriaIngredienteEmpresa($this->db);
        	$this->ItensDeUmLanche = new DbTable_ItensDeUmLanche($this->db);
-	$this->IngredienteEmpresa = new DbTable_IngredienteEmpresa($this->db);
+	//$this->IngredienteEmpresa = new DbTable_IngredienteEmpresa($this->db);
+        $this->Ingrediente = new DbTable_Ingrediente($this->db);
 	$this->view->pageTitle = 'Produto';
 	$this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
     }
@@ -63,7 +64,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
     {
 	$this->view->produtoId = '';
 	$this->view->empresaId = $this->empresaId;
-	$this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getRecords($this->empresaId);
+	$this->view->ingredienteEmpresaRec = $this->Ingrediente->getRecords();
 	$this->view->CategoriaEmpresaRec = $this->CategoriaEmpresa->getRecords($this->empresaId);
 	$this->view->cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
 	$this->_helper->viewRenderer('index');
@@ -100,6 +101,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 		try
 		{
 		    $produtoId = $this->Produto->add($formData, $this->empresaId);
+                    $this->TamanhoProduto->add($formData, $produtoId);
 		    //insere tambem no lucene
 		    LuceneManager::criaDocumentoProduto($this->empresaId, $produtoId, $formData);
 		}
@@ -344,9 +346,10 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	    $this->view->formData3 = $formData3;
 	    $b = $this->ItensDeUmLanche->getRecordsProduto($this->empresaId, $produtoId);
             $formData4="";
+            xdebug_break();
 	    foreach ($b as $k => $v)
 	    {
-		$formData4[$v['cod_ingrediente']] = $v;
+		$formData4[$v['cod_ingrediente']] = $v;                
 	    }
 	    $this->view->formData4 = $formData4;
 
@@ -390,7 +393,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	}
 
 	$this->view->CategoriaEmpresaRec = $this->CategoriaEmpresa->getRecords($this->empresaId);
-	$this->view->ingredienteEmpresaRec = $this->IngredienteEmpresa->getRecords($this->empresaId);
+	$this->view->ingredienteEmpresaRec = $this->Ingrediente->getRecords();
 	$cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
 	$this->view->cod_tipo_produto = $cod_tipo_produto;
 	$this->view->title = 'Produto';

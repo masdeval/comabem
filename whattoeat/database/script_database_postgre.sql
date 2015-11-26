@@ -881,9 +881,17 @@ ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
 
-ALTER TABLE public.ingrediente_empresa_produto ADD CONSTRAINT ingrediente_empresa_ingrediente_empresa_produto_fk
-FOREIGN KEY (cod_ingrediente, cod_empresa)
-REFERENCES public.ingrediente_empresa (cod_ingrediente, cod_empresa)
+ALTER TABLE public.ingrediente_empresa_produto ADD CONSTRAINT ingrediente_ingrediente_empresa_produto_fk
+FOREIGN KEY (cod_ingrediente)
+REFERENCES public.ingrediente (cod_ingrediente)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION
+NOT DEFERRABLE;
+
+
+ALTER TABLE public.ingrediente_empresa_produto ADD CONSTRAINT empresa_ingrediente_empresa_produto_fk
+FOREIGN KEY (cod_empresa)
+REFERENCES public.empresa (cod_empresa)
 ON DELETE NO ACTION
 ON UPDATE NO ACTION
 NOT DEFERRABLE;
