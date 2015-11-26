@@ -18,6 +18,7 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
      public function getIngredientesAindaNaoCustomizadosDropDown($empresaId)
     {
 
+        $result = '';
         $query = $this->_db->query("SELECT cod_ingrediente,nome FROM ingrediente where cod_ingrediente not in (SELECT I.cod_ingrediente FROM ingrediente I , ingrediente_empresa IE  WHERE  (IE.cod_ingrediente=I.cod_ingrediente) and IE.cod_empresa=$empresaId and IE.removed=0) ORDER BY  nome ");
         $dat = $query->fetchAll();
         foreach ($dat as $k => $row)
