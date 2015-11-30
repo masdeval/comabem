@@ -11,7 +11,7 @@ class Estabelecimento_Bootstrap extends Zend_Application_Module_Bootstrap
         $view = Zend_Registry::get("view");
 
         //Titulo
-        $view->headTitle("faça pedidos Online - Painel de controle");
+        $view->headTitle("Bem vindo ao Coma Bem!");
 
         //CSS
         $view->headLink()->appendStylesheet("/js/jquery-ui-1.8.4.custom/css/custom-theme/jquery-ui-1.8.4.custom.css");
