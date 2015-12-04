@@ -18,7 +18,7 @@ class Estabelecimento_Bootstrap extends Zend_Application_Module_Bootstrap
         $view->headLink()->appendStylesheet("/js/jcarousel/skins/tango/skin.css");
         $view->headLink()->appendStylesheet("/js/DataTables-1.7.1/media/css/demo_table.css");
         $view->headLink()->appendStylesheet("/css/base.css");
-
+        $view->headLink()->appendStylesheet("/css/portal.css");
 
 
         //JS

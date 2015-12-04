@@ -32,7 +32,7 @@ class Plugins_CheckAcl extends Zend_Controller_Plugin_Abstract {
           * Cada usuario tem sua propria role e se chegar aqui certamente ja terá um usuario na sessao.
           *  */
          $view = Zend_Registry::get('view');
-         $session = new Zend_Session_Namespace('default');
+         $session = new Zend_Session_Namespace('estabelecimento');
          if (isset($session->user))
          {
             $view->navigation()->setRole(new Zend_Acl_Role($session->user->role));
@@ -48,7 +48,7 @@ class Plugins_CheckAcl extends Zend_Controller_Plugin_Abstract {
         $resource = $request->getControllerName();
         $action = $request->getActionName();
 
-        $session = new Zend_Session_Namespace('default');
+        $session = new Zend_Session_Namespace('estabelecimento');
         if (isset($session->user)){
             $user = $session->user;
         }

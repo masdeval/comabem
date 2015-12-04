@@ -23,7 +23,7 @@ class Estabelecimento_FuncionarioController extends Zend_Controller_Action
         $this->FuncionarioHasEmpresa = new DbTable_FuncionarioHasEmpresa($this->db);
         $this->FuncionarioEntregador = new DbTable_FuncionarioEntregador($this->db);
         $this->view->pageTitle = 'Funcionario';
-        $this->session = new Zend_Session_Namespace('default');
+        $this->session = new Zend_Session_Namespace('estabelecimento');
         if (isset($this->session->user))
         {
             $this->empresaId = $this->session->user->empresa;

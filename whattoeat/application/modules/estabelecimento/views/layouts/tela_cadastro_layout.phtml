@@ -11,8 +11,11 @@ $this->headTitle('Zend Framework Tutorial');
 <?php echo $this->headMeta(); ?>
 <title><?php echo $this->pageTitle;?></title>
 <link type="text/css" href="<?php echo $this->baseUrl() ?>/js/jui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
+<link type="text/css" href="<?php echo $this->baseUrl() ?>/css/style.css" rel="stylesheet" />
+<link type="text/css" href="<?php echo $this->baseUrl() ?>/css/portal.css" rel="stylesheet" />
+
 <script>
-base_url='<?php echo $this->baseUrl() ?>';
+var base_url='<?php echo $this->baseUrl() ?>';
 
 </script>
 <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/js/jui/js/jquery-1.4.4.min.js"></script>
@@ -20,7 +23,7 @@ base_url='<?php echo $this->baseUrl() ?>';
 <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/js/validation-new.js"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/js/common.js"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl() ?>/js/jquery.cookie.js"></script>
-<link type="text/css" href="<?php echo $this->baseUrl() ?>/css/style.css" rel="stylesheet" />
+
 
 <script type="text/javascript">
             $(function(){
@@ -159,6 +162,12 @@ base_url='<?php echo $this->baseUrl() ?>';
 </head>
 
 <body>
+    
+        
+<div class="header">
+		<div class="logo" style="float:left;"><img src="/img/logotipo.png"></div>
+                
+	</div>
 
 <?php echo $this->layout()->content; ?>
 </body>

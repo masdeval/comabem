@@ -24,7 +24,7 @@ class Estabelecimento_PedidosController extends Zend_Controller_Action
     public function init()
     {
 	$this->db = Zend_Db_Table::getDefaultAdapter();
-	$this->session = new Zend_Session_Namespace('default');
+	$this->session = new Zend_Session_Namespace('estabelecimento');
 	if (isset($this->session->user))
 	{
 	    $this->empresaId = $this->session->user->empresa;

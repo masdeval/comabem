@@ -32,12 +32,13 @@ body {
 	margin: 26px 0 0 48px;
 }
 
-.topo {
+.header {
 	height: 137px;
 	background: #FFBF00;
-	margin: 0.5em 0 0 0;
+	margin: 0 0 20px 0;
 	padding: 0;
 	box-shadow: 3px 3px 0 #333;
+        
 }
 .conta {
 	width: 80em;

@@ -1,1 +1,103 @@
-<br /><br /><center>View script for controller <b>Auth</b> and script/action name <b>index</b></center>
+<?php echo $this->doctype(); ?>
+<html>
+	<head>
+		<?php echo $this->headMeta();?>
+		<?php echo $this->headTitle();?>
+		<?php echo $this->headLink();?>
+		<?php echo $this->JQuery()->enable();?>
+		<?php echo $this->headScript();?>
+	</head>
+<body>
+
+<body>
+
+	<div class="topo">
+		<div class="logo"><img src="/img/logotipo.png"></div>
+	</div>
+	<div class="conta">
+	<div class="heading">
+    
+    <h2><?php echo $this->headline; ?></h2>
+	
+    
+    <h2> Por favor, crie sua conta ou faça login antes de continuar. </h2>
+
+    
+	</div>
+	
+	
+    <div class="main-content" >
+    <ul class="columnListing">
+	<li class="leftSide">
+	<form action="/estabelecimento/auth/criar-Conta" method="POST" class="frm" name="form1" id='form1' onsubmit="return validaTermoAceite(this);">
+
+	<h3>Crie sua conta</h3>
+	<br>
+	* CPF: <input type="text" class="input-medium RQR required form-control" title="Por favor, indique o CPF." name="responsavel[cpf]" value="<?php //echo $this->cliente['email'] ?>"  onblur="">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing' id="spanMail"></span></div>
+	<br>
+	* Nome completo: <input type="text"  class="input-medium RQR required form-control" title="Por favor, indique seu nome." name="responsavel[nome]" value="<?php //echo $this->cliente['nome'] ?>">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	* Senha: <input type="password" class="input-medium RQR required form-control" title="Por favor, entre com uma senha." id="senha" name="cliente[senha]">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	* Confirme senha: <input type="password" class="input-medium RQR required form-control" tithe="Por favor, repita a senha." id="senha_repetida" name="cliente[senha_repetida]">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br><br>
+        <input type="checkbox"  id="aceite" name="cliente[aceite]" checked> Estou de acordo com os <a href="#">termos e condicões </a> do site.
+
+	
+	<br>
+	
+	<input class="btn btn-lg btn-primary btn-block" type="submit" name="criarConta" value="Criar Minha Conta">
+
+     </form>
+	</li>
+ 
+	<li class="option-callout">
+		<p>ou</p>
+	</li>
+ 
+	<li class="rightSide">
+    <form action="/estabelecimento/auth/login" method="POST" class="frm form-signin" role="form" id='form2' onsubmit="return validateForm('form2');">
+
+	<h3>Login</h3>
+	<br>
+	* CPF: <input class="form-control" type="text" class="input-medium RQR required" title="Por favor, indique o cpf." name="cpf">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+	<br>
+	* Senha: <input class="form-control" type="password" class="input-medium RQR required" title="Por favor, entre com uma senha." name="senha">
+	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div><br />
+
+	
+	<input class="btn btn-lg btn-primary btn-block" type="submit" name="login" value="Entrar" />
+	<br />
+	<br />
+	<a href="/portal/cliente/logout"> Logout </a>
+     </form>
+	 </li>
+	</ul>
+    </div>
+	
+</div>
+
+
+
+
+
+</body>
+
+<script>
+function isEmpty(str) {
+    return (!str || 0 === str.length);
+}
+
+function isBlank(str) {
+    return (!str || /^\s*$/.test(str));
+}
+
+
+  
+
+</script>
