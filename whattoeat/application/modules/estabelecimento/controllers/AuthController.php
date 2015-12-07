@@ -6,6 +6,8 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
 
     public function init() {
         
+        $this->_helper->layout()->setLayout('header');
+        
         //$this->_helper->layout()->disableLayout();        
         $this->db = Zend_Db_Table::getDefaultAdapter();
         $this->FuncionarioDB = new DbTable_Funcionario($this->db);        
@@ -15,14 +17,6 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
     public function indexAction() {
         $msg = $this->_getParam('msg', '');
         $this->view->headline = $msg;
-        if (isset($this->session->user))
-        {
-          $this->_redirect("estabelecimento/index");  
-        }
-        else
-        {
-           $this->_redirect("estabelecimento/auth");
-        }
        
     }
 
