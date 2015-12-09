@@ -186,14 +186,14 @@ function removeImage(){
 }
 /*Tela de Empresa*/
 function delEmpresa(id){
-    if(confirm('Tem certeza que deseja remover o registro?')){
+    if(confirm('Tem certeza que deseja remover a empresa?')){
         var url=base_url+'/estabelecimento/empresa/delete/';
         document.getElementById('form1').action = url;
         document.getElementById('form1').submit();
     }
 }
 function delTipos_de_produtos(id){
-    if(confirm('Tem certeza que deseja remover o registro?')){
+    if(confirm('Tem certeza que deseja remover o tipo de produto?')){
 
         var url=base_url+'/estabelecimento/empresa/delete-Tipos-De-Produtos/';
         document.getElementById('form2').action = url;
@@ -201,7 +201,7 @@ function delTipos_de_produtos(id){
     }
 }
 function deleteHorario(id){
-    if(confirm('Tem certeza que deseja remover o registro?')){
+    if(confirm('Tem certeza que deseja remover o horário?')){
 
         var url=base_url+'/estabelecimento/empresa/delete-Horario/';
         document.getElementById('form3').action = url;
