@@ -12,7 +12,7 @@
     <div class="main-content" >
     <ul class="columnListing">
 	<li class="leftSide">
-	<form action="/estabelecimento/auth/criar-Conta" method="POST" class="frm" name="form1" id='form1' onsubmit="return validaTermoAceite(this);">
+	<form action="/estabelecimento/auth/criar-Conta" method="POST" class="frm" name="form1" id='form1' onsubmit="return validaTermoAceite(this); ">
 
 	<h3>Crie sua conta</h3>
 	<br>
@@ -22,13 +22,13 @@
 	* Nome completo: <input type="text"  class="input-medium RQR required form-control" title="Por favor, indique seu nome." name="responsavel[nome]" value="<?php //echo $this->cliente['nome'] ?>">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
-	* Senha: <input type="password" class="input-medium RQR required form-control" title="Por favor, entre com uma senha." id="senha" name="cliente[senha]">
+	* Senha: <input type="password" class="input-medium RQR required form-control" title="Por favor, entre com uma senha." id="senha" name="responsavel[senha]">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br>
-	* Confirme senha: <input type="password" class="input-medium RQR required form-control" tithe="Por favor, repita a senha." id="senha_repetida" name="cliente[senha_repetida]">
+	* Confirme senha: <input type="password" class="input-medium RQR required form-control" tithe="Por favor, repita a senha." id="senha_repetida" name="responsavel[senha_repetida]">
 	<div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
 	<br><br>
-        <input type="checkbox"  id="aceite" name="cliente[aceite]" checked> Estou de acordo com os <a href="#">termos e condicões </a> do site.
+        <input type="checkbox"  id="aceite" name="responsavel[aceite]" checked> Estou de acordo com os <a href="#">termos e condicões </a> do site.
 
 	
 	<br>
@@ -57,7 +57,7 @@
 	<input class="btn btn-lg btn-primary btn-block" type="submit" name="login" value="Entrar" />
 	<br />
 	<br />
-	<a href="/portal/cliente/logout"> Logout </a>
+	
      </form>
 	 </li>
 	</ul>
@@ -76,6 +76,31 @@ function isEmpty(str) {
 function isBlank(str) {
     return (!str || /^\s*$/.test(str));
 }
+
+function validaTermoAceite(form)
+ {
+    var validacao =  validateForm('form1');
+
+    if(!form.aceite.checked)
+    {
+	alert("Você deve aceitar as condições antes de prosseguir.");
+	return false;
+
+    }
+    else if(!isEmpty(form.senha.value) && !isBlank(form.senha.value) && form.senha.value != form.senha_repetida.value)
+    {
+	alert("Senhas não conferem!");
+	return false;
+
+
+    }
+    else
+    {
+	return validateForm('form1');
+    }
+
+    
+ }
 
 
   

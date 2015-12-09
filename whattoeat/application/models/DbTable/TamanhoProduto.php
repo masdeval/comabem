@@ -26,7 +26,7 @@ class DbTable_TamanhoProduto extends Zend_Db_Table_Abstract
         {
             $data = array(
                 'cod_produto' => $cod_produto,
-                'descricao' => $formData['descricao'],
+                'descricao' => $formData['descricao_tamanho'],
                 'preco' => (float) $formData['preco'],
                 'numero_sabores_pizza' => (int) $formData['numero_sabores_pizza'],
                 'removed' => 0,
@@ -36,7 +36,7 @@ class DbTable_TamanhoProduto extends Zend_Db_Table_Abstract
         {
             $data = array(
                 'cod_produto' => $cod_produto,
-                'descricao' => $formData['descricao'],
+                'descricao' => $formData['descricao_tamanho'],
                 'preco' => (float) $formData['preco'],
                 'numero_sabores_pizza' => (int) $formData['numero_sabores_pizza'],
             );

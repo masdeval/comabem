@@ -17,32 +17,7 @@ class DbTable_Funcionario extends Zend_Db_Table_Abstract
         return $result;
     }
 
-    private function trataDados($formData)
-    {
-        $retorno = array(
-            //'cod_empresa' => $formData['cod_empresa'],
-            'nome' => $formData['nome'],
-            'cpf' => $formData['cpf'],
-            'email' => $formData['email'],
-            'observacao' => $formData['observacao'],
-            'telefone_residencial' => $formData['telefone_residencial'],
-            'telefone_comercial' => $formData['telefone_comercial'],
-            'celular' => $formData['celular'],
-            'endereco' => $formData['endereco'],
-            'numero' => $formData['numero'],
-            'bairro' => $formData['bairro'],
-            'complemento' => $formData['complemento'],
-            'cep' => $formData['cep'],
-            'data_cadastro' => $now,);
-
-        if (!empty($formData['data_nascimento']))
-        {
-            list($day, $month, $year) = explode('/', $formData['data_nascimento']);
-            $data_nascimento = "$year-$month-$day";
-            $retorno['data_nascimento'] = $data_nascimento;
-        }
-    }
-
+    
     public function addFuncionario($formData)
     {
         $now = date("Y-m-d H:i:s");
@@ -60,6 +35,7 @@ class DbTable_Funcionario extends Zend_Db_Table_Abstract
             'bairro' => $formData['bairro'],
             'complemento' => $formData['complemento'],
             'cep' => $formData['cep'],
+            'senha' => $formData['senha'],
             'data_cadastro' => $now,);
 
         if (!empty($formData['data_nascimento']))
@@ -88,6 +64,7 @@ class DbTable_Funcionario extends Zend_Db_Table_Abstract
             'bairro' => $formData['bairro'],
             'complemento' => $formData['complemento'],
             'cep' => $formData['cep'],
+            'senha' => $formData['senha'],
         );
 
         if (!empty($formData['data_nascimento']))

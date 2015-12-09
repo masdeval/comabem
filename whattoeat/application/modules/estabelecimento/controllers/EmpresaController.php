@@ -9,6 +9,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
     public $Produto;
     public $TiposProdutosEmpresa;
     public $HorarioFuncionamento;
+    public $FuncionarioHasEmpresa;
     public $errorMessage;
     public $caminho;
     public $session;
@@ -24,13 +25,14 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
             $this->empresaId = $this->session->user->empresa;
         }
 
-        $this->_helper->layout()->setLayout('tela_cadastro_layout');
+        $this->_helper->layout()->setLayout('header');
         $this->Empresa = new DbTable_Empresa($this->db);
         $this->TbCidade = new DbTable_TbCidade();
         $this->TipoProduto = new DbTable_TipoProduto();
         $this->Produto = new DbTable_Produto($this->db);
         $this->TiposProdutosEmpresa = new DbTable_TiposProdutosEmpresa($this->db);
         $this->HorarioFuncionamento = new DbTable_HorarioFuncionamento($this->db);
+        $this->FuncionarioHasEmpresa = new DbTable_FuncionarioHasEmpresa($this->db);
         $this->view->pageTitle = 'Empresa';
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
     }
@@ -128,7 +130,13 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                 {
                     $this->db->beginTransaction();
                     $id = $this->Empresa->addEmpresa($formData, $fileName);
+                    if(isset($this->session->user))
+                    {
+                        $this->FuncionarioHasEmpresa->insertRecord($this->session->user->id, $id, 1);
+                        $this->session->user->empresa= $id;
+                    }                    
                     $this->db->commit();
+                    $this->empresaId = $id;
                 } catch (Exception $e)
                 {
                     $this->db->rollBack();
@@ -144,8 +152,8 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
                         return;
                     }
                 }
-                $this->view->empresaId = $id;
-                $this->editAction($id);
+                
+                $this->editAction();
                 //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
             }
         }
@@ -293,13 +301,13 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
 
     public function editAction()
     {
-
         $empresaId = $this->empresaId; //$this->getRequest()->getPost('empresaId');
         $this->view->empresaId = $empresaId;
 
         $formData = $this->Empresa->getSingleData($empresaId);
         $formData2 = $this->TiposProdutosEmpresa->getRecords($empresaId);
         $formData3 = $this->HorarioFuncionamento->getRecords($empresaId);
+        if(empty($formData3)){$formData3 = array();}
         $this->view->formData = $formData;
         $this->view->formData2 = $formData2;
         $this->view->formData3 = $formData3;
@@ -310,7 +318,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         $this->view->cidadeOption = $cidadeOption;
         $this->view->title = 'Empresa';
         //$this->view->action = 'edit';
-        $this->view->empresaId = $empresaId;
+        
         $this->_helper->viewRenderer('index');
     }
 
