@@ -20,18 +20,12 @@
 
 <body>
 
-	<div class="topo">
+	<div class="header">
 		<div class="logo"><img src="/img/logotipo.png"></div>
 	</div>
 	<div class="conta">
 	<div class="heading">
-    <?php
-
-	if(!empty($this->nomeCliente))
-	    echo "<p>Bem vindo".  $this->nomeCliente ."!</p>";
-
-    ?>
-
+    
     <h2><?php echo $this->headline; ?></h2>
 
 	
@@ -98,7 +92,7 @@
 	<input class="btn btn-lg btn-primary btn-block" type="submit" name="login" value="Login" />
 	<br />
 	<br />
-	<a href="/portal/cliente/logout"> Logout </a>
+	
      </form>
 	 </li>
 	</ul>

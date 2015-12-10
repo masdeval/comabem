@@ -25,7 +25,7 @@
         //da busca por produto. Se não houver produto que case com a busca, também não vem empresa, e iria perder a informação que aparece no topo. 
     
 	if(!empty($this->nomeCliente))
-	    echo "<p>Bem vindo".  $this->nomeCliente ."! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
+	    echo "<p>Bem vindo ".  $this->nomeCliente ."! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
         
         echo "<div style=' padding-left: 50px; clear:both; margin: 40px; color:black;' > \n";
         echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->cod_empresa."' width='141' height='auto' alt=''> </p> </div> \n";
@@ -203,7 +203,7 @@
 	    //imprime o botao que vai permitir incluir no carrinho
 	    if($this->isAberto)
 	    {
-		echo "<img style='margin-left:10px; margin-right:10px;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['razao_social']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+		echo "<img style='margin-left:10px; margin-right:10px;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['url']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
 		echo "<input type='text' size='2' maxlength='2' value='1' id='quantidade_".$this->cod_empresa."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
 	    }
 	

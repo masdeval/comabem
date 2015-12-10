@@ -52,17 +52,25 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
 
     public function logoutAction() {
 
-        $this->_helper->viewRenderer->setNoRender();
-        $this->_helper->layout->disableLayout();
-        $auth = Zend_Auth::getInstance();
+        
+        $this->_helper->viewRenderer('index');
+        $session = new Zend_Session_Namespace('estabelecimento');
+
+	if (isset($session))
+	{
+	    unset($session->user);
+
+	}        
+        
+       /* $auth = Zend_Auth::getInstance();
         $auth->setStorage(new Zend_Auth_Storage_Session('estabelecimento'));
         $auth->clearIdentity();
         $session = new Zend_Session_Namespace('estabelecimento');
         if (isset($session->user)) {
             $session->__unset("user"); //nao esta funcionando ????
             Zend_Session::destroy(); //nao esta funcionando ????
-        }
-        $this->_redirect("estabelecimento/auth");
+        }*/
+        
     }
 
     private function getAuthAdapter($formData) {
