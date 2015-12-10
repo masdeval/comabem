@@ -57,7 +57,7 @@ class Plugins_CheckAcl extends Zend_Controller_Plugin_Abstract {
            $request->setModuleName('estabelecimento')
                 ->setControllerName('auth')
                 ->setActionName('index');
-	   return false;
+	   return false; 
         }
 
     $aux = $module . ':' . $resource;

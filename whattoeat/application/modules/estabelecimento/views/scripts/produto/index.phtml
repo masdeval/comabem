@@ -1,5 +1,5 @@
-
-<div id="tabs" style="width: 714px; margin-left: auto; margin-right: auto;">
+<div style="width: 750px; margin-left: auto; margin-right: auto;float: right;"><input type="button" name="voltar" value="Início" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/'"></div>
+<div id="tabs" style="width: 714px; margin-left: auto; margin-right: auto;clear: both;clear: both;">
     <div id="scroller">
         <ul>
             <li><a href="#tab1">Produto</a></li>
@@ -71,7 +71,7 @@
                     
                     
                 </table>
-
+                <br>
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>
                         <td><input type="hidden" name="emorFrom" value="1">
@@ -91,7 +91,7 @@
             
                         <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form5' name="form5" onsubmit="return validateForm('form5');" >
                         <fieldset style=" margin: 0; padding: 0;">
-                            <legend> Edite aqui o tamanhos do seu produto </legend>
+                            <legend> Edite aqui o tamanho do seu produto </legend>
                             <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
 <?php if (count($this->tamanhoDropDown) > 1)
                                 { ?>
@@ -138,7 +138,7 @@
                             
                         </table>
 
-
+                     <br>
                     <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                         <tr>
                             <td><input type="hidden" name="emorFrom" value="5">

@@ -2,8 +2,8 @@
 <script type="text/javascript"> function fulltrim(obj){return obj.replace(/(?:(?:^|\n)\s+|\s+(?:$|\n))/g,'').replace(/\s+/g,'');}; </script>
 <script type="text/javascript"> function setaURL(){document.getElementById('url').value = fulltrim(document.getElementById('razao_social').value);} </script> 
 
-
-<div id="tabs" style="width: 750px; margin-left: auto ;  margin-right: auto ;">
+<div style="width: 750px; margin-left: auto; margin-right: auto;float: right;"><input type="button" name="voltar" value="Início" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/'"></div>
+<div id="tabs" style="width: 750px; margin-left: auto ;  margin-right: auto ;clear: both;">
     <ul>
         <li><a href="#tabs-1">Empresa</a></li>
         <li><a href="#tabs-2">Tipos de produtos</a></li>
