@@ -8,7 +8,7 @@ class Estabelecimento_TabelaIngredienteCompartilhadaController extends Zend_Cont
     public function init()
     {
         $this->Ingrediente = new DbTable_Ingrediente();
-        $this->_helper->layout()->setLayout('tela_cadastro_layout');
+        $this->_helper->layout()->setLayout('header');
     }
 
     public function indexAction()

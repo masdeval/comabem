@@ -11,7 +11,7 @@ class Estabelecimento_Bootstrap extends Zend_Application_Module_Bootstrap
         $view = Zend_Registry::get("view");
 
         //Titulo
-        $view->headTitle("Bem vindo ao Coma Bem!");
+       /* $view->headTitle("Bem vindo ao Coma Bem!");
 
         //CSS
         $view->headLink()->appendStylesheet("/js/jquery-ui-1.8.4.custom/css/custom-theme/jquery-ui-1.8.4.custom.css");
@@ -25,7 +25,7 @@ class Estabelecimento_Bootstrap extends Zend_Application_Module_Bootstrap
         $view->headScript()->appendFile("/js/jquery-ui-1.8.4.custom/js/jquery-ui-1.8.4.custom.min.js", "text/javascript");
         $view->headScript()->appendFile("/js/jcarousel/lib/jquery.jcarousel.min.js", "text/javascript");
         $view->headScript()->appendFile("/js/DataTables-1.7.1/media/js/jquery.dataTables.js", "text/javascript");
-        $view->headScript()->appendFile("/js/js.js", "text/javascript");
+        $view->headScript()->appendFile("/js/js.js", "text/javascript");*/
     }
 
     public function _initAdminAcl()

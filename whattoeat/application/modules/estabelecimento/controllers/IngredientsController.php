@@ -23,7 +23,7 @@ class Estabelecimento_IngredientsController extends Zend_Controller_Action
             $this->empresaId = $this->session->user->empresa;
         }
 
-        $this->_helper->layout()->setLayout('tela_cadastro_layout');
+        $this->_helper->layout()->setLayout('header');
 
         $this->Empresa = new DbTable_Empresa($this->db);
         $this->TbCidade = new DbTable_TbCidade();
