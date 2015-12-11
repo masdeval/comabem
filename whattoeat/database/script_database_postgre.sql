@@ -218,7 +218,7 @@ CREATE TABLE public.empresa (
                 sem_glutem BOOLEAN,
                 intolerancia_lactose BOOLEAN,
                 organicos BOOLEAN,
-                responsavel VARCHAR(40) NOT NULL,
+                
                 CONSTRAINT empresa_pkey PRIMARY KEY (cod_empresa)
 );
 
