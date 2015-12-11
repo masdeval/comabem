@@ -33,7 +33,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    'cod_empresa' => $cod_empresa,
 	    'descricao' => $formData['descricao'],
 	    'tempo_preparo_minutos' => (int) $formData['tempo_preparo_minutos'],
-	    'valor_calorico' => (float) $formData['valor_calorico'],
+	    'valor_calorico_aproximado' => (float) $formData['valor_calorico_aproximado'],            
 	    'numero_max_adicionais' => (int) $formData['numero_max_adicionais'],
 	    'cobrado_por_quilo' => $formData['cobrado_por_quilo'],
 	    'disponivel' => $formData['disponivel'],
@@ -51,7 +51,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    'cod_empresa' => $cod_empresa,
 	    'descricao' => $formData['descricao'],
 	    'tempo_preparo_minutos' => (int) $formData['tempo_preparo_minutos'],
-	    'valor_calorico' => (float) $formData['valor_calorico'],
+	    'valor_calorico_aproximado' => (float) $formData['valor_calorico_aproximado'],           
 	    'numero_max_adicionais' => (int) $formData['numero_max_adicionais'],
 	    'cobrado_por_quilo' => $formData['cobrado_por_quilo'],
 	    'disponivel' => $formData['disponivel'],
@@ -82,6 +82,22 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	return $result;
     }
     
+    public function calculaValorCalorico($id)
+    {
+        try
+        {
+            $this->_db->query("update produto set valor_calorico = (select sum(ingrediente.valor_calorico * quantidade_utilizada) 
+                                    from ingrediente_empresa_produto, ingrediente
+                                    where ingrediente_empresa_produto.cod_ingrediente = ingrediente.cod_ingrediente
+                                    and ingrediente_empresa_produto.cod_produto =   $id  ) where cod_produto =  $id");
+        }
+        catch (Exception $e)
+	{
+	   $this->_db->query("update produto set valor_calorico = 0 where cod_produto =  $id");
+        }
+    }
+    
+    
 
     public function deleteRecords($id)
     {
@@ -93,7 +109,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
     public function consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece, $cod_empresa='')
     {
         
-	$select = "select P.cod_produto, P.nome , P.descricao, P.valor_calorico, FP.cod_foto, TP.cod_tamanho_produto, TP.preco, TP.descricao as tamanho,
+	$select = "select P.cod_produto, P.nome , P.descricao, P.valor_calorico, P.valor_calorico_aproximado,FP.cod_foto, TP.cod_tamanho_produto, TP.preco, TP.descricao as tamanho,
 	    Tipo.nome as tipo,E.razao_social as razao_social, E.cod_empresa, E.rua, E.numero, E.complemento, E.bairro, E.url, E.timezone, 
             E.telefone1, E.telefone2, E.email, E.website, Promo.preco_promocional ";
 
@@ -267,7 +283,8 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 
     public function configuracaoProduto($cod_produto)
     {
-	$select = " SELECT Tipo_Produto.nome as tipo_produto, Produto.tempo_preparo_minutos, Produto.cobrado_por_quilo, Produto.descricao, Produto.numero_max_adicionais, Categoria_Empresa.nome as categoria_adicional, " .
+	$select = " SELECT Tipo_Produto.nome as tipo_produto, Produto.tempo_preparo_minutos, Produto.cobrado_por_quilo, Produto.descricao, Produto.numero_max_adicionais, Produto.valor_calorico, Produto.valor_calorico_aproximado,"
+                . " Categoria_Empresa.nome as categoria_adicional, " .
 		" Categoria_Permitida_Como_Adicional.qtd_max_adicionais , Ingrediente.nome as nome_ingrediente, Ingrediente.cod_ingrediente, " .
 		" Ingrediente_Empresa.preco_quando_adicional ";
 

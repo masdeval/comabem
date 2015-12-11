@@ -321,6 +321,15 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 		return $this->indexAction();
 	    }
 	}
+        
+        $this->Produto->calculaValorCalorico($produtoId);
+        
+        
+    }
+    
+    private function calculaValorCalorico($produtoId)
+    {
+        
     }
 
     public function editAction($produtoId = '', $tamanhoId = '')
