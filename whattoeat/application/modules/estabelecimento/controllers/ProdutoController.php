@@ -355,7 +355,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	    $this->view->formData3 = $formData3;
 	    $b = $this->ItensDeUmLanche->getRecordsProduto($this->empresaId, $produtoId);
             $formData4="";
-            xdebug_break();
+            
 	    foreach ($b as $k => $v)
 	    {
 		$formData4[$v['cod_ingrediente']] = $v;                
