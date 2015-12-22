@@ -17,12 +17,12 @@
                         <td width="70%"><table class="tableFrm" cellspacing="7">
                                 <tr>
                                     <td> Nome * </td>
-                                    <td><input type="text" id="razao_social" class="input-medium RQR required"  title='Por favor, indique Razao Social'  name="razao_social"  value="<?php echo $this->formData['razao_social'] ?>" maxlength="100"  style="width: 200px;" onchange="setaURL();">
+                                    <td><input type="text" id="razao_social" class="input-medium RQR required form-control"  title='Por favor, indique Razao Social'  name="razao_social"  value="<?php echo $this->formData['razao_social'] ?>" maxlength="100"  style="width: 200px;" onchange="setaURL();">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
                                 <tr>
                                     <td> CNPJ (apenas números) *</td>
-                                    <td><input type="text" class="input-medium RQR required validNumber" title="Por favor, indique um CNPJ." name="cnpj" maxlength="14" value="<?php echo $this->formData['cnpj'] ?>" style="width: 200px;">
+                                    <td><input type="text" class="input-medium RQR required validNumber form-control" title="Por favor, indique um CNPJ." name="cnpj" maxlength="14" value="<?php echo $this->formData['cnpj'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
                             </table></td>
@@ -50,10 +50,10 @@
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>
                         <td colspan="2"> Email
-                            <input type="text" class="input-medium validEmail" maxlength="50"  name="email" value="<?php echo $this->formData['email'] ?>" style="width: 200px;">
+                            <input type="text" class="input-medium validEmail form-control" maxlength="50"  name="email" value="<?php echo $this->formData['email'] ?>" style="width: 200px;">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>                   
       	                         <td colspan="2"> URL interna 
-                                     <input type="text" id="url" class="input-medium" maxlength="50"  name="url" value="<?php echo $this->formData['url'] ?>" style="width: 200px;" disabled="true" >
+                                     <input type="text" id="url" class="input-medium form-control" maxlength="50"  name="url" value="<?php echo $this->formData['url'] ?>" style="width: 200px;" disabled="true" >
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                     </tr>
 
@@ -65,43 +65,43 @@
                     <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
                         <tr>
                             <td> Logradouro *&nbsp;&nbsp;&nbsp;<br>
-                                <input type="text" class="input-medium RQR required"  title='Por favor, indique Logradouro' maxlength="50"  name="rua" value="<?php echo $this->formData['rua'] ?>" style="width: 200px;">
+                                <input type="text" class="input-medium RQR required form-control"  title='Por favor, indique Logradouro' maxlength="50"  name="rua" value="<?php echo $this->formData['rua'] ?>" style="width: 200px;">
                                 <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                             <td> Numero *<br>
-                                <input type="text" class="input-medium RQR  required validNumber"  title='Por favor, indique Numero'  name="numero" value="<?php echo $this->formData['numero'] ?>" style="width: 200px;">
+                                <input type="text" class="input-medium RQR  required validNumber form-control"  title='Por favor, indique Numero'  name="numero" value="<?php echo $this->formData['numero'] ?>" style="width: 200px;">
                                 <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                              <td> Complemento<br>
-                                <input type="text" class="input-medium"  name="complemento" maxlength="20" value="<?php echo $this->formData['complemento'] ?>" style="width: 200px;"></td>
+                                <input type="text" class="input-medium form-control"  name="complemento" maxlength="20" value="<?php echo $this->formData['complemento'] ?>" style="width: 200px;"></td>
 
                         </tr>
                         <tr>
                             <td> CEP (apenas números)*<br>
-                                <input type="text" class="input-medium RQR required validNumber"  title='Por favor, indique CEP' maxlength="8"  name="cep" value="<?php echo $this->formData['cep'] ?>" style="width: 200px;">
+                                <input type="text" class="input-medium RQR required validNumber form-control"  title='Por favor, indique CEP' maxlength="8"  name="cep" value="<?php echo $this->formData['cep'] ?>" style="width: 200px;">
                                 <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                                         <td> Bairro
-                                <input type="text" class="input-medium" maxlength="30" name="bairro" value="<?php echo $this->formData['bairro'] ?>" style="width: 200px;"></td>
+                                <input type="text" class="input-medium form-control" maxlength="30" name="bairro" value="<?php echo $this->formData['bairro'] ?>" style="width: 200px;"></td>
 
                         </tr>
                         <tr>
                             <td> Telefone 1
-                                <input type="text" class="input-medium"  name="telefone1" maxlength="20" value="<?php echo $this->formData['telefone1'] ?>" style="width: 200px;"></td>
+                                <input type="text" class="input-medium form-control"  name="telefone1" maxlength="20" value="<?php echo $this->formData['telefone1'] ?>" style="width: 200px;"></td>
                             <td> Telefone 2
-                                <input type="text" class="input-medium"  name="telefone2" maxlength="20" value="<?php echo $this->formData['telefone2'] ?>" style="width: 200px;"></td>
+                                <input type="text" class="input-medium form-control"  name="telefone2" maxlength="20" value="<?php echo $this->formData['telefone2'] ?>" style="width: 200px;"></td>
                             <td> Website
-                                <input type="text" class="input-medium"  name="website" maxlength="50" value="<?php echo $this->formData['website'] ?>" style="width: 200px;"></td>
+                                <input type="text" class="input-medium form-control"  name="website" maxlength="50" value="<?php echo $this->formData['website'] ?>" style="width: 200px;"></td>
 
                         </tr>
                         <tr>
                             <td> Cidade *
 <?php
-                                $attribs = array("class" => 'input-medium RQR required', "title" => 'Por favor, indique Cidade', 'style' => 'width:200px');
+                                $attribs = array("class" => 'input-medium RQR required form-control', "title" => 'Por favor, indique Cidade', 'style' => 'width:200px');
                                 // echo form_dropdown('cod_cidade', $cidadeOption, $formData['cod_cidade'],$extra);
                                 echo $this->formSelect('cod_cidade', $this->formData['cod_cidade'], $attribs, $this->cidadeOption);
 ?>
                                 <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
 
 			  <td> Fuso Horário
-			    <select name="timezone" id="timezone" class="input-medium RQR required" title="Por favor, indique o fuso horário" style="width:200px">
+			    <select name="timezone" id="timezone" class="input-medium RQR required form-control" title="Por favor, indique o fuso horário" style="width:200px">
 				<option value="America/Manaus" label="America/Manaus" <?php echo ($this->formData['timezone'] == 'America/Manaus') ? "selected" : ""  ?>  >Manaus</option>
 				<option value="America/Sao_Paulo" label="America/Sao_Paulo" <?php echo ($this->formData['timezone'] == 'America/Sao_Paulo') ? "selected" : ""  ?> >Sao_Paulo</option>
 				<option value="America/Recife" label="America/Recife" <?php echo ($this->formData['timezone'] == 'America/Recife') ? "selected" : ""  ?> >Recife</option>
@@ -262,51 +262,51 @@
                                 </tr>
                                 <tr>
                                     <td align="center">Segunda</td>
-                                    <td align="center"><input type="text" class="input-medium  "  title='Por favor, indique Inicio do atendimento'  name="val[Monday][hora_inicio]" value="<?php echo (array_key_exists('Monday',$this->formData3)) ? $this->formData3['Monday']['hora_inicio'] : "" ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium form-control "  title='Por favor, indique Inicio do atendimento'  name="val[Monday][hora_inicio]" value="<?php echo (array_key_exists('Monday',$this->formData3)) ? $this->formData3['Monday']['hora_inicio'] : "" ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium  "  title='Por favor, indique Fim do atendimento'  name="val[Monday][hora_fim]" value="<?php echo (array_key_exists('Monday',$this->formData3)) ? $this->formData3['Monday']['hora_fim'] : " " ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium form-control "  title='Por favor, indique Fim do atendimento'  name="val[Monday][hora_fim]" value="<?php echo (array_key_exists('Monday',$this->formData3)) ? $this->formData3['Monday']['hora_fim'] : " " ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
                                 <tr>
                                     <td align="center">Terca</td>
-                                    <td align="center"><input type="text" class="input-medium  "  title='Por favor, indique Inicio do atendimento'  name="val[Tuesday][hora_inicio]"  value="<?php echo (array_key_exists('Tuesday',$this->formData3)) ? $this->formData3['Tuesday']['hora_inicio'] : "" ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium form-control "  title='Por favor, indique Inicio do atendimento'  name="val[Tuesday][hora_inicio]"  value="<?php echo (array_key_exists('Tuesday',$this->formData3)) ? $this->formData3['Tuesday']['hora_inicio'] : "" ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium  "  title='Por favor, indique Fim do atendimento'  name="val[Tuesday][hora_fim]" value="<?php echo (array_key_exists('Tuesday',$this->formData3)) ? $this->formData3['Tuesday']['hora_fim'] : " " ?>" style="width: 200px;" >
+                                    <td align="center"><input type="text" class="input-medium form-control "  title='Por favor, indique Fim do atendimento'  name="val[Tuesday][hora_fim]" value="<?php echo (array_key_exists('Tuesday',$this->formData3)) ? $this->formData3['Tuesday']['hora_fim'] : " " ?>" style="width: 200px;" >
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
                                 <tr>
                                     <td align="center">Quarta</td>
-                                    <td align="center"><input type="text" class="input-medium "  title='Por favor, indique Inicio do atendimento'  name="val[Wednesday][hora_inicio]"  value="<?php echo (array_key_exists('Wednesday',$this->formData3)) ? $this->formData3['Wednesday']['hora_inicio'] : "" ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium form-control"  title='Por favor, indique Inicio do atendimento'  name="val[Wednesday][hora_inicio]"  value="<?php echo (array_key_exists('Wednesday',$this->formData3)) ? $this->formData3['Wednesday']['hora_inicio'] : "" ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium "  title='Por favor, indique Fim do atendimento'  name="val[Wednesday][hora_fim]" value="<?php echo (array_key_exists('Wednesday',$this->formData3)) ? $this->formData3['Wednesday']['hora_fim'] : " " ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium form-control"  title='Por favor, indique Fim do atendimento'  name="val[Wednesday][hora_fim]" value="<?php echo (array_key_exists('Wednesday',$this->formData3)) ? $this->formData3['Wednesday']['hora_fim'] : " " ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
                                 <tr>
                                     <td align="center">Quinta</td>
-                                    <td align="center"><input type="text" class="input-medium "  title='Por favor, indique Inicio do atendimento'  name="val[Thursday][hora_inicio]"  value="<?php echo (array_key_exists('Thursday',$this->formData3)) ? $this->formData3['Thursday']['hora_inicio'] : "" ?> " style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium form-control"  title='Por favor, indique Inicio do atendimento'  name="val[Thursday][hora_inicio]"  value="<?php echo (array_key_exists('Thursday',$this->formData3)) ? $this->formData3['Thursday']['hora_inicio'] : "" ?> " style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium  "  title='Por favor, indique Fim do atendimento'  name="val[Thursday][hora_fim]" value="<?php echo (array_key_exists('Thursday',$this->formData3)) ? $this->formData3['Thursday']['hora_fim'] : " " ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium  form-control"  title='Por favor, indique Fim do atendimento'  name="val[Thursday][hora_fim]" value="<?php echo (array_key_exists('Thursday',$this->formData3)) ? $this->formData3['Thursday']['hora_fim'] : " " ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
                                 <tr>
                                     <td align="center">Sexta</td>
-                                    <td align="center"><input type="text" class="input-medium  "  title='Por favor, indique Inicio do atendimento'  name="val[Friday][hora_inicio]"  value="<?php echo (array_key_exists('Friday',$this->formData3)) ? $this->formData3['Friday']['hora_inicio'] : "" ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium  form-control"  title='Por favor, indique Inicio do atendimento'  name="val[Friday][hora_inicio]"  value="<?php echo (array_key_exists('Friday',$this->formData3)) ? $this->formData3['Friday']['hora_inicio'] : "" ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium  "  title='Por favor, indique Fim do atendimento'  name="val[Friday][hora_fim]" value="<?php echo (array_key_exists('Friday',$this->formData3)) ? $this->formData3['Friday']['hora_fim'] : " " ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium  form-control"  title='Por favor, indique Fim do atendimento'  name="val[Friday][hora_fim]" value="<?php echo (array_key_exists('Friday',$this->formData3)) ? $this->formData3['Friday']['hora_fim'] : " " ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
 				<tr>
                                     <td align="center">Sabado </td>
-                                    <td align="center"><input type="text" class="input-medium  "  title='Por favor, indique Inicio do atendimento'  name="val[Saturday][hora_inicio]"  value="<?php echo (array_key_exists('Saturday',$this->formData3)) ? $this->formData3['Saturday']['hora_inicio'] : "" ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium  form-control"  title='Por favor, indique Inicio do atendimento'  name="val[Saturday][hora_inicio]"  value="<?php echo (array_key_exists('Saturday',$this->formData3)) ? $this->formData3['Saturday']['hora_inicio'] : "" ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium  "  title='Por favor, indique Fim do atendimento'  name="val[Saturday][hora_fim]" value="<?php echo (array_key_exists('Saturday',$this->formData3)) ? $this->formData3['Saturday']['hora_fim'] : " " ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium  form-control"  title='Por favor, indique Fim do atendimento'  name="val[Saturday][hora_fim]" value="<?php echo (array_key_exists('Saturday',$this->formData3)) ? $this->formData3['Saturday']['hora_fim'] : " " ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
                                 <tr>
                                     <td align="center">Domingo</td>
-                                    <td align="center"><input type="text" class="input-medium "  title='Por favor, indique Inicio do atendimento'  name="val[Sunday][hora_inicio]"  value="<?php echo (array_key_exists('Sunday',$this->formData3)) ? $this->formData3['Sunday']['hora_inicio'] : "" ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium form-control"  title='Por favor, indique Inicio do atendimento'  name="val[Sunday][hora_inicio]"  value="<?php echo (array_key_exists('Sunday',$this->formData3)) ? $this->formData3['Sunday']['hora_inicio'] : "" ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td align="center"><input type="text" class="input-medium "  title='Por favor, indique Fim do atendimento'  name="val[Sunday][hora_fim]" value="<?php echo (array_key_exists('Sunday',$this->formData3)) ? $this->formData3['Sunday']['hora_fim'] : " " ?>" style="width: 200px;">
+                                    <td align="center"><input type="text" class="input-medium form-control"  title='Por favor, indique Fim do atendimento'  name="val[Sunday][hora_fim]" value="<?php echo (array_key_exists('Sunday',$this->formData3)) ? $this->formData3['Sunday']['hora_fim'] : " " ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
 
