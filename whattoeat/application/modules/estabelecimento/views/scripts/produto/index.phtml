@@ -280,18 +280,19 @@
                         <!--<legend>Ingrediente:</legend>-->
                         <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                             <tr><td colspan="30">
-                                    Indique quais sao as ingredientes que compõem esse produto. Isso é muito importante para a aplicacao o ajudar em outras etapas.
-                                </td></tr>
+                                    Indique quais são os ingredientes que compõem esse produto.  </td></tr>
                             <tr><td colspan="30">
 
                             <tr>
+                                <td align="left">&nbsp;</td>                                
+                                <td align="left">Quantidade em gramas </td>
                                 <td align="left">&nbsp;</td>                                
                                 <td align="left">Quantidade em gramas </td>
                             </tr>
 <?php
                             for ($i = 0; $i < sizeof($this->ingredienteEmpresaRec); $i++)
                             //foreach ($this->ingredienteEmpresaRec as $k => $v)
-                            {                                xdebug_break();
+                            {                                
                                 $v = $this->ingredienteEmpresaRec[$i];
                                 if (!empty($this->formData4[$v['cod_ingrediente']]))
                                 {
@@ -308,7 +309,7 @@
  
 ?>
                                 <tr>
-                                    <td align="left"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
+                                    <td align="left" style="width:100px"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
                                     <!-- <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php //echo $v['cod_ingrediente'] ?>]" value="<?php //echo $valor_calorico ?>" style="width: 200px;"> -->
                                     <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
                                     <td align="left"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $quantidade_utilizada ?>" style="width: 200px;">
@@ -316,9 +317,10 @@
 
 <?php 
                                 $i++;
-                                $v = $this->ingredienteEmpresaRec[$i];
+                                
                                 if($i < sizeof($this->ingredienteEmpresaRec))
                                 {
+                                    $v = $this->ingredienteEmpresaRec[$i];
                                     if (!empty($this->formData4[$v['cod_ingrediente']]))
                                     {
                                         $checked = "checked";                                    
@@ -334,7 +336,7 @@
 
 ?>
                                 
-                                    <td align="left"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
+                                    <td align="left" style="width:100px"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
                                     <!-- <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php //echo $v['cod_ingrediente'] ?>]" value="<?php //echo $valor_calorico ?>" style="width: 200px;"> -->
                                     <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
                                     <td align="left"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $quantidade_utilizada ?>" style="width: 200px;">
