@@ -541,28 +541,6 @@ SELECT pg_catalog.setval('promocao_cod_promocao_seq', 13, true);
 SELECT pg_catalog.setval('promocao_venda_coletiva_cod_venda_coletiva_seq', 1, true);
 
 
---
--- TOC entry 2373 (class 0 OID 41676)
--- Dependencies: 197
--- Data for Name: recado_cliente; Type: TABLE DATA; Schema: public; Owner: postgres
---
-
-INSERT INTO recado_cliente (cod_recado_cliente, data, texto, hora, cod_empresa, cod_produto) VALUES (43, '2011-12-12', '', '14:00:00', 37, 1);
-INSERT INTO recado_cliente (cod_recado_cliente, data, texto, hora, cod_empresa, cod_produto) VALUES (44, '2011-12-12', '', '14:00:00', 37, 2);
-INSERT INTO recado_cliente (cod_recado_cliente, data, texto, hora, cod_empresa, cod_produto) VALUES (46, '2011-12-12', '', '14:00:00', 37, 1);
-INSERT INTO recado_cliente (cod_recado_cliente, data, texto, hora, cod_empresa, cod_produto) VALUES (47, '2011-12-12', '', '14:00:00', 37, 2);
-INSERT INTO recado_cliente (cod_recado_cliente, data, texto, hora, cod_empresa, cod_produto) VALUES (48, '2015-11-12', '', '10:00:00', 4, 3);
-INSERT INTO recado_cliente (cod_recado_cliente, data, texto, hora, cod_empresa, cod_produto) VALUES (49, '2015-11-12', '', '10:00:00', 4, 3);
-
-
---
--- TOC entry 2414 (class 0 OID 0)
--- Dependencies: 196
--- Name: recado_cliente_cod_recado_cliente_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('recado_cliente_cod_recado_cliente_seq', 49, true);
-
 
 --
 -- TOC entry 2347 (class 0 OID 41522)

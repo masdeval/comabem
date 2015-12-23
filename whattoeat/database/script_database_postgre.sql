@@ -277,8 +277,7 @@ CREATE TABLE public.recado_cliente (
                 data DATE,
                 texto VARCHAR,
                 hora TIME,
-                cod_empresa INTEGER NOT NULL,
-                cod_produto BIGINT NOT NULL,
+                cod_empresa INTEGER NOT NULL,               
                 CONSTRAINT recado_cliente_pk PRIMARY KEY (cod_recado_cliente)
 );
 
