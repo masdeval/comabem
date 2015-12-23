@@ -511,6 +511,29 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	echo base64_decode($image);
     }
 
+    
+     public function ajaxPedidoIngredienteAction()
+    {
+	$this->_helper->layout->disableLayout();
+	$this->_helper->viewRenderer->setNoRender(true);
+	
+        $novo_ingrediente = $this->_getParam('sugestao_ingrediente');
+
+	if (!empty($novo_ingrediente))
+	{
+	    //envia email informando
+	   /* $mail = new Zend_Mail();
+	    $mail->setBodyText('Pedido de novo ingrediente. \n\n '.$novo_ingrediente);
+	    $mail->setFrom('equipe@buscacomabem.com.br');
+	    $mail->addTo("equipe@buscacomabem.com.br");
+	    $mail->setSubject('Pedido de novo ingrediente');
+	    //TODO facapedido - Se o email nor for enviado o que fazer?
+	    $mail->send();    */
+            echo "1"; //flag que sera utilizada no javascript para imprimir msg ao usuario
+	}
+         
+         exit;
+    }
 }
 
 ?>

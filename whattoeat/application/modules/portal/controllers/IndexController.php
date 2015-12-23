@@ -6,6 +6,8 @@ class Portal_IndexController extends Zend_Controller_Action
     public $TipoProdutoDB;
     public $ProdutoDB;
     public $FotoProdutoDB;
+    public $EmpresaDB;
+    public $RecadoClienteDB;
     private $session;
 
     public function init()
@@ -114,17 +116,19 @@ class Portal_IndexController extends Zend_Controller_Action
     public function lojaFechadaAction()
     {
 	$cod_empresa = $this->_getParam('codEmpresa', '');
-	$cod_produto = $this->_getParam('codProduto', '');
+	
 
 	date_default_timezone_set($this->EmpresaDB->getTimezone($cod_empresa));//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
 
 	$data = date('d') . "/" . date('m') . "/" . date('Y'); //ano com 4 digitos
-	$hora_atual = date('H') . ":00";
-	$status = $this->RecadoClienteDB->registraSolicitacaoLojaAberta($cod_empresa, $cod_produto, $data, $hora_atual);
+	$hora_atual = date('His');
+	$status = $this->RecadoClienteDB->registraSolicitacaoLojaAberta($cod_empresa, $data, $hora_atual);
 	echo $status;
 	exit;
     }
 
+   
+    
     public function limparCarrinhoAction()
     {
 	if (isset($this->session))

@@ -17,13 +17,12 @@ class DbTable_RecadoCliente extends Zend_Db_Table_Abstract
         return $result;
     }
 
-    public function registraSolicitacaoLojaAberta($cod_empresa, $cod_produto, $data, $hora)
+    public function registraSolicitacaoLojaAberta($cod_empresa, $data, $hora)
     {
 	$data = array('data' => $data,
 	    'hora' => $hora,
 	    'texto' => "",
-	    'cod_empresa' => (int) $cod_empresa,
-	    'cod_produto' => (int) $cod_produto,
+	    'cod_empresa' => (int) $cod_empresa,	    
 	  );
 	try
 	{

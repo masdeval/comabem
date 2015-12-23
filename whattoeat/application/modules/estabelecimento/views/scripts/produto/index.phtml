@@ -280,9 +280,15 @@
                         <!--<legend>Ingrediente:</legend>-->
                         <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                             <tr><td colspan="30">
-                                    Indique quais são os ingredientes que compõem esse produto.  </td></tr>
-                            <tr><td colspan="30">
+                                    Indique quais são os ingredientes que compõem esse produto. Isso será usado para calcular a caloria. </td></tr>
+                            
+                            <tr><td>&nbsp;</td></tr>
+                            
+                            <tr><td colspan="30">Se nao encontrou o ingrediente desejado, peça-nos aqui: <input type="text"  name="sugestao_ingrediente" id="sugestao_ingrediente"> <input type="button" value="Enviar" onclick="javascript:pedidoIngrediente()">
+                                    <span  id='spanPedidoIngrediente' > </span></td></tr>
 
+                            <tr><td>&nbsp;</td></tr>
+                             
                             <tr>
                                 <td align="left">&nbsp;</td>                                
                                 <td align="left">Quantidade em gramas </td>
@@ -482,3 +488,5 @@
 
 
 </div>
+
+

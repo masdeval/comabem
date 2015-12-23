@@ -158,8 +158,8 @@
 		    {
 			$hora_atual = date('H') . ":" . date('i') . ":00";
 			echo "<div style='float: left; margin: 60px 1px 20px 21px; width:150px;'> \n";
-			echo "<a class='botao_portal_amarelo' target=''	title='Fechada nesse horário' href='#' onclick='lojaFechada(".$this->resultado[$i]['cod_empresa'].",".$this->resultado[$i]['cod_produto'].",".$i. ")'".
-			" <span>Fechada nesse horário </span> </a> <span class='msg_estabelecimento_fechado' id='spanFechada".$i."'>Clique no botão se deseja enviar à loja sua vontade ".
+			echo "<input type='button' value='Fechada nesse horário' class='botao_portal_amarelo' onClick='javascript:lojaFechada(".$this->resultado[$i]['cod_empresa']. ",".$i." );' > ".
+			"  <span class='msg_estabelecimento_fechado' id='spanFechada".$i."'>Clique no botão se deseja enviar à loja sua vontade ".
 			" de que ela estivesse aberta. </span> </div>";
 		    }
   
