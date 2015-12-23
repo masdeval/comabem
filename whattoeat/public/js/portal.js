@@ -4,10 +4,11 @@
  */
 
 
-function lojaFechada(cod_empresa,cod_produto,indiceMsg)
+function lojaFechada(cod_empresa, indiceMsg)
 {
+   
 
-    reqURL='/portal/index/loja-Fechada/codEmpresa/'+cod_empresa+'/codProduto/'+cod_produto;
+    reqURL='/portal/index/loja-Fechada/codEmpresa/'+cod_empresa;
    
 
     $.ajax({
@@ -26,6 +27,30 @@ function lojaFechada(cod_empresa,cod_produto,indiceMsg)
 	}
     });
 }
+
+
+function pedidoIngrediente(msg)
+{
+   var msg = document.getElementById('sugestao_ingrediente').value;   
+
+    reqURL='/estabelecimento/produto/ajax-Pedido-Ingrediente/sugestao_ingrediente/'+msg;
+   
+
+    $.ajax({
+	type: "POST",
+	url:reqURL,   
+	success: function(r) {
+	    r=jQuery.trim(r);
+	    
+	    if(r=='1'){
+          
+		$('#spanPedidoIngrediente').html('Enviado!');
+	    }
+	    
+	}
+    });
+}
+
 
 function addProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto,nome_empresa, nome_produto, tamanho,preco)
 {
