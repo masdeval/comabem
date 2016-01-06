@@ -534,7 +534,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	    $mail->setSubject('Pedido de novo ingrediente');
             $mail->
 	    //TODO facapedido - Se o email nor for enviado o que fazer?
-	    $mail->send();    
+	    $mail->send($tr);    
             echo "1"; //flag que sera utilizada no javascript para imprimir msg ao usuario
 	}
          
