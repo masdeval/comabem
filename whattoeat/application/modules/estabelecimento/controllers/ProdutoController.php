@@ -521,14 +521,16 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 
 	if (!empty($novo_ingrediente))
 	{
+            $tr = new Zend_Mail_Transport_Smtp('mail.buscacomabem.com.br');
+            Zend_Mail::setDefaultTransport($tr);
 	    //envia email informando
-	   /* $mail = new Zend_Mail();
+	    $mail = new Zend_Mail();
 	    $mail->setBodyText('Pedido de novo ingrediente. \n\n '.$novo_ingrediente);
 	    $mail->setFrom('equipe@buscacomabem.com.br');
-	    $mail->addTo("equipe@buscacomabem.com.br");
+	    $mail->addTo("suporte@buscacomabem.com.br");
 	    $mail->setSubject('Pedido de novo ingrediente');
 	    //TODO facapedido - Se o email nor for enviado o que fazer?
-	    $mail->send();    */
+	    $mail->send();    
             echo "1"; //flag que sera utilizada no javascript para imprimir msg ao usuario
 	}
          
