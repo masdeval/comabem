@@ -522,20 +522,23 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	if (!empty($novo_ingrediente))
 	{
             $config = array('auth' => 'login',
-                'username' => 'myusername',
-                'password' => 'password');
-            $tr = new Zend_Mail_Transport_Smtp('mail.buscacomabem.com.br',$config);
+                'username' => 'suporte@buscacomabem.com.br',
+                'password' => 'inglaterra2012');
+            $tr = new Zend_Mail_Transport_Smtp('localhost',$config);
             Zend_Mail::setDefaultTransport($tr);
 	    //envia email informando
 	    $mail = new Zend_Mail();
-	    $mail->setBodyText('Pedido de novo ingrediente. \n\n '.$novo_ingrediente);
-	    $mail->setFrom('equipe@buscacomabem.com.br');
+	    $mail->setBodyText('Pedido de novo ingrediente: '.$novo_ingrediente);
+	    $mail->setFrom('suporte@buscacomabem.com.br');
 	    $mail->addTo("suporte@buscacomabem.com.br");
 	    $mail->setSubject('Pedido de novo ingrediente');
-            $mail->
+            
 	    //TODO facapedido - Se o email nor for enviado o que fazer?
-	    $mail->send($tr);    
-            echo "1"; //flag que sera utilizada no javascript para imprimir msg ao usuario
+	    if($mail->send($tr))    
+            {
+                echo "1"; //flag que sera utilizada no javascript para imprimir msg ao usuario
+            }
+            
 	}
          
          exit;
