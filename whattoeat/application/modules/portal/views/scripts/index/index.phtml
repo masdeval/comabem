@@ -40,13 +40,13 @@
             <h2>Por favor, entre com os critérios de pesquisa. Você pode procurar por ingredientes específicos, lugares, pratos ou 
             qualquer outro critério disponível para trazer a opção mais certa para você!</h2> 
 
-            <div style="text-align: left; border: transparent; width: 380px; ">
+            <!-- <div style="text-align: left; border: transparent; width: 380px; ">
                  <p class="lead">Aqui você pode digitar qualquer termo para sua consulta:</p>
                 
 		Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
 		<br>
 		Ex: catupiri, bacon, "peito de peru", chia 
-            </div>
+            </div> -->
 
             <br>
             <input class="form-control" type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
@@ -73,8 +73,8 @@
 		<?php } ?>
 	    </div>
 
-            <p class="lead">Valor calórico até: </p><input class="form-control" type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
-<br>
+             <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+            <br>
             <br>
             
             <p class="lead">Listar apenas estabelecimentos que oferecem: </p>
@@ -130,12 +130,131 @@
 
 <p style="padding-left: 50px;"><?php $this->headline; ?></p>
 
+<?php
+
+    if(!empty($this->pesquisa_facapedido_criterio))
+    {
+	for ($i = 0; $i < sizeof($this->resultado); $i++)
+	{
+?>
+
+<div style=' clear:both;  color:black;'>
+    <div style='float: left; margin: 20px 1px 20px 20px; '>
+	<p><img src='/portal/index/get-Imagem-Produto/id/<?php echo $this->resultado[$i]['cod_foto'] ?>' width='100' height='auto' alt=''>
+	</p>
+    </div>
+	
+    <div style='float: left; margin: 30px 1px 10px 10px; width:400px; font-size: medium;'>
+	<p style='display: block' >
+	    <?php echo $this->resultado[$i]["nome"]; ?>
+            <p style='font-size: small;'> 
+	    <?php echo $this->resultado[$i]["descricao"]."<br> Valor calórico: ".$this->resultado[$i]["valor_calorico"]." cal"; ?>
+    </p>
+    </p> </div> <!-- nome do produto -->
+
+        <!--	    //imprime os tamanhos disponiveis e precos do produto -->
+        <div style='float: left; margin: 35px 1px 10px 10px; font-size: medium; text-align: left'>
+	<?php
+
+
+	    //Sempre há pelo menos um tamanho, entao imprime esse
+	    if (!empty($this->resultado[$i]['preco_promocional']))
+	    {
+		$preco = (double) $this->resultado[$i]['preco_promocional'];
+		echo ($this->resultado[$i]['tamanho'] . "De ");
+		echo $this->resultado[$i]["preco"];
+		echo (" por ");
+		echo $this->resultado[$i]["preco_promocional"];
+	    }
+	    else
+	    {
+		$preco = (double) $this->resultado[$i]['preco'];
+		echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
+	    }
+
+	    //imprime o botao que vai permitir incluir no carrinho
+	    if($this->resultado[$i]['isAberto'] == true)
+	    {
+                echo "<img src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(".$this->resultado[$i]['cod_empresa'].",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['razao_social']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+                echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_".$this->resultado[$i]['cod_empresa']."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
+	    }
+	
+            if(($i+1) < sizeof($this->resultado))
+            {
+                $i++;
+                //Esse laco verifica se existem outros tamanhos para o mesmo produto
+                while (($i < sizeof($this->resultado)) && $this->resultado[$i]['cod_produto'] == $this->resultado[$i - 1]['cod_produto'])
+                {
+                    echo "<br> \n";
+
+                    if (!empty($this->resultado[$i]['preco_promocional']))
+                    {
+                        $preco = (double) $this->resultado[$i]['preco_promocional'];
+                        echo ($this->resultado[$i]['tamanho'] . " De ");
+                        echo $this->resultado[$i]["preco"];
+                        echo (" por ");
+                        echo $this->resultado[$i]["preco_promocional"];
+                    }
+                    else
+                    {
+                        $preco = (double) $this->resultado[$i]['preco'];
+                        echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
+                    }
+                    //imprime o botao que vai permitir incluir no carrinho
+                    if($this->resultado[$i]['isAberto'] == true)
+                    {
+               	        echo "<img src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(".$this->resultado[$i]['cod_empresa'].",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['razao_social']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+                        echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_".$this->resultado[$i]['cod_empresa']."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
+
+                    }
+
+
+                 $i++;
+
+                }
+
+                $i--;
+            }
+	?>
+    
+        </div> <!-- precos -->
+
+<?php	            echo "<div style='float: left; margin: 30px 1px 10px 10px; width:150px; '>  \n";
+		    echo  "<div style='font-weight: bold;'>" . $this->resultado[$i]["razao_social"] . " </div> <br> \n";
+
+		    //verifica se a empresa esta atendendo nesse horario
+		    if ($this->resultado[$i]['isAberto'] == true)
+		    {
+			
+			echo "<input type='button' class='btn btn-info' value='Ir &agrave; Loja' onClick='javascript:irLoja(\"" . $this->resultado[$i]['url'] . "\")'>";
+			
+		    }
+		    else
+		    {
+			$hora_atual = date('H') . ":" . date('i') . ":00";
+			
+			echo "<input type='button' class='btn btn-danger' value='Fechada nesse horário'  onClick='javascript:lojaFechada(".$this->resultado[$i]['cod_empresa']. ",".$i." );' > ".
+			" <br> <span class='msg_estabelecimento_fechado' id='spanFechada".$i."'>Clique no botão se deseja enviar à loja sua vontade ".
+			" de que ela estivesse aberta. </span> ";
+		    }
+                    echo " </div> \n";
+                    
+
+	}
+?>
+        
+        
+   </div>
+
 
 
 <?php
+    }
+    else
+    {
 		for ($i = 0; $i < sizeof($this->resultado); $i++)
 		{
-		    echo "<div style=' clear:both; margin: 80px; color:black;' > \n";
+		    echo "<div style=' clear:both; color:black;' > \n";
 
 		    echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->resultado[$i]['cod_empresa'] . "' width='141' height='auto' alt=''> </p> </div> \n";
 		    echo "<div style='float: left; margin: 20px 1px 20px 21px; width:300px; '>  \n";
@@ -150,21 +269,23 @@
 		    //verifica se a empresa esta atendendo nesse horario
 		    if ($this->resultado[$i]['isAberto'] == true)
 		    {
-			echo "<div style='float: left; margin: 60px 1px 20px 21px; width:150px;'> \n";
-			echo "<a class='botao_portal_vermelho' target='' title='Ir &agrave; Loja' href='javascript:irLoja(\"" . $this->resultado[$i]['url'] . "\")'>" .
-			"<span>Ir &agrave; Loja</span></a> </div>";
+			echo "<div style='float: left; margin: 60px 1px 20px 10px; width:150px;'> \n";
+                        echo "<input type='button' class='btn btn-info' value='Ir &agrave; Loja' onClick='javascript:irLoja(\"" . $this->resultado[$i]['url'] . "\")'>";
+
 		    }
 		    else
 		    {
 			$hora_atual = date('H') . ":" . date('i') . ":00";
-			echo "<div style='float: left; margin: 60px 1px 20px 21px; width:150px;'> \n";
-			echo "<input type='button' value='Fechada nesse horário' class='botao_portal_amarelo' onClick='javascript:lojaFechada(".$this->resultado[$i]['cod_empresa']. ",".$i." );' > ".
-			"  <span class='msg_estabelecimento_fechado' id='spanFechada".$i."'>Clique no botão se deseja enviar à loja sua vontade ".
-			" de que ela estivesse aberta. </span> </div>";
+			echo "<div style='float: left; margin: 60px 1px 20px 10px; width:150px;'> \n";
+                        
+			echo "<input type='button' class='btn btn-danger' value='Fechada nesse horário'  onClick='javascript:lojaFechada(".$this->resultado[$i]['cod_empresa']. ",".$i." );' > ".
+			" <br> <span class='msg_estabelecimento_fechado' id='spanFechada".$i."'>Clique no botão se deseja enviar à loja sua vontade ".
+			" de que ela estivesse aberta. </span> ";
 		    }
   
 		    echo "</div> \n";
 		}
+    }
 ?>
 
 

@@ -66,16 +66,16 @@
 	    <input type="hidden" name="isAberto" value="<?php echo $this->isAberto; ?>">
             
             
-            <h1>Entre com os critérios de pesquisa por favor. Você pode procurar por ingredientes específicos, lugares, pratos ou 
+            <h1>Por favor, entre com os critérios de pesquisa. Você pode procurar por ingredientes específicos, lugares, pratos ou 
             qualquer outro critério disponível para trazer a opção mais certa para você!</h1> 
 
-            <div style="text-align: left; border: transparent; width: 380px; ">
+            <!--<div style="text-align: left; border: transparent; width: 380px; ">
                  <p class="lead">Aqui você pode digitar qualquer termo para sua consulta:</p>
                 
 		Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
 		<br>
 		Ex: catupiri, bacon, "peito de peru", chia 
-            </div>
+            </div>-->
 
             <br>
             <input class="form-control" type="textarea" name="criterio" style="width: 400px;" value="<?php echo $this->pesquisa_facapedido_criterio; ?>">
@@ -102,7 +102,7 @@
 		<?php } ?>
 	    </div>
 
-            <p class="lead">Valor calórico até: </p><input class="form-control" type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+            <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
 <br>
             <br>
             
@@ -174,19 +174,23 @@
 	{
 ?>
 
-<div style=' clear:both; margin: 80px; color:black;'>
-    <div style='float: left; margin: 20px 1px 20px 21px; width:200px;'>
-	<p><img src='/portal/index/get-Imagem-Produto/id/<?php echo $this->resultado[$i]['cod_foto'] ?>' width='141' height='auto' alt=''>
+    
+<div style=' clear:both;  color:black;'>
+    <div style='float: left; margin: 20px 1px 20px 20px; '>
+	<p><img src='/portal/index/get-Imagem-Produto/id/<?php echo $this->resultado[$i]['cod_foto'] ?>' width='100' height='auto' alt=''>
 	</p>
     </div>
 	
-    <div style='float: left; margin: 50px 1px 20px 21px; width:100px; font-size: large;'>
+    <div style='float: left; margin: 30px 1px 10px 10px; width:400px; font-size: medium;'>
 	<p style='display: block' >
 	    <?php echo $this->resultado[$i]["nome"]; ?>
+            <p style='font-size: small;'> 
+	    <?php echo $this->resultado[$i]["descricao"]."<br> Valor calórico: ".$this->resultado[$i]["valor_calorico"]." cal"; ?>
+    </p>
     </p> </div> <!-- nome do produto -->
 
         <!--	    //imprime os tamanhos disponiveis e precos do produto -->
-        <div style='float: left; margin: 60px 1px 20px 80px; width:400px; font-size: medium;'>
+        <div style='float: left; margin: 35px 1px 10px 10px; font-size: medium; text-align: left'>
 	<?php
 
 
@@ -194,7 +198,7 @@
 	    if (!empty($this->resultado[$i]['preco_promocional']))
 	    {
 		$preco = (double) $this->resultado[$i]['preco_promocional'];
-		echo ($this->resultado[$i]['tamanho'] . "=> De ");
+		echo ($this->resultado[$i]['tamanho'] . "De ");
 		echo $this->resultado[$i]["preco"];
 		echo (" por ");
 		echo $this->resultado[$i]["preco_promocional"];
@@ -202,15 +206,16 @@
 	    else
 	    {
 		$preco = (double) $this->resultado[$i]['preco'];
-		echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
+		echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
 	    }
 
 	    //imprime o botao que vai permitir incluir no carrinho
 	    if($this->isAberto)
 	    {
-		echo "<img style='margin-left:10px; margin-right:10px;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['url']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
-		echo "<input type='text' size='2' maxlength='2' value='1' id='quantidade_".$this->cod_empresa."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
+	        echo "<img src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(".$this->resultado[$i]['cod_empresa'].",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['razao_social']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+          	echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_".$this->resultado[$i]['cod_empresa']."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
 	    }
+            
 	
             if(($i+1) < sizeof($this->resultado))
             {
@@ -223,7 +228,7 @@
                     if (!empty($this->resultado[$i]['preco_promocional']))
                     {
                         $preco = (double) $this->resultado[$i]['preco_promocional'];
-                        echo ($this->resultado[$i]['tamanho'] . "=> De ");
+                        echo ($this->resultado[$i]['tamanho'] . " De ");
                         echo $this->resultado[$i]["preco"];
                         echo (" por ");
                         echo $this->resultado[$i]["preco_promocional"];
@@ -231,13 +236,13 @@
                     else
                     {
                         $preco = (double) $this->resultado[$i]['preco'];
-                        echo $this->resultado[$i]['tamanho'] . " => " . $this->resultado[$i]["preco"];
+                        echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
                     }
                     //imprime o botao que vai permitir incluir no carrinho
                     if($this->isAberto)
                     {
-                        echo "<img style='margin-left:10px; margin-right:10px;' src='/img/incluir_mais_1.png' onclick=\"javascript:addProdutoCarrinhoAjax(".$this->cod_empresa.",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['razao_social']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
-                        echo "<input type='text' size='2' maxlength='2' value='1' id='quantidade_".$this->cod_empresa."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
+                         echo "<img src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(".$this->resultado[$i]['cod_empresa'].",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['razao_social']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
+                         echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_".$this->resultado[$i]['cod_empresa']."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
 
                     }
 
@@ -250,14 +255,11 @@
 	?>
     
         </div> <!-- precos -->
-
-    <div style="clear:both; float:left; width:500px;">	
-	<p style='font-size: medium;'>Descrição do produto: 
-	    <?php echo $this->resultado[$i]["descricao"]." Valor calórico: ".$this->resultado[$i]["valor_calorico"]." cal"; ?>
-    </p> </div> <!-- nome do produto -->
-
-
-   </div>
+    
+    
+    
+  </div>
+    
 
 <?php
 	}
