@@ -71,6 +71,39 @@
                     
                     
                 </table>
+                
+                
+                
+       <fieldset style=" margin: 0; padding: 0;">
+                    <legend></legend>
+                    <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+                        <tr>
+
+			  <td>
+			      
+	                    <input type="checkbox" <?php echo ($this->formData['atende_diabetico'] == 1) ? 'checked' : '' ?>   name="atende_diabetico" value="1" class=""> Produto para diabético
+                          </td>
+			  <td>
+		          <input type="checkbox" <?php echo ($this->formData['pouco_sal'] == 1) ? 'checked' : '' ?>   name="pouco_sal" value="1" class=""> Preparado com pouco sal
+                          </td>
+
+			  <td>
+		          <input type="checkbox" <?php echo ($this->formData['sem_glutem'] == 1) ? 'checked' : '' ?>   name="sem_glutem" value="1" class=""> Sem glutem
+                          </td>
+
+			  <td>
+		          <input type="checkbox" <?php echo ($this->formData['intolerancia_lactose'] == 1) ? 'checked' : '' ?>   name="intolerancia_lactose" value="1" class=""> Sem lactose
+                          </td>
+
+			  <td>
+		          <input type="checkbox" <?php echo ($this->formData['organicos'] == 1) ? 'checked' : '' ?>   name="organicos" value="1" class=""> Leva orgânico
+                          </td>
+
+
+			</tr>
+		    </table>
+		</fieldset>  
+                
                 <br>
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>

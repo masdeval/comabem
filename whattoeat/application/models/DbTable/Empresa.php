@@ -36,11 +36,7 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract {
             'data_cadastro' => $now,
             'timezone' => $formData['timezone'],
             'website' => $formData['website'],
-            'atende_diabetico' => ($formData['atende_diabetico'] == 1) ? 'true' : 'false',
-            'pouco_sal' => ($formData['pouco_sal'] == 1) ? 'true' : 'false',
-            'sem_glutem' => ($formData['sem_glutem'] == 1) ? 'true' : 'false',
-            'intolerancia_lactose' => ($formData['intolerancia_lactose'] == 1) ? 'true' : 'false',
-            'organicos' => ($formData['organicos'] == 1) ? 'true' : 'false',
+   
         );
         $id = $this->insert($data);
 
@@ -113,11 +109,7 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract {
             'cod_cidade' => (int) $formData['cod_cidade'],
             'timezone' => $formData['timezone'],
             'website' => $formData['website'],
-            'atende_diabetico' => ($formData['atende_diabetico'] == 1) ? 'true' : 'false',
-            'pouco_sal' => ($formData['pouco_sal'] == 1) ? 'true' : 'false',
-            'sem_glutem' => ($formData['sem_glutem'] == 1) ? 'true' : 'false',
-            'intolerancia_lactose' => ($formData['intolerancia_lactose'] == 1) ? 'true' : 'false',
-            'organicos' => ($formData['organicos'] == 1) ? 'true' : 'false',
+     
         );
 
 
