@@ -37,6 +37,11 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    'numero_max_adicionais' => (int) $formData['numero_max_adicionais'],
 	    'cobrado_por_quilo' => $formData['cobrado_por_quilo'],
 	    'disponivel' => $formData['disponivel'],
+            'atende_diabetico' => ($formData['atende_diabetico'] == 1) ? 'true' : 'false',
+            'pouco_sal' => ($formData['pouco_sal'] == 1) ? 'true' : 'false',
+            'sem_glutem' => ($formData['sem_glutem'] == 1) ? 'true' : 'false',
+            'intolerancia_lactose' => ($formData['intolerancia_lactose'] == 1) ? 'true' : 'false',
+            'organicos' => ($formData['organicos'] == 1) ? 'true' : 'false',            
 	);
 	$id = $this->insert($data);
 
@@ -55,6 +60,11 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    'numero_max_adicionais' => (int) $formData['numero_max_adicionais'],
 	    'cobrado_por_quilo' => $formData['cobrado_por_quilo'],
 	    'disponivel' => $formData['disponivel'],
+            'atende_diabetico' => ($formData['atende_diabetico'] == 1) ? 'true' : 'false',
+            'pouco_sal' => ($formData['pouco_sal'] == 1) ? 'true' : 'false',
+            'sem_glutem' => ($formData['sem_glutem'] == 1) ? 'true' : 'false',
+            'intolerancia_lactose' => ($formData['intolerancia_lactose'] == 1) ? 'true' : 'false',
+            'organicos' => ($formData['organicos'] == 1) ? 'true' : 'false',                
 	);
 
 
@@ -201,27 +211,27 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    {                
                 if($empresa_oferece[$k] == 'diabetico')
                 {
-                    $where .= "E.atende_diabetico = :".$i." or ";
+                    $where .= "P.atende_diabetico = :".$i." or ";
                     $i++;
                 }
                 else if ($empresa_oferece[$k] == 'pouco_sal')
                 {
-                    $where .= "E.pouco_sal = :".$i." or ";
+                    $where .= "P.pouco_sal = :".$i." or ";
                     $i++;
                 }
                 else if ($empresa_oferece[$k] == 'sem_glutem')
                 {
-                    $where .= "E.sem_glutem = :".$i." or ";
+                    $where .= "P.sem_glutem = :".$i." or ";
                     $i++;
                 }
                 else if ($empresa_oferece[$k] == 'lactose')
                 {
-                    $where .= "E.intolerancia_lactose = :".$i." or ";
+                    $where .= "P.intolerancia_lactose = :".$i." or ";
                     $i++;
                 }
                 else if ($empresa_oferece[$k] == 'organico')
                 {
-                    $where .= "E.organicos = :".$i." or ";
+                    $where .= "P.organicos = :".$i." or ";
                     $i++;
                 }                                
 	    }
