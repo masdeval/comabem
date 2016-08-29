@@ -34,7 +34,7 @@ body {
 
 .header {
 	height: 137px;
-	background: url('http://www.buscacomabem.com.br/img/backcomabem.jpg') no-repeat;
+	background: url('../img/backcomabem.jpg') no-repeat;
 	background-attachment: fixed;
 	background-position: center; 
 	margin: 0 0 20px 0;
@@ -157,3 +157,4 @@ ol, ul {
 	font-family: "Trebuchet MS", sans-serif;
 	color: black;
 }
+

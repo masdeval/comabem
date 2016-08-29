@@ -1,61 +1,69 @@
 <div id="borderTopo"></div>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" type="image/ico" href="http://www.buscacomabem.com.br/img/favicon.ico"/>
-	<!-- Bootstrap core CSS 
-	<link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />-->
-	
-	<!-- Bootstrap theme 
-	<link type="text/css" href="/bootstrap/bootstrap-theme.min.css" rel="stylesheet">-->
-	
-	<!-- Portal CSS
-	<link type="text/css" href="/css/portal.css" rel="stylesheet" /> -->    
-	<link type="text/css" href="/css/style.css" rel="stylesheet">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-	<script type="text/javascript">
-	$(document).ready(function(){
-		$('#pesquisaInicio').focus();
-		$('#filtroResult').click(function(){
-          $('#filtroMenu').animate({
-            height: 'toggle'
-        }) //Mostra MEnu Filtro   
+    <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
+    <!-- Bootstrap core CSS 
+    <link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />-->
 
-          $('#confirmaFiltro').click(function(){ $('#filtroMenu').fadeOut() });
+    <!-- Bootstrap theme 
+    <link type="text/css" href="/bootstrap/bootstrap-theme.min.css" rel="stylesheet">-->
 
-      });
-		$('#botaoAddCarrinho').click(function(){$('#RemoveAdd').fadeIn()})
+    <!-- Portal CSS
+    <link type="text/css" href="/css/portal.css" rel="stylesheet" /> -->    
+    <link type="text/css" href="/css/style.css" rel="stylesheet">
+    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script-->
+    <script src="/js/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#pesquisaInicio').focus();
+            $('#filtroResult').click(function () {
+                $('#filtroMenu').animate({
+                    height: 'toggle'
+                }) //Mostra MEnu Filtro   
+
+                $('#confirmaFiltro').click(function () {
+                    $('#filtroMenu').fadeOut()
+                });
+
+            });
+            $('#botaoAddCarrinho').click(function () {
+                $('#RemoveAdd').fadeIn()
+            })
 
 
-	})// fim document
+        })// fim document
 
-	</script>
-	<style type="text/css">
-		#botaoEstabelecimento{position: absolute;top: 5px;right: 50px}
-		#botaoEstabelecimento:hover{cursor: pointer;opacity: 0.8}
-		#confirmaFiltro{background: #00CC66;border: none;padding: 5px;color: #FFFFFF;float: right;border-radius: 3px;}
-		body{background: url('http://www.buscacomabem.com.br/img/backcomabem.jpg') no-repeat;}
-		#filtroMenu{display:none;font-family:arial !important;background: #FFFFFF;padding: 10px;border-radius: 3px;border:#CCCCCC;font-size: 19px;
-			position:absolute;top: 215px;margin-left: 490px;color: #666666;height: auto;}
-		#EnglobaPesquisaInicio{position:relative;margin-top:160px;background: rgba(255,255,255,0.7);width: 680px;padding: 25px;
-			box-shadow: 0px 2px 2px 0px #000000 }
-			#pesquisaInicio{padding:20px;width: 550px;background:#FFFFFF;border: none;}
-			::-webkit-input-placeholder {color: #666666;font-size: 16px;vertical-align: middle;}
+    </script>
+    <style type="text/css">
+        html{
+    height:100%
+}
+        #botaoEstabelecimento{position: absolute;top: 5px;right: 50px}
+        #botaoEstabelecimento:hover{cursor: pointer;opacity: 0.8}
+        #confirmaFiltro{background: #00CC66;border: none;padding: 5px;color: #FFFFFF;float: right;border-radius: 3px;}
 
-			:-moz-placeholder { /* Firefox 18- */color: #666666;  font-size: 16px;vertical-align: middle;}
+        #filtroMenu{display:none;font-family:arial !important;background: #FFFFFF;padding: 10px;border-radius: 3px;border:#CCCCCC;font-size: 19px;
+                    position:absolute;top: 215px;color: #666666;height: auto;}
+        #EnglobaPesquisaInicio{position:relative;margin-top:160px;background: rgba(255,255,255,0.7);width: 680px;padding: 25px;
+                               box-shadow: 0px 2px 2px 0px #000000 }
+        #pesquisaInicio{padding:20px;width: 550px;background:#FFFFFF;border: none;}
+        ::-webkit-input-placeholder {color: #666666;font-size: 16px;vertical-align: middle;}
 
-			::-moz-placeholder {  /* Firefox 19+ */  color: #666666;font-size: 16px;vertical-align: middle;}
+        :-moz-placeholder { /* Firefox 18- */color: #666666;  font-size: 16px;vertical-align: middle;}
 
-			:-ms-input-placeholder {  color: #666666; font-size:16px;vertical-align: middle;}
-		#botaoPesquisar:hover{cursor: pointer;opacity: 0.8}
-		#botaoPesquisar{font-family:arial;background: #FF0033;padding: 17px;color: #FFFFFF;border: none;font-weight: bold;
-			font-size: 18px}
-			#borderTopo{width: 100%;height: 5px;background: #FFBF00;position: absolute;top: 0px;left: 0px;}
-			#logoComabem img{float:left;clear: both;width: 214px;height: 85px}
-			#filtroResult:hover{cursor: pointer;opacity: 0.8}
-			#filtroResult{position:absolute;margin-top:-68px;margin-left:550px;background: rgba(0,0,0,0.7);padding: 10px;border: none;color: #FFFFFF;font-weight: bold;font-size: 20px}
-			#filtroMenu input{margin-left: 0px}
-	</style>
-	<!-- jQuery -->
+        ::-moz-placeholder {  /* Firefox 19+ */  color: #666666;font-size: 16px;vertical-align: middle;}
+
+        :-ms-input-placeholder {  color: #666666; font-size:16px;vertical-align: middle;}
+        #botaoPesquisar:hover{cursor: pointer;opacity: 0.8}
+        #botaoPesquisar{font-family:arial;background: #FF0033;padding: 17px;color: #FFFFFF;border: none;font-weight: bold;
+                        font-size: 18px}
+        #borderTopo{width: 100%;height: 5px;background: #FFBF00;position: absolute;top: 0px;left: 0px;}
+        #logoComabem img{float:left;clear: both;width: 214px;height: 85px}
+        #filtroResult:hover{cursor: pointer;opacity: 0.8}
+        #filtroResult{position:absolute;margin-top:-68px;margin-left:550px;background: rgba(0,0,0,0.7);padding: 10px;border: none;color: #FFFFFF;font-weight: bold;font-size: 20px}
+        #filtroMenu input{margin-left: 0px}
+    </style>
+    <!-- jQuery -->
     <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
     <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
     <script type="text/javascript" src="/js/mootools/mootools-core-1.4.2-full-compat.js"></script>
@@ -63,295 +71,293 @@
     <script type="text/javascript" src="/js/portal.js"></script>
 
 </head>
+<body>
 
-        <div>
-            <div id="logoComabem" ><a href="/portal/"><img src="http://www.buscacomabem.com.br/img/logotipo.png"></a></div>
-              <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img src="http://www.buscacomabem.com.br/img/estabelecimento.png"></div></a>
-	</div>
-    <?php
+<div>
+    <div class="main1">
+    <div id="logoComabem" ><a href="/portal/"><img src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
+    <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img src="<?php echo $this->serverUrl(); ?>/img/estabelecimento.png"></div></a>
 
-	if(!empty($this->nomeCliente))
-	     echo "<p>Bem vindo ".  $this->nomeCliente ."! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
-
-
-    ?>
+<?php
+if (!empty($this->nomeCliente))
+    echo "<p>Bem vindo " . $this->nomeCliente . "! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
+?>
 
 <div align="center" width="80%">
 
     <div class="formBuscar">
         <form action="/portal/index/consulta" method="post" class="" id='form1'>
 
-              <!-- <h2>Por favor, entre com os critérios de pesquisa. Você pode procurar por ingredientes específicos, lugares, pratos ou 
-            qualquer outro critério disponível para trazer a opção mais certa para você!</h2> 
+            <!-- <h2>Por favor, entre com os critérios de pesquisa. Você pode procurar por ingredientes específicos, lugares, pratos ou 
+          qualquer outro critério disponível para trazer a opção mais certa para você!</h2> 
 
-          <div style="text-align: left; border: transparent; width: 380px; ">
-                 <p class="lead">Aqui você pode digitar qualquer termo para sua consulta:</p>
-                
-		Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
-		<br>
-		Ex: catupiri, bacon, "peito de peru", chia 
-            </div> -->
+        <div style="text-align: left; border: transparent; width: 380px; ">
+               <p class="lead">Aqui você pode digitar qualquer termo para sua consulta:</p>
+              
+              Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
+              <br>
+              Ex: catupiri, bacon, "peito de peru", chia 
+          </div> -->
 
             <br>
-            
+
             <div id="EnglobaPesquisaInicio">
-            	<input type="button" id="filtroResult" value="Filtrar Por &#8628;">
-	            <input class="form-control" type="textarea" name="criterio" id="pesquisaInicio"  
-	            value="" placeholder="Ingredientes específicos, lugares, pratos..." required="required"><input class="btn btn-primary" id="botaoPesquisar" type="submit" 
-	            value="BUSCAR">
-        	</div>
+                <input type="button" id="filtroResult" value="Filtrar Por &#8628;">
+                <input class="form-control" type="textarea" name="criterio" id="pesquisaInicio"  
+                       value="" placeholder="Ingredientes específicos, lugares, pratos..."><input class="btn btn-primary" id="botaoPesquisar" type="submit" 
+                       value="BUSCAR">
+            </div>
             <br>
             <br>
-             <p class="lead">Culinária:</p>
-            
+            <p class="lead new_heading">Culinária:</p>
 
-            <div style="width:450; height: 100;">
-		<?php
-		//formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
-		//cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
-		$i = 0;
-		foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto)
-		{
-		    $checked = " ";
-		    if (!empty($this->pesquisa_facapedido_tipo_produto) && in_array($cod_tipo_produto, $this->pesquisa_facapedido_tipo_produto))
-		    {
-			$checked = "checked";
-		    }
-		?>
-    		<input  type="checkbox" name="cod_tipo_produto[]" <?php echo $checked; ?> value="<?php echo $cod_tipo_produto ?>" class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
 
-		<?php } ?>
-	    </div>
-	    <div style="width:450;" id="filtroMenu">
-             <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
-            <br>
-            <br>
-            
-            <p class="lead">Listar apenas estabelecimentos que oferecem: </p>
-            
-            
-	              
-			<input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabético<br>
+            <div  class="chkclass">
+                <?php
+//formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
+//cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
+                $i = 0;
+                foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto) {
+                    $checked = " ";
+                    if (!empty($this->pesquisa_facapedido_tipo_produto) && in_array($cod_tipo_produto, $this->pesquisa_facapedido_tipo_produto)) {
+                        $checked = "checked";
+                    }
+                    ?>
+                    <input  type="checkbox" name="cod_tipo_produto[]" <?php echo $checked; ?> value="<?php echo $cod_tipo_produto ?>" class=""> <label><?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?></label>
+
+                <?php } ?>
+            </div>
+            <div id="filtroMenu">
+                <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+                <br>
+                <br>
+
+                <p class="lead">Listar apenas estabelecimentos que oferecem: </p>
+
+
+
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabético<br>
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('pouco_sal', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="pouco_sal" class=""> Produto com pouco sal<br>
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('sem_glutem', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="sem_glutem" class=""> Produto sem glútem<br>
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('lactose', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="lactose" class=""> Produto sem lactose<br>
-				<input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgânico<br>
-				<input type="button" id="confirmaFiltro" value="&#10004; Ok">	
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgânico<br>
+                <input type="button" id="confirmaFiltro" value="&#10004; Ok">	
             </div>
 
-	    <br><br><br>
-            
+            <br><br><br>
+
 
         </form>
     </div>
 
-<!--<h3>Nosso sistema ainda não faz pedidos mas você pode simular suas compras e verificar o custo total. Compre em quantos estabelecimentos quiser. 
-    Todos os itens escolhidos ficarão no seu carrinho.</h3>-->
-    
+    <!--<h3>Nosso sistema ainda não faz pedidos mas você pode simular suas compras e verificar o custo total. Compre em quantos estabelecimentos quiser. 
+        Todos os itens escolhidos ficarão no seu carrinho.</h3>-->
+
     <div style="margin-right: 90px;display:none" id="RemoveAdd">
-        
-	      <form action="/portal/index/limpar-Carrinho" method="post" class="" >
-                  <div style="float: right; position: relative; ">
-		<input class="btn btn-warning" type="submit" value="Limpar Carrinho"> 
-                </div>
-		</form>
-        
-  		  <form action="/portal/pedido/fechar-Pedido" method="post" class="" >
-                    <div style="float: right; margin-right: 20px; ">
+
+        <form action="/portal/index/limpar-Carrinho" method="post" class="" >
+            <div style="float: right; position: relative; ">
+                <input class="btn btn-warning" type="submit" value="Limpar Carrinho"> 
+            </div>
+        </form>
+
+        <form action="/portal/pedido/fechar-Pedido" method="post" class="" >
+            <div style="float: right; margin-right: 20px; ">
                 <input class="btn btn-success" type="submit" value="Fechar Pedido"> 
-                </div>
-		</form>
+            </div>
+        </form>
 
-        
+
         <div style="clear: both;"></div>
-	   
-     </div>
 
-    
-     
-<div style="float: right;margin-right: 90px;position:fixed;bottom:0px">
-<h4> Seu pedido </h4>
-        
-<table  id="tableListaPedido" style=" border-spacing: 10px; border-collapse: separate;" >  
-	</table>
+    </div>
 
 
-</div>
+
+    <div style="float: right;margin-right: 90px;position:fixed;bottom:0px" class="bottom-menu">
+        <h4> Seu pedido </h4>
+
+        <table  id="tableListaPedido" style=" border-spacing: 10px; border-collapse: separate;" >  
+        </table>
 
 
-<p style="padding-left: 50px;"><?php $this->headline; ?></p>
-
-<?php
-	    
-    if(!empty($this->pesquisa_facapedido_criterio))
-    {
-	for ($i = 0; $i < sizeof($this->resultado); $i++)
-	{
-?>
-
-<div style=' clear:both;  color:black;'>
-    <div style='background:#FFFFFF;width:450px;margin:auto;position:absolute;margin-top:-200px '>
-	<p><img src='/portal/index/get-Imagem-Produto/id/<?php echo $this->resultado[$i]['cod_foto'] ?>' width='100' height='auto' alt=''>
-	</p>
-   
-	
-    <div>
-	<p style='display: block' >
-	    <?php echo $this->resultado[$i]["nome"]; ?>
-            <p style='font-size: small;'> 
-	    <?php echo $this->resultado[$i]["descricao"]."<br> Valor calórico: ".$this->resultado[$i]["valor_calorico"]." cal"; ?>
-    </p>
-    </p> </div> <!-- nome do produto -->
-
-        <!--	    //imprime os tamanhos disponiveis e precos do produto -->
-        <div>
-	<?php
+    </div>
 
 
-	    //Sempre há pelo menos um tamanho, entao imprime esse
-	    if (!empty($this->resultado[$i]['preco_promocional']))
-	    {
-		$preco = (double) $this->resultado[$i]['preco_promocional'];
-		echo ($this->resultado[$i]['tamanho'] . "De ");
-		echo $this->resultado[$i]["preco"];
-		echo (" por ");
-		echo $this->resultado[$i]["preco_promocional"];
-	    }
-	    else
-	    {
-		$preco = (double) $this->resultado[$i]['preco'];
-		echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
-	    }
+    <p style="padding-left: 50px;"><?php $this->headline; ?></p>
 
-	    //imprime o botao que vai permitir incluir no carrinho
-	    if($this->resultado[$i]['isAberto'] == true)
-	    {
-                echo "<img id='botaoAddCarrinho' src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(".$this->resultado[$i]['cod_empresa'].",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['razao_social']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
-                echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_".$this->resultado[$i]['cod_empresa']."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
-	    }
-	
-            if(($i+1) < sizeof($this->resultado))
-            {
-                $i++;
-                //Esse laco verifica se existem outros tamanhos para o mesmo produto
-                while (($i < sizeof($this->resultado)) && $this->resultado[$i]['cod_produto'] == $this->resultado[$i - 1]['cod_produto'])
-                {
-                    echo "<br> \n";
+    <?php
+    if (!empty($this->pesquisa_facapedido_criterio)) {
 
-                    if (!empty($this->resultado[$i]['preco_promocional']))
-                    {
+        for ($i = 0; $i < sizeof($this->resultado); $i++) {
+            ?>
+
+            <div class="popup1">
+                <a class="close" href="javascript:;"><span class="close"></span><span class="close1"></a> 
+                <div>
+                    <p><img src='<?php echo $this->serverUrl() ?>/portal/index/get-Imagem-Produto/id/<?php echo $this->resultado[$i]['cod_foto'] ?>' width='100' height='auto' alt=''>
+                    </p>
+                </div>
+                <div>
+                    <p class="title">
+                        <?php echo $this->resultado[$i]["nome"]; ?>
+                    <p class="para-text"> 
+                        <?php echo $this->resultado[$i]["descricao"] . "<br> Valor calórico: " . $this->resultado[$i]["valor_calorico"] . " cal"; ?>
+                    </p>
+                    </p> </div> <!-- nome do produto -->
+
+                <!--	    //imprime os tamanhos disponiveis e precos do produto -->
+                <div class="grand">
+                    <?php
+                    //Sempre há pelo menos um tamanho, entao imprime esse
+                    if (!empty($this->resultado[$i]['preco_promocional'])) {
                         $preco = (double) $this->resultado[$i]['preco_promocional'];
-                        echo ($this->resultado[$i]['tamanho'] . " De ");
+                        echo ($this->resultado[$i]['tamanho'] . "De ");
                         echo $this->resultado[$i]["preco"];
                         echo (" por ");
                         echo $this->resultado[$i]["preco_promocional"];
-                    }
-                    else
-                    {
+                    } else {
                         $preco = (double) $this->resultado[$i]['preco'];
                         echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
                     }
-                    //imprime o botao que vai permitir incluir no carrinho
-                    if($this->resultado[$i]['isAberto'] == true)
-                    {
-               	        echo "<img src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(".$this->resultado[$i]['cod_empresa'].",".$this->resultado[$i]['cod_tamanho_produto'].",'".$this->resultado[$i]['razao_social']."','".$this->resultado[$i]['nome']."','".$this->resultado[$i]['tamanho']."',".$preco.")\"> ";
-                        echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_".$this->resultado[$i]['cod_empresa']."_".$this->resultado[$i]['cod_tamanho_produto']."'>";
 
+                    //imprime o botao que vai permitir incluir no carrinho
+                    if ($this->resultado[$i]['isAberto'] == true) {
+                        echo "<img id='botaoAddCarrinho' src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"> ";
+                        echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_" . $this->resultado[$i]['cod_empresa'] . "_" . $this->resultado[$i]['cod_tamanho_produto'] . "'>";
                     }
 
+                    if (($i + 1) < sizeof($this->resultado)) {
+                        $i++;
+                        //Esse laco verifica se existem outros tamanhos para o mesmo produto
+                        while (($i < sizeof($this->resultado)) && $this->resultado[$i]['cod_produto'] == $this->resultado[$i - 1]['cod_produto']) {
+                            echo "<br> \n";
 
-                 $i++;
+                            if (!empty($this->resultado[$i]['preco_promocional'])) {
+                                $preco = (double) $this->resultado[$i]['preco_promocional'];
+                                echo ($this->resultado[$i]['tamanho'] . " De ");
+                                echo $this->resultado[$i]["preco"];
+                                echo (" por ");
+                                echo $this->resultado[$i]["preco_promocional"];
+                            } else {
+                                $preco = (double) $this->resultado[$i]['preco'];
+                                echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
+                            }
+                            //imprime o botao que vai permitir incluir no carrinho
+                            if ($this->resultado[$i]['isAberto'] == true) {
+                                echo "<img src='http://whattoeat.com/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"> ";
+                                echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_" . $this->resultado[$i]['cod_empresa'] . "_" . $this->resultado[$i]['cod_tamanho_produto'] . "'>";
+                            }
 
+
+                            $i++;
+                        }
+
+                        $i--;
+                    }
+                    ?>
+
+                </div> <!-- precos -->
+
+                <?php
+                echo "<div class='text1'>  \n";
+                echo "<div style='font-weight: bold;'>" . $this->resultado[$i]["razao_social"] . " </div> <br> \n";
+
+                //verifica se a empresa esta atendendo nesse horario
+                if ($this->resultado[$i]['isAberto'] == true) {
+
+                    echo "<input type='button' class='btn btn-info' value='Ir &agrave; Loja' onClick='javascript:irLoja(\"" . $this->resultado[$i]['url'] . "\")'>";
+                } else {
+                    $hora_atual = date('H') . ":" . date('i') . ":00";
+
+                    echo "<input type='button' class='btn btn-danger' value='Fechada nesse horário'  onClick='javascript:lojaFechada(" . $this->resultado[$i]['cod_empresa'] . "," . $i . " );' > " .
+                    " <br> <span class='msg_estabelecimento_fechado' id='spanFechada" . $i . "'>Clique no botão se deseja enviar à loja sua vontade " .
+                    " de que ela estivesse aberta. </span> ";
                 }
-
-                $i--;
+                echo " </div> \n";
             }
-	?>
-    
-        </div> <!-- precos -->
+            ?>
 
-<?php	            echo "<div>  \n";
-		    echo  "<div style='font-weight: bold;'>" . $this->resultado[$i]["razao_social"] . " </div> <br> \n";
+        </div> <!--fim resultado pesquisa-->   
 
-		    //verifica se a empresa esta atendendo nesse horario
-		    if ($this->resultado[$i]['isAberto'] == true)
-		    {
-			
-			echo "<input type='button' class='btn btn-info' value='Ir &agrave; Loja' onClick='javascript:irLoja(\"" . $this->resultado[$i]['url'] . "\")'>";
-			
-		    }
-		    else
-		    {
-			$hora_atual = date('H') . ":" . date('i') . ":00";
-			
-			echo "<input type='button' class='btn btn-danger' value='Fechada nesse horário'  onClick='javascript:lojaFechada(".$this->resultado[$i]['cod_empresa']. ",".$i." );' > ".
-			" <br> <span class='msg_estabelecimento_fechado' id='spanFechada".$i."'>Clique no botão se deseja enviar à loja sua vontade ".
-			" de que ela estivesse aberta. </span> ";
-		    }
-                    echo " </div> \n";
-                    
-
-	}
-?>
-        
-      </div> <!--fim resultado pesquisa-->   
-   
-   </div>
+    </div>
 
 
 
-<?php
-    }
-    else
+    <?php
+} else {
+    if(!empty($this->resultado))
     {
-		for ($i = 0; $i < sizeof($this->resultado); $i++)
-		{
-		    echo "<div style=' clear:both; color:black;' > \n";
+    echo "<div class='close_result_btn'>";
+    echo '<a href="javascript:;"  class="close close_bottom_results"><span class="close"></span><span class="close1"></span></a>';
+    for ($i = 0; $i < sizeof($this->resultado); $i++) {
 
-		    echo "<div style='float: left; margin: 20px 1px 20px 21px; width:200px;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->resultado[$i]['cod_empresa'] . "' width='141' height='auto' alt=''> </p> </div> \n";
-		    echo "<div style='float: left; margin: 20px 1px 20px 21px; width:300px; '>  \n";
-		    echo  "<div style='font-weight: bold;'>" . $this->resultado[$i]["razao_social"] . " </div> <br> \n";
-                    echo $this->resultado[$i]["rua"] . " " . $this->resultado[$i]["numero"]. " " . $this->resultado[$i]["complemento"] . " " . $this->resultado[$i]["bairro"] . " <br> \n";
-                    echo "Telefone 1: " . $this->resultado[$i]["telefone1"] . " Telefone 2 : " . $this->resultado[$i]["telefone2"] . " <br> \n";
-                    echo "email: " . $this->resultado[$i]["email"] . " <br> \n";
-                    echo  $this->resultado[$i]["website"] . " <br> \n";
-		    echo " </div> \n";
+        echo "<div class='buscardv' style=' clear:both; color:black;' > \n";
+        echo "<div><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->resultado[$i]['cod_empresa'] . "' width='141' height='auto' alt=''> </p> </div> \n";
+        echo "<div class='filter_result'>";
+        echo "<div class='filter_result'>" . $this->resultado[$i]["razao_social"] . " </div> <br> ";
+        echo $this->resultado[$i]["rua"] . " " . $this->resultado[$i]["numero"] . " " . $this->resultado[$i]["complemento"] . " " . $this->resultado[$i]["bairro"] . " <br> ";
+        echo "Telefone 1: " . $this->resultado[$i]["telefone1"] . " Telefone 2 : " . $this->resultado[$i]["telefone2"] . " <br> \n";
+        echo "email: " . $this->resultado[$i]["email"] . " <br> ";
+        echo $this->resultado[$i]["website"] . " <br> ";
+        echo " </div> ";
 
 
-		    //verifica se a empresa esta atendendo nesse horario
-		    if ($this->resultado[$i]['isAberto'] == true)
-		    {
-			echo "<div style='float: left; margin: 60px 1px 20px 10px; width:150px;'> \n";
-                        echo "<input type='button' class='btn btn-info' value='Ir &agrave; Loja' onClick='javascript:irLoja(\"" . $this->resultado[$i]['url'] . "\")'>";
 
-		    }
-		    else
-		    {
-			$hora_atual = date('H') . ":" . date('i') . ":00";
-			echo "<div style='float: left; margin: 60px 1px 20px 10px; width:150px;'> \n";
-                        
-			echo "<input type='button' class='btn btn-danger' value='Fechada nesse horário'  onClick='javascript:lojaFechada(".$this->resultado[$i]['cod_empresa']. ",".$i." );' > ".
-			" <br> <span class='msg_estabelecimento_fechado' id='spanFechada".$i."'>Clique no botão se deseja enviar à loja sua vontade ".
-			" de que ela estivesse aberta. </span> ";
-		    }
-  
-		    echo "</div> \n";
-		}
+        //verifica se a empresa esta atendendo nesse horario
+        if ($this->resultado[$i]['isAberto'] == true) {
+            echo "<div>";
+            echo "<input type='button' class='btn btn-info' value='Ir &agrave; Loja' onClick='javascript:irLoja(\"" . $this->resultado[$i]['url'] . "\")'>";
+        } else {
+            $hora_atual = date('H') . ":" . date('i') . ":00";
+            echo "<div>";
+
+            echo "<input type='button' class='btn btn-danger' value='Fechada nesse horário'  onClick='javascript:lojaFechada(" . $this->resultado[$i]['cod_empresa'] . "," . $i . " );' > " .
+            " <br> <span class='msg_estabelecimento_fechado' id='spanFechada" . $i . "'>Clique no botão se deseja enviar à loja sua vontade " .
+            " de que ela estivesse aberta. </span> ";
+        }
+
+        echo "</div>";
+        echo "</div>";
+   
     }
+         
+    }
+    echo "</div>";
+}
 ?>
 
 
 <script>
 
-recebeCarrinhoJSON();
+        recebeCarrinhoJSON();
 
-function irLoja(url)
-{
-    var form = document.getElementById("form1");
-    form.action = "/"+url;
-    form.submit();
+        function irLoja(url)
+        {
+            var form = document.getElementById("form1");
+            form.action = "/" + url;
+            form.submit();
 
-}
+        }
+
+        $(document).ready(function () {
+           
+   
+            
+          $(".close").click(function () {
+                $(".popup1").fadeOut(2500);
+                $()
+            });
+            
+            $(".close_bottom_results").click(function () {
+            
+                $(this).parent('div').fadeOut(2500);
+            });
+
+
+        });
 
 
 </script>
+</div>
+</body>

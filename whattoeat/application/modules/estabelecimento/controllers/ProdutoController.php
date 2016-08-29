@@ -61,7 +61,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
+    { 
 	$this->view->produtoId = '';
 	$this->view->empresaId = $this->empresaId;
 	$this->view->ingredienteEmpresaRec = $this->Ingrediente->getRecords();

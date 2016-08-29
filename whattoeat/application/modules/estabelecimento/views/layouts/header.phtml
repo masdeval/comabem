@@ -43,10 +43,10 @@ $this->headTitle()->setSeparator(' - ');
                             var option = this.id == "from" ? "minDate" : "maxDate",
                                     instance = $(this).data("datepicker"),
                                     date = $.datepicker.parseDate(
-                                            instance.settings.dateFormat ||
-                                            $.datepicker._defaults.dateFormat,
-                                            selectedDate, instance.settings);
-                            dates.not(this).datepicker("option", option, date);
+                                    instance.settings.dateFormat ||
+                                    $.datepicker._defaults.dateFormat,
+                                    selectedDate, instance.settings);
+                                    dates.not(this).datepicker("option", option, date);
                         }
                     });
 
@@ -154,7 +154,7 @@ $this->headTitle()->setSeparator(' - ');
                 $(function () {
                     $("#combobox").combobox();
                     $("#toggle").click(function () {
-                        $("#combobox").toggle();
+                    $("#combobox").toggle();
                     });
                 });
             </script>
@@ -162,11 +162,13 @@ $this->headTitle()->setSeparator(' - ');
 
     </head>
     <body>
+    
 
         <div class="header">
             <div class="logo" style="float:left;"><a href="/portal/"><img src="/img/logotipo.png" ></a></div>
             
-            <font size="5" color="red" style="float: left; font-family: cursive; margin: 50px 0px 0px 30px;"> A maneira inovadora de divulgar seus produtos  </font>
+            <font size="5" color="red backfont" style="    background:rgba(0,0,0,0.5);padding:10px; color:#fff !important;font-size:20px;
+    float: left; font-family: cursive; margin: 50px 0px 0px 30px;"> A maneira inovadora de divulgar seus produtos  </font>
                       
             <big><a style="float: right; margin: 100px 10px 0 0;" href="/estabelecimento/auth/logout">Sair</a></big>
                        

@@ -11,8 +11,8 @@ class Portal_IndexController extends Zend_Controller_Action
     private $session;
 
     public function init()
-    {
-	/* Initialize action controller here */
+    { 	
+/* Initialize action controller here */
 	$this->session = new Zend_Session_Namespace('compra');
 	$this->_helper->layout()->disableLayout();
 	$this->TipoProdutoDB = new DbTable_TipoProduto();
@@ -43,9 +43,13 @@ class Portal_IndexController extends Zend_Controller_Action
         if(!$empresa_oferece){$empresa_oferece=array();}
 	$produtos = "";
 
+        //echo "<pre>"; print_r($_POST); die;
+        
+  
+       
 	//primeiro busca com o lucene
 	if (!empty($criterios))
-	{
+	{ 
 	    $hits = LuceneManager::search($criterios);
 	    //obtem a lista de empresas em ordem crescente de relevancia e insere os ids em uma string
 	    //para fazer select no banco
@@ -64,23 +68,28 @@ class Portal_IndexController extends Zend_Controller_Action
 		}
 	    }
 	    $produtos .= "-1"; //so porque fica uma virgula no final
-	}
-
-	$resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece);
+            $resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece);
+	}else{
+                        
+            $resultado = LuceneManager::searchDefault($empresa_oferece);
+            
+}
 
 	//insere em resultado a situacao do estabelecimento informando se o mesmo
 	//esta aberto ou fechado
 	$empresa_ja_apresentada = array();
 	$novo_resultado = array();
 	$j = 0;
+
 	for ($i = 0; $i < sizeof($resultado); $i++)
 	{
+     
 	    if (array_key_exists($resultado[$i]['cod_empresa'], $empresa_ja_apresentada))
 	    {
 		continue;
 	    }
 	    else
-	    {
+	    { 
 
 		date_default_timezone_set($resultado[$i]['timezone']);//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
 		$hora_atual = date('H') . ":" . date('i') . ":00";

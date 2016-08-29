@@ -207,7 +207,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
         if (!empty($empresa_oferece))
 	{
             $where .= " and ( ";
-	   for ($k = 0; $k < sizeof($empresa_oferece); $k++)
+	    for ($k = 0; $k < sizeof($empresa_oferece); $k++)
 	    {                
                 if($empresa_oferece[$k] == 'diabetico')
                 {
@@ -234,15 +234,10 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
                     $where .= "P.organicos = :".$i." or ";
                     $i++;
                 }                                
-	    } 
-            
-            
-            
-            
+	    }
 	    $where .= " FALSE) ";
-	} 
-      //echo $select . $from . $where . $order_by; die;
-
+	}
+        
 	$stm = $this->_db->prepare($select . $from . $where . $order_by);
 
 	//    ********* Bind de parametros **********

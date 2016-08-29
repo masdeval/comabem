@@ -16,7 +16,7 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
         $this->PrivilegeDB = new DbTable_UserPrivileges($this->db);
     }
 
-    public function indexAction() {
+    public function indexAction() { 
         $msg = $this->_getParam('msg', '');
         $this->view->headline = $msg;
     }
