@@ -240,7 +240,7 @@ td.upload input {
     width: 350px;
 }
 .main1 {
-    background: url("http://whattoeat.com/img/backcomabem.jpg") repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
+    background: url("../img/backcomabem.jpg") repeat scroll 0 0 / cover rgba(0, 0, 0, 0);
     float: left;
     width: 100%;
     min-height: 100%;

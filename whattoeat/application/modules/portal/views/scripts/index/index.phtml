@@ -245,7 +245,8 @@ if (!empty($this->nomeCliente))
                             }
                             //imprime o botao que vai permitir incluir no carrinho
                             if ($this->resultado[$i]['isAberto'] == true) {
-                                echo "<img src='http://whattoeat.com/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"> ";
+                                $s_path=$this->serverUrl();
+                                echo "<img src='$s_path/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"> ";
                                 echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_" . $this->resultado[$i]['cod_empresa'] . "_" . $this->resultado[$i]['cod_tamanho_produto'] . "'>";
                             }
 
