@@ -517,14 +517,15 @@ float:left;
   box-sizing: border-box;
 }
 .close_result_btn a.close {
-  
   right: 0;
-  
 }
 
 
 }
 @media(max-width:991px) {
+    .close_result_btn a.close {
+  right: 18%;
+}
     .buscardv p img {
 float:none;
 }
@@ -653,6 +654,11 @@ float:left;
 
 @media(max-width:500px) {
     .popup1 {
+  
+  padding: 15px !important;
+  box-sizing: border-box;
+}
+    .popup1 {
  
   min-height: 263px;
  
@@ -667,6 +673,16 @@ float:left;
     #filtroMenu {
 
   width: 100% !important;
+}
+.popup1 span {
+  
+  float: none;
+  width: 350px;
+  display:unset
+}
+.popup1 .btn, #tabs-3 tr td input[type="submit"], #tabs-2 tr input[type="submit"] {
+  
+  margin-bottom: 10px;
 }
 }
 

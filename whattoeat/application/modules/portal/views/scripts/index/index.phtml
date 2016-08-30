@@ -12,7 +12,7 @@
     <link type="text/css" href="/css/portal.css" rel="stylesheet" /> -->    
     <link type="text/css" href="/css/style.css" rel="stylesheet">
     <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script-->
-    <script src="/js/jquery.min.js"></script>
+    <script src="<?php echo $this->serverUrl(); ?>/js/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('#pesquisaInicio').focus();
@@ -38,7 +38,11 @@
         html{
     height:100%
 }
-        #botaoEstabelecimento{position: absolute;top: 5px;right: 50px}
+    #botaoEstabelecimento {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
         #botaoEstabelecimento:hover{cursor: pointer;opacity: 0.8}
         #confirmaFiltro{background: #00CC66;border: none;padding: 5px;color: #FFFFFF;float: right;border-radius: 3px;}
 
@@ -64,11 +68,11 @@
         #filtroMenu input{margin-left: 0px}
     </style>
     <!-- jQuery -->
-    <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
-    <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
-    <script type="text/javascript" src="/js/mootools/mootools-core-1.4.2-full-compat.js"></script>
+    <script type="text/javascript" src="<?php echo $this->serverUrl(); ?>/js/jui/js/jquery-1.4.4.min.js"></script>
+    <script type="text/javascript" src="<?php echo $this->serverUrl(); ?>/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
+    <script type="text/javascript" src="<?php echo $this->serverUrl(); ?>/js/mootools/mootools-core-1.4.2-full-compat.js"></script>
     <!-- javascript Portal -->
-    <script type="text/javascript" src="/js/portal.js"></script>
+    <script type="text/javascript" src="<?php echo $this->serverUrl(); ?>/js/portal.js"></script>
 
 </head>
 <body>
