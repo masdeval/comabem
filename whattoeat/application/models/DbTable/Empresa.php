@@ -1,4 +1,4 @@
-berto<?php
+<?php
 
 class DbTable_Empresa extends Zend_Db_Table_Abstract {
 
@@ -209,20 +209,25 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract {
      */
 
     public function isAberto($cod_empresa, $dia_da_semana, $hora) {
+        
+     
         $query = $this->_db->query("SELECT e.cod_empresa, hora_inicio, hora_fim, desativada
 	                          FROM empresa e, horario_funcionamento hf
 				  WHERE e.cod_empresa = hf.cod_empresa and
 				  hf.dia_da_semana = '" . $dia_da_semana . "' and
-				  e.cod_empresa = " . $cod_empresa);
+				  e.cod_empresa = " . $cod_empresa); 
         $res = $query->fetchAll();
 
 
         if (count($res) <= 0 || $res[0]['desativada'] == true) {
             return false;
         } else {
+         
             if (strtotime($hora) >= strtotime($res[0]['hora_inicio']) && strtotime($hora) <= strtotime($res[0]['hora_fim'])) {
+       
                 return true;
             } else {
+              
                 return false;
             }
         }

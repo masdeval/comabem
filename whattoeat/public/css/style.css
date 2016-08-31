@@ -122,7 +122,7 @@ input.focus,select.focus,textarea.focus {
 .popup1{
     background: none repeat scroll 0 0 #ffffff;
   
-    min-height: 200px;
+    min-height: 100px;
     left: 0;
     margin: auto;
     position: absolute;
@@ -253,8 +253,8 @@ td.upload input {
     font-size: 0;
     height: 50px;
     position: absolute;
-    right: -22px;
-    top: -23px;
+    right:0px;
+    top: 0px;
     width: 50px;
 }
 .popup1 a.close span.close {
@@ -480,8 +480,10 @@ width:100%;
      right: 0;
     top: 18px;
 }
-.chkclass label{
-    margin-right:10px;
+.chkclass label {
+  font-size: 13px;
+  margin-right: 10px;
+  font-weight: 400;
 }
 .chkclass{
    height: 100px;
@@ -503,6 +505,131 @@ width:100%;
     float: left;
     margin-right: 10px;
     height: 120px;}
+
+/*
+.popup2 {
+  background: none repeat scroll 0 0 rgb(255, 255, 255);
+  left: 0;
+  margin: auto;
+  min-height: 200px;
+  padding: 20px;
+  position: absolute;
+  right: 0;
+  top: 32%;
+  width: 500px;
+}
+*/
+
+
+.bottom-menu {
+  background: none repeat scroll 0 0 rgb(255, 255, 255);
+  bottom: 0;
+  margin-top: 320px;
+  position: static;
+  width: 543px;
+}
+#tableListaPedido td{
+      font-size: 14px;
+    padding: 0;
+}
+.bottom-menu h4{
+   box-sizing: border-box;
+    font-size: 14px;
+    padding: 30px 0 0;}
+#RemoveAdd{
+    margin-right:15px;
+}    
+#RemoveAdd .btn-success {
+  background-color: rgb(92, 184, 92);
+  border: medium none;
+  border-radius: 4px;
+  color: rgb(255, 255, 255);
+  padding: 4px 15px;
+}
+.warning_btn .btn-warning {
+  background-color: rgb(240, 173, 78);
+  border-color: rgb(238, 162, 54);
+  color: rgb(255, 255, 255);
+    border-radius: 4px;
+  color: rgb(255, 255, 255);
+  padding: 4px 15px;
+    border: medium none;
+}
+.popup1_txt p img{
+  float: left;
+    height: 100px;
+    margin-right: 10px;
+}
+.popup1 .titletext {
+  float: left;
+  text-align: left !important;
+  width: 360px;
+}
+.popup1_txt{
+    width:700px;
+    margin-top:100px;
+}
+.titletext .title{
+    margin-top:0px;
+}
+.grandnew {
+  color: rgb(34, 34, 34);
+  float: right;
+  font-size: 16px;
+  font-weight: normal;
+  line-height: 25px;
+  position: relative;
+  right: 20px;
+  text-align: right;
+  top: 0;
+}
+.plusicon_text{
+   font-size: 14px;
+    font-weight: 300;
+    text-align: right;
+    width:131px;}
+
+.popup1_txt .text1 {
+  clear: both !important;
+  border-bottom: 1px solid #ddd;
+
+  margin-bottom: 31px;
+}
+
+.popup1_txt .text1:last-child{
+
+      border-bottom:none;
+
+  margin-bottom: 10px;}
+
+.plusicon_text p {
+ float: right;
+    width: 200px;
+}
+.plusicon_text p img{
+     float: right;
+    height: 20px;
+    margin-left: 5px;
+    width: 20px;
+    margin-right:0px;
+}
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media(max-width:1280px) {
 
  .filter_result {
@@ -546,9 +673,46 @@ float:left;
 }
 }
 @media(max-width:767px) {
- 
-
+    .plusicon_text p {
   
+  width: 100%;
+}
+    #EnglobaPesquisaInicio{
+        overflow:hidden
+    }
+    #botaoPesquisar {
+ 
+  float: right;
+}
+     .popup1 .titletext {
+ 
+  text-align: center !important;
+  width:100%
+}
+    .popup1_txt p img {
+  float: none;
+ 
+  margin-right:0px
+}
+    .grandnew {
+
+  float: left;
+  
+  right: 0;
+  text-align: center;
+  top: 0;
+  width: 100%;
+}
+.plusicon_text {
+  
+  text-align: center;
+  width: 100%;
+}
+
+
+  .popup1_txt{
+    width:100%;
+}
     .filter_result {
   
   margin-bottom: 10px;
@@ -653,6 +817,48 @@ float:left;
 }
 
 @media(max-width:500px) {
+    #botaoPesquisar {
+  
+  font-size: 14px !important;
+  
+  padding: 10px !important;
+}
+    .filterexpand {
+ 
+  font-size: 14px !important;
+  
+}
+    .bottom-menu {
+  
+  width: 100%;
+}
+    #tableListaPedido td {
+  font-size: 12px;
+  padding: 0;
+}
+    .plusicon_text {
+  
+  text-align: center;
+  width: 100%;
+}
+    .popup1 .titletext {
+ 
+  text-align: center !important;
+  width:100%
+}
+    .popup1_txt p img {
+  float: none;
+ 
+  margin-right:0px
+}
+    .grandnew {
+ 
+  float: none;
+ 
+  right: 0;
+  text-align: center;
+  top: 0;
+}
     .popup1 {
   
   padding: 15px !important;
@@ -686,7 +892,76 @@ float:left;
 }
 }
 
+.scroladd{
+    height:400px;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+.clsicon {
+  position: absolute !important;
+  right: 0 !important;
+  top: 2px !important;
+  z-index: 2147483647;
+}
+.filtroMenu1{
+    text-align: left;
+    overflow: hidden;
+    display: block;
+    width: 532px;
+    padding: 30px;
+    font-size: 16px;
+    line-height: 18px;
+    margin-top: 24px;
+}
 
+.filterexpand{
+    position: relative;
+    margin-top: 0;
+    margin-left: 0;
+    background: none;
+    padding: 3px 0px;
+    border: none;
+    color: #000;
+    font-weight: 300;
+    font-size: 16px;
+    left: 0;
+    float: left;
+    top: 0;
+    cursor:pointer
+}
+.expanddv {
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.5);
+  border: medium none rgb(204, 204, 204);
+  border-radius: 0;
+  box-sizing: border-box;
+  color: rgb(255, 255, 255);
+  display: none;
+  font-family: arial !important;
+  font-size: 14px;
+  height: auto;
+  padding: 0 44px;
+  position: relative;
+  text-align: left;
+  top: 62.2% !important;
+  width: 549px;
+  line-height: 20px;
+}
+.expanddv p{
+    margin:0px;
+    margin-bottom:10px;
+}
+.popup1_txt a.close {
+ 
+  height: 30px;
 
-
-
+  width: 30px;
+}
+.popup1_txt a.close span.close { 
+  height: 20px;
+  margin: 6px auto;
+ 
+}
+.popup1 a.close span.close1 {
+  height: 20px;
+  margin: 6px auto;
+}

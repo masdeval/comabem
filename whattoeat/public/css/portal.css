@@ -157,4 +157,5 @@ ol, ul {
 	font-family: "Trebuchet MS", sans-serif;
 	color: black;
 }
-
+.imgtext{float: left; margin: 30px 1px 10px 10px; width:400px; font-size: medium;text-align:left;}
+.rytsec{float: right; margin: 35px 1px 10px 10px; font-size: medium; text-align: right};

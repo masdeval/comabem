@@ -65,11 +65,13 @@ function addProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto,nome_empresa, no
 	    r=jQuery.trim(r);
 	    //alert(r)
 	    if(r=='Fail'){
+           
 
 		alert("Ocorreu um erro ao inserir esse produto. Por favor tente mais tarde.");
 
 	    }
-	    else{ 
+	    else{
+              
 		atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa, nome_produto, tamanho,preco,qt);
 	    }
 	}
@@ -91,11 +93,15 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
     {
 	if(document.getElementById("colunaProduto"+cod_tamanho_produto))//produto ja existe
 	{
+        
+          //  alert("colunaQuantidade"+cod_tamanho_produto);
 	    var Quantidade = document.getElementById("colunaQuantidade"+cod_tamanho_produto);
 	    Quantidade.innerHTML = parseInt(Quantidade.innerHTML) + parseInt(qt);
 	}
 	else
 	{
+       
+      
 	    var table = document.getElementById("tableListaPedido");
 	    var rowEmpresa = document.getElementById("row"+cod_empresa);
 
@@ -132,12 +138,14 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
     }
     else
     {
+      //  alert('3');
+       
 
 	var table = document.getElementById("tableListaPedido");
 	var rowEmpresa = table.insertRow(table.rows.length);
 
 	rowEmpresa.id = "row"+cod_empresa;
-	rowEmpresa.className = "empresaPedido";
+	rowEmpresa.className = "empresaPedido tbl_cart";
 	var coluna = rowEmpresa.insertCell(0);
 	coluna.innerHTML = nome_empresa;
 	rowEmpresa.insertCell(1);

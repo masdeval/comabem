@@ -322,7 +322,7 @@ class Zend_Search_Lucene_Document_Html extends Zend_Search_Lucene_Document
             $highlightedWordNodeSetDomDocument = new DOMDocument('1.0', 'UTF-8');
             $success = @$highlightedWordNodeSetDomDocument->
                                 loadHTML('<html><head><meta http-equiv="Content-type" content="text/html; charset=UTF-8"/></head><body>'
-                                       . $highlightedWordNodeSetHtml
+                                      . $highlightedWordNodeSetHtml
                                        . '</body></html>');
             if (!$success) {
                 require_once 'Zend/Search/Lucene/Exception.php';

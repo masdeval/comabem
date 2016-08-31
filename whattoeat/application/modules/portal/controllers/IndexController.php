@@ -83,6 +83,7 @@ class Portal_IndexController extends Zend_Controller_Action
 
 	for ($i = 0; $i < sizeof($resultado); $i++)
 	{
+           
      
 	    if (array_key_exists($resultado[$i]['cod_empresa'], $empresa_ja_apresentada))
 	    {
@@ -90,18 +91,22 @@ class Portal_IndexController extends Zend_Controller_Action
 	    }
 	    else
 	    { 
+               
 
-		date_default_timezone_set($resultado[$i]['timezone']);//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
-		$hora_atual = date('H') . ":" . date('i') . ":00";
-		//quero apresentar empresas apenas uma vez
+		//date_default_timezone_set($resultado[$i]['timezone']);//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
+		date_default_timezone_set('asia/kolkata');
+                $hora_atual = date('H') . ":" . date('i') . ":00";
+
+//quero apresentar empresas apenas uma vez
 		$empresa_ja_apresentada[$resultado[$i]['cod_empresa']] = $resultado[$i]['cod_empresa'];
 		$resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
 		$novo_resultado[$j] = $resultado[$i];
 		$j++;
 	    }
+             //echo "<pre>";print_r($resultado); die;
 	}
 
-
+//echo "<pre>"; print_r($novo_resultado); die;
 	$this->view->resultado = $novo_resultado;
 	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
 	$this->view->pesquisa_facapedido_criterio = $criterios;

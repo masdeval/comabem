@@ -154,7 +154,7 @@ class Portal_LojaController extends Zend_Controller_Action
      */
 
     public function addProdutoCarrinhoAction()
-    {
+    { 
 	$this->_helper->layout->disableLayout();
 	$cod_tamanho_produto = $this->getRequest()->getParam("cod_tamanho_produto");
 	$cod_empresa = $this->getRequest()->getParam("cod_empresa");
@@ -171,7 +171,7 @@ class Portal_LojaController extends Zend_Controller_Action
 	if (isset($this->session->carrinho))
 	{
 	    try
-	    {
+	    {  
 		$this->session->carrinho->addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho, $quantidade);
 		$status = 'Ok';
 	    }

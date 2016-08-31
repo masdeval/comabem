@@ -29,6 +29,7 @@ class Carrinho
 
     public function addProduto($cod_empresa, $cod_tamanho_produto, $nome_empresa, $nome_produto, $preco, $tamanho, $quantidade)
     {
+  
 	if (!array_key_exists($cod_empresa, $this->empresas))//este é o primeiro produto adicionado dessa empresa
 	{
 	    $this->empresas[$cod_empresa]['nome_empresa'] = $nome_empresa;

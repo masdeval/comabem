@@ -29,6 +29,8 @@ function lojaFechada(cod_empresa,cod_produto,indiceMsg)
 
 function addProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto,nome_empresa, nome_produto, tamanho,preco)
 {
+  
+
     var qt = document.getElementById("quantidade_"+cod_empresa+"_"+cod_tamanho_produto).value;
     reqURL='/portal/loja/add-Produto-Carrinho/nome_empresa/'+nome_empresa+'/cod_empresa/'+cod_empresa+'/cod_tamanho_produto/'+cod_tamanho_produto+'/nome_produto/'+nome_produto+"/tamanho/"+tamanho+"/preco/"+preco+"/quantidade/"+qt;
 
@@ -38,6 +40,7 @@ function addProdutoCarrinhoAjax(cod_empresa,cod_tamanho_produto,nome_empresa, no
 	url:reqURL,
 	success: function(r) {
 	    r=jQuery.trim(r);
+  
 	    //alert(r)
 	    if(r=='Fail'){
 
@@ -64,13 +67,17 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 
     if(document.getElementById("row"+cod_empresa))//empresa ja existe
     {
+        
 	if(document.getElementById("colunaProduto"+cod_tamanho_produto))//produto ja existe
 	{
+           
 	    var Quantidade = document.getElementById("colunaQuantidade"+cod_tamanho_produto);
 	    Quantidade.innerHTML = parseInt(Quantidade.innerHTML) + parseInt(qt);
 	}
 	else
 	{
+           
+          
 	    var table = document.getElementById("tableListaPedido");
 	    var rowEmpresa = document.getElementById("row"+cod_empresa);
 
@@ -80,22 +87,22 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 	    rowProduto.insertCell(0);//insere a coluna em branco
 
 	    coluna = rowProduto.insertCell(1);
-	    coluna.className = "itensPedido";
+	    coluna.className = "itensPedi";
 	    coluna.id = "colunaProduto"+cod_tamanho_produto;
 	    coluna.innerHTML = nome_produto;
 
 	    coluna = rowProduto.insertCell(2);
-	    coluna.className = "itensPedido";
+	    coluna.className = "itensPedi";
 	    coluna.id = "colunaTamanho"+cod_tamanho_produto;
 	    coluna.innerHTML = tamanho;
 
 	    coluna = rowProduto.insertCell(3);
-	    coluna.className = "itensPedido";
+	    coluna.className = "itensPedi";
 	    coluna.id = "colunaPreco"+cod_tamanho_produto;
 	    coluna.innerHTML = preco;
 
 	    coluna = rowProduto.insertCell(4);
-	    coluna.className = "itensPedido";
+	    coluna.className = "itensPedi";
 	    coluna.id = "colunaQuantidade"+cod_tamanho_produto;
 	    coluna.innerHTML = qt;
 
@@ -107,6 +114,7 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
     }
     else
     {
+
 
 	var table = document.getElementById("tableListaPedido");
 	var rowEmpresa = table.insertRow(table.rows.length);
@@ -126,22 +134,22 @@ function  atualizaInformacoesPedido(cod_empresa,cod_tamanho_produto,nome_empresa
 	rowProduto.insertCell(0);//insere a coluna em branco
 
 	coluna = rowProduto.insertCell(1);
-	coluna.className = "itensPedido";
+	coluna.className = "itensPedi";
 	coluna.id = "colunaProduto"+cod_tamanho_produto;
 	coluna.innerHTML = nome_produto;
 
 	coluna = rowProduto.insertCell(2);
-	coluna.className = "itensPedido";
+	coluna.className = "itensPedi";
 	coluna.id = "colunaTamanho"+cod_tamanho_produto;
 	coluna.innerHTML = tamanho;
 
 	coluna = rowProduto.insertCell(3);
-	coluna.className = "itensPedido";
+	coluna.className = "itensPedi";
 	coluna.id = "colunaPreco"+cod_tamanho_produto;
 	coluna.innerHTML = preco;
 
 	coluna = rowProduto.insertCell(4);
-	coluna.className = "itensPedido";
+	coluna.className = "itensPedi";
 	coluna.id = "colunaQuantidade"+cod_tamanho_produto;
 	coluna.innerHTML = qt;
 
@@ -341,6 +349,7 @@ function recebeCarrinhoJSON()
  */
 function imprimeCarrinho(carrinho, hash)
 {
+
     //primeiro obtem a lista de cod_empresas
     var lista_empresas = hash.getKeys();
 

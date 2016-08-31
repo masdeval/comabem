@@ -55,7 +55,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
     }
 
     public function indexAction()
-    {
+    { 
         $this->view->empresaId = $this->empresaId; //dessa maneira garanto que sempre exista um id de empresa setado na tela
         $this->view->cidadeOption = $this->TbCidade->getCidadeDropDown();
         $this->view->cod_tipo_produto = $this->TipoProduto->getCodTipoProductoDropDown();
