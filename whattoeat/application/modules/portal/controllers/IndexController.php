@@ -93,8 +93,8 @@ class Portal_IndexController extends Zend_Controller_Action
 	    { 
                
 
-		date_default_timezone_set($resultado[$i]['timezone']);//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
-		//date_default_timezone_set('asia/kolkata');
+		//date_default_timezone_set($resultado[$i]['timezone']);//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
+		date_default_timezone_set('asia/kolkata');
                 $hora_atual = date('H') . ":" . date('i') . ":00";
 
 //quero apresentar empresas apenas uma vez
@@ -106,15 +106,15 @@ class Portal_IndexController extends Zend_Controller_Action
              //echo "<pre>";print_r($resultado); die;
 	}
 
-//echo "<pre>"; print_r($novo_resultado); die;
-	$this->view->resultado = $novo_resultado;
-	$this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
-	$this->view->pesquisa_facapedido_criterio = $criterios;
-	$this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;
-	$this->view->pesquisa_facapedido_caloria = $caloria;
-        $this->view->pesquisa_facapedido_empresa_oferece = $empresa_oferece;
+    //echo "<pre>"; print_r($novo_resultado); die;
+            $this->view->resultado = $novo_resultado;
+            $this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
+            $this->view->pesquisa_facapedido_criterio = $criterios;
+            $this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;
+            $this->view->pesquisa_facapedido_caloria = $caloria;
+            $this->view->pesquisa_facapedido_empresa_oferece = $empresa_oferece;
 
-	$this->_helper->viewRenderer("index");
+            $this->_helper->viewRenderer("index");
     }
 
     public function getImagemProdutoAction()

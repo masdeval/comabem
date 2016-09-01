@@ -20,7 +20,8 @@
 
     <script>
         $(document).ready(function () {
-            $('#filtroResult').click(function () {
+            $('.filterexpand').click(function () {
+    
                 $('#filtroMenu').animate({
                     height: 'toggle'
                 });  //Mostra MEnu Filtro   
@@ -40,40 +41,53 @@
     </script>
 
     <style>
-  #filtroMenu {
-    background: none repeat scroll 0 0 rgb(238, 238, 238);
-    border: medium none rgb(204, 204, 204);
-    border-radius: 0px;
-    color: rgb(102, 102, 102);
-    display: none;
-    font-family: arial !important;
-    font-size: 19px;
-    height: auto;
-    margin-top: 0;
-    padding: 30px 68px;
-    text-align: left;
-    top: 215px;
-    width: 680px;
-   }
+    .filterexpand {
+  color: rgb(0, 0, 0) !important;
+  float: left;
+  padding: 2px 0px;
+  text-align: left;
+  width: auto;
+  cursor:pointer;
+}
+
+
+
+#filtroMenu {
+  background: none repeat scroll 0 0 rgb(238, 238, 238);
+  border: medium none rgb(204, 204, 204);
+  border-radius: 0;
+  color: rgb(102, 102, 102);
+  display: none;
+  font-family: arial !important;
+  font-size: 19px;
+  height: auto;
+  margin-top: 0;
+  padding: 30px 68px;
+  text-align: left;
+  top: 215px;
+  width: 682px;
+}
+#filtroMenu div{
+    font-size:14px;
+}
         #confirmaFiltro{
             margin-top:15px;
         }
         #filtroResult:hover{cursor: pointer;opacity: 0.8}
         #filtroResult{position:absolute;margin-top:-68px;margin-left:550px;background: rgba(0,0,0,0.7);padding: 10px;border: none;color: #FFFFFF;font-weight: bold;font-size: 20px}
         #filtroMenu input{margin-left: 0px}
-        .mainouter{
-
-            width: 100% !Important;
-            color: black;
-            float: left;
-            border-bottom: 1px solid #ccc;
-        }
-        .innerimg {
-            float: left;
-            margin: 20px 1px 10px 0px;
-
-
-        }
+.mainouter {
+  background-color: rgb(238, 238, 238);
+  color: rgb(0, 0, 0);
+  float: left;
+  margin-bottom: 10px;
+  padding: 25px;
+  width: 100% !important;
+}
+      .innerimg {
+  float: left;
+  margin: 0;
+}
         .inner_filter{
             position:relative;
             margin-top:60px;
@@ -124,18 +138,23 @@
   padding: 20px;
   width: 510px;
 }
-.inner_cart{
-       border: 1px solid rgb(221, 221, 221);
-    float: right;
-    margin-right: 0;
-    margin-top: 18px;
-    padding: 0 15px;
-    
+.inner_cart {
+  border: 1px solid rgb(221, 221, 221);
+  float: right;
+  margin-right: 0;
+  margin-top: 18px;
+  padding: 0 15px;
+  margin-bottom: 50px;
+}
+.innerimg p{
+    margin-bottom:0px;
 }
 
 
 
-
+.inner_filter {
+    position: relative;
+    margin-top: 0;}
         /*.formBuscar h1{
             font-size: 24px;
             line-height: 32px;}*/
@@ -166,9 +185,13 @@ echo " </div>  \n";
 ?>
 
 
+
+
+
+
 <div align="center" width="80%" style="clear:both;">
 
-    <div class="">
+    <div class="inner_search">
 
         <?php
         if ($this->isAberto == true) {
@@ -199,10 +222,10 @@ echo " </div>  \n";
 
             <br>
             <br>
-            <p class="lead">Culinária:</p>
+          
 
 
-            <div style="width:450; height: 100;">
+            <!--div style="width:450; height: 100;">
                 <?php
 //formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
 //cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
@@ -216,10 +239,10 @@ echo " </div>  \n";
                     <input  type="checkbox" name="cod_tipo_produto[]" <?php echo $checked; ?> value="<?php echo $cod_tipo_produto ?>" class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
 
                 <?php } ?>
-            </div>
+            </div-->
 
 
-            <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+            <!--font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>"-->
             <br>
             <br>
 
@@ -234,14 +257,34 @@ echo " </div>  \n";
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgânico	
             </div-->
             <div class="inner_filter">
-                <input type="button" id="filtroResult" value="Filtrar Por &#8628;">
+                <!--input type="button" id="filtroResult" value="Filtrar Por &#8628;"-->
                 <div class="inner_searchbar">
 
                     <input type="textarea" placeholder="Ingredientes específicos, lugares, pratos..." value="" name="criterio" class="form-control inputbtn"><input type="submit" value="Pesquisar"  class="btn btn-primary serchbutn">
+                       <span class="filterexpand"> Mais opcoes de filtro</span>
                 </div>
             </div>
 
             <div id="filtroMenu" class="filtroMenu1">
+                    <div style="width:450; height: 100;">
+                <?php
+//formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
+//cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
+                $i = 0;
+                foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto) {
+                    $checked = " ";
+                    if (!empty($this->pesquisa_facapedido_tipo_produto) && in_array($cod_tipo_produto, $this->pesquisa_facapedido_tipo_produto)) {
+                        $checked = "checked";
+                    }
+                    ?>
+                    <input  type="checkbox" name="cod_tipo_produto[]" <?php echo $checked; ?> value="<?php echo $cod_tipo_produto ?>" class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
+
+                <?php } ?>
+            </div>
+                
+                
+                
+                  <!--p class="lead">Culinária:</p-->
                 <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
                 <br>
                 <br>
@@ -345,7 +388,7 @@ echo " </div>  \n";
                 }
 
                 //imprime o botao que vai permitir incluir no carrinho
-                if ($this->isAberto) {
+               if ($this->isAberto) {
                     echo "<img src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"> ";
                     echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_" . $this->resultado[$i]['cod_empresa'] . "_" . $this->resultado[$i]['cod_tamanho_produto'] . "'>";
                 }
@@ -368,7 +411,7 @@ echo " </div>  \n";
                             echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
                         }
                         //imprime o botao que vai permitir incluir no carrinho
-                        if ($this->isAberto) {
+                       if ($this->isAberto) {
                             echo "<img src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"> ";
                             echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_" . $this->resultado[$i]['cod_empresa'] . "_" . $this->resultado[$i]['cod_tamanho_produto'] . "'>";
                         }

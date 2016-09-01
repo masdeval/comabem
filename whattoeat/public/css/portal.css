@@ -157,5 +157,37 @@ ol, ul {
 	font-family: "Trebuchet MS", sans-serif;
 	color: black;
 }
-.imgtext{float: left; margin: 30px 1px 10px 10px; width:400px; font-size: medium;text-align:left;}
-.rytsec{float: right; margin: 35px 1px 10px 10px; font-size: medium; text-align: right};
+.imgtext {
+  float: left;
+  font-size: medium;
+  margin: 0 15px;
+  padding-right: 30px;
+  text-align: left;
+  width: 500px;
+}
+.imgtext p:first-child {
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+.imgtext p{
+   color: rgb(98, 98, 98);
+    font-size: 14px;
+    font-weight: 300;}
+.rytsec {
+  float: left;
+  font-size: 14px;
+  font-weight: 300;
+  margin: 0;
+  text-align: left;
+}
+.innerimg {
+  height: 92px;
+  width: 100px;
+}
+.innerimg img {
+  height: 100%;
+  width: 100px;
+}

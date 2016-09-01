@@ -434,11 +434,11 @@ legend{
   padding: 11px 84px;
   margin-bottom: 8px;
 }
-.close_result_btn{
-    position: relative;
-display:inline-block;
-width:100%;
-
+.close_result_btn {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  left: -8%;
 }
 .close_result_btn a.close {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
@@ -520,13 +520,13 @@ width:100%;
 }
 */
 
-
 .bottom-menu {
-  background: none repeat scroll 0 0 rgb(255, 255, 255);
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7);
   bottom: 0;
-  margin-top: 320px;
-  position: static;
-  width: 543px;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  width: 347px;
 }
 #tableListaPedido td{
       font-size: 14px;
@@ -535,7 +535,7 @@ width:100%;
 .bottom-menu h4{
    box-sizing: border-box;
     font-size: 14px;
-    padding: 30px 0 0;}
+    padding: 0px 0 0;}
 #RemoveAdd{
     margin-right:15px;
 }    
@@ -565,12 +565,13 @@ width:100%;
   text-align: left !important;
   width: 360px;
 }
-.popup1_txt{
-    width:700px;
-    margin-top:100px;
+.popup1_txt {
+  margin-top: 100px;
+  width: 650px;
 }
-.titletext .title{
-    margin-top:0px;
+.titletext .title {
+  margin-top: 0;
+  margin-bottom: 2px;
 }
 .grandnew {
   color: rgb(34, 34, 34);
@@ -579,7 +580,7 @@ width:100%;
   font-weight: normal;
   line-height: 25px;
   position: relative;
-  right: 20px;
+  right: 63px;
   text-align: right;
   top: 0;
 }
@@ -613,10 +614,12 @@ width:100%;
     width: 20px;
     margin-right:0px;
 }
+.titletext p:first-child{
+      font-size: 15px;
+    margin-bottom: 8px;
+    margin-top: 0;
+}
  
-
-
-
 
 
 
@@ -939,12 +942,13 @@ float:left;
   font-family: arial !important;
   font-size: 14px;
   height: auto;
-  padding: 0 44px;
+  line-height: 20px;
+  padding: 30px 44px;
   position: relative;
   text-align: left;
   top: 62.2% !important;
   width: 549px;
-  line-height: 20px;
+  padding-bottom: 0px;
 }
 .expanddv p{
     margin:0px;
@@ -964,4 +968,7 @@ float:left;
 .popup1 a.close span.close1 {
   height: 20px;
   margin: 6px auto;
+}
+.margbtm{
+    margin-bottom:25px;
 }

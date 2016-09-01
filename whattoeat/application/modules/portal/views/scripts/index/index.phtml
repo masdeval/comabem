@@ -15,13 +15,16 @@
     <script src="<?php echo $this->serverUrl(); ?>/js/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+           
             $('#pesquisaInicio').focus();
             $('.filterexpand').click(function () {
-                $('#front_filtro_menu').animate({
+              /*  $('#front_filtro_menu').animate({
                     height: 'toggle'
-                }) //Mostra MEnu Filtro   
-
+                }); //Mostra MEnu Filtro */   
+        //      $(".chkclass").toggle();
+                $("#front_filtro_menu").slideToggle(500);
                 $('#confirmaFiltro').click(function () {
+                    //$('#front_filtro_menu').fadeOut()
                     $('#front_filtro_menu').fadeOut()
                 });
 
@@ -31,7 +34,7 @@
             })
 
 
-        })// fim document
+        });// fim document
 
     </script>
     <style type="text/css">
@@ -114,9 +117,12 @@ if (!empty($this->nomeCliente))
             </div>
             <br>
             <br>
-            <p class="lead new_heading">Culinária:</p>
+            
 
-            <div  class="chkclass">
+
+  
+            <div id="front_filtro_menu" class="expanddv">
+                            <div  class="margbtm">
                 <?php
 //formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
 //cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
@@ -130,8 +136,8 @@ if (!empty($this->nomeCliente))
                     <input  type="checkbox" name="cod_tipo_produto[]" <?php echo $checked; ?> value="<?php echo $cod_tipo_produto ?>" class=""> <label><?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?></label>
 
                 <?php } ?>
-            </div>
-            <div id="front_filtro_menu" class="expanddv">
+                     </div>
+                <!--p class="lead new_heading">Culinária:</p-->
                 <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
                 <br>
                 <br>
@@ -151,6 +157,7 @@ if (!empty($this->nomeCliente))
 
         </form>
     </div>
+                             
 
     <!--<h3>Nosso sistema ainda não faz pedidos mas você pode simular suas compras e verificar o custo total. Compre em quantos estabelecimentos quiser. 
         Todos os itens escolhidos ficarão no seu carrinho.</h3>-->
@@ -224,6 +231,7 @@ if (!empty($this->nomeCliente))
                     </p>
                 </div>
                 <div class="titletext">
+                    <p><?php  echo $this->resultado[$i]["razao_social"]; ?> </p>
                     <p class="title">
                         <?php echo $this->resultado[$i]["nome"]; ?>
                     <p class="para-text"> 
@@ -235,8 +243,16 @@ if (!empty($this->nomeCliente))
                 <div class="grand grandnew">
                     <?php
                    
-                    
-                    //Sempre há pelo menos um tamanho, entao imprime esse
+             
+                     // echo "<div style='font-weight: bold;'>" . $this->resultado[$i]["razao_social"] . " </div> <br> \n"; 
+                    //imprime o botao que vai permitir incluir no carrinho ?>
+                    <div class="plusicon_text">
+                               
+                   
+                        <p><?php  //echo $this->resultado[$i]["razao_social"];  
+                            
+                            
+                             //Sempre há pelo menos um tamanho, entao imprime esse
                     if (!empty($this->resultado[$i]['preco_promocional'])) {
                     
                         $preco = (double) $this->resultado[$i]['preco_promocional'];
@@ -248,12 +264,12 @@ if (!empty($this->nomeCliente))
                        
                         $preco = (double) $this->resultado[$i]['preco'];
                         echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
-                    } ?>
-                   <?php  // echo "<div style='font-weight: bold;'>" . $this->resultado[$i]["razao_social"] . " </div> <br> \n"; 
-                    //imprime o botao que vai permitir incluir no carrinho ?>
-                    <div class="plusicon_text"><p><?php  echo $this->resultado[$i]["razao_social"]; ?> 
+                    } 
+                            
+                            
+                            
                     
-                       <?php if ($this->resultado[$i]['isAberto'] == true) {
+                       if ($this->resultado[$i]['isAberto'] == true) {
                         echo "<img id='botaoAddCarrinho' src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"></p> ";
                         echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_" . $this->resultado[$i]['cod_empresa'] . "_" . $this->resultado[$i]['cod_tamanho_produto'] . "'>";
                     } ?>
