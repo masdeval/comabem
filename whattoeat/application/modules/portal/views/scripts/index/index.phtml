@@ -22,7 +22,7 @@
                     height: 'toggle'
                 }); //Mostra MEnu Filtro */   
         //      $(".chkclass").toggle();
-                $("#front_filtro_menu").slideToggle(500);
+                $("#front_filtro_menu").slideToggle(1000);
                 $('#confirmaFiltro').click(function () {
                     //$('#front_filtro_menu').fadeOut()
                     $('#front_filtro_menu').fadeOut()
@@ -51,8 +51,14 @@
 
         #filtroMenu{display:none;font-family:arial !important;background: #FFFFFF;padding: 10px;border-radius: 3px;border:#CCCCCC;font-size: 19px;
                     position:absolute;top: 215px;color: #666666;height: auto;}
-        #EnglobaPesquisaInicio{position:relative;margin-top:160px;background: rgba(255,255,255,0.7);width: 680px;padding: 25px;
-                               box-shadow: 0px 2px 2px 0px #000000 }
+#EnglobaPesquisaInicio {
+  background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 2px 0 rgb(0, 0, 0);
+  margin-top: 160px;
+  padding: 25px;
+  position: relative;
+  width: 550px;
+}
         #pesquisaInicio{padding:20px;width: 550px;background:#FFFFFF;border: none;}
         ::-webkit-input-placeholder {color: #666666;font-size: 16px;vertical-align: middle;}
 
@@ -343,11 +349,16 @@ if (!empty($this->nomeCliente))
 } else {
     if(!empty($this->resultado))
     {
-    echo "<div class='close_result_btn'>";
+        $add_class='';
+        if(count($this->resultado)>2)
+        {
+            $add_class="maxrecord_scroll";
+        }
+    echo "<div class='close_result_btn'><div class='buscar_outer_dv $add_class'>";
     echo '<a href="javascript:;"  class="close close_bottom_results"><span class="close"></span><span class="close1"></span></a>';
     for ($i = 0; $i < sizeof($this->resultado); $i++) {
 
-        echo "<div class='buscardv' style=' clear:both; color:black;' > \n";
+        echo " <div class='buscardv' style=' clear:both; color:black;' > \n";
         echo "<div><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->resultado[$i]['cod_empresa'] . "' width='141' height='auto' alt=''> </p> </div> \n";
         echo "<div id='filter_d' class='filter_result'>";
         echo "<div class='filter_result'>" . $this->resultado[$i]["razao_social"] . " </div> <br> ";
@@ -378,6 +389,7 @@ if (!empty($this->nomeCliente))
     }
          
     }
+       echo "</div>";
     echo "</div>";
 }
 ?>

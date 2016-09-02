@@ -163,7 +163,7 @@
 </head>
 <div class="header">
     <div class="logo" style="float:left;"><a href="/portal/"><img src="/img/logotipo.png"></a></div>
-    <div style="float: right; margin-right: 50px; margin-top: 100px; font-size: medium;" class=""> <a href="/estabelecimento/auth" > Para seu estabelecimento </a></div>
+    <div class="store_Address" style="float: right; margin-right: 50px; margin-top: 100px; font-size: medium;" class=""> <a href="/estabelecimento/auth" > Para seu estabelecimento </a></div>
 </div>
 
 <?php
@@ -173,9 +173,9 @@
 if (!empty($this->nomeCliente))
     echo "<p>Bem vindo " . $this->nomeCliente . "! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
 
-echo "<div style=' padding-left: 0px; clear:both; margin: 40px; color:black;' > \n";
-echo "<div style='float: left; margin: 20px 1px 20px 0px; width:auto;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->cod_empresa . "' width='141' height='auto' alt=''> </p> </div> \n";
-echo "<div style='float: left; margin: 20px 1px 20px 21px; width:300px; '>  \n";
+echo "<div class='nomeCliente' style=' padding-left: 0px; clear:both; margin: 40px; color:black;' > \n";
+echo "<div class='nomeCliente2' style='float: left; margin: 20px 1px 20px 0px; width:auto;'><p><img src='/portal/loja/get-Logo-Empresa/id/" . $this->cod_empresa . "' width='141' height='auto' alt=''> </p> </div> \n";
+echo "<div class='firstimgtext'>  \n";
 echo "<div style='font-weight: bold;'>" . $this->razao_social . " </div> <br> \n";
 echo $this->rua . " " . $this->numero . " " . $this->complemento . " " . $this->bairro . " <br> \n";
 echo "Telefone 1: " . $this->telefone1 . " Telefone 2 : " . $this->telefone2 . " <br> \n";
@@ -313,10 +313,10 @@ echo " </div>  \n";
 
     <!-- Imprime pedidos -->
 
-    <div style="margin-right: 0px;">
+    <div class="topdiv">
 
 
-        <div style="float: right; position: relative; ">
+        <div class="topdiv_btn1">
 
             <input class="btn btn-warning" type="button" value="Continuar Comprando" onclick="location.href = '/portal/index'">       
 
@@ -324,13 +324,13 @@ echo " </div>  \n";
 
 
         <form action="/portal/index/limpar-Carrinho" method="post" class="" >
-            <div style="float: right; position: relative; margin-right: 20px;">
+            <div class="topdiv_btn2">
                 <input class="btn btn-warning" type="submit" value="Limpar Carrinho"> 
             </div>
         </form>
 
         <form action="/portal/pedido/fechar-Pedido" method="post" class="" >
-            <div style="float: right; margin-right: 20px; ">
+            <div class="topdiv_btn3">
                 <input class="btn btn-success" type="submit" value="Fechar Pedido"> 
             </div>
         </form>

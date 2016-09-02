@@ -246,6 +246,7 @@ td.upload input {
     min-height: 100%;
     margin: -8px 0 0;
     position: absolute;
+    background-size:100% 100%;
 }
 .popup1 a.close {
     background: none repeat scroll 0 0 rgba(0, 0, 0, 0.7);
@@ -391,10 +392,10 @@ legend{
     font-size:20px;
 
 }
-#pesquisaInicio{
-    width:563px !important;
-    float:left;
-    margin-top:0
+#pesquisaInicio {
+  float: left;
+  margin-top: 0;
+  width: 432px !important;
 }
 .td-wid {
     width: 100px;
@@ -416,7 +417,7 @@ legend{
   min-height: 139px;
   padding: 16px 24px;
   text-align: center;
-  width:60%;
+  width:100%;
 
 }
 .filter_result {
@@ -626,14 +627,41 @@ legend{
 
 
 
-
-
-
+@media(max-width:1350px) {
+.buscardv input[type="button"] {
+ 
+  padding: 11px 30px;
+}
+}
 
 
 
 
 @media(max-width:1280px) {
+     .buscar_outer_dv {
+  height: 500px;
+  overflow: scroll;
+  width: 60%;
+}
+    .close_result_btn {
+  left: 0;
+  margin: auto auto 112px;
+  position: relative;
+  right: 15px;
+  width: 90%;
+}
+    .buscar_outer_dv {
+  width: 100% !important;
+}
+ .close_result_btn a.close {
+  right: 0;
+}
+
+    .main1 {
+
+  padding: 20px;
+  box-sizing: border-box;
+}
 
  .filter_result {
   
@@ -653,29 +681,68 @@ float:left;
 
 }
 @media(max-width:991px) {
-    .close_result_btn a.close {
-  right: 18%;
+    .filter_result {
+  
+  width: 265px;
 }
-    .buscardv p img {
-float:none;
-}
-.buscardv {
-  float: none;
+   .buscar_outer_dv {
+  height: 500px;
+  overflow: scroll;
   width: 60%;
 }
-.filter_result {
-  margin-bottom: 10px;
-  text-align: center;
-  width: 100%;
-}}
+    .close_result_btn {
+  left: 0;
+  margin: auto auto 112px;
+  position: relative;
+  right: 15px;
+  width: 90%;
+}
+    .buscar_outer_dv {
+  width: 100% !important;
+}
+ .close_result_btn a.close {
+  right: 0;
+}
+
+.buscardv input[type="button"] {
+  padding: 5px 16px;
+}
+}
 @media(max-width:800px) {
+    .imgtext {
+  
+  width: 300px;
+}
 .buscardv {
 float:left;
   width: 100%;
   box-sizing: border-box;
 }
+ .filter_result {
+  
+  width: 230px;
+}
 }
 @media(max-width:767px) {
+    .buscardv p img {
+  float:none;
+}
+   
+    .buscar_outer_dv {
+  height: 400px;
+  overflow: scroll;
+  width: 60%;
+}
+    .close_result_btn {
+  left: 0;
+  margin: auto auto 112px;
+  position: relative;
+ 
+  width: 100%;
+}
+    .buscar_outer_dv {
+  width: 100% !important;
+}
     .plusicon_text p {
   
   width: 100%;
@@ -971,4 +1038,13 @@ float:left;
 }
 .margbtm{
     margin-bottom:25px;
+}
+.buscar_outer_dv{
+    width:60%
+}
+.maxrecord_scroll {
+
+  margin-bottom: 50px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }

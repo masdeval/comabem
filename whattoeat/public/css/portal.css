@@ -11,67 +11,67 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 body {
-	background: #FEFEFE url(../img/bg.png);
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	margin: 0;
+    background: #FEFEFE url(../img/bg.png);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    margin: 0;
 }
 
 .logo {
-	
-	margin: 0px 0px 0px 10em;
-	padding: -2px 0 0 0;
-	width: 276px;
-	height: 138px;
+
+    margin: 0px 0px 0px 10em;
+    padding: -2px 0 0 0;
+    width: 276px;
+    height: 138px;
 }
 
 .logo img {
-	width: 15em;
-	margin: 26px 0 0 48px;
+    width: 15em;
+    margin: 26px 0 0 48px;
 }
 
 .header {
-	height: 137px;
-	background: url('../img/backcomabem.jpg') no-repeat;
-	background-attachment: fixed;
-	background-position: center; 
-	margin: 0 0 20px 0;
-	padding: 0;
-	box-shadow: 3px 3px 0 #333;
-        
+    height: 137px;
+    background: url('../img/backcomabem.jpg') no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    margin: 0 0 20px 0;
+    padding: 0;
+    box-shadow: 3px 3px 0 #333;
+
 }
 .conta {
-	width: 80em;
-	height: 100%;
-	margin: 0 auto;
-	position: relative;
-	
+    width: 80em;
+    height: 100%;
+    margin: 0 auto;
+    position: relative;
+
 }
 .criar-conta, .login-conta {
-	float: left;	 
-	
-	
+    float: left;	 
+
+
 }
 .heading {
-	background: none repeat scroll 0% 0% #F9F8F8;
-	border: 1px solid #DEDEDE;
-	border-radius: 10px 10px 0px 0px;
-	height: auto !important;
-	margin-top: 33px;
-	min-height: inherit;
-	overflow: hidden;
-	padding: 15px 25px;
-	position: relative;
+    background: none repeat scroll 0% 0% #F9F8F8;
+    border: 1px solid #DEDEDE;
+    border-radius: 10px 10px 0px 0px;
+    height: auto !important;
+    margin-top: 33px;
+    min-height: inherit;
+    overflow: hidden;
+    padding: 15px 25px;
+    position: relative;
 }
 .main-content {
-background: none repeat scroll 0% 0% #FFF;
-border-top: 0px none;
-padding: 25px 0px;
-border: 1px solid #DDD;
-font-size: 14px;
-color: #222;
+    background: none repeat scroll 0% 0% #FFF;
+    border-top: 0px none;
+    padding: 25px 0px;
+    border: 1px solid #DDD;
+    font-size: 14px;
+    color: #222;
 }
 .columnListing {
     display: inline-block;
@@ -117,77 +117,249 @@ ol, ul {
     border-right: 1px solid #DDD;
 }
 .formBuscar {
-	border: solid gray;
-	margin: 50px;
-	background: #FFBF00;
+    border: solid gray;
+    margin: 50px;
+    background: #FFBF00;
 }
 
 .botao_portal_vermelho {
-	background: url(/img/barra_vermelho.png);
-	color: white;
-	margin: 0 auto;
-	max-width: 200px;
-	cursor: pointer;
-	display: block;
-	text-align: center;
+    background: url(/img/barra_vermelho.png);
+    color: white;
+    margin: 0 auto;
+    max-width: 200px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
 }
 
 .botao_portal_amarelo {
-	background: url(/img/barra_amarelo.png);
-	color: white;
-	margin: 0 auto;
-	max-width: 200px;
-	cursor: pointer;
-	display: block;
-	text-align: center;
+    background: url(/img/barra_amarelo.png);
+    color: white;
+    margin: 0 auto;
+    max-width: 200px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
 }
 
 .msg_estabelecimento_fechado {
-	font: 62.5% "Trebuchet MS", sans-serif;
+    font: 62.5% "Trebuchet MS", sans-serif;
 }
 
 .itensPedido {
-	font-size: 14px;
-	font-family: "Trebuchet MS", sans-serif;
-	color: Orange;
+    font-size: 14px;
+    font-family: "Trebuchet MS", sans-serif;
+    color: Orange;
 }
 
 .empresaPedido {	
-	font-size: 14px;
-	font-family: "Trebuchet MS", sans-serif;
-	color: black;
+    font-size: 14px;
+    font-family: "Trebuchet MS", sans-serif;
+    color: black;
 }
 .imgtext {
-  float: left;
-  font-size: medium;
-  margin: 0 15px;
-  padding-right: 30px;
-  text-align: left;
-  width: 500px;
+    float: left;
+    font-size: medium;
+    margin: 0 15px;
+    padding-right: 30px;
+    text-align: left;
+    width: 500px;
 }
 .imgtext p:first-child {
-  color: rgb(0, 0, 0);
-  font-size: 16px;
-  margin-top: 0;
-  margin-bottom: 4px;
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 4px;
 }
 
 .imgtext p{
-   color: rgb(98, 98, 98);
+    color: rgb(98, 98, 98);
     font-size: 14px;
     font-weight: 300;}
 .rytsec {
-  float: left;
-  font-size: 14px;
-  font-weight: 300;
-  margin: 0;
-  text-align: left;
+    float: left;
+    font-size: 14px;
+    font-weight: 300;
+    margin: 0;
+    text-align: left;
 }
 .innerimg {
-  height: 92px;
-  width: 100px;
+    height: 92px;
+    width: 100px;
 }
 .innerimg img {
-  height: 100%;
-  width: 100px;
+    height: 100%;
+    width: 100px;
+}
+.topdiv_btn1{
+
+    float: right; position: relative; }
+.topdiv_btn2{
+    float: right; position: relative; margin-right: 20px;
+}
+.topdiv_btn3{
+    float: right; margin-right: 20px;
+}
+.topdiv{margin-right: 0px;}
+.firstimgtext{
+    float: left; margin: 20px 1px 20px 21px; width:300px}
+
+
+.store_Address{
+
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.8);
+    bottom: 0;
+    float: none;
+
+    padding: 12px;
+    position: absolute;
+    right: 0;
+    margin-top:0 !important;
+    margin-right:0px !important
+}
+.store_Address a{
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+.header {
+
+    position: relative;
+}
+@media(max-width:991px) {
+    .imgtext {
+
+        width: 300px;
+    }
+}
+@media(max-width:767px) {
+    .logo img {
+        margin: 0;
+
+    }
+
+
+    .logo {
+
+        margin: 0;
+        width: 100%;
+    }
+    #filtroMenu div{
+        width:100% !important;
+        margin-bottom:10px;
+    }
+    #filtroMenu {
+
+        width: 100% !important;
+
+    }
+    .serchbutn{
+        float:right;
+        margin-top:10px;
+    }
+    .inputbtn {
+
+        width: 100% !important;
+    }
+    .inner_searchbar {
+        width: 100% !important;
+        overflow: hidden;
+    }
+    .topdiv .btn {
+        font-size:13px;
+        padding: 5px 5px;
+
+    }
+    .imgtext {
+        width: 163px;
+    }
+
+}
+
+@media(max-width:550px) {
+
+    .firstimgtext {
+        float: left;
+        margin: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .nomeCliente2{
+        float: none !important;
+        margin: 0;
+        text-align: center !important;
+        width: auto;
+    }
+
+    .firstimgtext {
+
+
+        width: 100%;
+        text-align: center;
+
+        margin:0px;
+    }
+
+    .imgtext {
+        width: 100%;
+        text-align: center;
+    }
+    .innerimg {
+        float: none !important;
+
+        margin-bottom: 12px !important;
+    }
+    .rytsec {
+        float: left;
+        font-size: 13px;
+        font-weight: 300;
+        margin: 0;
+        text-align: center;
+        width: 100%;
+    }}
+@media(max-width:450px) {
+    .filterexpand {
+
+        float: left;
+        padding: 2px 0px;
+        text-align: center !important;
+
+        width: 100% !important;
+        margin-top: 10px;
+    }
+    .serchbutn {
+        float: none;
+        padding: 11px !important;
+        margin-top: 10px;
+        font-size: 13px !important;
+    }
+    .topdiv_btn3 {
+
+        margin-right: 0px;
+        width:100%
+    }
+    .btn-success {
+
+        width: 100%;
+    }
+    .topdiv_btn2 {
+
+        margin-right: 0;
+
+        width: 100%;
+    }
+    .topdiv_btn2 .btn-warning {
+
+        width: 100%;
+        margin-bottom:10px
+    }
+    .topdiv_btn1 {
+
+        width: 100%;
+    }
+    .topdiv_btn1 .btn-warning {
+
+        width: 100%;
+        margin-bottom:10px
+    }
 }
