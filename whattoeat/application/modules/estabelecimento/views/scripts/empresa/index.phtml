@@ -25,9 +25,9 @@
                                     <td class="tdwitdh"><input type="text" class="input-medium RQR required validNumber form-control" title="Por favor, indique um CNPJ." name="cnpj" maxlength="14" value="<?php echo $this->formData['cnpj'] ?>" style="width: 200px;">
                                         <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                                 </tr>
-                            </table></td>
+                            </table></td><tr>
 
-                            <td width="100%" position="relative" class="upload logocls"><?php if (!empty($this->formData['logo']))
+                    <tr width="100%" position="relative" class="upload logocls"><?php if (!empty($this->formData['logo']))
 { ?>
                             <span id='image'><img src="<?php echo $this->baseUrl() ?>/estabelecimento/empresa/get-Image/id/<?php echo $this->formData['cod_empresa'] ?>" width="151" height="141" alt=""></span><br>
                             <span id='changeImage' style="display: none;">
@@ -38,14 +38,14 @@
 
                             <br>
                             <span onclick="toggleImage()" id='labelChange' style="cursor: pointer; color: blue;">Trocar</span>
-                            <span onclick="removeImage()" id='labelRemove' style="cursor: pointer; color: blue;">Remover</span>
+                            <span onclick="removeImage()" id='labelRemove' style="cursor: pointer; color: blue;margin-left: 20px;">Remover</span>
                             <input type="hidden" value="" name="flagRemoverImagem" id="flagRemoverImagem">
 <?php } else
 {
  ?>
                             Logo <br><input type="file" name="userfile">
-<?php } ?></td>
-                    </tr>
+<?php } ?></tr>
+                    
                 </table>   
                           <!----change table -->
                 
