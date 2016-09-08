@@ -1,6 +1,6 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
+  <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
     <!-- Bootstrap core CSS -->
     <link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 
@@ -207,16 +207,6 @@ echo " </div>  \n";
             <input type="hidden" name="isAberto" value="<?php echo $this->isAberto; ?>">
 
 
-            <!--            <h1>Por favor, entre com os critÃ©rios de pesquisa. VocÃª pode procurar por ingredientes especÃ­ficos, lugares, pratos ou 
-                        qualquer outro critÃ©rio disponÃ­vel para trazer a opÃ§Ã£o mais certa para vocÃª!</h1> -->
-
-            <!--<div style="text-align: left; border: transparent; width: 380px; ">
-                 <p class="lead">Aqui vocÃª pode digitar qualquer termo para sua consulta:</p>
-                
-                Ex:  macarrÃ£o, massa verde, "Macarronada da Tia Dalva"
-                <br>
-                Ex: catupiri, bacon, "peito de peru", chia 
-            </div>-->
 
             <br>
 
@@ -225,43 +215,12 @@ echo " </div>  \n";
           
 
 
-            <!--div style="width:450; height: 100;">
-                <?php
-//formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
-//cod_tipo_produto Ã© um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
-                $i = 0;
-                foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto) {
-                    $checked = " ";
-                    if (!empty($this->pesquisa_facapedido_tipo_produto) && in_array($cod_tipo_produto, $this->pesquisa_facapedido_tipo_produto)) {
-                        $checked = "checked";
-                    }
-                    ?>
-                    <input  type="checkbox" name="cod_tipo_produto[]" <?php echo $checked; ?> value="<?php echo $cod_tipo_produto ?>" class=""> <?php echo $this->cod_tipo_produto[$cod_tipo_produto] ?>
-
-                <?php } ?>
-            </div-->
-
-
-            <!--font class="lead">Valor calÃ³rico atÃ©: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>"-->
-            <br>
-            <br>
-
-            <!--p class="lead">Listar apenas estabelecimentos que oferecem: </p>
-
-
-            <div style="width:450; height: 100;">
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabÃ©tico
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('pouco_sal', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="pouco_sal" class=""> Produto com pouco sal
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('sem_glutem', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="sem_glutem" class=""> Produto sem glÃºtem
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('lactose', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="lactose" class=""> Produto sem lactose
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgÃ¢nico	
-            </div-->
             <div class="inner_filter">
                 <!--input type="button" id="filtroResult" value="Filtrar Por &#8628;"-->
                 <div class="inner_searchbar">
 
-                    <input type="textarea" placeholder="Ingredientes especÃ­ficos, lugares, pratos..." value="" name="criterio" class="form-control inputbtn"><input type="submit" value="Pesquisar"  class="btn btn-primary serchbutn">
-                       <span class="filterexpand"> Mais opcoes de filtro</span>
+                    <input type="textarea" placeholder="Ingredientes específicos, lugares, pratos..." value="" name="criterio" class="form-control inputbtn"><input type="submit" value="Pesquisar"  class="btn btn-primary serchbutn">
+                       <span class="filterexpand"> Mais opções de filtro</span>
                 </div>
             </div>
 
@@ -285,7 +244,7 @@ echo " </div>  \n";
                 
                 
                   <!--p class="lead">CulinÃ¡ria:</p-->
-                <font class="lead">Valor calÃ³rico atÃ©: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+                <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
                 <br>
                 <br>
 
@@ -293,16 +252,16 @@ echo " </div>  \n";
 
 
 
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabÃ©tico<br>
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabético<br>
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('pouco_sal', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="pouco_sal" class=""> Produto com pouco sal<br>
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('sem_glutem', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="sem_glutem" class=""> Produto sem glÃºtem<br>
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('sem_glutem', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="sem_glutem" class=""> Produto sem glútem<br>
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('lactose', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="lactose" class=""> Produto sem lactose<br>
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgÃ¢nico<br>
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgânico<br>
                 <input type="button" id="confirmaFiltro" value="&#10004; Ok">	
             </div>
 
             <br><br><br>
-<!--            <input class="btn btn-primary" type="submit" value="Pesquisar">-->
+
 
 
         </form>
@@ -343,7 +302,7 @@ echo " </div>  \n";
 
 
     <div class="inner_cart">
-        <h4> Seu pedido </h4>
+        
 
         <table  id="tableListaPedido" style=" border-spacing: 10px; border-collapse: separate;" >  
         </table>
