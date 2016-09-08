@@ -363,8 +363,8 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	    $this->view->formData4 = $formData4;
 
 	    $this->view->tamanhoDropDown = $this->TamanhoProduto->getDropDown($produtoId);
-	    //$this->view->totalPrco = $this->ItensDeUmLanche->getPreco($produtoId);
-	    $this->view->totalCalorias = $this->ItensDeUmLanche->getCalorias($produtoId);
+	    
+	    
 	}
 
 	//Trata a aba Tamanhos

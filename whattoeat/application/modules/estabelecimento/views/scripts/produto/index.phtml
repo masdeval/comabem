@@ -17,11 +17,10 @@
                 <table class="tableFrm produtoindex" cellspacing="0" cellpadding="0" border="0">
                     <tr>
 
-                        <td> <label>Nome *</label> <br><input type="text" class="input-medium RQR required form-control"  name="nome" maxlength="50" value="<?php echo $this->formData['nome'] ?>" style="width: 200px;" title="Por favor, indique nome">
+                        <td> <label>Nome *</label> <br><input type="text" class="input-medium RQR required  form-control"  name="nome" maxlength="50" value="<?php echo $this->formData['nome'] ?>" title="Por favor, indique nome">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                            <td> <label>Valor calórico (calculado pelo sistema) </label><br><input type="text" class="input-medium validDecimalNumber form-control"   name="valor_calorico" value="<?php echo $this->formData['valor_calorico'] ?>" disabled="true" maxlength="50" style="width: 200px;" title="Por favor, indique valor calorico">
-                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                       <!--  <td width="50%">&nbsp;&nbsp; Valor calórico calculado: <?php //echo $this->totalCalorias; ?></td> -->
+                        <td> <label>Valor calórico (calculado) </label><br><input type="text" class="input-medium validDecimalNumber form-control"  name="valor_calorico" value="<?php echo $this->formData['valor_calorico'] ?>" disabled="true"   >  </td>
+                            <td> <label>Valor calórico  </label><br><input type="text" class="input-medium validDecimalNumber form-control"   name="valor_calorico_aproximado" value="<?php echo $this->formData['valor_calorico_aproximado'] ?>"   >  </td>                          
                     </tr>
                     <tr>
                     

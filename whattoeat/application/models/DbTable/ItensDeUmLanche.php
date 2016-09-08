@@ -48,11 +48,6 @@
           return $result[0]['total'];
       }*/
 
-      public function getCalorias($cod_produto){
-           $query = $this->_db->query("SELECT SUM(valor_calorico) as total FROM ingrediente_empresa_produto WHERE cod_produto=$cod_produto");
-
-          $result = $query->fetchAll();
-          return $result[0]['total'];
-      }
+      
   }
 ?>

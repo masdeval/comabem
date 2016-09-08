@@ -34,6 +34,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    'descricao' => $formData['descricao'],
 	    'tempo_preparo_minutos' => (int) $formData['tempo_preparo_minutos'],
 	    'valor_calorico_aproximado' => (float) $formData['valor_calorico_aproximado'],            
+            'valor_calorico' => (float) $formData['valor_calorico'],            
 	    'numero_max_adicionais' => (int) $formData['numero_max_adicionais'],
 	    'cobrado_por_quilo' => $formData['cobrado_por_quilo'],
 	    'disponivel' => $formData['disponivel'],
@@ -57,6 +58,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    'descricao' => $formData['descricao'],
 	    'tempo_preparo_minutos' => (int) $formData['tempo_preparo_minutos'],
 	    'valor_calorico_aproximado' => (float) $formData['valor_calorico_aproximado'],           
+            'valor_calorico' => (float) $formData['valor_calorico'],           
 	    'numero_max_adicionais' => (int) $formData['numero_max_adicionais'],
 	    'cobrado_por_quilo' => $formData['cobrado_por_quilo'],
 	    'disponivel' => $formData['disponivel'],
@@ -180,12 +182,12 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 		}
 	    }
 
-	    $where .= " and  P.cod_produto in ( " . $ids . " ) ";
+	    $where .= " AND  P.cod_produto in ( " . $ids . " ) ";
 	}
 
 	if (!empty($caloria))
 	{
-	    $where .= " and P.valor_calorico <= :" . $i;
+	    $where .= " AND (P.valor_calorico BETWEEN 1 AND :" . $i . " OR P.valor_calorico_aproximado BETWEEN 1 AND :" . $i . ") ";
 	    $i++;
 	}
 
@@ -201,37 +203,37 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 		    $ids.=",";
 		}
 	    }
-	    $where .= " and P.cod_tipo_produto in ( " . $ids . " ) ";
+	    $where .= " AND P.cod_tipo_produto in ( " . $ids . " ) ";
 	}
 
         if (!empty($empresa_oferece))
 	{
-            $where .= " and ( ";
+            $where .= " AND ( ";
 	   for ($k = 0; $k < sizeof($empresa_oferece); $k++)
 	    {                
                 if($empresa_oferece[$k] == 'diabetico')
                 {
-                    $where .= "P.atende_diabetico = :".$i." or ";
+                    $where .= "P.atende_diabetico = :".$i." OR ";
                     $i++;
                 }
                 else if ($empresa_oferece[$k] == 'pouco_sal')
                 {
-                    $where .= "P.pouco_sal = :".$i." or ";
+                    $where .= "P.pouco_sal = :".$i." OR ";
                     $i++;
                 }
                 else if ($empresa_oferece[$k] == 'sem_glutem')
                 {
-                    $where .= "P.sem_glutem = :".$i." or ";
+                    $where .= "P.sem_glutem = :".$i." OR ";
                     $i++;
                 }
                 else if ($empresa_oferece[$k] == 'lactose')
                 {
-                    $where .= "P.intolerancia_lactose = :".$i." or ";
+                    $where .= "P.intolerancia_lactose = :".$i." OR ";
                     $i++;
                 }
                 else if ($empresa_oferece[$k] == 'organico')
                 {
-                    $where .= "P.organicos = :".$i." or ";
+                    $where .= "P.organicos = :".$i." OR ";
                     $i++;
                 }                                
 	    } 

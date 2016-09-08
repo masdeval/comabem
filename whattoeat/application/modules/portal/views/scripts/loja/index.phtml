@@ -167,8 +167,8 @@
 </div>
 
 <?php
-//Traz no topo as informações do estabelecimento. Nao deu pra ser igual a index do portal porque do jeito que está lá a empresa vem como resultado 
-//da busca por produto. Se não houver produto que case com a busca, também não vem empresa, e iria perder a informação que aparece no topo. 
+//Traz no topo as informaÃ§Ãµes do estabelecimento. Nao deu pra ser igual a index do portal porque do jeito que estÃ¡ lÃ¡ a empresa vem como resultado 
+//da busca por produto. Se nÃ£o houver produto que case com a busca, tambÃ©m nÃ£o vem empresa, e iria perder a informaÃ§Ã£o que aparece no topo. 
 
 if (!empty($this->nomeCliente))
     echo "<p>Bem vindo " . $this->nomeCliente . "! (<a href='/portal/cliente/logout'> Logout </a>) </p>";
@@ -207,13 +207,13 @@ echo " </div>  \n";
             <input type="hidden" name="isAberto" value="<?php echo $this->isAberto; ?>">
 
 
-            <!--            <h1>Por favor, entre com os critérios de pesquisa. Você pode procurar por ingredientes específicos, lugares, pratos ou 
-                        qualquer outro critério disponível para trazer a opção mais certa para você!</h1> -->
+            <!--            <h1>Por favor, entre com os critÃ©rios de pesquisa. VocÃª pode procurar por ingredientes especÃ­ficos, lugares, pratos ou 
+                        qualquer outro critÃ©rio disponÃ­vel para trazer a opÃ§Ã£o mais certa para vocÃª!</h1> -->
 
             <!--<div style="text-align: left; border: transparent; width: 380px; ">
-                 <p class="lead">Aqui você pode digitar qualquer termo para sua consulta:</p>
+                 <p class="lead">Aqui vocÃª pode digitar qualquer termo para sua consulta:</p>
                 
-                Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
+                Ex:  macarrÃ£o, massa verde, "Macarronada da Tia Dalva"
                 <br>
                 Ex: catupiri, bacon, "peito de peru", chia 
             </div>-->
@@ -228,7 +228,7 @@ echo " </div>  \n";
             <!--div style="width:450; height: 100;">
                 <?php
 //formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
-//cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
+//cod_tipo_produto Ã© um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
                 $i = 0;
                 foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto) {
                     $checked = " ";
@@ -242,7 +242,7 @@ echo " </div>  \n";
             </div-->
 
 
-            <!--font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>"-->
+            <!--font class="lead">Valor calÃ³rico atÃ©: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>"-->
             <br>
             <br>
 
@@ -250,17 +250,17 @@ echo " </div>  \n";
 
 
             <div style="width:450; height: 100;">
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabético
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabÃ©tico
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('pouco_sal', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="pouco_sal" class=""> Produto com pouco sal
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('sem_glutem', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="sem_glutem" class=""> Produto sem glútem
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('sem_glutem', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="sem_glutem" class=""> Produto sem glÃºtem
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('lactose', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="lactose" class=""> Produto sem lactose
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgânico	
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgÃ¢nico	
             </div-->
             <div class="inner_filter">
                 <!--input type="button" id="filtroResult" value="Filtrar Por &#8628;"-->
                 <div class="inner_searchbar">
 
-                    <input type="textarea" placeholder="Ingredientes específicos, lugares, pratos..." value="" name="criterio" class="form-control inputbtn"><input type="submit" value="Pesquisar"  class="btn btn-primary serchbutn">
+                    <input type="textarea" placeholder="Ingredientes especÃ­ficos, lugares, pratos..." value="" name="criterio" class="form-control inputbtn"><input type="submit" value="Pesquisar"  class="btn btn-primary serchbutn">
                        <span class="filterexpand"> Mais opcoes de filtro</span>
                 </div>
             </div>
@@ -269,7 +269,7 @@ echo " </div>  \n";
                     <div style="width:450; height: 100;">
                 <?php
 //formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
-//cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
+//cod_tipo_produto Ã© um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
                 $i = 0;
                 foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto) {
                     $checked = " ";
@@ -284,8 +284,8 @@ echo " </div>  \n";
                 
                 
                 
-                  <!--p class="lead">Culinária:</p-->
-                <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
+                  <!--p class="lead">CulinÃ¡ria:</p-->
+                <font class="lead">Valor calÃ³rico atÃ©: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
                 <br>
                 <br>
 
@@ -293,11 +293,11 @@ echo " </div>  \n";
 
 
 
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabético<br>
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('diabetico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="diabetico" class=""> Produto especial para diabÃ©tico<br>
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('pouco_sal', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="pouco_sal" class=""> Produto com pouco sal<br>
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('sem_glutem', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="sem_glutem" class=""> Produto sem glútem<br>
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('sem_glutem', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="sem_glutem" class=""> Produto sem glÃºtem<br>
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('lactose', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="lactose" class=""> Produto sem lactose<br>
-                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgânico<br>
+                <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgÃ¢nico<br>
                 <input type="button" id="confirmaFiltro" value="&#10004; Ok">	
             </div>
 
@@ -368,14 +368,14 @@ echo " </div>  \n";
                 <p style='display: block' >
                     <?php echo $this->resultado[$i]["nome"]; ?>
                 <p style='font-size: small;'> 
-                    <?php echo $this->resultado[$i]["descricao"] . "<br> Valor calórico: " . $this->resultado[$i]["valor_calorico"] . " cal"; ?>
+                    <?php echo $this->resultado[$i]["descricao"] . "<br> Valor calÃ³rico: " . $this->resultado[$i]["valor_calorico"] . " cal"; ?>
                 </p>
                 </p> </div> <!-- nome do produto -->
 
             <!--	    //imprime os tamanhos disponiveis e precos do produto -->
             <div class="rytsec">
                 <?php
-                //Sempre há pelo menos um tamanho, entao imprime esse
+                //Sempre hÃ¡ pelo menos um tamanho, entao imprime esse
                 if (!empty($this->resultado[$i]['preco_promocional'])) {
                     $preco = (double) $this->resultado[$i]['preco_promocional'];
                     echo ($this->resultado[$i]['tamanho'] . "De ");

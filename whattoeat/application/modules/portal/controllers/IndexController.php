@@ -68,12 +68,11 @@ class Portal_IndexController extends Zend_Controller_Action
 		}
 	    }
 	    $produtos .= "-1"; //so porque fica uma virgula no final
-            $resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece);
-	}else{
-                        
-            $resultado = LuceneManager::searchDefault($empresa_oferece);
             
-}
+	}
+
+        $resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece);
+
 
 	//insere em resultado a situacao do estabelecimento informando se o mesmo
 	//esta aberto ou fechado
@@ -97,7 +96,7 @@ class Portal_IndexController extends Zend_Controller_Action
 		//date_default_timezone_set('asia/kolkata');
                 $hora_atual = date('H') . ":" . date('i') . ":00";
 
-//quero apresentar empresas apenas uma vez
+                //quero apresentar empresas apenas uma vez
 		$empresa_ja_apresentada[$resultado[$i]['cod_empresa']] = $resultado[$i]['cod_empresa'];
 		$resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
 		$novo_resultado[$j] = $resultado[$i];

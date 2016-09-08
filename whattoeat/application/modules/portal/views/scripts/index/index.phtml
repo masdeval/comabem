@@ -99,18 +99,7 @@ if (!empty($this->nomeCliente))
 <div align="center" width="80%">
 
     <div class="formBuscar">
-        <form action="/portal/index/consulta#filter_d" method="post" class="" id='form1'>
-
-            <!-- <h2>Por favor, entre com os critérios de pesquisa. Você pode procurar por ingredientes específicos, lugares, pratos ou 
-          qualquer outro critério disponível para trazer a opção mais certa para você!</h2> 
-
-        <div style="text-align: left; border: transparent; width: 380px; ">
-               <p class="lead">Aqui você pode digitar qualquer termo para sua consulta:</p>
-              
-              Ex:  macarrão, massa verde, "Macarronada da Tia Dalva"
-              <br>
-              Ex: catupiri, bacon, "peito de peru", chia 
-          </div> -->
+        <form action="/portal/index/consulta" method="post" class="" id='form1'>
 
             <br>
 
@@ -144,6 +133,7 @@ if (!empty($this->nomeCliente))
                 <?php } ?>
                      </div>
                 <!--p class="lead new_heading">Culinária:</p-->
+                
                 <font class="lead">Valor calórico até: </font><input  type="text" name="caloria" style="width:50" value="<?php echo $this->pesquisa_facapedido_caloria; ?>">
                 <br>
                 <br>
@@ -156,7 +146,8 @@ if (!empty($this->nomeCliente))
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('lactose', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="lactose" class=""> Produto sem lactose<br>
                 <input  type="checkbox" name="empresa_oferece[]" <?php echo in_array('organico', $this->pesquisa_facapedido_empresa_oferece) ? 'checked' : '' ?> value="organico" class=""> Produto orgânico<br>
                 <input type="button" id="confirmaFiltro" value="&#10004; Ok">	
-            </div-->
+                
+            </div>
 
             <br><br><br>
 
