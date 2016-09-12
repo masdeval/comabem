@@ -100,6 +100,11 @@ class Portal_LojaController extends Zend_Controller_Action
 
 	$resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto,  $empresa_oferece, $cod_empresa);
 
+        if(empty($resultado))
+        {
+            $this->view->headline = "Nenhum resultado encontrado.";
+        }
+        
 	//verifica se a loja esta aberta
 	date_default_timezone_set($this->EmpresaDB->getTimezone($cod_empresa));//seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
 	$hora_atual = date('H') . ":" . date('i') . ":00";
