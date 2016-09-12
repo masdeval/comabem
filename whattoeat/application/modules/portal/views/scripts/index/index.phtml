@@ -86,7 +86,7 @@
 </head>
 <body>
 
-<div>
+
     <div class="main1">
     <div id="logoComabem" ><a href="/portal/"><img src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
     <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img src="<?php echo $this->serverUrl(); ?>/img/estabelecimento.png"></div></a>
@@ -97,8 +97,7 @@ if (!empty($this->nomeCliente))
 ?>
 
 <div align="center" width="80%">
-
-    <div class="formBuscar">
+  
         <form action="/portal/index/consulta" method="post" class="" id='form1'>
 
             <br>
@@ -112,10 +111,7 @@ if (!empty($this->nomeCliente))
             </div>
             <br>
             <br>
-            
-
-
-  
+   
             <div id="front_filtro_menu" class="expanddv">
                             <div  class="margbtm">
                 <?php
@@ -153,8 +149,13 @@ if (!empty($this->nomeCliente))
 
 
         </form>
+    
+    
+    <div class="headline" >
+        <h4><?php echo $this->headline; ?> </h4>
     </div>
-                             
+    
+ 
 
     <!--<h3>Nosso sistema ainda não faz pedidos mas você pode simular suas compras e verificar o custo total. Compre em quantos estabelecimentos quiser. 
         Todos os itens escolhidos ficarão no seu carrinho.</h3>-->
@@ -210,12 +211,10 @@ if (!empty($this->nomeCliente))
 
     </div>
 
-
-    <p style="padding-left: 50px;"><?php $this->headline; ?></p>
-
+   
     <?php
   
-    if (!empty($this->pesquisa_facapedido_criterio)) {   ?>
+    if (!empty($this->pesquisa_facapedido_criterio) && !empty($this->resultado)) {   ?>
        
          <div class="popup1 popup1_txt <?php echo (count($this->resultado) >1) ? "scroladd" : "" ?> ">
                 <a class="close <?php echo (count($this->resultado) >1) ? "clsicon" : "" ?> " href="javascript:;"><span class="close"></span><span class="close1"></a> 
@@ -307,7 +306,7 @@ if (!empty($this->nomeCliente))
                 </div> <!-- precos -->
 
                 <?php
-                echo "<div class='text1'>  \n";
+                echo "<div class=''>  \n";
                 
 
                 //verifica se a empresa esta atendendo nesse horario
@@ -326,16 +325,12 @@ if (!empty($this->nomeCliente))
             ?>
 
         </div> <!--fim resultado pesquisa-->   
-        
-        
+                
         
         <div class="popup2">
         </div>
 
-    </div>
-
-
-
+    
     <?php
 } else {
     if(!empty($this->resultado))
@@ -384,7 +379,7 @@ if (!empty($this->nomeCliente))
     echo "</div>";
 }
 ?>
-
+</div>
 
 <script>
 

@@ -44,10 +44,8 @@ class Portal_IndexController extends Zend_Controller_Action
 	$produtos = "";
 
         //echo "<pre>"; print_r($_POST); die;
-        
-  
-       
-	//primeiro busca com o lucene
+        //
+ 	//primeiro busca com o lucene
 	if (!empty($criterios))
 	{ 
 	    $hits = LuceneManager::search($criterios);
@@ -73,6 +71,9 @@ class Portal_IndexController extends Zend_Controller_Action
 
         $resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece);
 
+        if(!empty($resultado) && sizeof($resultado) > 0)
+        {
+      
 
 	//insere em resultado a situacao do estabelecimento informando se o mesmo
 	//esta aberto ou fechado
@@ -105,14 +106,21 @@ class Portal_IndexController extends Zend_Controller_Action
              //echo "<pre>";print_r($resultado); die;
 	}
 
+         $this->view->resultado = $novo_resultado;
     //echo "<pre>"; print_r($novo_resultado); die;
-            $this->view->resultado = $novo_resultado;
+
+        }
+        else
+        {
+             $this->view->headline = "Nenhum resultado encontrado.";
+        }
+           
             $this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
             $this->view->pesquisa_facapedido_criterio = $criterios;
             $this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;
             $this->view->pesquisa_facapedido_caloria = $caloria;
             $this->view->pesquisa_facapedido_empresa_oferece = $empresa_oferece;
-
+        
             $this->_helper->viewRenderer("index");
     }
 
