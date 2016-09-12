@@ -219,7 +219,8 @@ echo " </div>  \n";
                 <!--input type="button" id="filtroResult" value="Filtrar Por &#8628;"-->
                 <div class="inner_searchbar">
 
-                    <input type="textarea" placeholder="Ingredientes específicos, lugares, pratos..." value="" name="criterio" class="form-control inputbtn"><input type="submit" value="Pesquisar"  class="btn btn-primary serchbutn">
+                    <input type="textarea" placeholder="Ingredientes específicos, lugares, pratos..." value="<?php echo !empty($this->pesquisa_facapedido_criterio) ? $this->pesquisa_facapedido_criterio : '' ?>" 
+                           name="criterio" class="form-control inputbtn"><input type="submit" value="Pesquisar"  class="btn btn-primary serchbutn">
                        <span class="filterexpand"> Mais opções de filtro</span>
                 </div>
             </div>

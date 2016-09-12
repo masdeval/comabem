@@ -106,7 +106,7 @@ if (!empty($this->nomeCliente))
             <div id="EnglobaPesquisaInicio">
                 <!--input type="button" id="filtroResult" value="Filtrar Por &#8628;"-->
                <input class="form-control" type="textarea" name="criterio" id="pesquisaInicio"  
-                       value="" placeholder="Ingredientes específicos, lugares, pratos..."><input class="btn btn-primary" id="botaoPesquisar" type="submit" 
+                       value="<?php echo !empty($this->pesquisa_facapedido_criterio) ? $this->pesquisa_facapedido_criterio : '' ?>" placeholder="Ingredientes específicos, lugares, pratos..."><input class="btn btn-primary" id="botaoPesquisar" type="submit" 
                        value="BUSCAR">
               <span class="filterexpand"> Mais opcoes de filtro</span>
             </div>
@@ -119,8 +119,8 @@ if (!empty($this->nomeCliente))
             <div id="front_filtro_menu" class="expanddv">
                             <div  class="margbtm">
                 <?php
-//formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
-//cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
+                //formData2 eh um array comecando do indice 0 e contendo os codigos de tipos de produtos que a empresa trabalha
+                //cod_tipo_produto é um array cujo indices sao os cod_tipo_produto e o conteudo o nome do tipo. Contem todos os tipos produtos existentes.
                 $i = 0;
                 foreach (array_keys($this->cod_tipo_produto) as $cod_tipo_produto) {
                     $checked = " ";
