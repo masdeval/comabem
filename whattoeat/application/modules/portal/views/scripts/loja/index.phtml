@@ -333,7 +333,7 @@ echo " </div>  \n";
                 <p style='display: block' >
                     <?php echo $this->resultado[$i]["nome"]; ?>
                 <p style='font-size: small;'> 
-                    <?php echo $this->resultado[$i]["descricao"] . "<br> Valor calorico: " . $this->resultado[$i]["valor_calorico"] . " cal"; ?>
+                    <?php echo $this->resultado[$i]["descricao"] . "<br> Valor calorico: " ?> <?php echo !empty($this->resultado[$i]["valor_calorico"])?$this->resultado[$i]["valor_calorico"]:$this->resultado[$i]["valor_calorico_aproximado"] ?>   cal 
                 </p>
                 </p> </div> <!-- nome do produto -->
 

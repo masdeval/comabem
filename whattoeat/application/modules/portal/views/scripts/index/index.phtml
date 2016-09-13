@@ -206,7 +206,7 @@ if (!empty($this->nomeCliente))
                     <p class="title">
                         <?php echo $this->resultado[$i]["nome"]; ?>
                     <p class="para-text"> 
-                        <?php echo $this->resultado[$i]["descricao"] . "<br> Valor calórico: " . $this->resultado[$i]["valor_calorico"] . " cal"; ?>
+                      <?php echo $this->resultado[$i]["descricao"] . "<br> Valor calorico: " ?> <?php echo !empty($this->resultado[$i]["valor_calorico"])?$this->resultado[$i]["valor_calorico"]:$this->resultado[$i]["valor_calorico_aproximado"] ?>   cal 
                     </p>
                     </p> </div> <!-- nome do produto -->
 
