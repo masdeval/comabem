@@ -123,7 +123,7 @@ class Portal_IndexController extends Zend_Controller_Action {
         $empresa = $this->EmpresaDB->getSingleData($cod_empresa);
         $email = $empresa['email'];
         $data = date('d') . "/" . date('m') . "/" . date('Y'); //ano com 4 digitos
-        $hora_atual = date('His');
+        $hora_atual = date('H:i:s');
 
         $config = array('auth' => 'login',
             'username' => 'suporte@buscacomabem.com.br',
@@ -134,7 +134,7 @@ class Portal_IndexController extends Zend_Controller_Action {
         $mail = new Zend_Mail();
         $mail->setBodyText('No dia ' . $data . ' foi solicitado que você estive aberto na hora ' . $hora_atual);
         $mail->setFrom('suporte@buscacomabem.com.br');
-        $mail->addTo("suporte@buscacomabem.com.br");
+        $mail->addTo($email);
         $mail->setSubject('Pedido de que você estivesse aberto');
  
         try {
