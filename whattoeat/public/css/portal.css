@@ -226,10 +226,10 @@ ol, ul {
     position: relative;
 }
 @media(max-width:991px) {
-    .imgtext {
+     .imgtext {
 
         width: 300px;
-    }
+     }
 }
 @media(max-width:767px) {
     .logo img {
@@ -292,11 +292,8 @@ ol, ul {
     }
 
     .firstimgtext {
-
-
         width: 100%;
         text-align: center;
-
         margin:0px;
     }
 

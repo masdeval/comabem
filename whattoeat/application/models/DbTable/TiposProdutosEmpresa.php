@@ -13,7 +13,7 @@ class DbTable_TiposProdutosEmpresa extends Zend_Db_Table_Abstract {
 
 
     public function getRecords($cod_empresa) {
-        $query = $this->_db->query("SELECT * FROM tipos_produtos_empresa where  cod_empresa =$cod_empresa ");
+        $query = $this->_db->query("SELECT * FROM tipos_produtos_empresa where  cod_empresa =$cod_empresa");
         $res = $query->fetchAll();
         foreach ($res as $k => $row) {
             $result[] = $row['cod_tipo_produto'];
@@ -61,9 +61,22 @@ class DbTable_TiposProdutosEmpresa extends Zend_Db_Table_Abstract {
         foreach ($res as $k => $row) {
             $result[$row['cod_tipo_produto']] = $row['nome'];
         }
-        return $result;
+        if(!empty($result))
+        {
+           return $result;
+        }
     }
 
 }
 
 ?>
+
+
+
+
+
+
+
+
+
+

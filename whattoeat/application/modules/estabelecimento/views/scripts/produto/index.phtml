@@ -1,4 +1,4 @@
-<div style="width: 750px; margin-left: auto; margin-right: auto;float: right;"><input type="button" name="voltar" value="Início" onclick="location.href='<?php  echo $this->baseUrl() ?>/estabelecimento/'"></div>
+<div style="width: 750px; margin-left: auto; margin-right: auto;float: right;"><input type="button" name="voltar" value="Início" onclick="location.href = '<?php echo $this->baseUrl() ?>/estabelecimento/'"></div>
 <div class="prodt" id="tabs" style="width: 714px; margin-left: auto; margin-right: auto;clear: both;clear: both;">
     <div id="scroller">
         <ul>
@@ -13,43 +13,47 @@
     <div id="tab1">
         <div class="contentForm">
             <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form1' onsubmit="return validateForm('form1');" enctype="multipart/form-data" >
-                
+
                 <table class="tableFrm produtoindex" cellspacing="0" cellpadding="0" border="0">
                     <tr>
 
                         <td> <label>Nome *</label> <br><input type="text" class="input-medium RQR required form-control"  name="nome" maxlength="50" value="<?php echo $this->formData['nome'] ?>" style="width: 200px;" title="Por favor, indique nome">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                            <td> <label>Valor calórico (calculado pelo sistema) </label><br><input type="text" class="input-medium validDecimalNumber form-control"   name="valor_calorico" value="<?php echo $this->formData['valor_calorico'] ?>" disabled="true" maxlength="50" style="width: 200px;" title="Por favor, indique valor calorico">
+                        <td> <label>Valor calórico (calculado pelo sistema) </label><br><input type="text" class="input-medium validDecimalNumber form-control"   name="valor_calorico" value="<?php echo $this->formData['valor_calorico'] ?>" disabled="true" maxlength="50" style="width: 200px;" title="Por favor, indique valor calorico">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                       <!--  <td width="50%">&nbsp;&nbsp; Valor calórico calculado: <?php //echo $this->totalCalorias; ?></td> -->
+                       <!--  <td width="50%">&nbsp;&nbsp; Valor calórico calculado: <?php //echo $this->totalCalorias;     ?></td> -->
                     </tr>
                     <tr>
-                    
+
 
                         <td><label> Tipo * </label><br>
-                            <?php $attribs = array("class" => 'input-medium RQR required form-control', "title" => 'Por favor, indique Tipo', 'style' => 'width:200px');
-                            echo $this->formSelect('cod_tipo_produto', $this->formData['cod_tipo_produto'], $attribs, $this->cod_tipo_produto); ?>
+                            <?php
+                            $attribs = array("class" => 'input-medium RQR required form-control', "title" => 'Por favor, indique Tipo', 'style' => 'width:200px');
+                            echo $this->formSelect('cod_tipo_produto', $this->formData['cod_tipo_produto'], $attribs, $this->cod_tipo_produto);
+                            ?>
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                            <td><label> Tempo Preparo Minutos</label> <br><input type="text" class="input-medium validNumber form-control"  name="tempo_preparo_minutos" maxlength="3" value="<?php echo $this->formData['tempo_preparo_minutos'] ?>" style="width: 200px;">
+                        <td><label> Tempo Preparo Minutos</label> <br><input type="text" class="input-medium validNumber form-control"  name="tempo_preparo_minutos" maxlength="3" value="<?php echo $this->formData['tempo_preparo_minutos'] ?>" style="width: 200px;">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> </td>
                     </tr>
                     <tr>
-                    
+
                         <td><label> Máximo de adicionais que são permitidos </label><br><input type="text" class="input-medium validNumber form-control"  name="numero_max_adicionais" maxlength="14" value="<?php echo $this->formData['numero_max_adicionais'] ?>" id='maxAdicionais' style="width: 200px;">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td> 
                     </tr>
-                    
+
                     <tr>
-                        <td><label>Cobrado Por Quilo ?</label><input type="checkbox" value="1" name="cobrado_por_quilo" <?php if ($this->formData['cobrado_por_quilo'] == 1)
-                            {
+                        <td><label>Cobrado Por Quilo ?</label><input type="checkbox" value="1" name="cobrado_por_quilo" <?php
+                            if ($this->formData['cobrado_por_quilo'] == 1) {
                                 echo 'checked';
-                            } ?> > 
+                            }
+                            ?> > 
 
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> </td>
-                        <td><label>Disponivel ?</label> <input type="checkbox" value="1" name="disponivel" <?php if ($this->formData['disponivel'] == 1)
-                            {
+                        <td><label>Disponivel ?</label> <input type="checkbox" value="1" name="disponivel" <?php
+                            if ($this->formData['disponivel'] == 1) {
                                 echo 'checked';
-                            } ?> >
+                            }
+                            ?> >
 
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                     </tr> 
@@ -59,55 +63,55 @@
                             <textarea name="descricao" class="input-medium form-control" style="width: 630px; height: 50px;"><?php echo $this->formData['descricao'] ?></textarea></td>
 
                     </tr>
-<?php  if($this->produtoId == '') { ?>                                        
-                    
-                    <tr>                        
-                        <td><label>Descricao do tamanho</label> <br>
-                            <input type="text" class="input-medium RQR required form-control"  title='Por favor, indique a descrição' maxlength="20"  name="descricao_tamanho" id="descricao_tamanho" value="" style="width: 200px;">
-                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                        <td colspan="2"><label> Preco </label><br>
-                            <input type="text" class="input-medium RQR required validDecimalNumber form-control"  title='Por favor, indique o preço'  name="preco" id="preco" value="" style="width: 200px;" maxlength="11">
-                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                    </tr>
-<?php } ?>               
-                    
-                    
+                    <?php if ($this->produtoId == '') { ?>                                        
+
+                        <tr>                        
+                            <td><label>Descricao do tamanho</label> <br>
+                                <input type="text" class="input-medium RQR required form-control"  title='Por favor, indique a descrição' maxlength="20"  name="descricao_tamanho" id="descricao_tamanho" value="" style="width: 200px;">
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                            <td colspan="2"><label> Preco </label><br>
+                                <input type="text" class="input-medium RQR required validDecimalNumber form-control"  title='Por favor, indique o preço'  name="preco" id="preco" value="" style="width: 200px;" maxlength="11">
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                        </tr>
+                    <?php } ?>               
+
+
                 </table>
-                
-                
-                
-       <fieldset style=" margin: 0; padding: 0;">
-                  
+
+
+
+                <fieldset style=" margin: 0; padding: 0;">
+
                     <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
                         <tr>
 
-			  <td>
-			      
-	                    <input type="checkbox" <?php echo ($this->formData['atende_diabetico'] == 1) ? 'checked' : '' ?>   name="atende_diabetico" value="1" class=""> Produto para diabético
-                          </td>
-			  <td>
-		          <input type="checkbox" <?php echo ($this->formData['pouco_sal'] == 1) ? 'checked' : '' ?>   name="pouco_sal" value="1" class=""> Preparado com pouco sal
-                          </td>
+                            <td>
+
+                                <input type="checkbox" <?php echo ($this->formData['atende_diabetico'] == 1) ? 'checked' : '' ?>   name="atende_diabetico" value="1" class=""> Produto para diabético
+                            </td>
+                            <td>
+                                <input type="checkbox" <?php echo ($this->formData['pouco_sal'] == 1) ? 'checked' : '' ?>   name="pouco_sal" value="1" class=""> Preparado com pouco sal
+                            </td>
                         </tr>
                         <tr>
-			  <td>
-		          <input type="checkbox" <?php echo ($this->formData['sem_glutem'] == 1) ? 'checked' : '' ?>   name="sem_glutem" value="1" class=""> Sem glutem
-                          </td>
+                            <td>
+                                <input type="checkbox" <?php echo ($this->formData['sem_glutem'] == 1) ? 'checked' : '' ?>   name="sem_glutem" value="1" class=""> Sem glutem
+                            </td>
 
-			  <td>
-		          <input type="checkbox" <?php echo ($this->formData['intolerancia_lactose'] == 1) ? 'checked' : '' ?>   name="intolerancia_lactose" value="1" class=""> Sem lactose
-                          </td>
+                            <td>
+                                <input type="checkbox" <?php echo ($this->formData['intolerancia_lactose'] == 1) ? 'checked' : '' ?>   name="intolerancia_lactose" value="1" class=""> Sem lactose
+                            </td>
                         </tr>
                         <tr>
-			  <td>
-		          <input type="checkbox" <?php echo ($this->formData['organicos'] == 1) ? 'checked' : '' ?>   name="organicos" value="1" class=""> Leva orgânico
-                          </td>
+                            <td>
+                                <input type="checkbox" <?php echo ($this->formData['organicos'] == 1) ? 'checked' : '' ?>   name="organicos" value="1" class=""> Leva orgânico
+                            </td>
 
 
-			</tr>
-		    </table>
-		</fieldset>  
-                
+                        </tr>
+                    </table>
+                </fieldset>  
+
                 <br>
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>
@@ -115,91 +119,92 @@
                             <input type="submit" name="Save" value="Salvar" >
                             <input type="hidden" id="produtoId" name="produtoId" value="<?php echo $this->produtoId; ?>">
                             <input type="button" name="Remover" value="Remover" onclick="delProduto('<?php echo $this->produtoId; ?>')">
-                            <input type="button" name="Novo" value="Novo" onclick="location.href='<?php echo $this->baseUrl() ?>/estabelecimento/produto/'">
-                            <input type="button" name="Grid" value="Ver Grid" onclick="location.href='<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
+                            <input type="button" name="Novo" value="Novo" onclick="location.href = '<?php echo $this->baseUrl() ?>/estabelecimento/produto/'">
+                            <input type="button" name="Grid" value="Ver Grid" onclick="location.href = '<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
 
                     </tr>
                 </table>
             </form>
             <br>
             <br>
-            
-            <?php  if($this->produtoId != '') { ?>                                        
-            
-                        <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form5' name="form5" onsubmit="return validateForm('form5');" >
-                        <fieldset style=" margin: 0; padding: 0;">
-                            <legend> Edite aqui o tamanho do seu produto </legend>
-                            <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
-<?php if (count($this->tamanhoDropDown) > 1)
-                                { ?>
-                                    <tr>
-                                        <td colspan="2" align="left">
-                                            Selecione um tamanho para editar seu valor 
 
-<?php				    $attribs = array("class" => 'input-medium form-control', 'id' => 'tamanhoEdit',  'style' => 'width:200px', 'onchange' => "editTamanho(this.value,'$this->produtoId')");
-                                    echo $this->formSelect('tamanhoEdit', $this->tamanhoId, $attribs, $this->tamanhoDropDown); 
-?>
-                                   
-                                      <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> 
-                                        
+            <?php if ($this->produtoId != '') { ?>                                        
 
-                                        </td>
-                                    </tr>
-<?php } ?>
-
-<?php if (!empty($this->totalPrco))
-                                { ?>
-                     <!--               <tr>
-                                       <td colspan="2" align="right"><b>Preco De Custo : R$ <?php //echo $this->totalPrco; ?></b></td>       -->                           </tr>
-<?php } ?>
-
-                          <!--      <tr> -->
-                                    
-                                    <td>Descricao &nbsp;&nbsp;&nbsp;<br>
-                                        <input type="text" class="input-medium RQR required form-control"  title='Por favor, indique a descrição' maxlength="20"  name="descricao_tamanho" id="descricao_tamanho" value="<?php echo $this->formData5['descricao'] ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                    <td colspan="2"> Preco <br>
-                                        <input type="text" class="input-medium RQR required validDecimalNumber form-control"  title='Por favor, indique o preço'  name="preco" id="preco" value="<?php echo $this->formData5['preco'] ?>" style="width: 200px;" maxlength="11">
-                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                            </tr>
-<?php //if ($this->formData['tipo'] == 'Pizza') { ?>
+                <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form5' name="form5" onsubmit="return validateForm('form5');" >
+                    <fieldset style=" margin: 0; padding: 0;">
+                        <legend> Edite aqui o tamanho do seu produto </legend>
+                        <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+                            <?php if (count($this->tamanhoDropDown) > 1) {
+                                ?>
                                 <tr>
-                                    <td colspan="2">Se este produto é uma pizza, indique o número de sabores que o cliente pode escolher para esse tamanho<br>
-                                        <input type="text" class="input-medium validNumber form-control" id="numero_sabores_pizza" name="numero_sabores_pizza" maxlength="3" value="<?php echo $this->formData5['numero_sabores_pizza'] ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-                                    </td>
+                                    <td colspan="2" align="left">
+                                        Selecione um tamanho para editar seu valor 
 
+                                        <?php
+                                        $attribs = array("class" => 'input-medium form-control', 'id' => 'tamanhoEdit', 'style' => 'width:200px', 'onchange' => "editTamanho(this.value,'$this->produtoId')");
+                                        echo $this->formSelect('tamanhoEdit', $this->tamanhoId, $attribs, $this->tamanhoDropDown);
+                                        ?>
+
+                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div> 
+
+
+                                    </td>
                                 </tr>
-                               
-<?php// } ?>
-                            
+                            <?php } ?>
+
+                            <?php if (!empty($this->totalPrco)) {
+                                ?>
+                                                     <!--               <tr>
+                                                                       <td colspan="2" align="right"><b>Preco De Custo : R$ <?php //echo $this->totalPrco;    ?></b></td>       -->                           </tr>
+                            <?php } ?>
+
+                                          <!--      <tr> -->
+
+                            <td>Descricao &nbsp;&nbsp;&nbsp;<br>
+                                <input type="text" class="input-medium RQR required form-control"  title='Por favor, indique a descrição' maxlength="20"  name="descricao_tamanho" id="descricao_tamanho" value="<?php echo $this->formData5['descricao'] ?>" style="width: 200px;">
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                            <td colspan="2"> Preco <br>
+                                <input type="text" class="input-medium RQR required validDecimalNumber form-control"  title='Por favor, indique o preço'  name="preco" id="preco" value="<?php echo $this->formData5['preco'] ?>" style="width: 200px;" maxlength="11">
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                            </tr>
+                            <?php //if ($this->formData['tipo'] == 'Pizza') {   ?>
+                            <tr>
+                                <td colspan="2">Se este produto é uma pizza, indique o número de sabores que o cliente pode escolher para esse tamanho<br>
+                                    <input type="text" class="input-medium validNumber form-control" id="numero_sabores_pizza" name="numero_sabores_pizza" maxlength="3" value="<?php echo $this->formData5['numero_sabores_pizza'] ?>" style="width: 200px;">
+                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                                </td>
+
+                            </tr>
+
+                            <?php // }   ?>
+
                         </table>
 
-                     <br>
-                    <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
-                        <tr>
-                            <td><input type="hidden" name="emorFrom" value="5">
-                                <input type="submit" name="Save" value="Salvar">
-                                <input type="hidden" name="produtoId" id="produtoId" value="<?php echo $this->produtoId; ?>">
-                                <input type="hidden" name="tamanhoId" id="tamanhoId" value="<?php echo $this->tamanhoId; ?>">
-				<input type="button" value="Novo tamanho" onclick="novoTamanho()">
-				<input type="button" value="Cancelar" onclick="cancel()">
+                        <br>
+                        <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+                            <tr>
+                                <td><input type="hidden" name="emorFrom" value="5">
+                                    <input type="submit" name="Save" value="Salvar">
+                                    <input type="hidden" name="produtoId" id="produtoId" value="<?php echo $this->produtoId; ?>">
+                                    <input type="hidden" name="tamanhoId" id="tamanhoId" value="<?php echo $this->tamanhoId; ?>">
+                                    <input type="button" value="Novo tamanho" onclick="novoTamanho()">
+                                    <input type="button" value="Cancelar" onclick="cancel()">
 
 
-<?php if (!empty($this->produtoId) && !empty($this->tamanhoId))
-                                { ?>
-                                    <input type="button" name="Save" value="Remover" onclick="delTamanhos('<?php echo $this->produtoId; ?>','<?php echo $this->tamanhoId; ?>')">
-<?php } ?>
-                                    <input type="button" name="Save" value="Ver Grid" style="margin-left:  200px;" onclick="location.href='<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
+                                    <?php if (!empty($this->produtoId) && !empty($this->tamanhoId)) {
+                                        ?>
+                                        <input type="button" name="Save" value="Remover" onclick="delTamanhos('<?php echo $this->produtoId; ?>', '<?php echo $this->tamanhoId; ?>')">
+                                    <?php } ?>
+                                    <input type="button" name="Save" value="Ver Grid" style="margin-left:  200px;" onclick="location.href = '<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
                             </tr>
                         </table>
-                            
+
                     </fieldset>
 
-              </form>
+                </form>
 
-            <?php  } ?>
-            
+            <?php } ?>
+
         </div>
 
     </div>
@@ -211,23 +216,27 @@
                     <!--<legend>Imagem:</legend> -->
                     <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                         <tr>
-                            <?php $i = 0;
-                            foreach ((array) $this->formData2 as $k => $v)
-                            { ?>
+                            <?php
+                            $i = 0;
+                            foreach ((array) $this->formData2 as $k => $v) {
+                                ?>
                                 <td> <img src="<?php echo $this->baseUrl() ?>/estabelecimento/produto/get-Image/id/<?php echo $v['cod_foto'] ?>" alt="" width="100"><br>
                                     <input type="checkbox" name="cod_foto[]" value="<?php echo $v['cod_foto'] ?>"></td>
-<?php if ($i >= 4)
-                                {
+                                <?php
+                                if ($i >= 4) {
                                     echo '</tr><tr>';
                                     $i = 0;
-                                } ?>
-<?php $i++;
-                            } ?>
+                                }
+                                ?>
+                                <?php
+                                $i++;
+                            }
+                            ?>
                         </tr>
 
                         <tr>
                             <td colspan="3" height="20">
-                                 <br><input type="file" name="userfile">&nbsp;&nbsp;
+                                <br><input type="file" name="userfile">&nbsp;&nbsp;
                             </td>
                         </tr>
                         <tr>
@@ -242,7 +251,7 @@
                             <input type="hidden" name="produtoId" value="<?php echo $this->produtoId; ?>">
                             <input type="submit" name="Save" value="Adicionar Nova">
                             <input type="button" name="Save" value="Remover Selecionadas" onclick="delImagens('<?php echo $this->produtoId; ?>')">
-               
+
                         </td>
                     </tr>
                 </table>
@@ -261,31 +270,29 @@
                                 Indique quais são as categorias de ingredientes que estarão disponívies como adicionais para este produto.
                             </td></tr>
                         <tr>
-<?php   
-                            $i = 0;
-                            foreach ($this->CategoriaEmpresaRec as $k => $v)
-                            {
-                                if (!empty($this->formData3[$v['cod_categoria_empresa']]))
-                                {
-                                    $checked = "checked";
-                                    
-                                } else
-                                {
-                                    $checked = '';
-                                    
-                                }
-?>
-                                <td>
-                                    <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php //echo $v['cod_categoria_empresa'] ?>" <?php //echo $checked ?> > <?php //echo $v['nome'] ?>
-                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-                                </td>
-<?php if ($i >= 2)
-                                {
-                                    //echo '</tr><tr>';
-                                    $i = 0;
-                                } ?>
-<?php $i++;
-                            }                           ?>
+    <?php
+    $i = 0;
+    foreach ($this->CategoriaEmpresaRec as $k => $v) {
+        if (!empty($this->formData3[$v['cod_categoria_empresa']])) {
+            $checked = "checked";
+        } else {
+            $checked = '';
+        }
+        ?>
+                                                <td>
+                                                    <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php //echo $v['cod_categoria_empresa']     ?>" <?php //echo $checked     ?> > <?php //echo $v['nome']     ?>
+                                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                                                </td>
+        <?php
+        if ($i >= 2) {
+            //echo '</tr><tr>';
+            $i = 0;
+        }
+        ?>
+        <?php
+        $i++;
+    }
+    ?>
                         </tr>
 
 
@@ -296,8 +303,8 @@
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>
                         <td><input type="hidden" name="emorFrom" value="3">
-                            <input type="hidden" name="action" value="<?php  //echo $this->action; ?>">
-                            <input type="hidden" name="produtoId" value="<?php //echo $this->produtoId ?>">
+                            <input type="hidden" name="action" value="<?php //echo $this->action;     ?>">
+                            <input type="hidden" name="produtoId" value="<?php //echo $this->produtoId     ?>">
                             <input type="submit" name="Save" value="Salvar">
                         </td>
                     </tr>
@@ -308,111 +315,105 @@
 
     -->
 
-    
+
     <div id="tab4">
         <div class="contentForm">
             <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form4' onsubmit="return validateForm('form4');" >
-                    <fieldset style=" margin: 0; padding: 0;">
-                        <!--<legend>Ingrediente:</legend>-->
-                        <table class="tableFrm tbl_ingredients" cellspacing="5" cellpadding="0" border="0">
-                            <tr><td colspan="30">
-                                    Indique quais são os ingredientes que compõem esse produto. Isso será usado para calcular a caloria. </td></tr>
-                            
-                            <tr><td>&nbsp;</td></tr>
-                            
-                            <tr><td class="td-wid" colspan="30">Se nao encontrou o ingrediente desejado, peça-nos aqui: <input type="text"  name="sugestao_ingrediente" id="sugestao_ingrediente"> <input type="button" value="Enviar" onclick="javascript:pedidoIngrediente()">
-                                    <span  id='spanPedidoIngrediente' > </span></td></tr>
+                <fieldset style=" margin: 0; padding: 0;">
+                    <!--<legend>Ingrediente:</legend>-->
+                    <table class="tableFrm tbl_ingredients" cellspacing="5" cellpadding="0" border="0">
+                        <tr><td colspan="30">
+                                Indique quais são os ingredientes que compõem esse produto. Isso será usado para calcular a caloria. </td></tr>
 
-                            <tr><td>&nbsp;</td></tr>
-                             
-                            <tr>
-                                <td align="left">&nbsp;</td>                                
-                                <td align="left">Quantidade em gramas </td>
-                                <td align="left">&nbsp;</td>                                
-                                <td align="left">Quantidade em gramas </td>
-                            </tr>
-<?php
-                            for ($i = 0; $i < sizeof($this->ingredienteEmpresaRec); $i++)
-                            //foreach ($this->ingredienteEmpresaRec as $k => $v)
-                            {                                
-                                $v = $this->ingredienteEmpresaRec[$i];
-                                if (!empty($this->formData4[$v['cod_ingrediente']]))
-                                {
-                                    $checked = "checked";                                    
-                                    //$valor_calorico = $this->formData4[$v['cod_ingrediente']]['valor_calorico'];
-                                    $quantidade_utilizada = $this->formData4[$v['cod_ingrediente']]['quantidade_utilizada'];
-                                } else
-                                {
-                                    $checked = '';
-                                    //$valor_calorico = '';
-                                    $quantidade_utilizada = '';
-                                    $preco = '';
-                                }
- 
-?>
-                                <tr>
-                                    <td align="left"  style="width:100px"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
-                                    <!-- <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php //echo $v['cod_ingrediente'] ?>]" value="<?php //echo $valor_calorico ?>" style="width: 200px;"> -->
-                                    <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
-                                    <td class="td-wid" align="left"><input type="text" class="input-medium validDecimalNumber form-control"  title=''  name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $quantidade_utilizada ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                        <tr><td>&nbsp;</td></tr>
 
-<?php 
-                                $i++;
-                                
-                                if($i < sizeof($this->ingredienteEmpresaRec))
-                                {
-                                    $v = $this->ingredienteEmpresaRec[$i];
-                                    if (!empty($this->formData4[$v['cod_ingrediente']]))
-                                    {
-                                        $checked = "checked";                                    
-                                        //$valor_calorico = $this->formData4[$v['cod_ingrediente']]['valor_calorico'];
-                                        $quantidade_utilizada = $this->formData4[$v['cod_ingrediente']]['quantidade_utilizada'];
-                                    } else
-                                    {
-                                        $checked = '';
-                                        //$valor_calorico = '';
-                                        $quantidade_utilizada = '';
-                                        $preco = '';
-                                    }
+                        <tr><td class="td-wid" colspan="30">Se nao encontrou o ingrediente desejado, peça-nos aqui: <input type="text"  name="sugestao_ingrediente" id="sugestao_ingrediente"> <input type="button" value="Enviar" onclick="javascript:pedidoIngrediente()">
+                                <span  id='spanPedidoIngrediente' > </span></td></tr>
 
-?>
-                                
-                                    <td align="left" style="width:100px"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
-                                    <!-- <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php //echo $v['cod_ingrediente'] ?>]" value="<?php //echo $valor_calorico ?>" style="width: 200px;"> -->
-                                    <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
-                                    <td class="td-wid" align="left"><input type="text" class="input-medium validDecimalNumber form-control"  title=''  name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $quantidade_utilizada ?>" style="width: 200px;">
-                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                        <tr><td>&nbsp;</td></tr>
 
-<?php 
-                                }
-                                else
-                                {
-?>
-                               </tr>
-<?php
-                                    
-                                }
+                        <!--tr>
+                            <td align="left">&nbsp;</td>                                
+                            <td align="left">Quantidade em gramas </td>
+                            <td align="left">&nbsp;</td>                                
+                            <td align="left">Quantidade em gramas </td>
+                        </tr-->
+                        <?php
+                        //echo "<pre>"; print_r($this->ingredienteEmpresaRec); die;
+                        /*  for ($i = 0; $i < sizeof($this->ingredienteEmpresaRec); $i++) {
+                          //foreach ($this->ingredienteEmpresaRec as $k => $v)
+                          $v = $this->ingredienteEmpresaRec[$i];
+                          if (!empty($this->formData4[$v['cod_ingrediente']])) {
+                          $checked = "checked";
+                          //$valor_calorico = $this->formData4[$v['cod_ingrediente']]['valor_calorico'];
+                          $quantidade_utilizada = $this->formData4[$v['cod_ingrediente']]['quantidade_utilizada'];
+                          } else {
+                          $checked = '';
+                          //$valor_calorico = '';
+                          $quantidade_utilizada = '';
+                          $preco = '';
+                          }
+                          ?>
+                          <tr>
+                          <td align="left"  style="width:100px"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
+                          <!-- <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php //echo $v['cod_ingrediente']  ?>]" value="<?php //echo $valor_calorico  ?>" style="width: 200px;"> -->
+                          <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
+                          <td class="td-wid" align="left"><input type="text" class="input-medium validDecimalNumber form-control"  title=''  name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $quantidade_utilizada ?>" style="width: 200px;">
+                          <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
 
-                                } ?>
+                          <?php
+                          $i++;
 
-                            <tr>
-                                <td colspan="3" height="20">&nbsp;</td>
-                            </tr>
-                        </table>
-                    </fieldset>
-                    <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+                          if ($i < sizeof($this->ingredienteEmpresaRec)) {
+                          $v = $this->ingredienteEmpresaRec[$i];
+                          if (!empty($this->formData4[$v['cod_ingrediente']])) {
+                          $checked = "checked";
+                          //$valor_calorico = $this->formData4[$v['cod_ingrediente']]['valor_calorico'];
+                          $quantidade_utilizada = $this->formData4[$v['cod_ingrediente']]['quantidade_utilizada'];
+                          } else {
+                          $checked = '';
+                          //$valor_calorico = '';
+                          $quantidade_utilizada = '';
+                          $preco = '';
+                          }
+                          ?>
+
+                          <td align="left" style="width:100px"><input type="checkbox" value="<?php echo $v['cod_ingrediente'] ?>" name="ie[cod_ingrediente][]" <?php echo $checked; ?>> <?php echo $v['nome'] ?> </td>
+                          <!-- <td align="center"><input type="text" class="input-medium validDecimalNumber"  title=''  name="ie[valor_calorico][<?php //echo $v['cod_ingrediente'] ?>]" value="<?php //echo $valor_calorico ?>" style="width: 200px;"> -->
+                          <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
+                          <td class="td-wid" align="left"><input type="text" class="input-medium validDecimalNumber form-control"  title=''  name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" value="<?php echo $quantidade_utilizada ?>" style="width: 200px;">
+                          <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+
+                          <?php
+                          } else {
+                          ?>
+                          </tr>
+                          <?php
+                          }
+                          } */
+                        ?>
+
                         <tr>
-                            <td><input type="hidden" name="emorFrom" value="4">
-                                <input type="hidden" name="action" value="<?php echo $this->action; ?>">
+                            <td colspan="3" height="20">&nbsp;</td>
+                        </tr>
+                    </table>
+                </fieldset>
+                <div class="ingredients_data">
+                </div>
+
+
+                <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
+                    <tr>
+                        <td><input type="hidden" name="emorFrom" value="4">
+                            <input type="hidden" name="action" value="<?php echo $this->action; ?>">
                             <input type="hidden" name="produtoId" value="<?php echo $this->produtoId ?>">
                             <input type="submit" name="Save" value="Salvar">
                         </td>
                     </tr>
                 </table>
             </form>
-            
-            
+
+
         </div>
     </div>
 
@@ -421,103 +422,103 @@
 
 
 
-                 <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form6' onsubmit="return validateForm('form6');" >
+            <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form6' onsubmit="return validateForm('form6');" >
 
-		     <fieldset style=" margin: 0; padding: 0;" id="fieldsetPromocao">
-                            <legend>Promoções antigas</legend>
-                   <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
-                         <tr>
-                                    
-                                    <td><label>Data Inicial</label></td>
-                                                <td><label>Data Final</label></td>
-                                                            <td><label>Preço</label></td>
-                                                            <td><label>Anúncio</b></label></td>
-                                    <td>&nbsp;</td>
-                                </tr>
-<?php foreach ((array) $this->formData6 as $k => $v)
-                                { ?>
+                <fieldset style=" margin: 0; padding: 0;" id="fieldsetPromocao">
+                    <legend>Promoções antigas</legend>
+                    <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+                        <tr>
 
-                                    <tr>
-<!--                                        <td><input type="checkbox" name="val[<?php //echo $v['cod_promocao'] ?>][id]"> </td>-->
+                            <td><label>Data Inicial</label></td>
+                            <td><label>Data Final</label></td>
+                            <td><label>Preço</label></td>
+                            <td><label>Anúncio</b></label></td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <?php foreach ((array) $this->formData6 as $k => $v) {
+                            ?>
 
-                                        <td> <input type="text" class="input-medium RQR required datepicker2 compareDate form-control"  title='Por favor, indique a data inicial' maxlength="20"  name="val[<?php echo $v['cod_promocao'] ?>][data_inicio]" id="from<?php echo $k ?>" value="<?php echo $v['data_inicio'] ?>" style="width: 100px;">
-                                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                                        <td>
-                                            <input type="text" class="input-medium RQR required datepicker2 compareDate2 form-control"  title='Por favor, indique a data final'  name="val[<?php echo $v['cod_promocao'] ?>][data_fim]" id="to<?php echo $k ?>" value="<?php echo $v['data_fim'] ?>" style="width: 100px;" maxlength="11" readonly>
-                                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="input-medium RQR required validDecimalNumber form-control"  title='Por favor, indique o preço'  name="val[<?php echo $v['cod_promocao'] ?>][preco_promocional]" value="<?php echo $v['preco_promocional'] ?>" style="width: 100px;" maxlength="11">
-                                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-                                        </td>
-                                        <td>
-                                            <input type="text" class="input-medium form-control"  title='' name="val[<?php echo $v['cod_promocao'] ?>][anuncio]" style="width: 175px;" value="<?php echo $v['anuncio'] ?>">
-                                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-                                        </td>
+                            <tr>
+    <!--                                        <td><input type="checkbox" name="val[<?php //echo $v['cod_promocao']     ?>][id]"> </td>-->
 
-                                        <td>
-                                            <!-- Melhor nao deixar editar uma promocao ja cadastrada <a href="#" onclick="savePromocao('<?php //echo $v['cod_promocao'] ?>')">Salvar</a> -->
-					    &nbsp;&nbsp; <a href="#" onclick="delPromocao('<?php echo $v['cod_promocao'] ?>')">Delete</a>
-                                        </td>
-                                    </tr>
+                                <td> <input type="text" class="input-medium RQR required datepicker2 compareDate form-control"  title='Por favor, indique a data inicial' maxlength="20"  name="val[<?php echo $v['cod_promocao'] ?>][data_inicio]" id="from<?php echo $k ?>" value="<?php echo $v['data_inicio'] ?>" style="width: 100px;">
+                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                <td>
+                                    <input type="text" class="input-medium RQR required datepicker2 compareDate2 form-control"  title='Por favor, indique a data final'  name="val[<?php echo $v['cod_promocao'] ?>][data_fim]" id="to<?php echo $k ?>" value="<?php echo $v['data_fim'] ?>" style="width: 100px;" maxlength="11" readonly>
+                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                                </td>
+                                <td>
+                                    <input type="text" class="input-medium RQR required validDecimalNumber form-control"  title='Por favor, indique o preço'  name="val[<?php echo $v['cod_promocao'] ?>][preco_promocional]" value="<?php echo $v['preco_promocional'] ?>" style="width: 100px;" maxlength="11">
+                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                                </td>
+                                <td>
+                                    <input type="text" class="input-medium form-control"  title='' name="val[<?php echo $v['cod_promocao'] ?>][anuncio]" style="width: 175px;" value="<?php echo $v['anuncio'] ?>">
+                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                                </td>
 
-
-<?php } ?>
-                              </table>
-                    </fieldset>
-
-                       <input type="hidden" name="emorFrom" value="6">
-                      <input type="hidden" name="promocaoId" value="">
-                      <input type="hidden" name="produtoId" value="<?php echo $this->produtoId; ?>">
-                      <input type="hidden" name="tamanhoId" value="<?php echo $this->tamanhoId; ?>">
-        
-</form>
-
-       <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form7' onsubmit="return validateForm('form7');" >
-       <fieldset style=" margin: 0; padding: 0;">
-        <legend>Cadastrar nova promoção</legend>
-
-        <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
-                <tr>
-                                   
-                    <td><label>Data Inicial</label></td>
-                    <td><label>Data Final</label></td>
-                    <td><label>Preço</label></td>
-                    <td><label>Anúncio</label></td>
-                                
-                                </tr>
-          <tr>
-         
-
-             <td> <input type="text" class="input-medium compareDate  datepicker2 RQR required form-control" value="<?php echo $this->formData7['data_inicio'] ?>" title='Por favor entre com a data inicial' maxlength="20"  name="data_inicio" value="" style="width: 100px;" id='from9999' readonly>
-              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-            <td>
-              <input type="text" class="input-medium compareDate2  datepicker2 RQR required form-control" value="<?php echo $this->formData7['data_fim'] ?>" title='Por favor entea com a data final'  name="data_fim" value="" style="width: 100px;" maxlength="11" id='to9999' readonly>
-              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-              </td>
-               <td>
-              <input type="text" class="input-medium   validDecimalNumber RQR required form-control" value="<?php echo $this->formData7['preco_promocional']?>" title='Por favor entre com o preço promocional'  name="preco_promocional" value="" style="width: 100px;" maxlength="11">
-              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-              </td>
-               <td>
-              <input type="textarea" class="input-medium form-control"  title='Por favor, indique anuncio'  value="<?php echo $this->formData7['anuncio'] ?>" name="anuncio" style="width: 175px;">
-              <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-              </td>
-              <td>    <input type="submit" name="Save" value="Salvar"> </td>
-
-          </tr>
-</table> </fieldset>
-          <input type="hidden" name="emorFrom" value="7">
-          <input type="hidden" name="promocaoId" value="">
-          <input type="hidden" name="produtoId" value="<?php echo $this->produtoId; ?>">
-          <input type="hidden" name="tamanhoId" value="<?php echo $this->tamanhoId; ?>">
-  
-       
-      </form>
+                                <td>
+                                    <!-- Melhor nao deixar editar uma promocao ja cadastrada <a href="#" onclick="savePromocao('<?php //echo $v['cod_promocao']     ?>')">Salvar</a> -->
+                                    &nbsp;&nbsp; <a href="#" onclick="delPromocao('<?php echo $v['cod_promocao'] ?>')">Delete</a>
+                                </td>
+                            </tr>
 
 
+                        <?php } ?>
+                    </table>
+                </fieldset>
 
-           
+                <input type="hidden" name="emorFrom" value="6">
+                <input type="hidden" name="promocaoId" value="">
+                <input type="hidden" name="produtoId" value="<?php echo $this->produtoId; ?>">
+                <input type="hidden" name="tamanhoId" value="<?php echo $this->tamanhoId; ?>">
+
+            </form>
+
+            <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form7' onsubmit="return validateForm('form7');" >
+                <fieldset style=" margin: 0; padding: 0;">
+                    <legend>Cadastrar nova promoção</legend>
+
+                    <table class="tableFrm" cellspacing="8" cellpadding="0" border="0">
+                        <tr>
+
+                            <td><label>Data Inicial</label></td>
+                            <td><label>Data Final</label></td>
+                            <td><label>Preço</label></td>
+                            <td><label>Anúncio</label></td>
+
+                        </tr>
+                        <tr>
+
+
+                            <td> <input type="text" class="input-medium compareDate  datepicker2 RQR required form-control" value="<?php echo $this->formData7['data_inicio'] ?>" title='Por favor entre com a data inicial' maxlength="20"  name="data_inicio" value="" style="width: 100px;" id='from9999' readonly>
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                            <td>
+                                <input type="text" class="input-medium compareDate2  datepicker2 RQR required form-control" value="<?php echo $this->formData7['data_fim'] ?>" title='Por favor entea com a data final'  name="data_fim" value="" style="width: 100px;" maxlength="11" id='to9999' readonly>
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                            </td>
+                            <td>
+                                <input type="text" class="input-medium   validDecimalNumber RQR required form-control" value="<?php echo $this->formData7['preco_promocional'] ?>" title='Por favor entre com o preço promocional'  name="preco_promocional" value="" style="width: 100px;" maxlength="11">
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                            </td>
+                            <td>
+                                <input type="textarea" class="input-medium form-control"  title='Por favor, indique anuncio'  value="<?php echo $this->formData7['anuncio'] ?>" name="anuncio" style="width: 175px;">
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                            </td>
+                            <td>    <input type="submit" name="Save" value="Salvar"> </td>
+
+                        </tr>
+                    </table> </fieldset>
+                <input type="hidden" name="emorFrom" value="7">
+                <input type="hidden" name="promocaoId" value="">
+                <input type="hidden" name="produtoId" value="<?php echo $this->produtoId; ?>">
+                <input type="hidden" name="tamanhoId" value="<?php echo $this->tamanhoId; ?>">
+
+
+            </form>
+
+
+
+
 
 
         </div>  </div>
@@ -526,3 +527,117 @@
 </div>
 
 
+<script>
+
+
+
+    $(document).ready(function () {
+
+        var app_div = '';
+
+        $("#sugestao_ingrediente").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    dataType: "json",
+                    type: 'Get',
+                    url: '<?php echo $this->baseUrl() ?>/estabelecimento/produto/autocomplete?term=' + $("#sugestao_ingrediente").val(),
+                    success: function (data) {
+                        // $('input.suggest-user').removeClass('ui-autocomplete-loading');  
+                        // hide loading image
+                        response(data);
+                        /* response( $.map( data, function(item) {
+                         
+                         // your operation on data
+                         })); */
+                    },
+                    error: function (data) {
+                        // $('input.suggest-user').removeClass('ui-autocomplete-loading');  
+                    }
+                });
+            },
+            open: function () {
+            },
+            close: function () {
+            },
+            focus: function (event, ui) {
+            },
+            select: function (event, ui) {
+                var item_id = ui.item.id;
+                var item_label = ui.item.label;
+
+                app_div = '<div class="ingredientpage"><input style="display:none" type="checkbox" checked="checked" name="ie[cod_ingrediente][]" value="' + item_id + '">';
+                app_div += '<div align="left" class="td-wid"><span class="item_label">' + item_label + '</span>';
+                app_div += '<input type="text" style="width: 200px;" value="" name="ie[quantidade_utilizada][' + item_id + ']" title="" class="input-medium validDecimalNumber form-control">';
+                app_div += '<div class="del_ingredient"><img src="http://whattoeat.com/img/Erase.png"><input type="hidden" name="ie[valor_calorico][' + item_id + ']"></div>';
+                app_div += '<div class="bodyTextSmall"> <span class="tip"></span> <span class="missing"></span></div></div>';
+
+
+                $(".ingredients_data").append(app_div);
+
+
+
+            }
+        });
+
+
+
+        $("body").delegate(".del_ingredient", "click", function () {
+
+
+            $(this).parent().parent().remove();
+
+
+
+        });
+
+
+
+    });
+
+</script>
+<style>
+    .ingredients_data .ingredientpage {
+        background-color: rgb(238, 238, 238);
+        float: left;
+        margin-bottom: 10px;
+        padding: 5px 25px;
+        width: 48%;
+        margin-right:10px;
+    }
+    .ingredients_data .td-wid {
+        padding: 5px 0 !important;
+        width: 100%;
+    }
+    .ingredients_data .item_label{
+        float:left;
+        margin-top:2px;
+    }
+    .ingredientpage .input-medium {
+        float: right;
+        height: 26px;
+        margin: 0 12px;
+        padding: 0 10px !important;
+        width: 85px !important;
+        margin-top: -4px;
+    }
+    .ingredientpage .del_ingredient{
+        position:relative;
+    }
+    .ingredientpage .del_ingredient img {
+        margin-top: 8px;
+        position: absolute;
+        right: -14px;
+        top: -6px;
+        width: 15px;
+    }
+    .ui-autocomplete {
+        font-family: Trebuchet MS,Tahoma,Verdana,Arial,sans-serif;
+        font-size: 1.1em;
+        height: 122px;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+    #tabs{
+
+    }
+</style>

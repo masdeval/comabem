@@ -1048,3 +1048,11 @@ float:left;
   overflow-x: hidden;
   overflow-y: scroll;
 }
+.font-style-class
+{
+ font-family: verdana;
+ margin: 0px 10px 0px 10px;
+ font-family:"Verdana";
+ font-size:14px;
+ padding:10px 2px 25px 25px;
+}

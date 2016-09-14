@@ -24,7 +24,8 @@
           return $result;
       }
        public function add($formData,$cod_produto,$cod_empresa)
-      {
+      { 
+     
           $this->_db->delete('itens_de_um_lanche', "cod_produto =$cod_produto and cod_empresa=$cod_empresa");
           foreach($formData['ie']['cod_ingrediente'] as $k=>$v){
               if(empty($v)){

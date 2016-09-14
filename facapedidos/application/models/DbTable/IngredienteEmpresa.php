@@ -47,7 +47,7 @@ class DbTable_IngredienteEmpresa extends Zend_Db_Table_Abstract
 
     public function getRecords($code_empresa)
     {
-
+       
         $query = $this->_db->query("SELECT IE.*,E.razao_social,I.nome, I.imagem as imagem_original FROM ingrediente_empresa IE LEFT JOIN empresa E ON (IE.cod_empresa=E.cod_empresa) LEFT JOIN ingrediente I ON (IE.cod_ingrediente=I.cod_ingrediente) WHERE IE.cod_empresa=$code_empresa and IE.removed=0 ORDER BY  I.nome ");
         $result = $query->fetchAll();
         return $result;
