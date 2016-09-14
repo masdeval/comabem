@@ -59,7 +59,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
 
         $this->view->produtoId = '';
         $this->view->empresaId = $this->empresaId;
-        $this->view->ingredienteEmpresaRec = $this->Ingrediente->getRecords();
+        $this->view->ingredienteEmpresaRec = $this->Ingrediente->getIngredientOptionDropDown();
         $this->view->CategoriaEmpresaRec = $this->CategoriaEmpresa->getRecords($this->empresaId);
         $this->view->cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
         $this->_helper->viewRenderer('index');
@@ -353,7 +353,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
         }
 
         $this->view->CategoriaEmpresaRec = $this->CategoriaEmpresa->getRecords($this->empresaId);
-        $this->view->ingredienteEmpresaRec = $this->Ingrediente->getRecords();
+        $this->view->ingredienteEmpresaRec = $this->Ingrediente->getIngredientOptionDropDown();
         $cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
         $this->view->cod_tipo_produto = $cod_tipo_produto;
         $this->view->title = 'Produto';
