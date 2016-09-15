@@ -128,7 +128,9 @@
             <br>
             <br>
 
-            <?php if ($this->produtoId != '') { ?>                                        
+            <?php if ($this->produtoId != '') {  //echo count($this->tamanhoDropDown); die;    
+               //print_r($this->allIngredients); die;
+                ?>                                        
 
                 <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form5' name="form5" onsubmit="return validateForm('form5');" >
                     <fieldset style=" margin: 0; padding: 0;">
@@ -399,6 +401,23 @@
                     </table>
                 </fieldset>
                 <div class="ingredients_data">
+                    <?php if(!empty($this->allIngredients)){
+                        foreach($this->allIngredients as $ing)
+                        { //print_r($ing); die; ?>
+                    
+                        <div class="ingredientpage">
+                            <input style="display:none" type="checkbox" checked="checked" name="ie[cod_ingrediente][]" value="<?php echo $ing['product_id']; ?>">
+                            <div align="left" class="td-wid">
+                                <span class="item_label"><?php echo $ing['nome']; ?></span>
+                                <input type="text" style="width: 200px;" value="<?php echo $ing['quantity']; ?>" name="ie[quantidade_utilizada][<?php echo $ing['product_id']; ?>]" title="" class="input-medium validDecimalNumber form-control">
+                                <div class="del_ingredient">
+                                    <img src="http://whattoeat.com/img/Erase.png">
+                                    <input type="hidden" name="ie[valor_calorico][<?php echo $ing['product_id']; ?>]"></div><div class="bodyTextSmall"> 
+                                    <span class="tip"></span> <span class="missing"></span>
+                                </div>
+                            </div>
+                        </div>
+                   <?php  } }?>
                 </div>
 
 

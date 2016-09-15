@@ -24,7 +24,7 @@
           return $result;
       }
        public function add($formData,$cod_produto,$cod_empresa)
-      {
+      { 
           $this->_db->delete('ingrediente_empresa_produto', "cod_produto =$cod_produto and cod_empresa=$cod_empresa");
           foreach($formData['ie']['cod_ingrediente'] as $k=>$v){
               if(empty($v)){
@@ -53,6 +53,18 @@
 
           $result = $query->fetchAll();
           return $result[0]['total'];
+      }
+         public function getAllIngredients($produtoId)
+      {
+ 
+
+          //  echo "SELECT * FROM ingrediente_empresa_produto where cod_produto='$produtoId'" ; die;
+        $find_query = $this->_db->query("SELECT * FROM ingrediente_empresa_produto where cod_produto='$produtoId'");
+        $find_result = $find_query->fetchAll();
+     //   echo "<pre>"; print_r($find_result); die;
+        //$result = $find_result[0];
+       return $find_result; 
+          
       }
   }
 ?>

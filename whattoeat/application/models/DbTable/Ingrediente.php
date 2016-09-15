@@ -31,7 +31,7 @@ class DbTable_Ingrediente extends Zend_Db_Table_Abstract {
         $results = $query->fetchAll();
         return $results;
     }
-
+    
     public function getImageData($ingredienteId) {
 
         $query = $this->_db->query("SELECT encode(imagem, 'base64') AS data FROM ingrediente  WHERE cod_ingrediente = '$ingredienteId' ");

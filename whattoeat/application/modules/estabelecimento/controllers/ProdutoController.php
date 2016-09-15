@@ -29,7 +29,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
         $this->CategoriaEmpresa = new DbTable_CategoriaEmpresa();
         $this->CategoriaIngredienteEmpresa = new DbTable_CategoriaIngredienteEmpresa($this->db);
         $this->ItensDeUmLanche = new DbTable_ItensDeUmLanche($this->db);
-        //$this->IngredienteEmpresa = new DbTable_IngredienteEmpresa($this->db);
+        $this->IngredienteEmpresa = new DbTable_IngredienteEmpresa($this->db);
         $this->Ingrediente = new DbTable_Ingrediente($this->db);
         $this->view->pageTitle = 'Produto';
         $this->caminho = $this->getRequest()->getModuleName() . "/" . $this->getRequest()->getControllerName();
@@ -56,12 +56,13 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-
+      
         $this->view->produtoId = '';
         $this->view->empresaId = $this->empresaId;
         $this->view->ingredienteEmpresaRec = $this->Ingrediente->getRecords();
         $this->view->CategoriaEmpresaRec = $this->CategoriaEmpresa->getRecords($this->empresaId);
         $this->view->cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
+
         $this->_helper->viewRenderer('index');
     }
 
@@ -92,7 +93,9 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
 
         $formData = $this->getRequest()->getPost();
         $produtoId = $formData['produtoId'];
-
+      
+               
+//echo "<pre>"; print_r($getIngredients); die;
 
         if ($formData['emorFrom'] == 1) { //formulario principal de produto
 
@@ -125,7 +128,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
                 //$this->_helper->redirector->gotoUrl($this->caminho . "/edit/id/$id");
             }
         }
-        if ($formData['emorFrom'] == 2) { //formulario de imagens do produto
+        if ($formData['emorFrom'] == 2) { //getAllIngredientsformulario de imagens do produto
             if (!empty($produtoId)) {
                 if (!empty($_FILES['userfile']['name'])) {
                     try {
@@ -173,8 +176,9 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
             }
         }
         if ($formData['emorFrom'] == 4) { //ingredientes
-            //echo "<pre>";print_r($_POST); die;
-            
+
+
+       //echo "<pre>";print_r($getIngredients); die;  
 
             if (!empty($produtoId)) {
                 try {
@@ -182,6 +186,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
                     $this->db->beginTransaction();
                   
                     $this->ItensDeUmLanche->add($formData, $produtoId, $this->empresaId);
+                    
                    //    $this->ItensDeUmLanche->add($formData, $produtoId, '4');
                    
                     $this->db->commit();
@@ -191,8 +196,12 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
                     $this->errorAction();
                     return;
                 }
+               // echo "fff"; die;
+                $getIngredients=$this->ItensDeUmLanche->getAllIngredients($produtoId);
+                    $this->view->allIngredients= $getIngredients;
                 $this->editAction($produtoId);
             } else {
+                 
                 $this->view->headline = "Por favor, selecione um produto primeiro.";
                 return $this->indexAction();
             }
@@ -228,9 +237,12 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
                   }
                   } */
                 if (!empty($tamanhoId)) {
+                  
                     $this->editAction($produtoId, $tamanhoId);
                 } else {
-                    $this->editAction($produtoId);
+                    
+                   
+                  
                 }
             } else {
                 $this->view->headline = "Por favor, selecione um produto primeiro.";
@@ -294,6 +306,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
 
     public function editAction($produtoId = '', $tamanhoId = '') {
 
+
         if (empty($produtoId))
             $produtoId = $this->getRequest()->getPost('produtoId');
 
@@ -351,6 +364,27 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
         } else {
             $formData6 = '';
         }
+         $final_added=array();
+         $getIngredients=$this->ItensDeUmLanche->getAllIngredients($produtoId);
+
+         if(!empty($getIngredients))
+         {
+             $i=0;
+             foreach($getIngredients as $added_ingredient)
+             {
+                 $ingredienteId=$added_ingredient['cod_ingrediente'];
+                  $ingredient_Details =$this->Ingrediente->getSingleData($ingredienteId);
+                  
+                  $final_added[$i]['nome']=$ingredient_Details['nome'];
+                  $final_added[$i]['quantity']=$added_ingredient['quantidade_utilizada'];
+                  $final_added[$i]['product_id']=$added_ingredient['cod_produto'];
+                
+                 $i++;
+                 
+             }
+             
+         }
+       
 
         $this->view->CategoriaEmpresaRec = $this->CategoriaEmpresa->getRecords($this->empresaId);
         $this->view->ingredienteEmpresaRec = $this->Ingrediente->getRecords();
@@ -359,6 +393,8 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
         $this->view->title = 'Produto';
         // $this->view->action = 'edit';
         $this->view->empresaId = $this->empresaId;
+             
+        $this->view->allIngredients= $final_added;
         $this->_helper->viewRenderer('index');
     }
 

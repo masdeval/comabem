@@ -1,4 +1,5 @@
 <?php
+
   class DbTable_ItensDeUmLanche extends Zend_Db_Table_Abstract
   {
       protected $_name = 'itens_de_um_lanche';
@@ -25,7 +26,7 @@
       }
        public function add($formData,$cod_produto,$cod_empresa)
       { 
-     
+              
           $this->_db->delete('itens_de_um_lanche', "cod_produto =$cod_produto and cod_empresa=$cod_empresa");
           foreach($formData['ie']['cod_ingrediente'] as $k=>$v){
               if(empty($v)){
@@ -55,5 +56,7 @@
           $result = $query->fetchAll();
           return $result[0]['total'];
       }
+     
+   
   }
 ?>
