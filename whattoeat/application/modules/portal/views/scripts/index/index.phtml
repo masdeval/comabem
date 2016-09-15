@@ -105,7 +105,7 @@ if (!empty($this->nomeCliente))
             <div id="EnglobaPesquisaInicio">
                 <!--input type="button" id="filtroResult" value="Filtrar Por &#8628;"-->
                <input class="form-control" type="textarea" name="criterio" id="pesquisaInicio"  
-                       value="<?php echo !empty($this->pesquisa_facapedido_criterio) ? $this->pesquisa_facapedido_criterio : '' ?>" placeholder="Ingredientes especÃ­ficos, lugares, pratos..."><input class="btn btn-primary" id="botaoPesquisar" type="submit" 
+                       value="<?php echo !empty($this->pesquisa_facapedido_criterio) ? $this->pesquisa_facapedido_criterio : '' ?>" placeholder="Ingredientes especificos, lugares, pratos..."><input class="btn btn-primary" id="botaoPesquisar" type="submit" 
                        value="BUSCAR">
               <span class="filterexpand"> Mais opcoes de filtro</span>
             </div>
@@ -339,8 +339,8 @@ if (!empty($this->nomeCliente))
             $hora_atual = date('H') . ":" . date('i') . ":00";
             echo "<div>";
 
-            echo "<input type='button' class='btn btn-danger' value='Fechada nesse horÃ¡rio'  onClick='javascript:lojaFechada(" . $this->resultado[$i]['cod_empresa'] . "," . $i . " );' > " .
-            " <br> <span class='msg_estabelecimento_fechado' id='spanFechada" . $i . "'>Clique no botÃ£o se deseja enviar Ã  loja sua vontade " .
+            echo "<input type='button' class='btn btn-danger' value='Fechada nesse horario'  onClick='javascript:lojaFechada(" . $this->resultado[$i]['cod_empresa'] . "," . $i . " );' > " .
+            " <br> <span class='msg_estabelecimento_fechado' id='spanFechada" . $i . "'>Clique aqui se deseja enviar &agrave; loja sua vontade " .
             " de que ela estivesse aberta. </span> ";
         }
 
