@@ -64,12 +64,36 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
     { 
 	$this->view->produtoId = '';
 	$this->view->empresaId = $this->empresaId;
-	$this->view->ingredienteEmpresaRec = $this->Ingrediente->getRecords();
+	$this->view->ingredienteEmpresaRec = $this->Ingrediente->getIngredientOptionDropDown();
 	$this->view->CategoriaEmpresaRec = $this->CategoriaEmpresa->getRecords($this->empresaId);
 	$this->view->cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
 	$this->_helper->viewRenderer('index');
     }
 
+       public function autocompleteAction() {
+       
+        if (isset($_GET['term'])) {
+            $term = $_GET['term'];
+            $get_ingredients_arr = $this->Ingrediente->getSearchIngredients($term);
+        }
+
+        $return_arr = array();
+        if (!empty($get_ingredients_arr)) {
+            $i = 0;
+            foreach ($get_ingredients_arr as $arr) {
+
+                $return_arr[$i]['label'] = $arr['nome'];
+                $return_arr[$i]['value'] = $arr['nome'];
+                $return_arr[$i]['id'] = $arr['cod_ingrediente'];
+                $i++;
+            }
+        }
+
+        echo json_encode($return_arr);
+        die;
+    }
+
+    
     public function addAction()
     {
 	$formData = $this->getRequest()->getPost();
@@ -402,7 +426,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	}
 
 	$this->view->CategoriaEmpresaRec = $this->CategoriaEmpresa->getRecords($this->empresaId);
-	$this->view->ingredienteEmpresaRec = $this->Ingrediente->getRecords();
+	$this->view->ingredienteEmpresaRec =  $this->Ingrediente->getIngredientOptionDropDown();
 	$cod_tipo_produto = $this->TiposProdutosEmpresa->getCodTipoProductoDropDown($this->empresaId);
 	$this->view->cod_tipo_produto = $cod_tipo_produto;
 	$this->view->title = 'Produto';

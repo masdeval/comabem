@@ -30,6 +30,13 @@ class DbTable_Ingrediente extends Zend_Db_Table_Abstract
         $dat = $this->fetchAll(null,"nome");        
         return $dat;
     }
+    
+     public function getSearchIngredients($key) {
+
+        $query = $this->_db->query("SELECT * FROM ingrediente where nome LIKE '%$key%'");
+        $results = $query->fetchAll();
+        return $results;
+    }
     public function getImageData($ingredienteId)
     {
 

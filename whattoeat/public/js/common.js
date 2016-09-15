@@ -1,3 +1,4 @@
+var base_url = '';
 // limpa todos os caracteres especiais do campo solicitado
 function filtraCampo(campo){
 	var s = "";
@@ -361,13 +362,13 @@ function editTamanho(tamid,id)
 	//um codigo de tamanho para ser preenchido no campo hidden tamanhoId que deve receber string vazia
 
 
-        document.getElementById('descricao').value = '';
+        document.getElementById('descricao_tamanho').value = '';
 	document.getElementById('preco').value = '';
 	document.getElementById('numero_sabores_pizza').value = '';
         document.getElementById("tamanhoId").value = '';
  	document.getElementById('tamanhoEdit').style.display = 'none';
  	document.getElementById('fieldsetPromocao').style.display = 'none';
-	document.getElementById('descricao').focus();
+	document.getElementById('descricao_tamanho').focus();
 
 
     }

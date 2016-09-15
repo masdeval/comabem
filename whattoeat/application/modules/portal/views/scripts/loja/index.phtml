@@ -343,13 +343,13 @@ echo " </div>  \n";
                 //Sempre hÃ¡ pelo menos um tamanho, entao imprime esse
                 if (!empty($this->resultado[$i]['preco_promocional'])) {
                     $preco = (double) $this->resultado[$i]['preco_promocional'];
-                    echo ($this->resultado[$i]['tamanho'] . "De ");
+                    echo ("Tamanho " . $this->resultado[$i]['tamanho'] . "  Promocao de ");
                     echo $this->resultado[$i]["preco"];
                     echo (" por ");
                     echo $this->resultado[$i]["preco_promocional"];
                 } else {
                     $preco = (double) $this->resultado[$i]['preco'];
-                    echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
+                    echo "Tamanho " . $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
                 }
 
                 //imprime o botao que vai permitir incluir no carrinho
@@ -367,13 +367,13 @@ echo " </div>  \n";
 
                         if (!empty($this->resultado[$i]['preco_promocional'])) {
                             $preco = (double) $this->resultado[$i]['preco_promocional'];
-                            echo ($this->resultado[$i]['tamanho'] . " De ");
+                            echo ("Tamanho " . $this->resultado[$i]['tamanho'] . "  Promocao de ");
                             echo $this->resultado[$i]["preco"];
                             echo (" por ");
                             echo $this->resultado[$i]["preco_promocional"];
                         } else {
                             $preco = (double) $this->resultado[$i]['preco'];
-                            echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
+                            echo "Tamanho " . $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
                         }
                         //imprime o botao que vai permitir incluir no carrinho
                        if ($this->isAberto) {

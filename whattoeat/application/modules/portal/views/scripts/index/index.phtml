@@ -227,41 +227,41 @@ if (!empty($this->nomeCliente))
                     if (!empty($this->resultado[$i]['preco_promocional'])) {
                     
                         $preco = (double) $this->resultado[$i]['preco_promocional'];
-                        echo ($this->resultado[$i]['tamanho'] . "De ");
+                        echo (" Tamanho " . $this->resultado[$i]['tamanho'] . "  Promocao de ");
                         echo $this->resultado[$i]["preco"];
                         echo (" por ");
                         echo $this->resultado[$i]["preco_promocional"];
                     } else {
                        
                         $preco = (double) $this->resultado[$i]['preco'];
-                        echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
+                        echo " Tamanho " . $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
                     } 
-                            
-                            
-                            
-                    
+                     
                        if ($this->resultado[$i]['isAberto'] == true) {
                         echo "<img id='botaoAddCarrinho' src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"></p> ";
                         echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_" . $this->resultado[$i]['cod_empresa'] . "_" . $this->resultado[$i]['cod_tamanho_produto'] . "'>";
                     } ?>
-                    </div> <br> 
+                            
+                              </div>
+                    <br> 
                 
-<?php 
+<?php  
                     if (($i + 1) < sizeof($this->resultado)) {
+                        
                         $i++;
                         //Esse laco verifica se existem outros tamanhos para o mesmo produto
                         while (($i < sizeof($this->resultado)) && $this->resultado[$i]['cod_produto'] == $this->resultado[$i - 1]['cod_produto']) {
-                            echo "<br> \n";
+                            echo "<br>  <div class='plusicon_text'> \n";
 
                             if (!empty($this->resultado[$i]['preco_promocional'])) {
                                 $preco = (double) $this->resultado[$i]['preco_promocional'];
-                                echo ($this->resultado[$i]['tamanho'] . " De ");
+                                echo (" Tamanho " . $this->resultado[$i]['tamanho'] . "  Promocao de ");
                                 echo $this->resultado[$i]["preco"];
                                 echo (" por ");
                                 echo $this->resultado[$i]["preco_promocional"];
                             } else {
                                 $preco = (double) $this->resultado[$i]['preco'];
-                                echo $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
+                                echo " Tamanho " . $this->resultado[$i]['tamanho'] . "  " . $this->resultado[$i]["preco"];
                             }
                             //imprime o botao que vai permitir incluir no carrinho
                             if ($this->resultado[$i]['isAberto'] == true) {
@@ -269,7 +269,7 @@ if (!empty($this->nomeCliente))
                                 echo "<img src='$s_path/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"> ";
                                 echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_" . $this->resultado[$i]['cod_empresa'] . "_" . $this->resultado[$i]['cod_tamanho_produto'] . "'>";
                             }
-
+                            echo "</div>";
 
                             $i++;
                         }
@@ -277,11 +277,11 @@ if (!empty($this->nomeCliente))
                         $i--;
                     }
                     ?>
-
+                   
                 </div> <!-- precos -->
 
                 <?php
-                echo "<div class=''>  \n";
+                echo "<div class='text1'>  \n";
                 
 
                 //verifica se a empresa esta atendendo nesse horario
@@ -346,7 +346,13 @@ if (!empty($this->nomeCliente))
 
         echo "</div>";
         echo "</div>";
+        
+        while(($i < sizeof($this->resultado)-1) && ($this->resultado[$i]['cod_empresa'] == $this->resultado[$i+1]['cod_empresa']))
+        {
+            $i++;         
+        }
    
+      
     }
          
     }

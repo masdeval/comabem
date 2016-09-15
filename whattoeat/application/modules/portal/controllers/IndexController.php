@@ -72,9 +72,9 @@ class Portal_IndexController extends Zend_Controller_Action {
             for ($i = 0; $i < sizeof($resultado); $i++) {
 
 
-                if (array_key_exists($resultado[$i]['cod_empresa'], $empresa_ja_apresentada)) {
-                    continue;
-                } else {
+                //if (array_key_exists($resultado[$i]['cod_empresa'], $empresa_ja_apresentada)) {
+                    //continue;
+               // } else {
 
 
                     date_default_timezone_set($resultado[$i]['timezone']); //seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
@@ -86,7 +86,7 @@ class Portal_IndexController extends Zend_Controller_Action {
                     $resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
                     $novo_resultado[$j] = $resultado[$i];
                     $j++;
-                }
+               // }
                 //echo "<pre>";print_r($resultado); die;
             }
 

@@ -145,9 +145,8 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    $i++;
 	}
 
-	//preciso ordenar aqui para garantir que todos os produtos que forem retornados mais de uma vez
-	//por terem varios tamanhos aparecam juntos no resultado
-	$order_by = " ORDER BY P.cod_produto";
+	//preciso ordenar aqui para agrupar por empresa
+	$order_by = " ORDER BY E.razao_social";
 
 	if (!empty($produtos))
 	{
