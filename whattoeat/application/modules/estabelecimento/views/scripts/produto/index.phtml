@@ -21,7 +21,7 @@
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                         <td> <label>Valor calórico (calculado pelo sistema) </label><br><input type="text" class="input-medium validDecimalNumber form-control"   name="valor_calorico" value="<?php echo $this->formData['valor_calorico'] ?>" disabled="true" maxlength="50" style="width: 200px;" title="Por favor, indique valor calorico">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                       <!--  <td width="50%">&nbsp;&nbsp; Valor calórico calculado: <?php //echo $this->totalCalorias;     ?></td> -->
+                       <!--  <td width="50%">&nbsp;&nbsp; Valor calórico calculado: <?php //echo $this->totalCalorias;      ?></td> -->
                     </tr>
                     <tr>
 
@@ -128,8 +128,9 @@
             <br>
             <br>
 
-            <?php if ($this->produtoId != '') {  //echo count($this->tamanhoDropDown); die;    
-               //print_r($this->allIngredients); die;
+            <?php
+            if ($this->produtoId != '') {  //echo count($this->tamanhoDropDown); die;    
+                //print_r($this->allIngredients); die;
                 ?>                                        
 
                 <form action="<?php echo $this->baseUrl() ?>/estabelecimento/produto/add" method="post" class="frm" id='form5' name="form5" onsubmit="return validateForm('form5');" >
@@ -156,11 +157,11 @@
 
                             <?php if (!empty($this->totalPrco)) {
                                 ?>
-                                                     <!--               <tr>
-                                                                       <td colspan="2" align="right"><b>Preco De Custo : R$ <?php //echo $this->totalPrco;    ?></b></td>       -->                           </tr>
-                            <?php } ?>
+                                                             <!--               <tr>
+                                                                               <td colspan="2" align="right"><b>Preco De Custo : R$ <?php //echo $this->totalPrco;    ?></b></td>       -->                           </tr>
+    <?php } ?>
 
-                                          <!--      <tr> -->
+                                              <!--      <tr> -->
 
                             <td>Descricao &nbsp;&nbsp;&nbsp;<br>
                                 <input type="text" class="input-medium RQR required form-control"  title='Por favor, indique a descrição' maxlength="20"  name="descricao_tamanho" id="descricao_tamanho" value="<?php echo $this->formData5['descricao'] ?>" style="width: 200px;">
@@ -169,7 +170,7 @@
                                 <input type="text" class="input-medium RQR required validDecimalNumber form-control"  title='Por favor, indique o preço'  name="preco" id="preco" value="<?php echo $this->formData5['preco'] ?>" style="width: 200px;" maxlength="11">
                                 <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
                             </tr>
-                            <?php //if ($this->formData['tipo'] == 'Pizza') {   ?>
+    <?php //if ($this->formData['tipo'] == 'Pizza') {    ?>
                             <tr>
                                 <td colspan="2">Se este produto é uma pizza, indique o número de sabores que o cliente pode escolher para esse tamanho<br>
                                     <input type="text" class="input-medium validNumber form-control" id="numero_sabores_pizza" name="numero_sabores_pizza" maxlength="3" value="<?php echo $this->formData5['numero_sabores_pizza'] ?>" style="width: 200px;">
@@ -178,7 +179,7 @@
 
                             </tr>
 
-                            <?php // }   ?>
+    <?php // }    ?>
 
                         </table>
 
@@ -196,7 +197,7 @@
                                     <?php if (!empty($this->produtoId) && !empty($this->tamanhoId)) {
                                         ?>
                                         <input type="button" name="Save" value="Remover" onclick="delTamanhos('<?php echo $this->produtoId; ?>', '<?php echo $this->tamanhoId; ?>')">
-                                    <?php } ?>
+    <?php } ?>
                                     <input type="button" name="Save" value="Ver Grid" style="margin-left:  200px;" onclick="location.href = '<?php echo $this->url(array('controller' => 'produto', 'action' => 'gridView')); ?>'"></td>
                             </tr>
                         </table>
@@ -205,7 +206,7 @@
 
                 </form>
 
-            <?php } ?>
+<?php } ?>
 
         </div>
 
@@ -281,10 +282,10 @@
             $checked = '';
         }
         ?>
-                                                <td>
-                                                    <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php //echo $v['cod_categoria_empresa']     ?>" <?php //echo $checked     ?> > <?php //echo $v['nome']     ?>
-                                                    <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
-                                                </td>
+                                                    <td>
+                                                        <input type="checkbox" name="cp[cod_categoria_empresa][]" value="<?php //echo $v['cod_categoria_empresa']      ?>" <?php //echo $checked      ?> > <?php //echo $v['nome']      ?>
+                                                        <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                                                    </td>
         <?php
         if ($i >= 2) {
             //echo '</tr><tr>';
@@ -305,8 +306,8 @@
                 <table class="tableFrm" cellspacing="5" cellpadding="0" border="0">
                     <tr>
                         <td><input type="hidden" name="emorFrom" value="3">
-                            <input type="hidden" name="action" value="<?php //echo $this->action;     ?>">
-                            <input type="hidden" name="produtoId" value="<?php //echo $this->produtoId     ?>">
+                            <input type="hidden" name="action" value="<?php //echo $this->action;      ?>">
+                            <input type="hidden" name="produtoId" value="<?php //echo $this->produtoId      ?>">
                             <input type="submit" name="Save" value="Salvar">
                         </td>
                     </tr>
@@ -401,23 +402,25 @@
                     </table>
                 </fieldset>
                 <div class="ingredients_data">
-                    <?php if(!empty($this->allIngredients)){
-                        foreach($this->allIngredients as $ing)
-                        { //print_r($ing); die; ?>
-                    
-                        <div class="ingredientpage">
-                            <input style="display:none" type="checkbox" checked="checked" name="ie[cod_ingrediente][]" value="<?php echo $ing['product_id']; ?>">
-                            <div align="left" class="td-wid">
-                                <span class="item_label"><?php echo $ing['nome']; ?></span>
-                                <input type="text" style="width: 200px;" value="<?php echo $ing['quantity']; ?>" name="ie[quantidade_utilizada][<?php echo $ing['product_id']; ?>]" title="" class="input-medium validDecimalNumber form-control">
-                                <div class="del_ingredient">
-                                    <img src="http://whattoeat.com/img/Erase.png">
-                                    <input type="hidden" name="ie[valor_calorico][<?php echo $ing['product_id']; ?>]"></div><div class="bodyTextSmall"> 
-                                    <span class="tip"></span> <span class="missing"></span>
+                    <?php
+                    if (!empty($this->allIngredients)) {
+                        foreach ($this->allIngredients as $ing) { //print_r($ing); die; 
+                            ?>
+
+                            <div class="ingredientpage" id="a_<?php echo $ing['cod_ingrediente']; ?>">
+                                <input style="display:none" type="checkbox" checked="checked" name="ie[cod_ingrediente][]" value="<?php echo $ing['cod_ingrediente']; ?>">
+                                <div align="left" class="td-wid">
+                                    <span class="item_label"><?php echo $ing['nome']; ?></span>
+                                    <input type="text" style="width: 200px;" value="<?php echo $ing['quantity']; ?>" name="ie[quantidade_utilizada][<?php echo $ing['cod_ingrediente']; ?>]" title="" class="input-medium validDecimalNumber form-control">
+                                    <div class="del_ingredient" data-productid="<?php echo $ing['product_id']; ?>" data-codingrediente="<?php echo $ing['cod_ingrediente']; ?>" data-codempresa="<?php echo $ing['cod_empresa']; ?>">
+                                        <img src="http://whattoeat.com/img/Erase.png">
+                                        <input type="hidden" name="ie[valor_calorico][<?php echo $ing['cod_ingrediente']; ?>]"></div><div class="bodyTextSmall"> 
+                                        <span class="tip"></span> <span class="missing"></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                   <?php  } }?>
+    <?php }
+} ?>
                 </div>
 
 
@@ -454,11 +457,11 @@
                             <td><label>Anúncio</b></label></td>
                             <td>&nbsp;</td>
                         </tr>
-                        <?php foreach ((array) $this->formData6 as $k => $v) {
-                            ?>
+<?php foreach ((array) $this->formData6 as $k => $v) {
+    ?>
 
                             <tr>
-    <!--                                        <td><input type="checkbox" name="val[<?php //echo $v['cod_promocao']     ?>][id]"> </td>-->
+    <!--                                        <td><input type="checkbox" name="val[<?php //echo $v['cod_promocao']      ?>][id]"> </td>-->
 
                                 <td> <input type="text" class="input-medium RQR required datepicker2 compareDate form-control"  title='Por favor, indique a data inicial' maxlength="20"  name="val[<?php echo $v['cod_promocao'] ?>][data_inicio]" id="from<?php echo $k ?>" value="<?php echo $v['data_inicio'] ?>" style="width: 100px;">
                                     <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
@@ -476,13 +479,13 @@
                                 </td>
 
                                 <td>
-                                    <!-- Melhor nao deixar editar uma promocao ja cadastrada <a href="#" onclick="savePromocao('<?php //echo $v['cod_promocao']     ?>')">Salvar</a> -->
+                                    <!-- Melhor nao deixar editar uma promocao ja cadastrada <a href="#" onclick="savePromocao('<?php //echo $v['cod_promocao']      ?>')">Salvar</a> -->
                                     &nbsp;&nbsp; <a href="#" onclick="delPromocao('<?php echo $v['cod_promocao'] ?>')">Delete</a>
                                 </td>
                             </tr>
 
 
-                        <?php } ?>
+<?php } ?>
                     </table>
                 </fieldset>
 
@@ -583,8 +586,12 @@
             select: function (event, ui) {
                 var item_id = ui.item.id;
                 var item_label = ui.item.label;
+                var find=$(".ingredients_data").find('#a_'+item_id).length;
+            
+        if($.trim(find)==$.trim('0'))
+        {
 
-                app_div = '<div class="ingredientpage"><input style="display:none" type="checkbox" checked="checked" name="ie[cod_ingrediente][]" value="' + item_id + '">';
+                app_div = '<div class="ingredientpage" id="a_'+item_id+'"><input style="display:none" type="checkbox" checked="checked" name="ie[cod_ingrediente][]" value="' + item_id + '">';
                 app_div += '<div align="left" class="td-wid"><span class="item_label">' + item_label + '</span>';
                 app_div += '<input type="text" style="width: 200px;" value="" name="ie[quantidade_utilizada][' + item_id + ']" title="" class="input-medium validDecimalNumber form-control">';
                 app_div += '<div class="del_ingredient"><img src="http://whattoeat.com/img/Erase.png"><input type="hidden" name="ie[valor_calorico][' + item_id + ']"></div>';
@@ -592,7 +599,10 @@
 
 
                 $(".ingredients_data").append(app_div);
-
+            }else{
+    
+                alert('Ingredient already exists.');
+            }
 
 
             }
@@ -600,10 +610,32 @@
 
 
 
-        $("body").delegate(".del_ingredient", "click", function () {
+        $("body").delegate(".del_ingredient", "click", function (e) {
+
+            var prod_id=$(this).data('productid');
+            var cod_ing=$(this).data('codingrediente');
+            var cod_empressa=$(this).data('codempresa');
+       if(confirm('Are you sure you want to delete this ingredients ?'))
+       {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo $this->baseUrl() ?>/estabelecimento/produto/delingredient",
+                data: {prodId:prod_id,cod_ing:cod_ing,cod_empressa:cod_empressa},
+               // contentType: "application/json; charset=utf-8",
+              //  dataType: "json",
+                success: function (msg) {
+  
+                       
+             
+             
+                }
+            });
+                        $(e.target).parent().parent().parent().remove();
+
+}
 
 
-            $(this).parent().parent().remove();
+            // $(this).parent().parent().remove();
 
 
 

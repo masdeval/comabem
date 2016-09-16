@@ -90,12 +90,12 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
     }
 
     public function addAction() {
+        
 
         $formData = $this->getRequest()->getPost();
         $produtoId = $formData['produtoId'];
-      
-               
-//echo "<pre>"; print_r($getIngredients); die;
+
+
 
         if ($formData['emorFrom'] == 1) { //formulario principal de produto
 
@@ -178,7 +178,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
         if ($formData['emorFrom'] == 4) { //ingredientes
 
 
-       //echo "<pre>";print_r($getIngredients); die;  
+       //echo "<pre>";print_r($formData); die;  
 
             if (!empty($produtoId)) {
                 try {
@@ -248,13 +248,14 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
                 $this->view->headline = "Por favor, selecione um produto primeiro.";
                 return $this->indexAction();
             }
+           
+               
         }
 
         //promocao
         if ($formData['emorFrom'] == 6 || $formData['emorFrom'] == 7) {
             if (!empty($produtoId)) {
                 $tamanhoId = $formData['tamanhoId'];
-
                 if (!empty($tamanhoId)) {
                     $promocaoId = $formData['promocaoId'];
 
@@ -298,6 +299,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
         }
 
         $this->Produto->calculaValorCalorico($produtoId);
+        $_SESSION['delArray']=[];
     }
 
     private function calculaValorCalorico($produtoId) {
@@ -366,18 +368,19 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
         }
          $final_added=array();
          $getIngredients=$this->ItensDeUmLanche->getAllIngredients($produtoId);
-
+//echo "<pre>"; print_r($getIngredients); die;
          if(!empty($getIngredients))
          {
              $i=0;
              foreach($getIngredients as $added_ingredient)
              {
-                 $ingredienteId=$added_ingredient['cod_ingrediente'];
-                  $ingredient_Details =$this->Ingrediente->getSingleData($ingredienteId);
-                  
-                  $final_added[$i]['nome']=$ingredient_Details['nome'];
-                  $final_added[$i]['quantity']=$added_ingredient['quantidade_utilizada'];
-                  $final_added[$i]['product_id']=$added_ingredient['cod_produto'];
+                 $ingredienteId=$added_ingredient['cod_ingrediente']; 
+                 $ingredient_Details =$this->Ingrediente->getSingleData($ingredienteId);
+                 $final_added[$i]['nome']=$ingredient_Details['nome'];
+                 $final_added[$i]['quantity']=$added_ingredient['quantidade_utilizada'];
+                 $final_added[$i]['product_id']=$added_ingredient['cod_produto'];
+                 $final_added[$i]['cod_ingrediente']=$ingredient_Details['cod_ingrediente'];
+                 $final_added[$i]['cod_empresa']=$added_ingredient['cod_empresa'];
                 
                  $i++;
                  
@@ -396,6 +399,25 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action {
              
         $this->view->allIngredients= $final_added;
         $this->_helper->viewRenderer('index');
+    }
+    
+    public function delingredientAction()
+    {
+      
+        
+       $cod_empressa=$this->getRequest()->getPost('cod_empressa');
+       $cod_ingredient=$this->getRequest()->getPost('cod_ing');
+       $cod_prodId=$this->getRequest()->getPost('prodId');
+      $getIngredients=$this->ItensDeUmLanche->delingredient($cod_empressa,$cod_ingredient,$cod_prodId);
+       
+       if(trim($getIngredients)==trim('success'))
+       {
+          
+           echo "success"; die;
+           
+       }
+       
+        
     }
 
     public function do_upload() {

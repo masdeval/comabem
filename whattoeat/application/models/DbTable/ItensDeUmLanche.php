@@ -25,6 +25,7 @@
       }
        public function add($formData,$cod_produto,$cod_empresa)
       { 
+           
           $this->_db->delete('ingrediente_empresa_produto', "cod_produto =$cod_produto and cod_empresa=$cod_empresa");
           foreach($formData['ie']['cod_ingrediente'] as $k=>$v){
               if(empty($v)){
@@ -65,6 +66,20 @@
         //$result = $find_result[0];
        return $find_result; 
           
+      }
+      public function delingredient($cod_empressa,$cod_ingredient,$prodid)
+      {
+   
+          $where_data=array(
+              'cod_empresa='.$cod_empressa,
+              'cod_produto='.$prodid,
+              'cod_ingrediente='.$cod_ingredient
+              
+          );
+          
+        $delete_query = $this->_db->delete('ingrediente_empresa_produto', $where_data);
+
+          return  "success";
       }
   }
 ?>
