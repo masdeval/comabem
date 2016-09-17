@@ -366,7 +366,7 @@
                                 <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
                                 <input type="text" style="width: 200px;" value="<?php echo $v['quantidade_utilizada'] ?>" name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" title="" class="input-medium validDecimalNumber form-control">
                                 <div class="del_ingredient">
-                                    <img src="img/Erase.png">
+                                    <img src="/img/Erase.png">
                                     </div><div class="bodyTextSmall"> 
                                     <span class="tip"></span> <span class="missing"></span>
                                 </div>
@@ -524,7 +524,7 @@
                 $.ajax({
                     dataType: "json",
                     type: 'Get',
-                    url: '<?php echo $this->baseUrl() ?>/estabelecimento/produto/autocomplete?term=' + $("#ingrediente_produto").val(),
+                    url: '/estabelecimento/produto/autocomplete?term=' + $("#ingrediente_produto").val(),
                     success: function (data) {
                         // $('input.suggest-user').removeClass('ui-autocomplete-loading');  
                         // hide loading image
