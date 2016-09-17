@@ -213,7 +213,7 @@ if (!empty($this->nomeCliente))
     </div>
 
         
-        <table  id="tableListaPedido" style=" border-spacing: 10px; border-collapse: separate;" >  
+        <table  id="tableListaPedido" style=" border-spacing: 7px; border-collapse: separate;" >  
         </table>
 
 
@@ -275,10 +275,10 @@ if (!empty($this->nomeCliente))
                             
                             
                     
-                       if ($this->resultado[$i]['isAberto'] == true) {
+                      // if ($this->resultado[$i]['isAberto'] == true) {
                         echo "<img id='botaoAddCarrinho' src='/img/Create.png' style='margin-left:5px;'  onclick=\"javascript:addProdutoCarrinhoAjax(" . $this->resultado[$i]['cod_empresa'] . "," . $this->resultado[$i]['cod_tamanho_produto'] . ",'" . $this->resultado[$i]['razao_social'] . "','" . $this->resultado[$i]['nome'] . "','" . $this->resultado[$i]['tamanho'] . "'," . $preco . ")\"></p> ";
                         echo "<input type='text' style='visibility: hidden;' size='2' maxlength='2' value='1' id='quantidade_" . $this->resultado[$i]['cod_empresa'] . "_" . $this->resultado[$i]['cod_tamanho_produto'] . "'>";
-                    } ?>
+                   // } ?>
                     </div> <br> 
                 
 <?php 
@@ -401,6 +401,7 @@ if (!empty($this->nomeCliente))
 
         function irLoja(url)
         {
+
             var form = document.getElementById("form1");
             form.action = "/" + url;
             form.submit();
@@ -420,8 +421,18 @@ if (!empty($this->nomeCliente))
             
                 $(this).parent('div').fadeOut(2500);
             });
+      
 
-
+      
+           /* if($(".bottom-menu").height() >= 54)
+            {
+          
+                $(".bottom-menu").addClass('scrolad');
+                
+            }else{
+                 $(".bottom-menu").removeClass('scrolad');
+                
+            } */ 
         });
 
 

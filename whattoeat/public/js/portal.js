@@ -328,6 +328,7 @@ function limparCarrinhoAjax()
  */
 function recebeCarrinhoJSON()
 {
+
     reqURL='/portal/loja/retorna-Carrinho-Json';
 
     $.ajax({
@@ -353,8 +354,19 @@ function recebeCarrinhoJSON()
 		var json_hash = new Hash(json_object);
 
 		imprimeCarrinho(json_object, json_hash);
+                var count_tr=$("#tableListaPedido").find('tr').length;
+                if(count_tr >= 9)
+                {
+                    $(".bottom-menu").addClass('scrolad');
+                    
+                }else{
+                    $(".bottom-menu").removeClass('scrolad');
+ 
+                    
+                }
 
 	    }
+            
 	
 	}
     });

@@ -77,8 +77,8 @@ class Portal_IndexController extends Zend_Controller_Action {
             } else {
 
 
-                date_default_timezone_set($resultado[$i]['timezone']); //seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
-                //date_default_timezone_set('asia/kolkata');
+             //   date_default_timezone_set($resultado[$i]['timezone']); //seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
+                date_default_timezone_set('asia/kolkata');
                 $hora_atual = date('H') . ":" . date('i') . ":00";
 
                 //quero apresentar empresas apenas uma vez

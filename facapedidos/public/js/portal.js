@@ -303,6 +303,7 @@ function limparCarrinhoAjax()
  */
 function recebeCarrinhoJSON()
 {
+    
     reqURL='/portal/loja/retorna-Carrinho-Json';
 
     $.ajax({

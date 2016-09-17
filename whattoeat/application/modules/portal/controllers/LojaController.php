@@ -220,6 +220,7 @@ class Portal_LojaController extends Zend_Controller_Action
 
     public function retornaCarrinhoJsonAction()
     {
+       
 
 	/*
 	 * Talvez fosse necessario usar essa implementacao alternativa do JSON para retornar
