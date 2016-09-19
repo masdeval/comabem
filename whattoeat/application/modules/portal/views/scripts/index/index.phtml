@@ -86,7 +86,7 @@
 </head>
 <body>
 
-
+<div>
     <div class="main1">
     <div id="logoComabem" ><a href="/portal/"><img src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
     <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img src="<?php echo $this->serverUrl(); ?>/img/estabelecimento.png"></div></a>
@@ -97,7 +97,7 @@ if (!empty($this->nomeCliente))
 ?>
 
 <div align="center" width="80%">
-  
+     <div class="formBuscar">
         <form action="/portal/index/consulta" method="post" class="" id='form1'>
 
             <br>
@@ -105,7 +105,7 @@ if (!empty($this->nomeCliente))
             <div id="EnglobaPesquisaInicio">
                 <!--input type="button" id="filtroResult" value="Filtrar Por &#8628;"-->
                <input class="form-control" type="textarea" name="criterio" id="pesquisaInicio"  
-                       value="<?php echo !empty($this->pesquisa_facapedido_criterio) ? $this->pesquisa_facapedido_criterio : '' ?>" placeholder="Ingredientes especÃ­ficos, lugares, pratos..."><input class="btn btn-primary" id="botaoPesquisar" type="submit" 
+                       value="<?php echo !empty($this->pesquisa_facapedido_criterio) ? $this->pesquisa_facapedido_criterio : '' ?>" placeholder="Ingredientes especificos, lugares, pratos..."><input class="btn btn-primary" id="botaoPesquisar" type="submit" 
                        value="BUSCAR">
               <span class="filterexpand"> Mais opcoes de filtro</span>
             </div>
@@ -149,7 +149,7 @@ if (!empty($this->nomeCliente))
 
 
         </form>
-    
+    </div>
     
     <div class="headline" >
         <h4><?php echo $this->headline; ?> </h4>
@@ -158,9 +158,9 @@ if (!empty($this->nomeCliente))
  
     <div  class="bottom-menu">
         <h4> Seu pedido </h4>
-
+ 
         
-    <div style="display:none" id="RemoveAdd">
+    <div id="RemoveAdd">
 
         <form action="/portal/index/limpar-Carrinho" method="post" class="" >
             <div class="warning_btn" style="float: right; position: relative; ">
@@ -178,9 +178,10 @@ if (!empty($this->nomeCliente))
         <div style="clear: both;"></div>
 
     </div>
+     
 
         
-        <table  id="tableListaPedido" style=" border-spacing: 10px; border-collapse: separate;" >  
+        <table  id="tableListaPedido" style=" border-spacing: 7px; border-collapse: separate;" >  
         </table>
 
 
@@ -339,7 +340,7 @@ if (!empty($this->nomeCliente))
             $hora_atual = date('H') . ":" . date('i') . ":00";
             echo "<div>";
 
-            echo "<input type='button' class='btn btn-danger' value='Fechada nesse horÃ¡rio'  onClick='javascript:lojaFechada(" . $this->resultado[$i]['cod_empresa'] . "," . $i . " );' > " .
+            echo "<input type='button' class='btn btn-danger' value='Fechada nesse horario'  onClick='javascript:lojaFechada(" . $this->resultado[$i]['cod_empresa'] . "," . $i . " );' > " .
             " <br> <span class='msg_estabelecimento_fechado' id='spanFechada" . $i . "'>Clique no botÃ£o se deseja enviar Ã  loja sua vontade " .
             " de que ela estivesse aberta. </span> ";
         }

@@ -435,6 +435,23 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 	$this->_helper->viewRenderer('index');
     }
 
+     public function delingredientAction()
+    {
+              
+       $cod_empressa=$this->getRequest()->getPost('cod_empressa');
+       $cod_ingredient=$this->getRequest()->getPost('cod_ing');
+       $cod_prodId=$this->getRequest()->getPost('prodId');
+       $getIngredients=$this->ItensDeUmLanche->delingredient($cod_empressa,$cod_ingredient,$cod_prodId);
+       $this->Produto->calculaValorCalorico($cod_prodId);
+       
+       if(trim($getIngredients)==trim('success'))
+       { 
+           echo "success"; 
+           
+           die;
+       }
+              
+    }
     public function do_upload()
     {
 	$adapter = new Zend_File_Transfer_Adapter_Http();
