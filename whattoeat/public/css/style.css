@@ -546,6 +546,7 @@ legend{
     padding: 0px 0 0;}
 #RemoveAdd{
     margin-right:15px;
+    margin-bottom: 15px;
 }    
 #RemoveAdd .btn-success {
   background-color: rgb(92, 184, 92);
