@@ -527,7 +527,7 @@
                 $.ajax({
                     dataType: "json",
                     type: 'Get',
-                    url: '<?php echo $this->baseUrl() ?>/estabelecimento/produto/autocomplete?term=' + $("#ingrediente_produto").val(),
+                    url: '/estabelecimento/produto/autocomplete?term=' + $("#ingrediente_produto").val(),
                     success: function (data) {
                         // $('input.suggest-user').removeClass('ui-autocomplete-loading');  
                         // hide loading image
