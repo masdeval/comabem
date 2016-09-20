@@ -132,10 +132,10 @@ class Portal_IndexController extends Zend_Controller_Action {
         Zend_Mail::setDefaultTransport($tr);
         //envia email 
         $mail = new Zend_Mail();
-        $mail->setBodyText('No dia ' . $data . ' foi solicitado que você estive aberto na hora ' . $hora_atual);
+        $mail->setBodyText('No dia ' . $data . ' foi solicitado que voce estivesse aberto na hora ' . $hora_atual);
         $mail->setFrom('suporte@buscacomabem.com.br');
         $mail->addTo($email);
-        $mail->setSubject('Pedido de que você estivesse aberto');
+        $mail->setSubject('Pedido de que voce estivesse aberto');
  
         try {
 
