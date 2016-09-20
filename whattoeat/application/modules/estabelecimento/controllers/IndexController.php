@@ -43,9 +43,16 @@ class Estabelecimento_IndexController extends Zend_Controller_Action {
                 if ($mail->send($tr)) {
                     $this->view->headline = "Parabéns! Sua mensagem foi enviada.";
                 }
+                else
+                {
+                    $this->view->headline = "Problema ao enviar sua mensagem. Por favor, tente novamente em alguns instantes.";
+                }
             } catch (Exception $e) {
+                
+                $this->view->headline = "Problema ao enviar sua mensagem. Por favor, tente novamente em alguns instantes.";
                 return;
             }
+            
         }
         
         
