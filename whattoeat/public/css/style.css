@@ -150,7 +150,7 @@ p.title {
     font-size: 16px;
     font-weight: normal;
 }
-.text1 div {
+.text1 > div {
     color: #626262;
     font-size: 13px;
     font-weight: normal !important;
@@ -447,7 +447,7 @@ legend{
     font-size: 0;
     height: 50px;
     position: absolute;
-    right: 16%;
+    right: 18%;
     top: -28px;
     width: 50px;
     z-index: 0;}
@@ -530,15 +530,24 @@ legend{
     
     
 }
+
 .bottom-menu {
-    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7);
-    bottom: 0;
-    margin: auto;
-    position: absolute;
-    right: 0;
-    width: 347px;    
-    
+background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7);
+  height: auto;
+  margin: auto;
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  top: 285px;
+  width: 368px;
 }
+
+.scrolad{
+      height: 445px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 #tableListaPedido td{
     font-size: 14px;
     padding: 0;
@@ -549,6 +558,7 @@ legend{
     padding: 0px 0 0;}
 #RemoveAdd{
     margin-right:15px;
+    margin-bottom: 15px;
 }    
 #RemoveAdd .btn-success {
     background-color: rgb(92, 184, 92);
@@ -648,17 +658,18 @@ legend{
 
 
 @media(max-width:1280px) {
+    
+.bottom-menu {
+  margin: auto;
+  position: absolute;
+  right: 0;
+  top: 335px;
+  width: 320px;
+}    
     .buscar_outer_dv {
         height: 500px;
         overflow: scroll;
         width: 60%;
-    }
-    .close_result_btn {
-        left: 0;
-        margin: auto auto 112px;
-        position: relative;
-        right: 15px;
-        width: 90%;
     }
     .buscar_outer_dv {
         width: 100% !important;
@@ -688,9 +699,33 @@ legend{
         right: 0;
     }
 
+  .close_result_btn {
+  left: -159px;
+  margin: auto auto 111px;
+  position: relative;
+  right: 107px;
+  width: 74%;
+}
 
 }
 @media(max-width:991px) {
+    
+ .close_result_btn {
+  left: 0;
+  margin: auto auto 112px;
+  position: relative;
+  right: 15px;
+  width: 90%;
+}
+  .bottom-menu { 
+  bottom: 0;
+  top:unset;
+  margin: auto;
+  position: absolute;
+  right: 0;
+  width: 347px;
+}    
+    
     .filter_result {
 
         width: 265px;
@@ -1057,4 +1092,13 @@ legend{
     margin-bottom: 50px;
     overflow-x: hidden;
     overflow-y: scroll;
+}
+
+.font-style-class
+{
+ font-family: verdana;
+ margin: 0px 10px 0px 10px;
+ font-family:"Verdana";
+ font-size:14px;
+ padding:10px 2px 25px 25px;
 }

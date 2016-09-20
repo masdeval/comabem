@@ -49,5 +49,20 @@
       }*/
 
       
+       public function delingredient($cod_empressa,$cod_ingredient,$prodid)
+      {
+   
+          $where_data=array(
+              'cod_empresa='.$cod_empressa,
+              'cod_produto='.$prodid,
+              'cod_ingrediente='.$cod_ingredient
+              
+          );
+          
+        $delete_query = $this->_db->delete('ingrediente_empresa_produto', $where_data);
+
+          return  "success";
+      }
+      
   }
 ?>

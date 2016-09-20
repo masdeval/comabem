@@ -19,8 +19,13 @@
 
                         <td> <label>Nome *</label> <br><input type="text" class="input-medium RQR required form-control"  name="nome" maxlength="50" value="<?php echo $this->formData['nome'] ?>" style="width: 200px;" title="Por favor, indique nome">
                             <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
-                        <td> <label>Valor calorico (calculado pelo sistema) </label><br><input type="text" class="input-medium validDecimalNumber form-control"   name="valor_calorico" value="<?php echo $this->formData['valor_calorico'] ?>" disabled="true" maxlength="50" style="width: 200px;" title="Por favor, indique valor calorico">
-                            <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                        <td> <label>Valor calorico (sistema) </label><br><input type="text" class="input-medium validDecimalNumber form-control"   name="valor_calorico" value="<?php echo $this->formData['valor_calorico'] ?>" disabled="true" maxlength="5" style="width: 80px;" title="Por favor, indique valor calorico">
+                           </td>
+                        
+                        <td> <label>Valor calorico (aprox) </label><br><input type="text" class="input-medium validDecimalNumber form-control"   name="valor_calorico_aproximado" value="<?php echo $this->formData['valor_calorico_aproximado'] ?>" maxlength="5" style="width: 80px;" >
+                            </td>
+                        
+                        
                        <!--  <td width="50%">&nbsp;&nbsp; Valor calÃ³rico calculado: <?php //echo $this->totalCalorias;     ?></td> -->
                     </tr>
                     <tr>
@@ -323,7 +328,7 @@
                     <!--<legend>Ingrediente:</legend>-->
                     <table  class="tableFrm tbl_ingredients" cellspacing="5" cellpadding="0" border="0">
                         <tr><td colspan='30'>
-                                Indique quais são os ingredientes desse produto. Isso será usado para calcular a caloria. 
+                                Indique os ingredientes desse produto. Isso será usado para calcular a caloria. 
                            </td></tr>
 
                         <tr><td>&nbsp;</td></tr>
@@ -365,8 +370,8 @@
                                 <span class="item_label"><?php echo $this->ingredienteEmpresaRec[$v['cod_ingrediente']]; ?></span>
                                 <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
                                 <input type="text" style="width: 200px;" value="<?php echo $v['quantidade_utilizada'] ?>" name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" title="" class="input-medium validDecimalNumber form-control">
-                                <div class="del_ingredient">
-                                    <img src="/img/Erase.png">
+                                <div class="del_ingredient" data-productid="<?php echo $this->produtoId; ?>" data-codingrediente="<?php echo $v['cod_ingrediente']; ?>" data-codempresa="<?php echo $v['cod_empresa']; ?>">
+                                    <img src="img/Erase.png">
                                     </div><div class="bodyTextSmall"> 
                                     <span class="tip"></span> <span class="missing"></span>
                                 </div>
@@ -379,9 +384,7 @@
                                         </div>
                         
 
-                        <tr>
-                            <td colspan="3" height="20">&nbsp;</td>
-                        </tr>
+                        
                     </table>
                 </fieldset>
 
@@ -548,8 +551,11 @@
             select: function (event, ui) {
                 var item_id = ui.item.id;
                 var item_label = ui.item.label;
-
-                app_div = '<div class="ingredientpage"><input style="display:none" type="checkbox" checked="checked" name="ie[cod_ingrediente][]" value="' + item_id + '">';
+                var find = $(".ingredients_data").find('#a_' + item_id).length;
+               
+               if ($.trim(find) == $.trim('0'))
+                {
+                app_div = '<div class="ingredientpage" id="a_' + item_id + '"><input style="display:none" type="checkbox" checked="checked" name="ie[cod_ingrediente][]" value="' + item_id + '">';
                 app_div += '<div align="left" class="td-wid"><span class="item_label">' + item_label + '</span>';
                 app_div += '<input type="text" style="width: 200px;" value="" name="ie[quantidade_utilizada][' + item_id + ']" title="" class="input-medium validDecimalNumber form-control">';
                 app_div += '<div class="del_ingredient"><img src="/img/Erase.png"><input type="hidden" name="ie[valor_calorico][' + item_id + ']"></div>';
@@ -557,7 +563,10 @@
 
 
                 $(".ingredients_data").append(app_div);
+                }else {
 
+                    alert('Ingrediente ja existe.');
+                }
 
 
             }
@@ -565,14 +574,38 @@
 
 
 
-        $("body").delegate(".del_ingredient", "click", function () {
+        $("body").delegate(".del_ingredient", "click", function (e) {
+
+            var prod_id = $(this).data('productid');
+            var cod_ing = $(this).data('codingrediente');
+            var cod_empressa = $(this).data('codempresa');
+            if (confirm('Tem certeza que deseja remover esse ingrediente?'))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo $this->baseUrl() ?>/estabelecimento/produto/delingredient",
+                    data: {prodId: prod_id, cod_ing: cod_ing, cod_empressa: cod_empressa},
+                    // contentType: "application/json; charset=utf-8",
+                    //  dataType: "json",
+                    success: function (msg) {
 
 
-            $(this).parent().parent().remove();
+
+
+                    }
+                });
+                $(e.target).parent().parent().parent().remove();
+
+            }
+
+
+            // $(this).parent().parent().remove();
 
 
 
         });
+
+
 
 
 

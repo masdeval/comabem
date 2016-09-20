@@ -86,7 +86,7 @@
 </head>
 <body>
 
-
+<div>
     <div class="main1">
     <div id="logoComabem" ><a href="/portal/"><img src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
     <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img src="<?php echo $this->serverUrl(); ?>/img/estabelecimento.png"></div></a>
@@ -97,7 +97,7 @@ if (!empty($this->nomeCliente))
 ?>
 
 <div align="center" width="80%">
-  
+     <div class="formBuscar">
         <form action="/portal/index/consulta" method="post" class="" id='form1'>
 
             <br>
@@ -149,7 +149,7 @@ if (!empty($this->nomeCliente))
 
 
         </form>
-    
+    </div>
     
     <div class="headline" >
         <h4><?php echo $this->headline; ?> </h4>
@@ -158,9 +158,9 @@ if (!empty($this->nomeCliente))
  
     <div  class="bottom-menu">
         <h4> Seu pedido </h4>
-
+ 
         
-    <div style="display:none" id="RemoveAdd">
+    <div id="RemoveAdd">
 
         <form action="/portal/index/limpar-Carrinho" method="post" class="" >
             <div class="warning_btn" style="float: right; position: relative; ">
@@ -178,9 +178,10 @@ if (!empty($this->nomeCliente))
         <div style="clear: both;"></div>
 
     </div>
+     
 
         
-        <table  id="tableListaPedido" style=" border-spacing: 10px; border-collapse: separate;" >  
+        <table  id="tableListaPedido" style=" border-spacing: 7px; border-collapse: separate;" >  
         </table>
 
 
