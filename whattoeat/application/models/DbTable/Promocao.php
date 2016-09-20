@@ -27,14 +27,14 @@ class DbTable_Promocao extends Zend_Db_Table_Abstract
 	if (!empty($formData['data_inicio']))
 	{
 	    list($day, $month, $year) = explode('/', $formData['data_inicio']);
-	    $data_nascimento = "$year-$month-$day";
-	    $data['data_inicio'] = $data_nascimento;
+	    $date = "$year-$month-$day";
+	    $data['data_inicio'] = $date;
 	}
 	if (!empty($formData['data_fim']))
 	{
 	    list($day, $month, $year) = explode('/', $formData['data_fim']);
-	    $data_nascimento = "$year-$month-$day";
-	    $data['data_fim'] = $data_nascimento;
+	    $date = "$year-$month-$day";
+	    $data['data_fim'] = $date;
 	}
 	$id = $this->insert($data);
 
@@ -51,14 +51,14 @@ class DbTable_Promocao extends Zend_Db_Table_Abstract
 	if (!empty($formData['data_inicio']))
 	{
 	    list($day, $month, $year) = explode('/', $formData['data_inicio']);
-	    $data_nascimento = "$year-$month-$day";
-	    $data['data_inicio'] = $data_nascimento;
+	    $date = "$year-$month-$day";
+	    $data['data_inicio'] = $date;
 	}
 	if (!empty($formData['data_fim']))
 	{
 	    list($day, $month, $year) = explode('/', $formData['data_fim']);
-	    $data_nascimento = "$year-$month-$day";
-	    $data['data_fim'] = $data_nascimento;
+	    $date = "$year-$month-$day";
+	    $data['data_fim'] = $date;
 	}
 
 
