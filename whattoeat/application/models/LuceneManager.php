@@ -42,6 +42,18 @@ class LuceneManager {
         // but is stored in the index.
         //$doc->addField(Zend_Search_Lucene_Field::Binary('icon',$iconData));
         // Field is tokenized and indexed, and is stored in the index.
+        
+        //desfriao de empresa
+        //nome da empresa
+        $aux = mb_detect_encoding(($empresa['razao_social']));
+        $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($empresa['razao_social']));
+        $doc->addField(Zend_Search_Lucene_Field::Text('nome_empresa', $aux, "UTF-8"));
+        //endereco da emrpesa
+        $aux = mb_detect_encoding(($empresa['rua']));
+        $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($empresa['rua']));
+        $doc->addField(Zend_Search_Lucene_Field::Text('rua_empresa', $aux, "UTF-8"));
+
+         
         //descricao do produto
         $aux = mb_detect_encoding(($produto['descricao']));
         $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($produto['descricao'])); //converte uma string em iso-8859-1 para UTF-8
@@ -50,11 +62,7 @@ class LuceneManager {
         $aux = mb_detect_encoding(($produto['nome']));
         $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($produto['nome']));
         $doc->addField(Zend_Search_Lucene_Field::Text('nome_produto', $aux, "UTF-8"));
-        //nome da empresa
-        $aux = mb_detect_encoding(($produto['nome_fantasia']));
-        $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($empresa['nome_fantasia']));
-        $doc->addField(Zend_Search_Lucene_Field::Text('nome_empresa', $aux, "UTF-8"));
-
+        
         //Adiciona os ingredientes do produto
         foreach ($ingredientes as $value) {
 
@@ -163,6 +171,24 @@ class LuceneManager {
         return $resultado;
     }
 
+    static function recriateLuceneDatabase(){
+        
+        $db = Zend_Db_Table::getDefaultAdapter();
+        $dbProduto = new DbTable_Produto($db);
+        $dbEmpresa = new DbTable_Empresa($db);
+        
+        $empresas = $dbEmpresa->fetchAll();
+        foreach($empresas as $empresa)
+        {
+            $produtos = $dbProduto->getRecords($empresa['cod_empresa']);
+            foreach($produtos as $produto)
+            {
+                LuceneManager::criaDocumentoProduto($empresa['cod_empresa'], $produto['cod_produto'], $produto);
+            }
+            
+        }
+    }
+    
 }
 
 ?>

@@ -97,7 +97,7 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
         $user = new User();
         $user->id = $auth->getIdentity()->cod_funcionario;
         $user->name = $auth->getIdentity()->nome;
-        $user->resources = $this->PrivilegeDB->getResourcesFromUser($user->id);
+        //deprecated - $user->resources = $this->PrivilegeDB->getResourcesFromUser($user->id);
         $user->empresa = $this->FuncionarioDB->getEmpresa($user->id);
         $user->role = $this->PrivilegeDB->getUserRole($user->id);
         $session = new Zend_Session_Namespace('estabelecimento');
@@ -122,7 +122,7 @@ class Estabelecimento_AuthController extends Zend_Controller_Action {
 
             $this->db->beginTransaction();
             $id = $this->FuncionarioDB->addFuncionario($formData);
-            $this->PrivilegeDB->addUserPrivilege(1, $id); //insere role de administrador
+            $this->PrivilegeDB->addUserPrivilege(2, $id); //insere role de gerente
             $this->db->commit();
         } catch (Exception $e) {
             $this->db->rollback();

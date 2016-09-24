@@ -20,10 +20,12 @@ class DbTable_UserPrivileges extends Zend_Db_Table_Abstract {
     }
 
     public function getUserRole($id) {
-        $query = $this->_db->query("SELECT role.nome FROM privilege,role where privilege.cod_funcionario = '$id' and " .
+        
+        $query = $this->_db->query("SELECT role.nome FROM privilege,role where privilege.cod_funcionario = $id and " .
                 " role.cod_role = privilege.cod_role ");
         $result = $query->fetchAll();
-        return $result[0]['nome'];
+        
+        return $result[0]['nome'];       
     }
 
     public function getResourcesFromUser($id) {
