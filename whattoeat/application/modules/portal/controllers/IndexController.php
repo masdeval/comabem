@@ -6,9 +6,14 @@ class Portal_IndexController extends Zend_Controller_Action {
     public $ProdutoDB;
     public $FotoProdutoDB;
     public $EmpresaDB;
+    public $ConsultaDB;
     private $session;
+    private $descricaoTipoProdutos;
+    private $geolocation;
 
     public function init() {
+        
+        
         /* Initialize action controller here */
         $this->session = new Zend_Session_Namespace('compra');
         $this->_helper->layout()->disableLayout();
@@ -16,7 +21,11 @@ class Portal_IndexController extends Zend_Controller_Action {
         $this->FotoProdutoDB = new DbTable_FotoProduto(Zend_Db_Table::getDefaultAdapter());
         $this->ProdutoDB = new DbTable_Produto(Zend_Db_Table::getDefaultAdapter());
         $this->EmpresaDB = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
+        $this->ConsultaDB = new DbTable_Consulta(Zend_Db_Table::getDefaultAdapter());
+        $this->geolocation = new IP2Location_DatabaseGeo(APPLICATION_PATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'IP2Location' . DIRECTORY_SEPARATOR . 'databases' . DIRECTORY_SEPARATOR . 'IP2LOCATION-LITE-DB1.BIN', IP2Location_DatabaseGeo::FILE_IO);
 
+        $this->descricaoTipoProdutos = $this->TipoProdutoDB->getCodTipoProductoDropDown();
+        
         if (isset($this->session->cliente)) {
             $this->view->nomeCliente = $this->session->cliente->getNomeExibicao();
         }
@@ -37,6 +46,9 @@ class Portal_IndexController extends Zend_Controller_Action {
             $empresa_oferece = array();
         }
         $produtos = "";
+
+        //grava a consulta no banco 
+        $this->gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece);
 
         //echo "<pre>"; print_r($_POST); die;
         //
@@ -73,20 +85,20 @@ class Portal_IndexController extends Zend_Controller_Action {
 
 
                 //if (array_key_exists($resultado[$i]['cod_empresa'], $empresa_ja_apresentada)) {
-                    //continue;
-               // } else {
+                //continue;
+                // } else {
 
 
-                    date_default_timezone_set($resultado[$i]['timezone']); //seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
-                    //date_default_timezone_set('asia/kolkata');
-                    $hora_atual = date('H') . ":" . date('i') . ":00";
+                date_default_timezone_set($resultado[$i]['timezone']); //seta a timezone do estabelecimento para que volte a hora correta de acordo com o fuso-horario local
+                //date_default_timezone_set('asia/kolkata');
+                $hora_atual = date('H') . ":" . date('i') . ":00";
 
-                    //quero apresentar empresas apenas uma vez
-                    $empresa_ja_apresentada[$resultado[$i]['cod_empresa']] = $resultado[$i]['cod_empresa'];
-                    $resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
-                    $novo_resultado[$j] = $resultado[$i];
-                    $j++;
-               // }
+                //quero apresentar empresas apenas uma vez
+                $empresa_ja_apresentada[$resultado[$i]['cod_empresa']] = $resultado[$i]['cod_empresa'];
+                $resultado[$i]['isAberto'] = $this->EmpresaDB->isAberto($resultado[$i]['cod_empresa'], date('l'), $hora_atual);
+                $novo_resultado[$j] = $resultado[$i];
+                $j++;
+                // }
                 //echo "<pre>";print_r($resultado); die;
             }
 
@@ -136,7 +148,7 @@ class Portal_IndexController extends Zend_Controller_Action {
         $mail->setFrom('suporte@buscacomabem.com.br');
         $mail->addTo($email);
         $mail->setSubject('Pedido de que voce estivesse aberto');
- 
+
         try {
 
             if ($mail->send($tr)) {
@@ -147,7 +159,7 @@ class Portal_IndexController extends Zend_Controller_Action {
         } catch (Exception $ex) {
             echo 'Fail';
         }
-        
+
 
         //$status = $this->RecadoClienteDB->registraSolicitacaoLojaAberta($cod_empresa, $data, $hora_atual);
         //echo $status;
@@ -163,4 +175,32 @@ class Portal_IndexController extends Zend_Controller_Action {
         $this->_helper->viewRenderer("index");
     }
 
+    private function gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece)
+    {
+        if (!empty($criterios) || !empty($tipos_produto) || !empty($caloria) || !empty($empresa_oferece)) {
+            
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $cidade = substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::CITY_NAME),0,29);
+            $pais = substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::COUNTRY_NAME),0,19);
+            
+            $descricao_tipo_produto = "";
+            if(!empty($tipos_produto))
+            {
+                foreach($tipos_produto as $p)
+                {                    
+                    $descricao_tipo_produto .= $this->descricaoTipoProdutos[$p]." ";
+                }
+            }
+            $produtosEspeciais='';
+            if(!empty($empresa_oferece))
+            {
+                foreach($empresa_oferece as $e)
+                {
+                    $produtosEspeciais .= $e." ";
+                }
+            }
+            
+            $this->ConsultaDB->addConsulta($ip, $pais, $cidade, $criterios, $descricao_tipo_produto,$caloria,$produtosEspeciais);
+        }
+    }
 }
