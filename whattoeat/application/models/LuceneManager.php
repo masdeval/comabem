@@ -98,6 +98,7 @@ class LuceneManager {
             $query .= $item . "~0.7 ";
             // $query .= new Zend_Search_Lucene_Search_Query_Fuzzy(new Zend_Search_Lucene_Index_Term($item), 0.4);
         }
+        
 
         $resultado = $index->find($query);
         return $resultado;
