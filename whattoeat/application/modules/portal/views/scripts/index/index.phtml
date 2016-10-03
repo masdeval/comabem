@@ -392,6 +392,9 @@ if (!empty($this->nomeCliente))
             
                 $(this).parent('div').fadeOut(2500);
             });
+            
+            //Initialize Google geocoder
+            initialize();
         });
 
 
@@ -400,11 +403,19 @@ if (!empty($this->nomeCliente))
   *
   */
  
-  var geocoder = new google.maps.Geocoder();
-  navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+ var geocoder;
+ if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+ } 
+ 
+ function initialize()
+ {
+   geocoder = new google.maps.Geocoder();   
+ }
+  
      
     //Get the latitude and the longitude;
-    function successFunction(position) {
+  function successFunction(position) {
         
     var lat = position.coords.latitude;
     var lng = position.coords.longitude;
