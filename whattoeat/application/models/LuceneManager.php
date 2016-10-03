@@ -95,7 +95,7 @@ class LuceneManager {
             $item = str_replace("-", " ", $item); //deu problema busca fuzzy usando -
             //$item = (utf8_decode($item));
             //$item = mb_convert_encoding($item,"utf-8","iso-8859-1");
-            $query .= $item  . "~0.7 ";
+            $query .= $item . "~0.7 ";
             // $query .= new Zend_Search_Lucene_Search_Query_Fuzzy(new Zend_Search_Lucene_Index_Term($item), 0.4);
         }
         
