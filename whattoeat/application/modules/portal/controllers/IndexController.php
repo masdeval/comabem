@@ -9,7 +9,7 @@ class Portal_IndexController extends Zend_Controller_Action {
     public $ConsultaDB;
     private $session;
     private $descricaoTipoProdutos;
-    private $geolocation;
+    //private $geolocation;
 
     public function init() {
         
@@ -22,7 +22,7 @@ class Portal_IndexController extends Zend_Controller_Action {
         $this->ProdutoDB = new DbTable_Produto(Zend_Db_Table::getDefaultAdapter());
         $this->EmpresaDB = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
         $this->ConsultaDB = new DbTable_Consulta(Zend_Db_Table::getDefaultAdapter());
-        $this->geolocation = new IP2Location_DatabaseGeo(APPLICATION_PATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'IP2Location' . DIRECTORY_SEPARATOR . 'databases' . DIRECTORY_SEPARATOR . 'IP2LOCATION-LITE-DB1.BIN', IP2Location_DatabaseGeo::FILE_IO);
+        //$this->geolocation = new IP2Location_DatabaseGeo(APPLICATION_PATH . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR . 'IP2Location' . DIRECTORY_SEPARATOR . 'databases' . DIRECTORY_SEPARATOR . 'IP2LOCATION-LITE-DB1.BIN', IP2Location_DatabaseGeo::FILE_IO);
 
         $this->descricaoTipoProdutos = $this->TipoProdutoDB->getCodTipoProductoDropDown();
         
@@ -48,7 +48,10 @@ class Portal_IndexController extends Zend_Controller_Action {
         $produtos = "";
 
         //grava a consulta no banco 
-        $this->gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece);
+        $latitude = $this->getRequest()->getPost('latitude');
+        $longitude = $this->getRequest()->getPost('longitude');
+        $cidade = $this->getRequest()->getPost('cidade');
+        $this->gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece,$latitude,$longitude,$cidade);
 
         //echo "<pre>"; print_r($_POST); die;
         //
@@ -175,13 +178,14 @@ class Portal_IndexController extends Zend_Controller_Action {
         $this->_helper->viewRenderer("index");
     }
 
-    private function gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece)
+    private function gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece,$latitude,$longitude,$cidade)
     {
+        try{
         if (!empty($criterios) || !empty($tipos_produto) || !empty($caloria) || !empty($empresa_oferece)) {
             
             $ip = $_SERVER['REMOTE_ADDR'];
-            $cidade = substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::CITY_NAME),0,29);
-            $pais = substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::COUNTRY_NAME),0,19);
+            //$cidade = substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::CITY_NAME),0,29);
+            $pais = "BR";//substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::COUNTRY_NAME),0,19);
             
             $descricao_tipo_produto = "";
             if(!empty($tipos_produto))
@@ -200,7 +204,11 @@ class Portal_IndexController extends Zend_Controller_Action {
                 }
             }
             
-            $this->ConsultaDB->addConsulta($ip, $pais, $cidade, $criterios, $descricao_tipo_produto,$caloria,$produtosEspeciais);
+            $this->ConsultaDB->addConsulta($ip, $pais, $cidade, $criterios, $descricao_tipo_produto,$caloria,$produtosEspeciais,$latitude,$longitude);
+        }
+        }catch(Exception $e)
+        {
+          //TODO Log the error   
         }
     }
 }

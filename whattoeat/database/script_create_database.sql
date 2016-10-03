@@ -187,7 +187,9 @@ CREATE TABLE consulta (
     id bigint NOT NULL,
     tipo_produto character varying(200),
     caloria double precision,
-    produtos_especiais character varying(200)
+    produtos_especiais character varying(200),
+    latitude double precision,
+    longitude double precision
 );
 
 

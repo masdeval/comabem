@@ -1,7 +1,7 @@
 <div id="borderTopo"></div>
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" type="image/ico" href="/img/favicon.ico"/>
+    <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
     <!-- Bootstrap core CSS 
     <link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />-->
 
@@ -11,7 +11,7 @@
     <!-- Portal CSS
     <link type="text/css" href="/css/portal.css" rel="stylesheet" /> -->    
     <link type="text/css" href="/css/style.css" rel="stylesheet">
-    <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script-->
+   
     <script src="<?php echo $this->serverUrl(); ?>/js/jquery.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -146,7 +146,9 @@ if (!empty($this->nomeCliente))
             </div>
 
             <br><br><br>
-
+            <input type="hidden" id="latitude" name="latitude">
+            <input type="hidden" id="longitude" name="longitude">
+            <input type="hidden" id="cidade" name="cidade">
 
         </form>
     </div>
@@ -172,6 +174,7 @@ if (!empty($this->nomeCliente))
             <div style="float: right; margin-right: 20px; ">
                 <input class="btn btn-success" type="submit" value="Fechar Pedido"> 
             </div>
+            
         </form>
 
 
@@ -362,8 +365,11 @@ if (!empty($this->nomeCliente))
 }
 ?>
 </div>
-
+    
+ 
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCtgh1zXGMTjtmbD3AB455cGXYuD4PbBUk"></script>
 <script>
+
 
         recebeCarrinhoJSON();
 
@@ -376,8 +382,6 @@ if (!empty($this->nomeCliente))
         }
 
         $(document).ready(function () {
-           
-   
             
           $(".close").click(function () {
                 $(".popup1").fadeOut(2500);
@@ -388,11 +392,63 @@ if (!empty($this->nomeCliente))
             
                 $(this).parent('div').fadeOut(2500);
             });
-
-
         });
 
 
+  /*
+  * Code to get geolocation information using Google API 
+  *
+  */
+ 
+  var geocoder = new google.maps.Geocoder();
+  navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+     
+    //Get the latitude and the longitude;
+    function successFunction(position) {
+        
+    var lat = position.coords.latitude;
+    var lng = position.coords.longitude;
+    codeLatLng(lat, lng);
+}
+    
+function errorFunction(){
+    
+    //alert("Problema no browser");
+    
+}
+
+ function codeLatLng(lat, lng) {
+  var latlng = new google.maps.LatLng(lat, lng);
+  geocoder.geocode({latLng: latlng}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      if (results[1]) {
+        var arrAddress = results;
+        console.log(results);
+        $.each(arrAddress, function(i, address_component) {
+          if (address_component.types[0] == "locality") {
+            console.log("City: " + address_component.address_components[0].long_name);
+            itemLocality = address_component.address_components[0].long_name;
+
+            document.getElementById('latitude').value=lat;
+            document.getElementById('longitude').value=lng;
+            document.getElementById('cidade').value=itemLocality;
+            
+          }
+        });
+      } else {
+        //alert("No results found");
+      }
+    } else {
+      //alert("Geocoder failed due to: " + status);
+    }
+  });
+}
+
+  
+
 </script>
+  
+  
+
 </div>
 </body>
