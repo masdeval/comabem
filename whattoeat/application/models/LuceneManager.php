@@ -3,7 +3,15 @@
 //define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 
 class LuceneManager {
-
+    
+    private static $LUCENE_DIR;
+    
+  static function init()
+  {
+    self::$LUCENE_DIR = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'index';
+  }
+  
+  
     static function criaDocumentoProduto($empresaId, $produtoId, $produto) {
         $DbTable_Empresa = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
         $DbTable_Produto = new DbTable_Produto(Zend_Db_Table::getDefaultAdapter());
@@ -18,10 +26,11 @@ class LuceneManager {
         //cria ou abre o indice
         try {
             //tenta abrir
-            $index = new Zend_Search_Lucene(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'index');
+            $index = new Zend_Search_Lucene(self::$LUCENE_DIR);
         } catch (Exception $e) {
             //se nao conseguir, cria um indice novo
-            $index = new Zend_Search_Lucene(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'index', true);
+            $index = new Zend_Search_Lucene(self::$LUCENE_DIR, true);
+            
         }
         //remove o produto para nao gerar entradas duplicadas
         $hit = $index->find("cod_produto:" . $produtoId);
@@ -42,7 +51,6 @@ class LuceneManager {
         // but is stored in the index.
         //$doc->addField(Zend_Search_Lucene_Field::Binary('icon',$iconData));
         // Field is tokenized and indexed, and is stored in the index.
-        
         //desfriao de empresa
         //nome da empresa
         $aux = mb_detect_encoding(($empresa['razao_social']));
@@ -53,7 +61,7 @@ class LuceneManager {
         $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($empresa['rua']));
         $doc->addField(Zend_Search_Lucene_Field::Text('rua_empresa', $aux, "UTF-8"));
 
-         
+
         //descricao do produto
         $aux = mb_detect_encoding(($produto['descricao']));
         $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($produto['descricao'])); //converte uma string em iso-8859-1 para UTF-8
@@ -62,7 +70,7 @@ class LuceneManager {
         $aux = mb_detect_encoding(($produto['nome']));
         $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($produto['nome']));
         $doc->addField(Zend_Search_Lucene_Field::Text('nome_produto', $aux, "UTF-8"));
-        
+
         //Adiciona os ingredientes do produto
         foreach ($ingredientes as $value) {
 
@@ -84,7 +92,7 @@ class LuceneManager {
         Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8());
 
 
-        $index = Zend_Search_Lucene::open(APPLICATION_PATH . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'index');
+        $index = Zend_Search_Lucene::open(self::$LUCENE_DIR);
 
 
         $array_criterios = explode(" ", $criterios);
@@ -98,7 +106,7 @@ class LuceneManager {
             $query .= $item . "~0.7 ";
             // $query .= new Zend_Search_Lucene_Search_Query_Fuzzy(new Zend_Search_Lucene_Index_Term($item), 0.4);
         }
-        
+
 
         $resultado = $index->find($query);
         return $resultado;
@@ -172,24 +180,48 @@ class LuceneManager {
         return $resultado;
     }
 
-    static function recriateLuceneDatabase(){
-        
+    static function recriateLuceneDatabase() {
+
         $db = Zend_Db_Table::getDefaultAdapter();
         $dbProduto = new DbTable_Produto($db);
         $dbEmpresa = new DbTable_Empresa($db);
-        
+
         $empresas = $dbEmpresa->fetchAll();
-        foreach($empresas as $empresa)
-        {
+        foreach ($empresas as $empresa) {
             $produtos = $dbProduto->getRecords($empresa['cod_empresa']);
-            foreach($produtos as $produto)
-            {
+            foreach ($produtos as $produto) {
+                try{
                 LuceneManager::criaDocumentoProduto($empresa['cod_empresa'], $produto['cod_produto'], $produto);
+                }
+                catch(Exception $e)
+                {
+                    //remove all files and try again
+                    self::delete_files(self::$LUCENE_DIR);
+                    LuceneManager::criaDocumentoProduto($empresa['cod_empresa'], $produto['cod_produto'], $produto);
+                }
             }
-            
         }
     }
-    
+
+    /*
+     * php delete function that deals with directories recursively
+     */
+
+    private static function delete_files($target) {
+        if (is_dir($target)) {
+            $files = glob($target . '*', GLOB_MARK); //GLOB_MARK adds a slash to directories returned
+
+            foreach ($files as $file) {
+                self::delete_files($file);
+            }
+
+            rmdir($target);
+        } elseif (is_file($target)) {
+            unlink($target);
+        }
+    }
+
 }
 
+LuceneManager::init();
 ?>
