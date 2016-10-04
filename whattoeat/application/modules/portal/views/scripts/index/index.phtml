@@ -403,9 +403,16 @@ if (!empty($this->nomeCliente))
   *
   */
  
- var geocoder;
+  var geocoder;
+
+ var options = {
+    enableHighAccuracy: true,
+    //timeout: 4500,
+    maximumAge: 0
+  };
+
  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+    navigator.geolocation.getCurrentPosition(successFunction, errorFunction,options);
  } 
  
  function initialize()
@@ -422,10 +429,11 @@ if (!empty($this->nomeCliente))
     codeLatLng(lat, lng);
 }
     
-function errorFunction(){
+function errorFunction(err){
     
-    //alert("Problema no browser");
-    
+    alert(err.message);
+    //console.warn('HATA(' + err.code + '): ' + err.message);
+       
 }
 
  function codeLatLng(lat, lng) {

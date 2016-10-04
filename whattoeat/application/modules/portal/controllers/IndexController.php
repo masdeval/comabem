@@ -208,6 +208,7 @@ class Portal_IndexController extends Zend_Controller_Action {
         }
         }catch(Exception $e)
         {
+          //throw new Exception($e)  
           //TODO Log the error   
         }
     }
