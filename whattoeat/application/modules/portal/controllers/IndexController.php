@@ -212,4 +212,6 @@ class Portal_IndexController extends Zend_Controller_Action {
           //TODO Log the error   
         }
     }
+    
+    
 }

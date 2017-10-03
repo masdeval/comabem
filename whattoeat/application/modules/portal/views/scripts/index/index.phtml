@@ -1,5 +1,14 @@
 <div id="borderTopo"></div>
 <head>
+    <title>Busca Coma Bem - Encontre os melhores restaurantes e lanchonetes. Busca avançada por estabelecimento, produto, ingrediantes, caloria, etc. Faça pedido em mais de um estabelecimento de uma só vez. </title>
+    <meta name="description" content="Somos uma empresa de tecnologia que alia os melhores recursos disponíveis para prover soluções inovadoras
+        e eficientes para os restaurantes e seus usuários. Nosso principal objetivo é fornecer uma maneira para que os usuários possam encontrar de forma rápida e precisa
+        o melhor produto para atendê-lo. Diferentemente de outros aplicativos de descoberta e pedido de alimentos, no Coma Bem! 
+        você direciona sua pesquisa para o produto que deseja e não para um estabelecimento específico. Assim, você tem a certeza
+        que está levando em consideração todas as opções disponíveis e poderá compará-las para escolher a que melhor lhe atende. 
+        Descubra novos pratos e lugares baseado em suas necessidades, interesses ou mesmo em sua curiosidade. ">
+     
+    
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
     <!-- Bootstrap core CSS 
@@ -88,8 +97,8 @@
 
 <div>
     <div class="main1">
-    <div id="logoComabem" ><a href="/portal/"><img src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
-    <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img src="<?php echo $this->serverUrl(); ?>/img/estabelecimento.png"></div></a>
+    <div id="logoComabem" ><a href="/portal/"><img alt='buscacomabem' src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
+    <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img alt='estabelecimento' src="<?php echo $this->serverUrl(); ?>/img/estabelecimento.png"></div></a>
 
 <?php
 if (!empty($this->nomeCliente))
@@ -366,8 +375,8 @@ if (!empty($this->nomeCliente))
 ?>
 </div>
     
- 
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCtgh1zXGMTjtmbD3AB455cGXYuD4PbBUk"></script>
+<!--TODO 
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCtgh1zXGMTjtmbD3AB455cGXYuD4PbBUk"></script>-->
 <script>
 
 
@@ -412,12 +421,12 @@ if (!empty($this->nomeCliente))
   };
 
  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(successFunction, errorFunction,options);
+    //TODOnavigator.geolocation.getCurrentPosition(successFunction, errorFunction,options);
  } 
  
  function initialize()
  {
-   geocoder = new google.maps.Geocoder();   
+   //TODOgeocoder = new google.maps.Geocoder();   
  }
   
      

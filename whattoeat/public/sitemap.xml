@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+ <url>
+ <loc>http://www.buscacomabem.com.br/</loc>
+ <changefreq>daily</changefreq>
+ <priority>0.8</priority>
+ </url>
+ <url>
+ <loc>http://www.buscacomabem.com.br/portal/index/consulta/</loc>
+ </url>
+ <url>
+ <loc>http://www.buscacomabem.com.br/comabem/</loc>
+ </url>
+ <url>
+ <loc>http://www.buscacomabem.com.br/portal/pedido/fechar-Pedido/</loc>
+ </url>
+ <url>
+ <loc>http://www.buscacomabem.com.br/portal/cliente/login/</loc>
+ </url>
+ <url>
+ <loc>http://www.buscacomabem.com.br/estabelecimento/auth/</loc>
+ </url>
+ <url>
+ <loc>http://www.buscacomabem.com.br/estabelecimento/index/</loc>
+ </url>
+ <url>
+ <loc>http://www.buscacomabem.com.br/estabelecimento/</loc>
+ </url>
+ <url>
+ <loc>http://www.buscacomabem.com.br/portal/index/limpar-Carrinho/</loc>
+ </url>
+<url>
+ <loc>http://www.buscacomabem.com.br/estabelecimento/empresa</loc>
+</url>
+<url>
+    <loc>http://www.buscacomabem.com.br/estabelecimento/produto</loc>
+</url>
+<url>
+    <loc>http://www.buscacomabem.com.br/estabelecimento/funcionario</loc>
+</url>
+<url>
+    <loc>http://www.buscacomabem.com.br/estabelecimento/ingredients</loc>
+</url>
+<url>
+    <loc>http://www.buscacomabem.com.br/estabelecimento/pedidos</loc>
+</url>
+</urlset>
+

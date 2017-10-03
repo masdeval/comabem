@@ -35,27 +35,29 @@ class Estabelecimento_IndexController extends Zend_Controller_Action {
             Zend_Mail::setDefaultTransport($tr);
             //envia email informando
             $mail = new Zend_Mail();
-            $mail->setBodyText($nome." (".$email . ") escreveu: " . $mensagem);
+            $mail->setBodyText($nome . " (" . $email . ") escreveu: " . $mensagem);
             $mail->setFrom($email);
             $mail->addTo("suporte@buscacomabem.com.br");
             $mail->setSubject('Fale conosco');
             try {
                 if ($mail->send($tr)) {
                     $this->view->headline = "Parabéns! Sua mensagem foi enviada.";
-                }
-                else
-                {
+                } else {
                     $this->view->headline = "Problema ao enviar sua mensagem. Por favor, tente novamente em alguns instantes.";
                 }
             } catch (Exception $e) {
-                
+
                 $this->view->headline = "Problema ao enviar sua mensagem. Por favor, tente novamente em alguns instantes.";
                 return;
             }
-            
         }
-        
-        
+    }
+
+    public function sitemapAction() {
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        echo $this->view->navigation()->sitemap();
     }
 
 }
