@@ -3,10 +3,10 @@
     <title>Busca Coma Bem - Encontre os melhores restaurantes e lanchonetes. Busca avançada por estabelecimento, produto, ingrediantes, caloria, etc. Faça pedido em mais de um estabelecimento de uma só vez. </title>
     <meta name="description" content="Somos uma empresa de tecnologia que alia os melhores recursos disponíveis para prover soluções inovadoras
         e eficientes para os restaurantes e seus usuários. Nosso principal objetivo é fornecer uma maneira para que os usuários possam encontrar de forma rápida e precisa
-        o melhor produto para atendê-lo. Diferentemente de outros aplicativos de descoberta e pedido de alimentos, no Coma Bem! 
-        você direciona sua pesquisa para o produto que deseja e não para um estabelecimento específico. Assim, você tem a certeza
+        o melhor produto para atendê-lo. Você direciona sua pesquisa para o produto ou estabelecimento que deseja. Assim, você tem a certeza
         que está levando em consideração todas as opções disponíveis e poderá compará-las para escolher a que melhor lhe atende. 
-        Descubra novos pratos e lugares baseado em suas necessidades, interesses ou mesmo em sua curiosidade. ">
+        Descubra novos pratos e lugares baseado em suas necessidades, interesses ou mesmo em sua curiosidade.  
+        Keywords: comida saudavel, comer bem, buscar restaurantes, cardapio saudavel, divulgacao de lanchonetes e restaurantes">
      
     
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
@@ -53,9 +53,15 @@
         #botaoEstabelecimento {
           position: absolute;
           right: 0;
-          top: 0;
+          top: 15;
          }
         #botaoEstabelecimento:hover{cursor: pointer;opacity: 0.8}
+        #facebook {
+          position: absolute;
+          right: 400;
+          top: 15;
+         }
+        #facebook:hover{cursor: pointer;opacity: 0.8}
         #confirmaFiltro{background: #00CC66;border: none;padding: 5px;color: #FFFFFF;float: right;border-radius: 3px;}
 
         #filtroMenu{display:none;font-family:arial !important;background: #FFFFFF;padding: 10px;border-radius: 3px;border:#CCCCCC;font-size: 19px;
@@ -80,7 +86,7 @@
         #botaoPesquisar{font-family:arial;background: #FF0033;padding: 17px;color: #FFFFFF;border: none;font-weight: bold;
                         font-size: 18px}
         #borderTopo{width: 100%;height: 5px;background: #FFBF00;position: absolute;top: 0px;left: 0px;}
-        #logoComabem img{float:left;clear: both;width: 214px;height: 85px}
+        #logoComabem img{float:left;clear: both;width: 214px;height: 85px;}
         #filtroResult:hover{cursor: pointer;opacity: 0.8}
         #filtroResult{position:absolute;margin-top:-68px;margin-left:550px;background: rgba(0,0,0,0.7);padding: 10px;border: none;color: #FFFFFF;font-weight: bold;font-size: 20px}
         #filtroMenu input{margin-left: 0px}
@@ -99,6 +105,7 @@
     <div class="main1">
     <div id="logoComabem" ><a href="/portal/"><img alt='buscacomabem' src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
     <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img alt='estabelecimento' src="<?php echo $this->serverUrl(); ?>/img/estabelecimento.png"></div></a>
+    <a href="https://www.facebook.com/buscacomabem/" target="_blank"><div id="facebook"><img alt='facebook' src="<?php echo $this->serverUrl(); ?>/img/facebook.png"></div></a>
 
 <?php
 if (!empty($this->nomeCliente))
