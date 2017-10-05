@@ -4,6 +4,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
 {
 
     public $TbCidade;
+    public $TbEstado;
     public $TipoProduto;
     public $Empresa;
     public $Produto;
@@ -28,6 +29,7 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         $this->_helper->layout()->setLayout('header');
         $this->Empresa = new DbTable_Empresa($this->db);
         $this->TbCidade = new DbTable_TbCidade();
+        $this->TbEstado = new DbTable_TbEstado();
         $this->TipoProduto = new DbTable_TipoProduto();
         $this->Produto = new DbTable_Produto($this->db);
         $this->TiposProdutosEmpresa = new DbTable_TiposProdutosEmpresa($this->db);
@@ -56,8 +58,8 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
 
     public function indexAction()
     { 
-        $this->view->empresaId = $this->empresaId; //dessa maneira garanto que sempre exista um id de empresa setado na tela
-        $this->view->cidadeOption = $this->TbCidade->getCidadeDropDown();
+        $this->view->empresaId = $this->empresaId; //dessa maneira garanto que sempre exista um id de empresa setado na tela        
+        $this->view->estadoOption = $this->TbEstado->getEstadoDropDown();
         $this->view->cod_tipo_produto = $this->TipoProduto->getCodTipoProductoDropDown();
         $this->editAction();//so nesse caso de empresa que precisa ter essa chamada
     }
@@ -312,10 +314,12 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         $this->view->formData2 = $formData2;
         $this->view->formData3 = $formData3;
 
-        $cidadeOption = $this->TbCidade->getCidadeDropDown();
+        $estadoOption = $this->TbEstado->getEstadoDropDown();
+        $cidadeOption = $this->TbCidade->getCidadeByEstadoDropDown($formData['cod_estado']);
         $cod_tipo_produto = $this->TipoProduto->getCodTipoProductoDropDown();
         $this->view->cod_tipo_produto = $cod_tipo_produto;
         $this->view->cidadeOption = $cidadeOption;
+        $this->view->estadoOption = $estadoOption;
         $this->view->title = 'Empresa';
         //$this->view->action = 'edit';
         
@@ -409,8 +413,17 @@ class Estabelecimento_EmpresaController extends Zend_Controller_Action
         exit;
     }
 
-    public function getImageAction()
+    public function getCidadeAction()
     {
+        $cod_estado = $this->_getParam('cod_estado', '');               
+        $result = $this->TbCidade->getCidadeByEstadoDropDown($cod_estado);
+        $this->view->cidadeOption = $result;
+        
+        echo json_encode($result);
+        exit;
+    }
+    public function getImageAction()
+    {        
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $empresaId = $this->empresaId;  //$this->_getParam('id', '');

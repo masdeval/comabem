@@ -85,8 +85,8 @@ class DbTable_Empresa extends Zend_Db_Table_Abstract {
             'Ü' => 'U',
             'Ç' => 'C'
         );
-        return ereg_replace(
-                '[^a-z0-9-]', '', ereg_replace(
+        return preg_replace(
+                '/[^a-z0-9-]/', '', preg_replace(
                         ' +', '-',
                         //strtr(utf8_decode(utf8_encode($input)),'ÀÁÃÂÉÊÍÓÕÔÚÜÇàáãâéêíóõôúüç','AAAAEEIOOOUUCaaaaeeiooouuc')
                         strtr(

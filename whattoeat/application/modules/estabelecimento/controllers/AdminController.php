@@ -21,13 +21,15 @@ class Estabelecimento_AdminController extends Zend_Controller_Action {
     public function recriateLuceneDatabaseAction() {
                   
         try{
-        LuceneManager::recriateLuceneDatabase();
-        $this->view->headline = "Base recriada com sucesso.";
+        
+            $retorno = LuceneManager::recriateLuceneDatabase();
+        
+        $this->view->headline = $retorno;
         
                    
-        } catch (Exception $ex) {
+        } catch (Exception $e) {
             
-            $this->view->headline = "Erro ao recirar a base " . $ex;
+            $this->view->headline = "Erro ao recirar a base " . $e;
         }
         $this->_helper->viewRenderer('index');
     }

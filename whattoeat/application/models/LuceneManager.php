@@ -3,22 +3,21 @@
 //define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
 
 class LuceneManager {
-    
+
     private static $LUCENE_DIR;
-    
-  static function init()
-  {
-    self::$LUCENE_DIR = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'index';
-  }
-  
-  
-    static function criaDocumentoProduto($empresaId, $produtoId, $produto) {
+
+    static function init() {
+        self::$LUCENE_DIR = APPLICATION_PATH . DIRECTORY_SEPARATOR . 'lucene' . DIRECTORY_SEPARATOR . 'index';
+    }
+
+    static function criaDocumentoProduto($empresaId, $produtoId) {
         $DbTable_Empresa = new DbTable_Empresa(Zend_Db_Table::getDefaultAdapter());
         $DbTable_Produto = new DbTable_Produto(Zend_Db_Table::getDefaultAdapter());
         Zend_Search_Lucene_Search_QueryParser::setDefaultEncoding("UTF-8");
         Zend_Search_Lucene_Analysis_Analyzer::setDefault(new Zend_Search_Lucene_Analysis_Analyzer_Common_Utf8_CaseInsensitive());
 
         $empresa = $DbTable_Empresa->getSingleData($empresaId);
+        $produto = $DbTable_Produto->getSingleData($produtoId);
         $ingredientes = $DbTable_Produto->getIngredientes($produtoId);
 
 
@@ -30,7 +29,6 @@ class LuceneManager {
         } catch (Exception $e) {
             //se nao conseguir, cria um indice novo
             $index = new Zend_Search_Lucene(self::$LUCENE_DIR, true);
-            
         }
         //remove o produto para nao gerar entradas duplicadas
         $hit = $index->find("cod_produto:" . $produtoId);
@@ -71,14 +69,15 @@ class LuceneManager {
         $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($produto['nome']));
         $doc->addField(Zend_Search_Lucene_Field::Text('nome_produto', $aux, "UTF-8"));
 
+        $aux = '';
         //Adiciona os ingredientes do produto
         foreach ($ingredientes as $value) {
 
-            $aux = mb_detect_encoding(($value));
-            $aux = iconv($aux, "UTF-8//TRANSLIT", strtolower($value));
-            $doc->addField(Zend_Search_Lucene_Field::Text('nome_ingrediente', $aux, "UTF-8"));
+            $encoding = mb_detect_encoding(($value['nome']));
+            $aux = $aux . " " . iconv($encoding, "UTF-8//TRANSLIT", strtolower($value['nome']));
+            
         }
-
+        $doc->addField(Zend_Search_Lucene_Field::Text('nome_ingrediente', $aux, "UTF-8"));
         // Field is tokenized and indexed, but is not stored in the index.
         //$doc->addField(Zend_Search_Lucene_Field::UnStored('contents','My document content'));
 
@@ -190,14 +189,16 @@ class LuceneManager {
         foreach ($empresas as $empresa) {
             $produtos = $dbProduto->getRecords($empresa['cod_empresa']);
             foreach ($produtos as $produto) {
-                try{
-                LuceneManager::criaDocumentoProduto($empresa['cod_empresa'], $produto['cod_produto'], $produto);
-                }
-                catch(Exception $e)
-                {
-                    //remove all files and try again
-                    self::delete_files(self::$LUCENE_DIR);
+                try {
                     LuceneManager::criaDocumentoProduto($empresa['cod_empresa'], $produto['cod_produto'], $produto);
+                    return "Base criada com sucesso em ".self::$LUCENE_DIR;
+                } catch (Exception $e) {
+                    
+                        //remove all files and try again
+                        self::delete_files(self::$LUCENE_DIR);
+                        LuceneManager::criaDocumentoProduto($empresa['cod_empresa'], $produto['cod_produto'], $produto);
+                        return "Base criada com sucesso em ".self::$LUCENE_DIR;
+                    
                 }
             }
         }

@@ -371,7 +371,7 @@
                                 <input type="hidden" name="ie[valor_calorico][<?php echo $v['cod_ingrediente'] ?>]">
                                 <input type="text" style="width: 200px;" value="<?php echo $v['quantidade_utilizada'] ?>" name="ie[quantidade_utilizada][<?php echo $v['cod_ingrediente'] ?>]" title="" class="input-medium validDecimalNumber form-control">
                                 <div class="del_ingredient" data-productid="<?php echo $this->produtoId; ?>" data-codingrediente="<?php echo $v['cod_ingrediente']; ?>" data-codempresa="<?php echo $v['cod_empresa']; ?>">
-                                    <img src="img/Erase.png">
+                                    <img src="<?php echo $this->baseUrl() ?>/img/Erase.png">
                                     </div><div class="bodyTextSmall"> 
                                     <span class="tip"></span> <span class="missing"></span>
                                 </div>
@@ -558,7 +558,7 @@
                 app_div = '<div class="ingredientpage" id="a_' + item_id + '"><input style="display:none" type="checkbox" checked="checked" name="ie[cod_ingrediente][]" value="' + item_id + '">';
                 app_div += '<div align="left" class="td-wid"><span class="item_label">' + item_label + '</span>';
                 app_div += '<input type="text" style="width: 200px;" value="" name="ie[quantidade_utilizada][' + item_id + ']" title="" class="input-medium validDecimalNumber form-control">';
-                app_div += '<div class="del_ingredient"><img src="/img/Erase.png"><input type="hidden" name="ie[valor_calorico][' + item_id + ']"></div>';
+                app_div += '<div class="del_ingredient"><img src="<?php echo $this->baseUrl() ?>/img/Erase.png"><input type="hidden" name="ie[valor_calorico][' + item_id + ']"></div>';
                 app_div += '<div class="bodyTextSmall"> <span class="tip"></span> <span class="missing"></span></div></div>';
 
 
@@ -594,8 +594,8 @@
 
                     }
                 });
-                $(e.target).parent().parent().parent().remove();
-
+                $(e.target).parent().parent().parent().remove();alert('coco');
+                $("#form4").submit();
             }
 
 

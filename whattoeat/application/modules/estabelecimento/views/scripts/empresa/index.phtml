@@ -117,14 +117,28 @@
 
                         </tr>
                         <tr>
-                            <td> <label>Cidade *</label>
-<?php
-                                $attribs = array("class" => 'input-medium RQR required form-control', "title" => 'Por favor, indique Cidade');
+                            
+                             
+                            <td> Estado * 
+                                
+                                <?php $attribs = array("id"=>"comboEstado", "class" => 'input-medium RQR required', "title" => 'Por favor, indique o estado', 'style' => 'width:200px', 'onchange'=>"obterCidadePorEstado(this)");
                                 // echo form_dropdown('cod_cidade', $cidadeOption, $formData['cod_cidade'],$extra);
-                                echo $this->formSelect('cod_cidade', $this->formData['cod_cidade'], $attribs, $this->cidadeOption);
-?>
-                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div></td>
+                                echo $this->formSelect('cod_estado', $this->formData['cod_estado'], $attribs, $this->estadoOption); ?>
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                            </td>
+                            
+                            <td> <label>Cidade *</label>
+                               
+                            <!--<select name="comboCidade" id="comboCidade" class="input-medium RQR required form-control" title="Por favor, indique Cidade" >
+                            </select></td>    -->
 
+                            <?php
+                                $attribs = array("id"=>"comboCidade","class" => 'input-medium RQR required form-control', "title" => 'Por favor, indique Cidade');                                
+                                echo $this->formSelect('cod_cidade', $this->formData['cod_cidade'], $attribs, $this->cidadeOption); ?>
+                                <div class='bodyTextSmall'> <span class='tip'></span> <span class='missing'></span></div>
+                                
+                            </tr>
+                            <tr>
                             <td> <label>Fuso Horário</label>
 			    <select name="timezone" id="timezone" class="input-medium RQR required form-control" title="Por favor, indique o fuso horário">
 				<option value="America/Manaus" label="America/Manaus" <?php echo ($this->formData['timezone'] == 'America/Manaus') ? "selected" : ""  ?>  >Manaus</option>

@@ -51,7 +51,8 @@ class Portal_IndexController extends Zend_Controller_Action {
         $latitude = $this->getRequest()->getPost('latitude');
         $longitude = $this->getRequest()->getPost('longitude');
         $cidade = $this->getRequest()->getPost('cidade');
-        $this->gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece,$latitude,$longitude,$cidade);
+        $estado = $this->getRequest()->getPost('estado');
+        $this->gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece,$latitude,$longitude,$cidade,$estado);
 
         //echo "<pre>"; print_r($_POST); die;
         //
@@ -73,7 +74,7 @@ class Portal_IndexController extends Zend_Controller_Action {
             $produtos .= "-1"; //so porque fica uma virgula no final
         }
 
-        $resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece);
+        $resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece,$estado);
 
         if (!empty($resultado) && sizeof($resultado) > 0) {
 

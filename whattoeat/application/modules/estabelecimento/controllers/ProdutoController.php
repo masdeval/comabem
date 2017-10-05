@@ -108,7 +108,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 		{
 		    $this->Produto->edit($formData, $this->empresaId, $produtoId);
 		    //insere tambem no lucene
-		    LuceneManager::criaDocumentoProduto($this->empresaId, $produtoId, $formData);
+		    LuceneManager::criaDocumentoProduto($this->empresaId, $produtoId);
 		}
 		catch (Exception $e)
 		{
@@ -127,7 +127,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 		    $produtoId = $this->Produto->add($formData, $this->empresaId);
                     $this->TamanhoProduto->add($formData, $produtoId);
 		    //insere tambem no lucene
-		    LuceneManager::criaDocumentoProduto($this->empresaId, $produtoId, $formData);
+		    LuceneManager::criaDocumentoProduto($this->empresaId, $produtoId);
 		}
 		catch (Exception $e)
 		{
@@ -214,6 +214,7 @@ class Estabelecimento_ProdutoController extends Zend_Controller_Action
 		    $this->db->beginTransaction();
 		    $this->ItensDeUmLanche->add($formData, $produtoId, $this->empresaId);
 		    $this->db->commit();
+                    LuceneManager::criaDocumentoProduto($this->empresaId, $produtoId);
 		}
 		catch (Exception $e)
 		{
