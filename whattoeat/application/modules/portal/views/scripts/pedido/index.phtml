@@ -1,6 +1,16 @@
 <head>
+    
+<title>Busca Coma Bem - Encontre os melhores restaurantes e lanchonetes. Busca avançada por estabelecimento, produto, ingrediantes, caloria, etc. Faça pedido em mais de um estabelecimento de uma só vez. </title>
+    <meta name="description" content="Somos uma empresa de tecnologia que alia os melhores recursos disponíveis para prover soluções inovadoras
+        e eficientes para os restaurantes e seus usuários. Nosso principal objetivo é fornecer uma maneira para que os usuários possam encontrar de forma rápida e precisa
+        o melhor produto para atendê-lo. Você direciona sua pesquisa para o produto ou estabelecimento que deseja. Assim, você tem a certeza
+        que está levando em consideração todas as opções disponíveis e poderá compará-las para escolher a que melhor lhe atende. 
+        Descubra novos pratos e lugares baseado em suas necessidades, interesses ou mesmo em sua curiosidade.  
+        Keywords: comida saudavel, comer bem, buscar restaurantes, cardapio saudavel, divulgacao de lanchonetes e restaurantes">
+     
+    
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
+    <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
     
     <!-- Bootstrap core CSS -->
 	<link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
@@ -24,9 +34,13 @@
 
 </head>
  <div class="header">
-            <div class="logo" style="float:left;"><a href="/portal/"><img src="/img/logotipo.png"></a></div>
-                <div style="float: right; margin-right: 50px; margin-top: 100px; font-size: medium;" class=""> <a href="/estabelecimento/auth" > Para seu estabelecimento </a></div>
-	</div>
+     
+     
+     <div id="logoComabem" ><a href="/portal/"><img alt='buscacomabem' src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
+    <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img alt='estabelecimento' src="<?php echo $this->serverUrl(); ?>/img/estabelecimento.png"></div></a>
+    <a href="https://www.facebook.com/buscacomabem/" target="_blank"><div class="facebook"><img alt='facebook' src="<?php echo $this->serverUrl(); ?>/img/facebook.png"></div></a>
+    	
+ </div>
 <body>
 
 <p> O ComaBem ainda não permite fazer o pedido, mas aqui você pdoerá ver um resumo da sua compra, com os valores de cada item e o valor total. </p>

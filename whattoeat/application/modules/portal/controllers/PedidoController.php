@@ -31,7 +31,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 	}
 	catch (Exception $e)
 	{
-	    continue;
+	    
 	}
 	//retorna um array indexado de 0
 	$configuracoes = $this->ProdutoDB->configuracaoProduto($tamanho_produto['cod_produto']);
@@ -126,6 +126,7 @@ class Portal_PedidoController extends Zend_Controller_Action
 	$this->view->configuracoes = $configuracao_produtos;
 	if (isset($this->session->configuracoesPedido))//significa que o usuario já chegou a fazer alguma configuracao e voltou para continuar comprando
 	    $this->view->configuracoesJaFeitas = $this->session->configuracoesPedido;
+        
     }
 
     /*

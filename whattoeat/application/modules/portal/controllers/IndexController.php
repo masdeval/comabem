@@ -17,6 +17,7 @@ class Portal_IndexController extends Zend_Controller_Action {
         /* Initialize action controller here */
         $this->session = new Zend_Session_Namespace('compra');
         $this->_helper->layout()->disableLayout();
+        $this->CidadeDB = new DbTable_TbCidade();
         $this->TipoProdutoDB = new DbTable_TipoProduto();
         $this->FotoProdutoDB = new DbTable_FotoProduto(Zend_Db_Table::getDefaultAdapter());
         $this->ProdutoDB = new DbTable_Produto(Zend_Db_Table::getDefaultAdapter());
@@ -35,6 +36,8 @@ class Portal_IndexController extends Zend_Controller_Action {
     public function indexAction() {
         $this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
         $this->view->pesquisa_facapedido_empresa_oferece = array();
+        $this->view->cidade = $this->CidadeDB->getCitiesAvaiable();
+        
     }
 
     public function consultaAction() {
@@ -50,9 +53,9 @@ class Portal_IndexController extends Zend_Controller_Action {
         //grava a consulta no banco 
         $latitude = $this->getRequest()->getPost('latitude');
         $longitude = $this->getRequest()->getPost('longitude');
-        $cidade = $this->getRequest()->getPost('cidade');
-        $estado = $this->getRequest()->getPost('estado');
-        $this->gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece,$latitude,$longitude,$cidade,$estado);
+        $cidade = $this->getRequest()->getPost('cod_cidade');
+        
+        $this->gravaLogConsulta($criterios,$tipos_produto,$caloria,$empresa_oferece,$latitude,$longitude,$cidade);
 
         //echo "<pre>"; print_r($_POST); die;
         //
@@ -61,20 +64,18 @@ class Portal_IndexController extends Zend_Controller_Action {
             $hits = LuceneManager::search($criterios);
             //obtem a lista de empresas em ordem crescente de relevancia e insere os ids em uma string
             //para fazer select no banco
-            $cod_empresa = "";
+            
+            $produtos = '';
             foreach ($hits as $hit) {
                 //Quero selecionar apenas uma vez uma determinada empresa no filtro da primeira pagina
-                if ($cod_empresa == $hit->cod_empresa) {
-                    continue;
-                } else {
-                    $cod_empresa = $hit->cod_empresa;
+                
                     $produtos .= $hit->cod_produto . ", ";
-                }
+                
             }
             $produtos .= "-1"; //so porque fica uma virgula no final
         }
 
-        $resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece,$estado);
+        $resultado = $this->ProdutoDB->consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece,$cidade);
 
         if (!empty($resultado) && sizeof($resultado) > 0) {
 
@@ -117,7 +118,8 @@ class Portal_IndexController extends Zend_Controller_Action {
         $this->view->pesquisa_facapedido_tipo_produto = $tipos_produto;
         $this->view->pesquisa_facapedido_caloria = $caloria;
         $this->view->pesquisa_facapedido_empresa_oferece = $empresa_oferece;
-
+        $this->view->cidade = $this->CidadeDB->getCitiesAvaiable();
+        $this->view->cod_cidade = $cidade;        
         $this->_helper->viewRenderer("index");
     }
 
@@ -171,11 +173,15 @@ class Portal_IndexController extends Zend_Controller_Action {
     }
 
     public function limparCarrinhoAction() {
+        
         if (isset($this->session)) {
             $this->session->__unset("carrinho");
             $this->session->__unset("configuracoesPedido");
         }
         $this->view->cod_tipo_produto = $this->TipoProdutoDB->getCodTipoProductoDropDown();
+        $this->view->pesquisa_facapedido_empresa_oferece = array();
+        $this->view->cidade = $this->CidadeDB->getCitiesAvaiable();
+        $this->view->cod_cidade = $this->getRequest()->getPost('cod_cidade');
         $this->_helper->viewRenderer("index");
     }
 
@@ -185,8 +191,8 @@ class Portal_IndexController extends Zend_Controller_Action {
         if (!empty($criterios) || !empty($tipos_produto) || !empty($caloria) || !empty($empresa_oferece)) {
             
             $ip = $_SERVER['REMOTE_ADDR'];
-            //$cidade = substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::CITY_NAME),0,29);
-            $pais = "BR";//substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::COUNTRY_NAME),0,19);
+            //GEO $cidade = substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::CITY_NAME),0,29);
+            $pais = "BR";//GEO substr($this->geolocation->lookup($ip, IP2Location_DatabaseGeo::COUNTRY_NAME),0,19);
             
             $descricao_tipo_produto = "";
             if(!empty($tipos_produto))

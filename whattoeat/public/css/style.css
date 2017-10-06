@@ -1102,3 +1102,9 @@ background: none repeat scroll 0 0 rgba(255, 255, 255, 0.7);
  font-size:14px;
  padding:10px 2px 25px 25px;
 }
+
+.facebook {
+          position: absolute;
+          right: 400;
+          top: 15;
+         }

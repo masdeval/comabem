@@ -32,6 +32,7 @@ body {
     margin: 26px 0 0 48px;
 }
 
+
 .header {
     height: 137px;
     background: url('../img/backcomabem.jpg') no-repeat;
@@ -362,4 +363,10 @@ ol, ul {
         width: 100%;
         margin-bottom:10px
     }
+}
+
+.facebook {    
+    position: absolute;
+    right: 400;
+    top: 15;
 }

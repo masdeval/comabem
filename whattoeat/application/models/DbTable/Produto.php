@@ -118,7 +118,7 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	$t = $this->_db->update('produto', $data, $where);
     }
 
-    public function consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece, $estado, $cod_empresa='')
+    public function consultaQBE($produtos, $caloria, $tipos_produto, $empresa_oferece, $cidade='', $cod_empresa='')
     {
         
 	$select = "select P.cod_produto, P.nome , P.descricao, P.valor_calorico, P.valor_calorico_aproximado,FP.cod_foto, TP.cod_tamanho_produto, TP.preco, TP.descricao as tamanho,
@@ -136,8 +136,8 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 
 	$where = "where P.removed <> 1 and TP.removed  <> 1 AND P.disponivel = true AND
 	P.cod_produto = TP.cod_produto AND E.desativada = false AND E.removed = 0 AND
-	P.cod_tipo_produto = Tipo.cod_tipo_produto AND P.cod_empresa = E.cod_empresa AND 
-        E.cod_estado = ".$estado;
+	P.cod_tipo_produto = Tipo.cod_tipo_produto AND P.cod_empresa = E.cod_empresa ";
+        
 
 	$i = 1;
 	if (!empty($cod_empresa))
@@ -145,6 +145,10 @@ class DbTable_Produto extends Zend_Db_Table_Abstract
 	    $where .= " AND E.cod_empresa = :" . $i;
 	    $i++;
 	}
+        else
+        {
+            $where .= " AND E.cod_cidade = ".$cidade;
+        }
 
 	//preciso ordenar aqui para agrupar por empresa
 	$order_by = " ORDER BY E.razao_social";
