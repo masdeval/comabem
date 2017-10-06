@@ -289,6 +289,7 @@
                                         //Esse laco verifica se existem outros tamanhos para o mesmo produto
                                         while (($i < sizeof($this->resultado)) && $this->resultado[$i]['cod_produto'] == $this->resultado[$i - 1]['cod_produto']) {                                           
                                             
+                                            //Porque um produto pode ter mais de uma imagem e assim vai retornar o mesmo tamanho mais de uma vez
                                             if($this->resultado[$i]['cod_tamanho_produto'] == $this->resultado[$i-1]['cod_tamanho_produto']){
                                                 $i++;
                                                 continue;

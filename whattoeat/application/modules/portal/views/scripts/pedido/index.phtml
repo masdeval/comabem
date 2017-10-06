@@ -1,289 +1,260 @@
 <head>
-    
-<title>Busca Coma Bem - Encontre os melhores restaurantes e lanchonetes. Busca avançada por estabelecimento, produto, ingrediantes, caloria, etc. Faça pedido em mais de um estabelecimento de uma só vez. </title>
+
+    <title>Busca Coma Bem - Encontre os melhores restaurantes e lanchonetes. Busca avançada por estabelecimento, produto, ingrediantes, caloria, etc. Faça pedido em mais de um estabelecimento de uma só vez. </title>
     <meta name="description" content="Somos uma empresa de tecnologia que alia os melhores recursos disponíveis para prover soluções inovadoras
-        e eficientes para os restaurantes e seus usuários. Nosso principal objetivo é fornecer uma maneira para que os usuários possam encontrar de forma rápida e precisa
-        o melhor produto para atendê-lo. Você direciona sua pesquisa para o produto ou estabelecimento que deseja. Assim, você tem a certeza
-        que está levando em consideração todas as opções disponíveis e poderá compará-las para escolher a que melhor lhe atende. 
-        Descubra novos pratos e lugares baseado em suas necessidades, interesses ou mesmo em sua curiosidade.  
-        Keywords: comida saudavel, comer bem, buscar restaurantes, cardapio saudavel, divulgacao de lanchonetes e restaurantes">
-     
-    
+          e eficientes para os restaurantes e seus usuários. Nosso principal objetivo é fornecer uma maneira para que os usuários possam encontrar de forma rápida e precisa
+          o melhor produto para atendê-lo. Você direciona sua pesquisa para o produto ou estabelecimento que deseja. Assim, você tem a certeza
+          que está levando em consideração todas as opções disponíveis e poderá compará-las para escolher a que melhor lhe atende. 
+          Descubra novos pratos e lugares baseado em suas necessidades, interesses ou mesmo em sua curiosidade.  
+          Keywords: comida saudavel, comer bem, buscar restaurantes, cardapio saudavel, divulgacao de lanchonetes e restaurantes">
+
+
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
-    
-    <!-- Bootstrap core CSS -->
-	<link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	
-	<!-- Bootstrap theme -->
-	<link type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
-	
-	<!-- Portal CSS-->
-	<link type="text/css" href="/css/portal.css" rel="stylesheet" />     
 
-	
+    <!-- Bootstrap core CSS -->
+    <link type="text/css" href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Bootstrap theme -->
+    <link type="text/css" href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+
+    <!-- Portal CSS-->
+    <link type="text/css" href="/css/portal.css" rel="stylesheet" />     
+
+
     <link type="text/css" href="/js/jui/css/pepper-grinder/jquery-ui-1.8.9.custom.css" rel="stylesheet" />
 
-
-    <script type="text/javascript" src="/js/jui/js/jquery-1.4.4.min.js"></script>
-    <script type="text/javascript" src="/js/jui/js/jquery-ui-1.8.9.custom.min.js"></script>
     <script type="text/javascript" src="/js/portal.js"></script>
-    <script type="text/javascript" src="/js/validation-new.js"></script>
-    
+
 
 
 </head>
- <div class="header">
-     
-     
-     <div id="logoComabem" ><a href="/portal/"><img alt='buscacomabem' src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
-    <a href="/estabelecimento/auth" ><div id="botaoEstabelecimento"><img alt='estabelecimento' src="<?php echo $this->serverUrl(); ?>/img/estabelecimento.png"></div></a>
-    <a href="https://www.facebook.com/buscacomabem/" target="_blank"><div class="facebook"><img alt='facebook' src="<?php echo $this->serverUrl(); ?>/img/facebook.png"></div></a>
-    	
- </div>
+
+
+<div class="header">
+    <div class="logo" ><a href="/portal/"><img alt='buscacomabem' src="<?php echo $this->serverUrl(); ?>/img/logotipo.png"></a></div>
+    <a href="https://www.facebook.com/buscacomabem/" target="_blank"><div class="facebook"><img alt='facebook' src="<?php echo $this->serverUrl(); ?>/img/facebook.png"></div></a>		
+</div>
+
 <body>
 
-<p> O ComaBem ainda não permite fazer o pedido, mas aqui você pdoerá ver um resumo da sua compra, com os valores de cada item e o valor total. </p>
-<p> Pedimos que entre em contato direto com o estabaelicmento para fazer seu pedido. </p>
+    <p> O ComaBem ainda não permite fazer o pedido, mas aqui você pdoerá ver um resumo da sua compra, com os valores de cada item e o valor total. </p>
+    <p> Pedimos que entre em contato direto com o estabaelicmento para fazer seu pedido. </p>
     <form action="/portal/pedido/concluir-Compra" method="POST" name="form1" id="form1" onsubmit="return validateForm('form1')" >
 
-	<!--  Ainda não vamos opferecer efetivar a compra <input type="submit" value="Concluir Compra">  -->
-	<input type="button" value="Continuar Comprando" onclick="javascript:document.getElementById('form1').action='/portal/pedido/continuar-Comprando',document.getElementById('form1').submit()">
+        <!--  Ainda não vamos opferecer efetivar a compra <input type="submit" value="Concluir Compra">  -->
+        <input type="button" value="Continuar Comprando" onclick="javascript:document.getElementById('form1').action = '/portal/pedido/continuar-Comprando', document.getElementById('form1').submit()">
 
-	<?php
-	//descobre quais são os ids das empresas que estao no array do carrinho em $this->carrinho
-	$cod_empresas = array_keys($this->carrinho);
-	$total = 0.0;
-	$total_adicionais = 0.0;
+        <?php
+        //descobre quais são os ids das empresas que estao no array do carrinho em $this->carrinho
+        $cod_empresas = array_keys($this->carrinho);
+        $total = 0.0;
+        $total_adicionais = 0.0;
 
-	foreach ($cod_empresas as $key_empresa)
-	{
-	?>
+        foreach ($cod_empresas as $key_empresa) {
+            ?>
 
-    	<!-- Box para uma empresa -->
-    	<div style="border: solid gray; margin: 50px;">
+            <!-- Box para uma empresa -->
+            <div style="border: solid gray; margin: 50px;">
 
-    	    <h4><?php echo $this->carrinho[$key_empresa]['nome_empresa'] ?> </h4>
+                <h4><?php echo $this->carrinho[$key_empresa]['nome_empresa'] ?> </h4>
 
-    	    <br>
-
-
-    	    <input type="radio" checked name="configuracoes[<?php echo $key_empresa ?>][entregar]" value="1"> Desejo entrega
-    	    <input type="radio"  name="configuracoes[<?php echo $key_empresa ?>][entregar]" value="2"> Irei buscar no local
-
-    	    <br>
-        	    Deseja receber mensagem de texto no celular quando o pedido estiver pronto?
-    	    <input type="radio"  name="configuracoes[<?php echo $key_empresa ?>][sms]" value="1"> Sim
-	    <input type="radio" checked name="configuracoes[<?php echo $key_empresa ?>][sms]" value="2"> Não
+                <br>
 
 
-	    <?php
-	    //encontra os produtos escolhidos de uma empresa especifica
-	    //vai vir na primeira posicao a palavra 'nome_empresa' que deve ser descartada
-	    $cod_tamanho_produtos = array_keys($this->carrinho[$key_empresa]);
-	    unset($cod_tamanho_produtos[0]); //retira o lixo
+                <input type="radio" checked name="configuracoes[<?php echo $key_empresa ?>][entregar]" value="1"> Desejo entrega
+                <input type="radio"  name="configuracoes[<?php echo $key_empresa ?>][entregar]" value="2"> Irei buscar no local
 
-	    foreach ($cod_tamanho_produtos as $key_tamanho_produto)
-	    {
-		$total_parcial = 0.0;
-		$total_parcial_adicionais = 0.0;
-	    ?>
-    	    <ul>
-    		<li> <?php echo $this->carrinho[$key_empresa][$key_tamanho_produto]['nome_produto'] ?>
-    		    <br>
-        		Tamanho escolhido:  <?php echo $this->carrinho[$key_empresa][$key_tamanho_produto]['tamanho'] ?>
-		    <br>
-    		Preço: <?php $valor = (float) $this->carrinho[$key_empresa][$key_tamanho_produto]['preco'];
-		    echo $valor; ?>
-		    <?php $total_parcial += $valor; ?>
-		    <br>
-		Quantidade: <?php
-		    $qt = (int) $this->carrinho[$key_empresa][$key_tamanho_produto]['quantidade'];
-		    ?>
-
-		    <input type="text" size="2" id="quantidade_<?php echo $key_empresa ?>_<?php echo $key_tamanho_produto ?>" maxlength="2" class="input-medium RQR required validNumber" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][quantidade]" value="<?php echo $qt ?>">
-		    <div class='bodyTextSmall' style="float:left;"> <span class='tip'></span> <span class='missing' ></span></div>
-		    <input type="button" name="recalcular" value="Recalcular" onclick="recalcularQuantidade(<?php echo $key_empresa ?>,<?php echo $key_tamanho_produto ?>)">
-		    <br><br>
-
-		    <?php
-		    //se sim, entao existe categoria permitida como adicional
-		    if (isset($this->configuracoes[$key_empresa][$key_tamanho_produto][0]))
-		    {
-			echo "<input type='button' id='botao_adicionais_" . $key_empresa . "_" . $key_tamanho_produto . "' value='Apresentar Adicionais' onclick='panelAdicionais(" . $key_empresa . "," . $key_tamanho_produto . ")'/>";
-			echo '<div style="display: none;" id="adicional_' . $key_empresa . '_' . $key_tamanho_produto . '">';
-			//cria as opcoes para incluir os adicionais
-			//itera no numero de itens do produto escolhido
-			//para cada item deve ser possivel configurar os adicionais se existirem
-			for ($i = 1; $i <= $qt; $i++)
-			{
-			    echo "<fieldset style='margin: 0; padding: 0;'>";
-			    echo "<legend>" . $this->carrinho[$key_empresa][$key_tamanho_produto]['nome_produto'] . " - " . $i . " (Máximo de adicionais: " . $this->configuracoes[$key_empresa][$key_tamanho_produto]['max_adicionais'] . ")</legend>";
-			    echo "<table class='tableFrm' cellspacing='8' cellpadding='0' border='0'>";
-			    echo "<tr>";
-			    $j = 0;
-			    $k = 0;
-			    $ingredientes_ja_impressos = array();
-
-			    //itera nas categorias permitidas
-			    while (isset($this->configuracoes[$key_empresa][$key_tamanho_produto][$j]))
-			    {
-				$categoria = $this->configuracoes[$key_empresa][$key_tamanho_produto][$j];
-
-				$ingredientes = $categoria['ingredientes'];
-
-				foreach ($ingredientes as $cod_ingrediente => $valor)
-				{
-				    //nao deve imprimir o mesmo ingrediente duas vezes
-				    if (array_key_exists($cod_ingrediente, $ingredientes_ja_impressos))
-					continue;
-
-				    $ingredientes_ja_impressos[$cod_ingrediente] = $cod_ingrediente;
-				    //essa linha deve enviar a informacao de quais ingredientes serao adicionais para um produto
-				    //se houver varios produtos iguais, isso deve ser tratado
-				    echo '<td> <input type="checkbox"  onclick="calculaAdicionais(this,\'' . $valor['preco_adicional'] . '\',' . $key_empresa . ',' . $key_tamanho_produto . ',' . $i . ',' . $this->configuracoes[$key_empresa][$key_tamanho_produto]['max_adicionais'] . ')" name="configuracoes[' . $key_empresa . '][' . $key_tamanho_produto . ']' . '[adicionais]' . '[' . $i . '][]' .
-				    '" value="' . $cod_ingrediente;
-
-				    //pode ser que o usuario ja configurou alguma coisa e deve-se apresentar aqui
-				    //primeiro verifica se no array de configuracao existe algo sobre adicionais
-				    if (isset($this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['adicionais'][$i]))
-				    {
-					$flag = true;
-					//se existe, deve-se verificar se o ingrediente que se quer imprimir ja foi selecionado antes
-					//para isso tem-se que iterar em todos os codigos de ingredientes relacionados com essa empresa e esse produto
-					foreach ((array) $this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['adicionais'][$i] as $cod_ingrediente_ja_escolhido)
-					{
-					    //se achou algum, marca como checado
-					    if ($cod_ingrediente == $cod_ingrediente_ja_escolhido)
-					    {
-						$total_parcial_adicionais += $valor['preco_adicional'];
-						echo '" checked >' . $valor['nome_ingrediente'] . " (R$ " . $valor['preco_adicional'] . ") </td>";
-						$flag = false;
-						break;
-					    }
-					}
-					if ($flag)//se esse ingrediente nunca foi selecionado antes, entra aqui
-					{
-					    echo '" >' . $valor['nome_ingrediente'] . " (R$ " . $valor['preco_adicional'] . ") </td>";
-					}
-				    }
-				    else
-				    {
-					echo '" >' . $valor['nome_ingrediente'] . " (R$ " . $valor['preco_adicional'] . ") </td>";
-				    }
+                <br>
+                Deseja receber mensagem de texto no celular quando o pedido estiver pronto?
+                <input type="radio"  name="configuracoes[<?php echo $key_empresa ?>][sms]" value="1"> Sim
+                <input type="radio" checked name="configuracoes[<?php echo $key_empresa ?>][sms]" value="2"> Não
 
 
-				    if ($k >= 4)
-				    {
-					echo '</tr><tr>';
-					$k = 0;
-				    }
-				    $k++;
-				}
-				$j++;
-			    }
+                <?php
+                //encontra os produtos escolhidos de uma empresa especifica
+                //vai vir na primeira posicao a palavra 'nome_empresa' que deve ser descartada
+                $cod_tamanho_produtos = array_keys($this->carrinho[$key_empresa]);
+                unset($cod_tamanho_produtos[0]); //retira o lixo
+
+                foreach ($cod_tamanho_produtos as $key_tamanho_produto) {
+                    $total_parcial = 0.0;
+                    $total_parcial_adicionais = 0.0;
+                    ?>
+                    <ul>
+                        <li> <?php echo $this->carrinho[$key_empresa][$key_tamanho_produto]['nome_produto'] ?>
+                            <br>
+                            Tamanho escolhido:  <?php echo $this->carrinho[$key_empresa][$key_tamanho_produto]['tamanho'] ?>
+                            <br>
+                            Preço: <?php $valor = (float) $this->carrinho[$key_empresa][$key_tamanho_produto]['preco'];
+            echo $valor;
+            ?>
+                            <?php $total_parcial += $valor; ?>
+                            <br>
+                            Quantidade: <?php
+                    $qt = (int) $this->carrinho[$key_empresa][$key_tamanho_produto]['quantidade'];
+                            ?>
+
+                            <input type="text" size="2" id="quantidade_<?php echo $key_empresa ?>_<?php echo $key_tamanho_produto ?>" maxlength="2" class="input-medium RQR required validNumber" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][quantidade]" value="<?php echo $qt ?>">
+                            <div class='bodyTextSmall' style="float:left;"> <span class='tip'></span> <span class='missing' ></span></div>
+                            <input type="button" name="recalcular" value="Recalcular" onclick="recalcularQuantidade(<?php echo $key_empresa ?>,<?php echo $key_tamanho_produto ?>)">
+                            <br><br>
+
+                            <?php
+                            //se sim, entao existe categoria permitida como adicional
+                            if (isset($this->configuracoes[$key_empresa][$key_tamanho_produto][0])) {
+                                echo "<input type='button' id='botao_adicionais_" . $key_empresa . "_" . $key_tamanho_produto . "' value='Apresentar Adicionais' onclick='panelAdicionais(" . $key_empresa . "," . $key_tamanho_produto . ")'/>";
+                                echo '<div style="display: none;" id="adicional_' . $key_empresa . '_' . $key_tamanho_produto . '">';
+                                //cria as opcoes para incluir os adicionais
+                                //itera no numero de itens do produto escolhido
+                                //para cada item deve ser possivel configurar os adicionais se existirem
+                                for ($i = 1; $i <= $qt; $i++) {
+                                    echo "<fieldset style='margin: 0; padding: 0;'>";
+                                    echo "<legend>" . $this->carrinho[$key_empresa][$key_tamanho_produto]['nome_produto'] . " - " . $i . " (Máximo de adicionais: " . $this->configuracoes[$key_empresa][$key_tamanho_produto]['max_adicionais'] . ")</legend>";
+                                    echo "<table class='tableFrm' cellspacing='8' cellpadding='0' border='0'>";
+                                    echo "<tr>";
+                                    $j = 0;
+                                    $k = 0;
+                                    $ingredientes_ja_impressos = array();
+
+                                    //itera nas categorias permitidas
+                                    while (isset($this->configuracoes[$key_empresa][$key_tamanho_produto][$j])) {
+                                        $categoria = $this->configuracoes[$key_empresa][$key_tamanho_produto][$j];
+
+                                        $ingredientes = $categoria['ingredientes'];
+
+                                        foreach ($ingredientes as $cod_ingrediente => $valor) {
+                                            //nao deve imprimir o mesmo ingrediente duas vezes
+                                            if (array_key_exists($cod_ingrediente, $ingredientes_ja_impressos))
+                                                continue;
+
+                                            $ingredientes_ja_impressos[$cod_ingrediente] = $cod_ingrediente;
+                                            //essa linha deve enviar a informacao de quais ingredientes serao adicionais para um produto
+                                            //se houver varios produtos iguais, isso deve ser tratado
+                                            echo '<td> <input type="checkbox"  onclick="calculaAdicionais(this,\'' . $valor['preco_adicional'] . '\',' . $key_empresa . ',' . $key_tamanho_produto . ',' . $i . ',' . $this->configuracoes[$key_empresa][$key_tamanho_produto]['max_adicionais'] . ')" name="configuracoes[' . $key_empresa . '][' . $key_tamanho_produto . ']' . '[adicionais]' . '[' . $i . '][]' .
+                                            '" value="' . $cod_ingrediente;
+
+                                            //pode ser que o usuario ja configurou alguma coisa e deve-se apresentar aqui
+                                            //primeiro verifica se no array de configuracao existe algo sobre adicionais
+                                            if (isset($this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['adicionais'][$i])) {
+                                                $flag = true;
+                                                //se existe, deve-se verificar se o ingrediente que se quer imprimir ja foi selecionado antes
+                                                //para isso tem-se que iterar em todos os codigos de ingredientes relacionados com essa empresa e esse produto
+                                                foreach ((array) $this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['adicionais'][$i] as $cod_ingrediente_ja_escolhido) {
+                                                    //se achou algum, marca como checado
+                                                    if ($cod_ingrediente == $cod_ingrediente_ja_escolhido) {
+                                                        $total_parcial_adicionais += $valor['preco_adicional'];
+                                                        echo '" checked >' . $valor['nome_ingrediente'] . " (R$ " . $valor['preco_adicional'] . ") </td>";
+                                                        $flag = false;
+                                                        break;
+                                                    }
+                                                }
+                                                if ($flag) {//se esse ingrediente nunca foi selecionado antes, entra aqui
+                                                    echo '" >' . $valor['nome_ingrediente'] . " (R$ " . $valor['preco_adicional'] . ") </td>";
+                                                }
+                                            } else {
+                                                echo '" >' . $valor['nome_ingrediente'] . " (R$ " . $valor['preco_adicional'] . ") </td>";
+                                            }
 
 
-			    echo "</tr>";
-			    echo "</table> </fieldset> ";
-			}
-			echo "</div>";
-		    }
-		    ?>
-		    <?php
-		    //se sim, entao existe produto é uma pizza e pode ser escolhido varios sabores
-		    if (strcasecmp($this->configuracoes[$key_empresa][$key_tamanho_produto]['tipo_produto'], 'pizza') == 0 && $this->configuracoes[$key_empresa][$key_tamanho_produto]['numero_sabores_pizza'] > 1)
-		    {
-			echo "<input type='button' id='botaoSaboresPizza_" . $key_empresa . "_" . $key_tamanho_produto . "' value='Escolher Sabores' onclick='panelSaboresPizza(" . $key_empresa . "," . $key_tamanho_produto . ")'/>";
-			echo '<div style="display: none;" id="panelSaboresPizza_' . $key_empresa . '_' . $key_tamanho_produto . '">';
-			//cria as opcoes para incluir os adicionais
-			//itera no numero de itens do produto escolhido
-			//para cada item deve ser possivel configurar os adicionais se existirem
-			for ($i = 1; $i <= $qt; $i++)
-			{
-			    echo "<fieldset style='margin: 0; padding: 0;'>";
-			    echo "<legend>" . $this->carrinho[$key_empresa][$key_tamanho_produto]['nome_produto'] . " - " . $i . " (Máximo de sabores: " . ((int)$this->configuracoes[$key_empresa][$key_tamanho_produto]['numero_sabores_pizza'] - 1) . ")</legend>";
-			    echo "<table class='tableFrm' cellspacing='8' cellpadding='0' border='0'>";
-			    echo "<tr>";
-			    $k = 0;
+                                            if ($k >= 4) {
+                                                echo '</tr><tr>';
+                                                $k = 0;
+                                            }
+                                            $k++;
+                                        }
+                                        $j++;
+                                    }
 
 
-			    $sabores_pizza = $this->configuracoes[$key_empresa][$key_tamanho_produto]['sabores_pizza'];
+                                    echo "</tr>";
+                                    echo "</table> </fieldset> ";
+                                }
+                                echo "</div>";
+                            }
+                            ?>
+                            <?php
+                            //se sim, entao existe produto é uma pizza e pode ser escolhido varios sabores
+                            if (strcasecmp($this->configuracoes[$key_empresa][$key_tamanho_produto]['tipo_produto'], 'pizza') == 0 && $this->configuracoes[$key_empresa][$key_tamanho_produto]['numero_sabores_pizza'] > 1) {
+                                echo "<input type='button' id='botaoSaboresPizza_" . $key_empresa . "_" . $key_tamanho_produto . "' value='Escolher Sabores' onclick='panelSaboresPizza(" . $key_empresa . "," . $key_tamanho_produto . ")'/>";
+                                echo '<div style="display: none;" id="panelSaboresPizza_' . $key_empresa . '_' . $key_tamanho_produto . '">';
+                                //cria as opcoes para incluir os adicionais
+                                //itera no numero de itens do produto escolhido
+                                //para cada item deve ser possivel configurar os adicionais se existirem
+                                for ($i = 1; $i <= $qt; $i++) {
+                                    echo "<fieldset style='margin: 0; padding: 0;'>";
+                                    echo "<legend>" . $this->carrinho[$key_empresa][$key_tamanho_produto]['nome_produto'] . " - " . $i . " (Máximo de sabores: " . ((int) $this->configuracoes[$key_empresa][$key_tamanho_produto]['numero_sabores_pizza'] - 1) . ")</legend>";
+                                    echo "<table class='tableFrm' cellspacing='8' cellpadding='0' border='0'>";
+                                    echo "<tr>";
+                                    $k = 0;
 
 
-			    foreach ($sabores_pizza as $pizza)
-			    {
-
-				//essa linha deve enviar a informacao de quais ingredientes serao adicionais para um produto
-				//se houver varios produtos iguais, isso deve ser tratado
-				echo '<td> <input type="checkbox"  onclick="verificaMaximoSaboresPermitido(this,' . $key_empresa . ',' . $key_tamanho_produto . ',' . $i . ',' . $this->configuracoes[$key_empresa][$key_tamanho_produto]['numero_sabores_pizza'] . ')" name="configuracoes[' . $key_empresa . '][' . $key_tamanho_produto . ']' . '[sabores_pizza]' . '[' . $i . '][]' .
-				'" value="' . $pizza['cod_produto'];
+                                    $sabores_pizza = $this->configuracoes[$key_empresa][$key_tamanho_produto]['sabores_pizza'];
 
 
-				//pode ser que o usuario ja configurou alguma coisa e deve-se apresentar aqui
-				//primeiro verifica se no array de configuracao existe algo sobre outros sabores
-				if (isset($this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['sabores_pizza'][$i]))
-				{
-				    $flag = true;
-				    foreach ((array) $this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['sabores_pizza'][$i] as $cod_pizza_ja_escolhida)
-				    {
-					//se achou algum, marca como checado
-					if ($pizza['cod_produto'] == $cod_pizza_ja_escolhida)
-					{
-					    echo '" checked >' . $pizza['nome'] . " </td>";
-					    $flag = false;
-					    break;
-					}
-				    }
-				    if ($flag)//se esse ingrediente nunca foi selecionado antes, entra aqui
-				    {
-					echo '" >' . $pizza['nome'] . " </td>";
-				    }
-				}
-				else
-				{
-				    echo '" >' . $pizza['nome'] . " </td>";
-				}
-				if ($k >= 4)
-				{
-				    echo '</tr><tr>';
-				    $k = 0;
-				}
-				$k++;
-			    }
+                                    foreach ($sabores_pizza as $pizza) {
 
-	        		echo "</tr>";
-				echo "</table> </fieldset> ";
-
-			}
-		    echo "</div>";
-		    }
-		    
-		    ?>
-
-		    <br>
-		Total parcial: <?php echo ($total_parcial *= $qt) . " + <span id='spanParcialAdicionais_" . $key_empresa . "_" . $key_tamanho_produto . "'>" . $total_parcial_adicionais . "</span> = <span id='spanTotalParcial_" . $key_empresa . "_" . $key_tamanho_produto . "'>" . ($total_parcial + $total_parcial_adicionais) . "</span>" ?>
-
-		    <input type="hidden" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][total_parcial]" value="<?php echo $total_parcial ?>">
-		    <input type="hidden" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][total_parcial_adicionais]" value="<?php echo $total_parcial_adicionais ?>">
-
-		</li>
-
-	    </ul>
+                                        //essa linha deve enviar a informacao de quais ingredientes serao adicionais para um produto
+                                        //se houver varios produtos iguais, isso deve ser tratado
+                                        echo '<td> <input type="checkbox"  onclick="verificaMaximoSaboresPermitido(this,' . $key_empresa . ',' . $key_tamanho_produto . ',' . $i . ',' . $this->configuracoes[$key_empresa][$key_tamanho_produto]['numero_sabores_pizza'] . ')" name="configuracoes[' . $key_empresa . '][' . $key_tamanho_produto . ']' . '[sabores_pizza]' . '[' . $i . '][]' .
+                                        '" value="' . $pizza['cod_produto'];
 
 
-<?php
-		    $total += $total_parcial;
-		    $total_adicionais += $total_parcial_adicionais;
-		}//fecha foreach($cod_tamanho_produtos as $key_tamanho_produto)
+                                        //pode ser que o usuario ja configurou alguma coisa e deve-se apresentar aqui
+                                        //primeiro verifica se no array de configuracao existe algo sobre outros sabores
+                                        if (isset($this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['sabores_pizza'][$i])) {
+                                            $flag = true;
+                                            foreach ((array) $this->configuracoesJaFeitas[$key_empresa][$key_tamanho_produto]['sabores_pizza'][$i] as $cod_pizza_ja_escolhida) {
+                                                //se achou algum, marca como checado
+                                                if ($pizza['cod_produto'] == $cod_pizza_ja_escolhida) {
+                                                    echo '" checked >' . $pizza['nome'] . " </td>";
+                                                    $flag = false;
+                                                    break;
+                                                }
+                                            }
+                                            if ($flag) {//se esse ingrediente nunca foi selecionado antes, entra aqui
+                                                echo '" >' . $pizza['nome'] . " </td>";
+                                            }
+                                        } else {
+                                            echo '" >' . $pizza['nome'] . " </td>";
+                                        }
+                                        if ($k >= 4) {
+                                            echo '</tr><tr>';
+                                            $k = 0;
+                                        }
+                                        $k++;
+                                    }
 
-		echo "Digite aqui as observações sobre seu pedido:<br>";
-		echo "<input type='text' size='100' name='configuracoes[" . $key_empresa . "][observacao]' value='" . $this->configuracoesJaFeitas[$key_empresa]['observacao'] . "'>";
+                                    echo "</tr>";
+                                    echo "</table> </fieldset> ";
+                                }
+                                echo "</div>";
+                            }
+                            ?>
 
-		echo "</div>";
-	    }//fecha foreach ($cod_empresas as $key_empresa)
-	    echo "Total da compra: " . $total . " + <span id='spanTotalAdicionais'>" . $total_adicionais . "</span> = <span id='spanTotalCompra'>" . ($total + $total_adicionais) . "</span>";
-?>
+                            <br>
+                            Total parcial: <?php echo ($total_parcial *= $qt) . " + <span id='spanParcialAdicionais_" . $key_empresa . "_" . $key_tamanho_produto . "'>" . $total_parcial_adicionais . "</span> = <span id='spanTotalParcial_" . $key_empresa . "_" . $key_tamanho_produto . "'>" . ($total_parcial + $total_parcial_adicionais) . "</span>" ?>
+
+                            <input type="hidden" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][total_parcial]" value="<?php echo $total_parcial ?>">
+                            <input type="hidden" name="configuracoes[<?php echo $key_empresa ?>][<?php echo $key_tamanho_produto ?>][total_parcial_adicionais]" value="<?php echo $total_parcial_adicionais ?>">
+
+                        </li>
+
+                    </ul>
+
+
+                            <?php
+                            $total += $total_parcial;
+                            $total_adicionais += $total_parcial_adicionais;
+                        }//fecha foreach($cod_tamanho_produtos as $key_tamanho_produto)
+
+                        echo "Digite aqui as observações sobre seu pedido:<br>";
+                        echo "<input type='text' size='100' name='configuracoes[" . $key_empresa . "][observacao]' value='" . $this->configuracoesJaFeitas[$key_empresa]['observacao'] . "'>";
+
+                        echo "</div>";
+                    }//fecha foreach ($cod_empresas as $key_empresa)
+                    echo "Total da compra: " . $total . " + <span id='spanTotalAdicionais'>" . $total_adicionais . "</span> = <span id='spanTotalCompra'>" . ($total + $total_adicionais) . "</span>";
+                    ?>
 
 
     </form>
@@ -295,156 +266,153 @@
     function panelAdicionais(cod_empresa, cod_produto)
     {
 
-	var nomePanel =  "adicional_"+cod_empresa+"_"+cod_produto;
-	var nomeBotao = "botao_adicionais_"+cod_empresa+"_"+cod_produto;
+        var nomePanel = "adicional_" + cod_empresa + "_" + cod_produto;
+        var nomeBotao = "botao_adicionais_" + cod_empresa + "_" + cod_produto;
 
-	if(document.getElementById(nomePanel).style.display == 'none')
-	{
-	    $('#'+nomePanel).slideDown("slow");
-	    document.getElementById(nomeBotao).value = "Esconder Adicionais";
-	    isEscondido = false;
-	}
-	else
-	{
-	    $('#'+nomePanel).slideUp("slow");
-	    document.getElementById(nomeBotao).value = "Apresentar Adicionais";
-	    isEscondido = true;
-	}
-   
+        if (document.getElementById(nomePanel).style.display == 'none')
+        {
+            $('#' + nomePanel).slideDown("slow");
+            document.getElementById(nomeBotao).value = "Esconder Adicionais";
+            isEscondido = false;
+        } else
+        {
+            $('#' + nomePanel).slideUp("slow");
+            document.getElementById(nomeBotao).value = "Apresentar Adicionais";
+            isEscondido = true;
+        }
+
 
     }
 
     function panelSaboresPizza(cod_empresa, cod_produto)
     {
-	var nomePanel =  "panelSaboresPizza_"+cod_empresa+"_"+cod_produto;
-	var nomeBotao = "botaoSaboresPizza_"+cod_empresa+"_"+cod_produto;
+        var nomePanel = "panelSaboresPizza_" + cod_empresa + "_" + cod_produto;
+        var nomeBotao = "botaoSaboresPizza_" + cod_empresa + "_" + cod_produto;
 
-	if(document.getElementById(nomePanel).style.display == 'none')
-	{
-	    $('#'+nomePanel).slideDown("slow");
-	    document.getElementById(nomeBotao).value = "Esconder Sabores";
-	    isEscondido = false;
-	}
-	else
-	{
-	    $('#'+nomePanel).slideUp("slow");
-	    document.getElementById(nomeBotao).value = "Escolher Sabores";
-	    isEscondido = true;
-	}
+        if (document.getElementById(nomePanel).style.display == 'none')
+        {
+            $('#' + nomePanel).slideDown("slow");
+            document.getElementById(nomeBotao).value = "Esconder Sabores";
+            isEscondido = false;
+        } else
+        {
+            $('#' + nomePanel).slideUp("slow");
+            document.getElementById(nomeBotao).value = "Escolher Sabores";
+            isEscondido = true;
+        }
 
 
     }
 
-    function calculaAdicionais(elem,preco,key_empresa,key_produto,i,numAdicionaisPermitidos)
+    function calculaAdicionais(elem, preco, key_empresa, key_produto, i, numAdicionaisPermitidos)
     {
-	preco = parseFloat(preco);
-	preco = toFixed(preco,2);//seta o numero maximo de casas decimais para 2
+        preco = parseFloat(preco);
+        preco = toFixed(preco, 2);//seta o numero maximo de casas decimais para 2
 
-	if(elem.checked == true)
-	{
-	    if(!validaNumeroAdicionais(document.getElementsByName('configuracoes['+key_empresa+']['+key_produto+']'+'[adicionais]'+'['+i+'][]'),numAdicionaisPermitidos))
-	    {
-		alert("Você já escolheu o número máximo de adicionais permitido.");
-		elem.checked = false;
-		return;
-	    }
+        if (elem.checked == true)
+        {
+            if (!validaNumeroAdicionais(document.getElementsByName('configuracoes[' + key_empresa + '][' + key_produto + ']' + '[adicionais]' + '[' + i + '][]'), numAdicionaisPermitidos))
+            {
+                alert("Você já escolheu o número máximo de adicionais permitido.");
+                elem.checked = false;
+                return;
+            }
 
-	    //refaz para subtotal dos adicionais da empresa
-	    var total = parseFloat(document.getElementById('spanParcialAdicionais_'+key_empresa+'_'+key_produto).innerHTML);
-	    total = total + preco;
-	    document.getElementById('spanParcialAdicionais_'+key_empresa+'_'+key_produto).innerHTML = toFixed(total,2);
-	    //refaz para total parcial da empresa
-	    total = parseFloat(document.getElementById('spanTotalParcial_'+key_empresa+'_'+key_produto).innerHTML);
-	    total = total + preco;
-	    document.getElementById('spanTotalParcial_'+key_empresa+'_'+key_produto).innerHTML = toFixed(total,2);
-	    //refaz para total geral de adicionais
-	    total = parseFloat(document.getElementById('spanTotalAdicionais').innerHTML);
-	    total = total + preco;
-	    document.getElementById('spanTotalAdicionais').innerHTML = toFixed(total,2);
-	    //refaz para total geral da compra
-	    total = parseFloat(document.getElementById('spanTotalCompra').innerHTML);
-	    total = total + preco;
-	    document.getElementById('spanTotalCompra').innerHTML = toFixed(total,2);
+            //refaz para subtotal dos adicionais da empresa
+            var total = parseFloat(document.getElementById('spanParcialAdicionais_' + key_empresa + '_' + key_produto).innerHTML);
+            total = total + preco;
+            document.getElementById('spanParcialAdicionais_' + key_empresa + '_' + key_produto).innerHTML = toFixed(total, 2);
+            //refaz para total parcial da empresa
+            total = parseFloat(document.getElementById('spanTotalParcial_' + key_empresa + '_' + key_produto).innerHTML);
+            total = total + preco;
+            document.getElementById('spanTotalParcial_' + key_empresa + '_' + key_produto).innerHTML = toFixed(total, 2);
+            //refaz para total geral de adicionais
+            total = parseFloat(document.getElementById('spanTotalAdicionais').innerHTML);
+            total = total + preco;
+            document.getElementById('spanTotalAdicionais').innerHTML = toFixed(total, 2);
+            //refaz para total geral da compra
+            total = parseFloat(document.getElementById('spanTotalCompra').innerHTML);
+            total = total + preco;
+            document.getElementById('spanTotalCompra').innerHTML = toFixed(total, 2);
 
-	}
-	else if(elem.checked == false)
-	{
-	    //refaz para subtotal dos adicionais da emrpesa
-	    var total = parseFloat(document.getElementById('spanParcialAdicionais_'+key_empresa+'_'+key_produto).innerHTML);
-	    total = total - preco;
-	    document.getElementById('spanParcialAdicionais_'+key_empresa+'_'+key_produto).innerHTML = toFixed(total,2);
-	    //refaz para total parcial da empresa
-	    total = parseFloat(document.getElementById('spanTotalParcial_'+key_empresa+'_'+key_produto).innerHTML);
-	    total = total - preco;
-	    document.getElementById('spanTotalParcial_'+key_empresa+'_'+key_produto).innerHTML = toFixed(total,2);
-	    //refaz para total geral de adicionais
-	    total = parseFloat(document.getElementById('spanTotalAdicionais').innerHTML);
-	    total = total - preco;
-	    document.getElementById('spanTotalAdicionais').innerHTML = toFixed(total,2);
-	    //refaz para total geral da compra
-	    total = parseFloat(document.getElementById('spanTotalCompra').innerHTML);
-	    total = total - preco;
-	    document.getElementById('spanTotalCompra').innerHTML = toFixed(total,2);
-	}
-    
+        } else if (elem.checked == false)
+        {
+            //refaz para subtotal dos adicionais da emrpesa
+            var total = parseFloat(document.getElementById('spanParcialAdicionais_' + key_empresa + '_' + key_produto).innerHTML);
+            total = total - preco;
+            document.getElementById('spanParcialAdicionais_' + key_empresa + '_' + key_produto).innerHTML = toFixed(total, 2);
+            //refaz para total parcial da empresa
+            total = parseFloat(document.getElementById('spanTotalParcial_' + key_empresa + '_' + key_produto).innerHTML);
+            total = total - preco;
+            document.getElementById('spanTotalParcial_' + key_empresa + '_' + key_produto).innerHTML = toFixed(total, 2);
+            //refaz para total geral de adicionais
+            total = parseFloat(document.getElementById('spanTotalAdicionais').innerHTML);
+            total = total - preco;
+            document.getElementById('spanTotalAdicionais').innerHTML = toFixed(total, 2);
+            //refaz para total geral da compra
+            total = parseFloat(document.getElementById('spanTotalCompra').innerHTML);
+            total = total - preco;
+            document.getElementById('spanTotalCompra').innerHTML = toFixed(total, 2);
+        }
+
     }
 
     function toFixed(value, precision) {
-	var power = Math.pow(10, precision || 0);
-	return (Math.round(value * power) / power);
+        var power = Math.pow(10, precision || 0);
+        return (Math.round(value * power) / power);
     }
 
-    function recalcularQuantidade(cod_empresa,cod_tamanho)
+    function recalcularQuantidade(cod_empresa, cod_tamanho)
     {
-	var url = '/portal/pedido/recalcular-Quantidade';
-	document.getElementById('form1').action = url;
-	document.getElementById('form1').submit();
+        var url = '/portal/pedido/recalcular-Quantidade';
+        document.getElementById('form1').action = url;
+        document.getElementById('form1').submit();
 
     }
 
     function validaNumeroAdicionais(collection, numAdicionaisPermitidos)
     {
-	var qt = 0;
-	for(var i = 0; i < collection.length; i++)
-	{
-	    if(collection[i].checked == true)
-	    {
-		qt++;
-	    }
-	}
+        var qt = 0;
+        for (var i = 0; i < collection.length; i++)
+        {
+            if (collection[i].checked == true)
+            {
+                qt++;
+            }
+        }
 
-	if(qt > numAdicionaisPermitidos)
-	    return false;
-	else
-	    return true;
+        if (qt > numAdicionaisPermitidos)
+            return false;
+        else
+            return true;
 
     }
 
 
-    function verificaMaximoSaboresPermitido(elem,key_empresa,key_produto,i,maxPermitido)
+    function verificaMaximoSaboresPermitido(elem, key_empresa, key_produto, i, maxPermitido)
     {
-	var collection = document.getElementsByName('configuracoes['+key_empresa+']['+key_produto+']'+'[sabores_pizza]'+'['+i+'][]');
-	maxPermitido--; //tem que decrementar de um
+        var collection = document.getElementsByName('configuracoes[' + key_empresa + '][' + key_produto + ']' + '[sabores_pizza]' + '[' + i + '][]');
+        maxPermitido--; //tem que decrementar de um
 
-	if(elem.checked == true)
-	{
+        if (elem.checked == true)
+        {
 
-	    var qt = 0;
-	    for(var i = 0; i < collection.length; i++)
-	    {
-		if(collection[i].checked == true)
-		{
-		    qt++;
-		}
-	    }
+            var qt = 0;
+            for (var i = 0; i < collection.length; i++)
+            {
+                if (collection[i].checked == true)
+                {
+                    qt++;
+                }
+            }
 
-	    if(qt > maxPermitido)
-	    {
-		alert("Você já escolheu o número máximo de sabores permitido.");
-		elem.checked = false;
-		return;
-	    }
+            if (qt > maxPermitido)
+            {
+                alert("Você já escolheu o número máximo de sabores permitido.");
+                elem.checked = false;
+                return;
+            }
 
-	}
+        }
     }
 </script>
